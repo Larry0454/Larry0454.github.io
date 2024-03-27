@@ -19,19 +19,19 @@
     <meta name="description" content="物理层一、物理层的基本概念 物理层的主要任务：在传输介质上传输比特流 物理层的四个特性： 机械特性：接口所用的接线器的形状or尺寸，引线数目和排列，固定和锁定装置等 电气特性：在接口电缆的各条线上出现的电压的范围 功能特性：某条线上出现的某一电平的电压表示何种意义 过程特性：对于不同功能的各种可能事件的出现顺序     二、数据通信的基础知识 信道：向某一方向传送信息的介质  消息：通信的目的是传">
 <meta property="og:type" content="article">
 <meta property="og:title" content="physical_layer">
-<meta property="og:url" content="http://larry0454.github.io/2024/03/27/computer_network/physical-layer/index.html">
+<meta property="og:url" content="http://larry0454.github.io/2024/03/27/physical-layer/index.html">
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="物理层一、物理层的基本概念 物理层的主要任务：在传输介质上传输比特流 物理层的四个特性： 机械特性：接口所用的接线器的形状or尺寸，引线数目和排列，固定和锁定装置等 电气特性：在接口电缆的各条线上出现的电压的范围 功能特性：某条线上出现的某一电平的电压表示何种意义 过程特性：对于不同功能的各种可能事件的出现顺序     二、数据通信的基础知识 信道：向某一方向传送信息的介质  消息：通信的目的是传">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://larry0454.github.io/.io//%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F.png">
 <meta property="og:image" content="http://larry0454.github.io/.io//%E8%B0%83%E5%88%B6.png">
-<meta property="og:image" content="http://larry0454.github.io/.io//%E8%B0%83%E5%88%B6.png">
 <meta property="og:image" content="http://larry0454.github.io/.io//%E4%BF%A1%E9%81%93%E5%A4%8D%E7%94%A8.png">
 <meta property="og:image" content="http://larry0454.github.io/.io//CDMA.png">
 <meta property="og:image" content="http://larry0454.github.io/.io//%E5%85%89%E7%BA%A4%E5%90%8C%E8%BD%B4%E6%B7%B7%E5%90%88%E7%BD%91.png">
-<meta property="article:published_time" content="2024-03-27T08:54:30.000Z">
-<meta property="article:modified_time" content="2024-03-27T09:00:20.760Z">
+<meta property="article:published_time" content="2024-03-27T09:27:13.000Z">
+<meta property="article:modified_time" content="2024-03-27T09:28:56.984Z">
 <meta property="article:author" content="WangLe">
+<meta property="article:tag" content="computer network">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://larry0454.github.io/.io//%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F.png">
   
@@ -204,7 +204,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-27 16:54" pubdate>
+        <time datetime="2024-03-27 17:27" pubdate>
           March 27, 2024 pm
         </time>
       </span>
@@ -322,7 +322,7 @@
 </ul>
 </li>
 <li><p>数据通信系统模型：</p>
-<img src="/.io//传输系统.png" srcset="/img/loading.gif" lazyload width="80%">
+<p><img src="/.io//%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F.png" srcset="/img/loading.gif" lazyload alt="图片"></p>
 </li>
 <li><p>基带信号与带通信号</p>
 <ul>
@@ -353,8 +353,6 @@
 <li><p>调相：载波的<strong>初始相位</strong>随基带数字信号而变化</p>
 </li>
 </ul>
-<img src="/.io//调制.png" srcset="/img/loading.gif" lazyload>
-
 <p><img src="/.io//%E8%B0%83%E5%88%B6.png" srcset="/img/loading.gif" lazyload alt="图片"></p>
 </li>
 <li><p>多元制的混合调制方法：可获得<u>更高的传输速率</u>，如<strong>正交振幅调制</strong>（振幅与相位相结合）</p>
@@ -434,7 +432,7 @@
 <li><p>频分复用（FDM）：不同用户占用<strong>不同频带</strong>资源，每路信号以不同载波频率进行调制</p>
 </li>
 <li><p>时分复用（TDM）：将时间划分成一段段<strong>等长的时隙</strong>，所有用户在不同时间占用<u>相同的频带宽度</u>；接收端采用同步技术<br><strong>注意</strong>：TDM的轮转时隙数量 &#x3D; 用户总数，这种固定的分配方式会造成资源的浪费</p>
-<img src="/.io//信道复用.png" srcset="/img/loading.gif" lazyload>
+<p><img src="/.io//%E4%BF%A1%E9%81%93%E5%A4%8D%E7%94%A8.png" srcset="/img/loading.gif" lazyload alt="图片"></p>
 </li>
 <li><p>统计时分复用（STDM）：为每个用户动态按需分配时隙，可显著提高信道利用率</p>
 <ul>
@@ -454,7 +452,8 @@
 <li><p>每个站被分配一个<u>唯一</u>的m比特的<strong>码片序列</strong>，各站的码片序列必须<strong>相互正交</strong>，且<strong>相同码片规格化内积为1</strong></p>
 </li>
 <li><p>接收方T持有发送方的码片序列S，发送方发送的扩频信号为 $\text{S}_x$<br>则接收方收到的扩频信号 &#x3D; $\text{S} \cdot (\text{S}_x + \text{other signals})$ &#x3D; $\text{S} \cdot \text{S}_x$ + <strong>0</strong> &#x3D; +1(发送了1) or -1(发送了0)</p>
-<img src="/.io//CDMA.png" srcset="/img/loading.gif" lazyload></li>
+<p><img src="/.io//CDMA.png" srcset="/img/loading.gif" lazyload alt="图片"></p>
+</li>
 </ol>
 <p><strong>注意</strong>：利用CDMA，网络中各用户可以使用同一载波，占用相同带宽、各用户可以<u><strong>同时</strong></u>发送or接收信号</p>
 </li>
@@ -529,8 +528,7 @@
 </ul>
 </li>
 </ul>
-<img src="/.io//光纤同轴混合网.png" srcset="/img/loading.gif" lazyload>
-
+<p><img src="/.io//%E5%85%89%E7%BA%A4%E5%90%8C%E8%BD%B4%E6%B7%B7%E5%90%88%E7%BD%91.png" srcset="/img/loading.gif" lazyload alt="图片"></p>
 <ul>
 <li>优点：频带很宽，并能利用<strong>已有的相当大</strong>的覆盖面的有线电视网</li>
 <li>缺点：要将现有的<u>450MHz单向传输有线电视网</u> 改造为 <u>750MHz双向传输HFC网</u> 需要相当的资源和时间</li>
@@ -561,6 +559,13 @@
               <div class="post-metas my-3">
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/computer-network/">#computer network</a>
+      
+    </div>
+  
 </div>
 
 
@@ -570,7 +575,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>physical_layer</div>
-      <div>http://larry0454.github.io/2024/03/27/computer_network/physical-layer/</div>
+      <div>http://larry0454.github.io/2024/03/27/physical-layer/</div>
     </div>
     <div class="license-meta">
       
