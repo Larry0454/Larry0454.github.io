@@ -1,0 +1,1179 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="网络层 一、网络层提供的两种服务  面向连接的服务：虚电路；以电信公司为代表的一派支持，电话没有差错处理能力，故传输网络必须可靠  通信双方开始数据传输前，先由网络建立连接，由网络保证数据传输可靠性 虚电路通信时，首部无需填写完整的目的主机地址，只需要填写虚电路编号（减少分组开销）  注意：虚电路只是一种逻辑连接，分组沿逻辑连接传送，并不是真正建立了一条物理连接 无连接的服务：数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.network_layer">
+<meta property="og:url" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="网络层 一、网络层提供的两种服务  面向连接的服务：虚电路；以电信公司为代表的一派支持，电话没有差错处理能力，故传输网络必须可靠  通信双方开始数据传输前，先由网络建立连接，由网络保证数据传输可靠性 虚电路通信时，首部无需填写完整的目的主机地址，只需要填写虚电路编号（减少分组开销）  注意：虚电路只是一种逻辑连接，分组沿逻辑连接传送，并不是真正建立了一条物理连接 无连接的服务：数">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/%E5%AF%B9%E6%AF%94%E8%A1%A8%E6%A0%BC.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/IP%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/%E7%89%B9%E6%AE%8A%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/IP%E5%9C%B0%E5%9D%80%E4%B8%8EMAC%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/ARP.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E9%A6%96%E9%83%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/IP%E6%A0%A1%E9%AA%8C%E5%92%8C.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/ICMP.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/RIP%E6%8A%A5%E6%96%87.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/OSPF%E5%88%86%E7%BB%84.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/AS%E5%8C%BA%E5%9F%9F%E5%88%92%E5%88%86.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%AB%AF%E5%8F%A3.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/VPN.png">
+<meta property="article:published_time" content="2024-03-27T12:26:28.000Z">
+<meta property="article:modified_time" content="2024-03-27T13:15:21.776Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="computer network">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/%E5%AF%B9%E6%AF%94%E8%A1%A8%E6%A0%BC.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>3.network_layer - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="3.network_layer"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-27 20:26" pubdate>
+          March 27, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          71 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">3.network_layer</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="网络层">网络层</h2>
+<h3 id="一网络层提供的两种服务">一、网络层提供的两种服务</h3>
+<ul>
+<li><p>面向连接的服务：虚电路；以<u>电信公司</u>为代表的一派支持，电话没有差错处理能力，故传输网络必须可靠</p>
+<ul>
+<li>通信双方开始数据<u>传输前</u>，先由<strong>网络建立连接</strong>，由网络保证数据传输可靠性</li>
+<li>虚电路通信时，首部无需填写完整的目的主机地址，只需要填写虚电路编号（减少分组开销）</li>
+</ul>
+<p><strong>注意</strong>：虚电路只是一种<strong>逻辑连接</strong>，分组沿逻辑连接传送，<u>并不是真正建立了一条物理连接</u></p></li>
+<li><p>无连接的服务：数据报；以<u>Internet</u>为代表的一派支持，电脑比电话有更强的差错处理能力</p>
+<ul>
+<li>网络在发送数据时<strong>不需要先建立连接</strong>，每个分组在网络中独立传送</li>
+<li>网络层要设计得尽可能<strong>简单</strong>，向上层提供简单灵活、无连接的、<strong>尽最大努力交付</strong>的数据报服务（不可靠交付）</li>
+</ul>
+<p><strong>注意</strong>：网络层<u>不保证服务质量</u>，分组可能出错、丢失、重复或失序；由上层运输层负责可靠通信</p></li>
+</ul>
+<p><img src="/2024/03/27/computer_network/network-layer/对比表格.png" srcset="/img/loading.gif" lazyload></p>
+<hr>
+<h3 id="二网际协议ip">二、网际协议IP</h3>
+<ul>
+<li><p>网际协议（Internet
+Protocol）：TCP/IP体系中最重要的两个协议之一</p>
+<ul>
+<li><p>各层网络的中间设备：将网络<strong>互相连接</strong>的设备</p>
+<ul>
+<li><p>物理层：转发器</p></li>
+<li><p>数据链路层：网桥 or 交换机</p>
+<p><strong>注意</strong>：物理层 和 数据链路层
+的设备知识把网络扩大了，不能称之为网络互连</p></li>
+<li><p>网络层：路由器，真正的网络互连</p></li>
+<li><p>网络层以上：网关（比较复杂、使用较少）</p></li>
+</ul></li>
+<li><p>虚拟互连网络：即
+逻辑互联网络，屏蔽了各网络的具体异构细节，在网络层上看好像是一个统一的网络</p>
+<ul>
+<li>直接交付：查找转发表，若目的主机<u>在</u>本网络上，就<strong>不需要经过路由器</strong>而是直接交付</li>
+<li>间接交付：查找转发表，若目的主机<u>不在</u>本网络上，就需要<strong>转发给其它路由器</strong>进行间接交付</li>
+</ul></li>
+</ul></li>
+<li><p>分类的IP地址：分配给主机或路由器的标识符，目前使用的<strong>IPv4</strong>为<u>32位IP地址</u>；IP地址由<strong>ICANN</strong>机构分配</p>
+<ul>
+<li><p>IP地址的表示方法：32bit，采用<strong>点分十进制记法</strong>，将IP地址用<strong>4段十进制</strong>数字表示，并在段间插入一个<strong>小数点</strong></p></li>
+<li><p>IP地址的分类：分为A、B、C、D、E五类，IP地址 ::= {&lt;网络号&gt;,
+&lt;主机号&gt;}</p>
+<p><img src="/2024/03/27/computer_network/network-layer/IP地址.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<li><p>各地址的范围：看点分十进制的<strong>最高字节</strong></p>
+<ul>
+<li>A类地址：最高字节 <span class="math inline">\(\le\)</span> 127</li>
+<li>B类地址：128 <span class="math inline">\(\le\)</span> 最高字节 <span class="math inline">\(\le\)</span> 191</li>
+<li>C类地址：192 <span class="math inline">\(\le\)</span> 最高字节 <span class="math inline">\(\le\)</span> 223</li>
+<li>D类地址：224 <span class="math inline">\(\le\)</span> 最高字节 <span class="math inline">\(\le\)</span> 239</li>
+<li>E类地址：240 <span class="math inline">\(\le\)</span> 最高字节 <span class="math inline">\(\le\)</span> 255</li>
+</ul></li>
+</ul></li>
+<li><p>特殊IP地址：这些IP地址不会被指派，仅用于特定情况</p>
+<p><img src="/2024/03/27/computer_network/network-layer/特殊地址.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<ul>
+<li>{0, 0}：本网络上的本主机；能作为源地址，不能作为目的地址</li>
+<li>{0, X}：本网络上主机号为 X
+的主机；能作为源地址，不能作为目的地址</li>
+<li>{全1,
+全1}：本网络上进行广播的地址（路由器不转发）；不能作为源地址，能作为目的地址</li>
+<li>{Y, 全1}：对网络号为 Y
+的网络上的所有主机进行广播；不能作为源地址，能作为目的地址</li>
+<li>{127,
+非全0且非全1}：用于本机软件回环测试；能作为源地址，能作为目的地址</li>
+</ul></li>
+<li><p>IP地址的特点：</p>
+<ul>
+<li>分等级的地址结构：
+<ul>
+<li>网络前缀是第一级地址（由管理机构分配），主机号是第二级地址（由单位自行分配，<strong>便于管理</strong>）</li>
+<li>转发时仅考虑网络前缀，无需考虑目的主机号 <span class="math inline">\(\Rightarrow\)</span>
+减少转发表所占<strong>存储空间</strong>，缩短查找转发表的<strong>时间</strong></li>
+</ul></li>
+<li>多归属主机：由于路由器至少连接到两个网络上，故一个路由器至少有两个不同的IP地址</li>
+<li>用转发器（物理层）或交换机（链路层）连接的网络仍属于一个网络；拥有<u>不同网络前缀的<strong>局域网</strong></u>必须使用<strong>路由器</strong>进行互联</li>
+<li>同一个局域网上的主机 or
+路由器使用的网络前缀（网络号）必须相同；<u>局域网地址的<strong>主机号部分为全0</strong></u></li>
+<li>匿名网络：点对点链路（"/31"，即只有两个IP地址）构成的网络不分配IP地址（节省IP地址资源）</li>
+</ul>
+<hr></li>
+<li><p>IP地址与硬件地址(MAC地址)：</p>
+<ul>
+<li>IP地址：网络层 及
+以上各层使用的地址，是一种<strong>逻辑地址</strong>；设置在<strong>IP数据报首部</strong></li>
+<li>物理地址：<u>数据链路层</u> 以及
+<u>物理层</u>使用的地址；设置在<strong>MAC帧首部</strong></li>
+</ul>
+<p><img src="/2024/03/27/computer_network/network-layer/IP地址与MAC地址.png" srcset="/img/loading.gif" lazyload></p></li>
+<li><p>ARP与RARP协议：分别实现<strong>同一局域网内</strong> IP地址 <span class="math inline">\(\rightarrow\)</span> MAC地址 <strong>与</strong>
+MAC地址 <span class="math inline">\(\rightarrow\)</span> IP地址
+的<strong>转换</strong></p>
+<ul>
+<li><p>ARP高速缓存：存放<u><strong>本局域网</strong></u>内各主机或路由器的<strong>IP地址到MAC地址的<u>转换项</u></strong></p></li>
+<li><p>ARP(发送)请求分组：发送方IP地址 + 发送方MAC地址 +
+接收方IP地址</p></li>
+<li><p>ARP(接收)响应分组：接收方IP地址 +
+<u><strong>接收方MAC地址</strong></u></p>
+<p><strong>注意</strong>：ARP发送请求是局域网内<strong>广播</strong>发送，ARP响应请求是局域网内<strong>单播</strong>发送(只返回给发送方)</p>
+<hr></li>
+<li><p>主机A想给<u>本局域网</u>上的主机B发送IP包：</p>
+<ol type="1">
+<li>在主机A的ARP cache中查找主机B的IP地址项</li>
+<li>若存在主机B的IP地址项，将<strong>对应的硬件地址</strong>写入MAC帧，通过局域网发送</li>
+<li>若不存在，在局域网内广播ARP请求；当主机B收到ARP请求时，向主机A返回ARP应答（告知B的物理地址）</li>
+</ol>
+<p><strong>注意</strong>：ARP解决<strong>同一局域网内</strong>IP地址和硬件地址的映射问题；若目的主机<u>不在本局域网内，IP包需经路由器转发</u></p></li>
+<li><p>运行ARP协议：主要分为以下四种情况：</p>
+<ul>
+<li><span class="math inline">\(\text{H}_1\)</span>发送数据至<strong>同一网络</strong>的<span class="math inline">\(\text{H}_2\)</span>：<span class="math inline">\(\text{H}_1\)</span>广播(<span class="math inline">\(\text{N}_1\)</span>)ARP请求分组，获得<span class="math inline">\(\text{H}_2\)</span>的MAC地址</li>
+<li><span class="math inline">\(\text{H}_1\)</span>发送数据至<strong>不同网络</strong>的<span class="math inline">\(\text{H}_3\)</span>：<span class="math inline">\(\text{H}_1\)</span>广播(<span class="math inline">\(\text{N}_1\)</span>)ARP请求分组，获得连接两个网络的<span class="math inline">\(\text{R}_1\)</span>的MAC地址（剩余工作由<span class="math inline">\(\text{R}_1\)</span>完成）</li>
+<li><span class="math inline">\(\text{R}_1\)</span>发送数据至<strong>邻接网络</strong>的<span class="math inline">\(\text{H}_3\)</span>：<span class="math inline">\(\text{R}_1\)</span>广播(<span class="math inline">\(\text{N}_2\)</span>)ARP请求分组，获得<span class="math inline">\(\text{H}_2\)</span>的MAC地址</li>
+<li><span class="math inline">\(\text{R}_1\)</span>发送数据至<strong>非邻接网络</strong>的<span class="math inline">\(\text{H}_4\)</span>：<span class="math inline">\(\text{R}_1\)</span>广播(<span class="math inline">\(\text{N}_2\)</span>)ARP请求分组，获得连接<span class="math inline">\(\text{N}_2\)</span>的<span class="math inline">\(\text{R}_2\)</span>的MAC地址（剩余工作由<span class="math inline">\(\text{R}_2\)</span>完成）</li>
+</ul>
+<p><img src="/2024/03/27/computer_network/network-layer/ARP.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>注意</strong>：ARP
+cache中的每个映射项目都有<strong>生存时间</strong>，超过生存时间的项目会被删除</p></li>
+</ul></li>
+<li><p>IP数据报的格式：首部 + 数据</p>
+<p><img src="/2024/03/27/computer_network/network-layer/IP数据报首部.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<ul>
+<li><p>首部固定部分：</p>
+<ul>
+<li><p>版本：占4bit，目前IP协议版本是IPv4；通信双方使用协议IP版本必须一致</p></li>
+<li><p>首部长度：占4bit，单位为一个word(32bit) <span class="math inline">\(\Rightarrow\)</span> 首部长度最长可达60Byte（15
+<span class="math inline">\(\times\)</span> 32 / 8 Byte）</p></li>
+<li><p>区分服务：占1byte，表示服务类型，一般被忽略</p></li>
+<li><p>总长度：占2byte，表示首部 + 数据部分总长度，单位为一个Byte <span class="math inline">\(\Rightarrow\)</span>
+总长度最大可达65535Byte</p></li>
+<li><p>标识：占2btye；当数据报长度 &gt;
+MTU时要分片传输，各数据报片具有<strong>相同的标识</strong>，便于各<strong>分片重装</strong>为原来的数据报</p></li>
+<li><p>标志：占3bit，其最低位为MF、中间一位为DF，最高位无意义
+MF=1表示该分片后面"还有分片"，MF=0表示是最后一个分片
+DF=1表示“不能分片”，DF=0表示允许分片7</p></li>
+<li><p>片偏移：占13bit，表示该分片相对于<u>原分组中数据字段起点</u>的<strong>偏移</strong>，单位为8Byte</p></li>
+<li><p>生存时间：占8bit，表示跳数限制；每次转发时就将TTL减一，<strong>减小至0就丢弃</strong>（防止无法交付的数据报浪费网络资源）</p></li>
+<li><p>协议：占8bit，表示该数据报携带的数据使用何种协议，如ICMP、IP、TCP、UDP、IGMP等</p></li>
+<li><p>首部校验和：占16bit，<u>只检验数据报<strong>首部</strong></u>，不包括数据部分；最终结果（取反后）为<u><strong>全0</strong>则可以保留</u></p>
+<ul>
+<li><p>反码求和：将n个长度为16bit的字按行排列，写出每列"1"的个数</p>
+<ol type="1">
+<li>拆分数字：将各列数字拆分成 <strong>1</strong> + (若干2的幂次之和) or
+<strong>0</strong> + (若干2的幂次之和)</li>
+</ol></li>
+</ul>
+<ol start="2" type="1">
+<li>进位：将拆分得到的若干2的幂次<u><strong>按2进制权重</strong>向前<strong>累加</strong></u>到对应的列上，原列只保留1
+or 0</li>
+<li>循环迭代：若最高位拆分得到的数仍 &gt;
+1，<strong>继续拆分</strong>之，并将拆分得到的数<strong>回添到末位</strong>上；<u>直至各列位置均
+= 0 or 1</u></li>
+</ol>
+<p><strong>注意</strong>：也可用16进制计算，各列求和后<strong>拆分</strong>得到<u>16的倍数
++ &lt;16的数</u>，<strong>进位 + 循环迭代</strong>直至各列位置均 &lt; 16
+(0~9A~F)</p>
+<p><img src="/2024/03/27/computer_network/network-layer/IP校验和.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>源地址、目的地址：各占32bit，分别表示<strong>发送</strong>IP数据报的主机IP地址
+和 <strong>接收</strong>IP数据报的主机IP地址</p></li>
+</ul></li>
+<li><p>首部可变部分：选项字段，<strong>长度可变</strong>，用来支持排错、测量以及安全等措施；<u>实际很少被使用</u></p></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="三划分子网和构造超网">三、划分子网和构造超网</h3>
+<ul>
+<li><p>划分子网的目的：<u>分类IP地址</u>无法适应Internet快速发展的需要（主机数量庞大
++ 访问子网需求）</p></li>
+<li><p>三级IP地址 与 子网掩码：</p>
+<ul>
+<li>三级IP地址：net-id + <strong>subnet-id</strong> + host-id</li>
+<li>子网掩码：net-id 和 subnet-id 部分全1，host-id 部分全0</li>
+</ul>
+<p><img src="/2024/03/27/computer_network/network-layer/子网掩码.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>子网地址 = 主机IP地址 <strong>&amp;</strong> 子网掩码</li>
+</ul></li>
+<li><p>使用掩码的分组转发过程：路由表项 = 目的网络地址 +
+目的网络子网掩码 + 下一跳</p>
+<ol type="1">
+<li>路由器提取分组首部的目的IP地址<strong>D</strong></li>
+<li>用<u>与路由器<strong>直接相连</strong>的各网络的<strong>子网掩码</strong></u>和<u><strong>D</strong></u>逐位相“与”，若<u>与D匹配</u>则<strong>直接交付</strong>，否则间接交付（即转入下一步）
+匹配 <span class="math inline">\(\Leftrightarrow\)</span> (目的地址)
+&amp; (子网掩码) = (主机地址) &amp; (子网掩码)</li>
+<li>若路由表中存在目的地址为D的<strong>特定主机路由</strong>，则将分组传送给对应的<strong>下一跳</strong>路由（否则转入下一步）</li>
+<li>将<u>路由表中的<strong>各子网掩码</strong></u>和<u><strong>D</strong></u>逐位相“与”，若其结果<u>与该行目的地址匹配</u>，则传送给对应的<strong>下一跳</strong>路由（否则转入下一步）
+匹配 <span class="math inline">\(\Leftrightarrow\)</span> (目的地址)
+&amp; (子网掩码) = (目的网络地址)</li>
+<li>若路由表中存在<strong>默认路由</strong>，则传送给路由表中指明的默认路由器，否则报告转发分组<strong>出错</strong></li>
+</ol>
+<p><strong>注意</strong>：子网内部通过<u>数据链路层MAC帧</u>实现<u>直接交付</u>，涉及<strong>ARP</strong>缓存的查询</p>
+<hr></li>
+<li><p>无分类编址 CIDR：用于缓解IP地址枯竭的问题</p>
+<ul>
+<li><p>网络前缀：代替分类地址中的网络号 + 子网号，IP地址 =
+{&lt;<strong>网络前缀</strong>&gt;, &lt;主机号&gt;}</p>
+<ul>
+<li>CIDR记法：<u>IP地址</u>后添
+"/n"，n表示IP地址<strong>高n位</strong>是网络前缀</li>
+</ul></li>
+<li><p>CIDR地址块：由<u>网络前缀相同</u>的连续IP地址组成</p>
+<ul>
+<li>最小地址 = &lt;网络前缀&gt; + 全0</li>
+<li>最大地址 = &lt;网络前缀&gt; + 全1</li>
+</ul>
+<p><strong>注意</strong>：CIDR是无分类的，如果IP地址未指明前缀长度（"/n"），就不知道网络地址是什么</p></li>
+<li><p>地址掩码：用于计算网络地址，高n位为全1，剩余低位为全0；网络地址 =
+IP地址 &amp;&amp; 地址掩码</p></li>
+<li><p>路由聚合 与 构成超网：</p>
+<ul>
+<li>超网：一个CIDR地址块可包含多个分类地址网络，如
+255.255.254.0/23（512个主机）可容纳两个C类网络（256个主机）</li>
+<li>路由聚合：一个表项 <span class="math inline">\(\rightarrow\)</span>
+很多个传统分类地址（可减少路由表中<strong>表项</strong>的个数），减少了查找转发表所需要的时间</li>
+</ul></li>
+<li><p>最长前缀匹配：选择<u>匹配成功</u>的表项中具有<strong>最长网络前缀</strong>的路由</p>
+<ol type="1">
+<li>让<u>目的地址D</u>依次与<u>路由表中各掩码</u>进行“按位与”操作：(掩码)
+&amp; (数据报目的地址) = (表项网路地址)</li>
+<li>若 (某项掩码) &amp; (目的地址D) = (该项网络地址)，说明匹配成功</li>
+<li>从<u>匹配成功</u>的若干表项中选出<strong>网络前缀最长</strong>的表项，转发至对应出口</li>
+</ol>
+<p><strong>注意</strong>：网络前缀越长，说明CIDR地址块越小，路由也就越具体</p></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="四网际控制报文协议-icmp">四、网际控制报文协议 ICMP</h3>
+<ul>
+<li><p>ICMP的作用：报告错误 + 测试</p></li>
+<li><p>ICMP报文格式：ICMP位于IP层，封装在IP包内传输</p>
+<p><img src="/2024/03/27/computer_network/network-layer/ICMP.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p>​
+<strong>注意</strong>：首部的检验和<strong>检验首部</strong>，ICMP报文中的检验和<strong>检验数据报</strong></p></li>
+<li><p>ICMP报文协议：差错报告报文 +
+询问报文，主要包括以下9种类型（“询问”包括request+reply）</p>
+<ul>
+<li>差错报告报文：向<u>源主机</u>发送
+<ul>
+<li>终点不可达：路由器 or
+主机<strong>无法传输报文时</strong>向源主机发送</li>
+<li>源点抑制：路由器 or
+主机<strong>由于拥塞丢弃报文时</strong>，向源主机发送此报文，使其<u>放慢发送速度</u></li>
+<li>超时：当报文字段<strong>TTL=0时</strong>，路由器丢弃该报文，并向源主机发送此报文</li>
+<li>参数问题：路由器 or
+主机收到的报文中<strong>头部有非法字段时</strong>，丢弃数据包，并向源主机发送此报文</li>
+<li>重定向：路由器向源主机发送此报文<strong>告知路由改变</strong>，主机下次发送数据报给另外的路由器</li>
+</ul></li>
+<li>询问报文：向<u>目的主机</u>发送
+<ul>
+<li>回声探测：测试网络连通性</li>
+<li>请求时间：可用于时间同步</li>
+</ul></li>
+<li>应用实例：Ping(回声探测，主机回应) + Traceroute(超时检测,
+一系列报文的TTL=1, 2, 3, ...)</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="五路由算法及协议">五、路由算法及协议</h3>
+<ul>
+<li><p>路由器根据路由信息转发分组；路由信息由路由协议生成；路由算法是路由协议的核心</p></li>
+<li><p>理想路由算法的特性：</p>
+<ul>
+<li>正确 + 完整：可根据路由正确寻址</li>
+<li>计算上简单、不能增加过多开销</li>
+<li>具有自适应性：根据通信量 + 网络拓扑 变化调整路由</li>
+<li>具有稳定性：通信量和拓扑稳定时，能快速收敛</li>
+<li>公平性：对所有用户公平</li>
+<li>最佳路由：能找出最好的路由（时延）</li>
+</ul></li>
+<li><p>静态路由 与 <strong>动态路由</strong>：</p>
+<ul>
+<li>静态路由：非自适应 + 简单开销小（无法及时适应网络变化）+
+适用于小规模网络（人工设置路由）</li>
+<li>动态路由：自适应 + 复杂开销大（较好地适应网络状态变化）+
+适用于大规模网络（算法协议计算）</li>
+</ul></li>
+<li><p>自治系统AS：一组路由器，AS内部使用 <u>路由选择协议</u> +
+<u>共同的度量</u> 确定AS内的路由</p>
+<ul>
+<li>内部网关协议IGP：AS内部使用的路由选择协议，如RIP和OSPF</li>
+<li>外部网关协议EGP：若源站和目的站<u>处在不同的自治系统中</u>，自治系统边界使用EGP将路由选择信息传递到另一个AS中</li>
+</ul>
+<hr></li>
+<li><p>RIP报文：距离向量路由协议</p>
+<ul>
+<li><p>RIP特点：</p>
+<ul>
+<li>简单、适用于小规模网络</li>
+<li>距离定义为路由器跳数：最长为15、<u>16表示不可达</u></li>
+<li>仅与<strong>相邻路由器</strong>交换信息（即路由表），每30s交换一次</li>
+</ul></li>
+<li><p>RIP格式：属于用户层协议，封装在UDP用户数据报中</p>
+<p><img src="/2024/03/27/computer_network/network-layer/RIP报文.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<li><p>RIP优势与缺陷：</p>
+<ul>
+<li>优势：实现简单，开销较小</li>
+<li>缺陷：”坏消息传得慢“
+<ul>
+<li>网络出现故障时，要经过很长的时间才能传送到所有路由器</li>
+<li>支持的网络规模有限($$15)</li>
+<li>每次交换完整的路由表，这导致随着网络规模扩大，开销随之增加</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>距离向量路由：动态路由算法；各路由器维护一张路由表，存放
+<strong>目的网络 - 最短距离 - 下一跳</strong> 的表项</p>
+<ol type="1">
+<li>路由器R收到相邻路由器X的RIP报文，<u>把报文<strong>下一跳地址</strong>改为X</u>，<u>把报文中<strong>所有距离d加1</strong></u>得到d'，<u>报文目的地址仍为N</u></li>
+<li>对改后RIP报文中的每个项目：
+<ul>
+<li>若R的路由表中<u>不存在目的网络N</u>，直接将该项目加入路由表即可（N不可达
+<span class="math inline">\(\Rightarrow\)</span> N可能可达）</li>
+<li>若R的路由表中<u>存在目的网络N</u>：
+<ul>
+<li>若其下一跳地址仍是X，必须用新的项目更新该项目（保证路由信息是最新的）</li>
+<li>若其下一跳地址不是X，<strong>且d'小于原先距离</strong>，用最新的项目覆盖该项目（<strong>松弛操作</strong>）；否则不更新</li>
+</ul></li>
+</ul></li>
+<li>若3min内未收到相邻路由器的更新路由表（标明邻居不可用），则把此相邻路由器更新为16</li>
+</ol>
+<hr></li>
+<li><p>链路状态路由：</p>
+<ul>
+<li>链路状态：本路由器与哪些路由器<strong>相邻</strong>，以及该链路的“<strong>度量</strong>”</li>
+<li>链路状态数据库：每个路由器各自建立，均包含<u><strong>全网络</strong>的拓扑结构图</u>，各db保持一致（链路状态数据库的<strong>同步</strong>）
+<br><strong>注意</strong>：RIP协议并不知道全网的拓扑结构，只知道全网络dist
++ 下一跳地址</li>
+<li>路由表构建：基于<u>全网拓扑图</u>，使用<strong>dijkstra算法</strong>计算本路由器到其它节点的最佳路径，构建路由表</li>
+</ul></li>
+<li><p>链路状态路由算法：以下均为<u>双向操作</u></p>
+<ol type="1">
+<li>每个节点向邻居发送问候分组（间隔10s一次），了解邻居节点的网络地址、是否可达</li>
+<li>设置到它每个邻居的成本<strong>度量</strong>metric</li>
+<li>构造<strong>DD分组</strong>，向邻站提供<u>自己数据库中</u>已有的链路状态<strong>摘要信息</strong></li>
+<li>（根据摘要信息）邻站向本站发送<strong>LSR分组</strong>，请求本站没有的
+or 可更新的信息</li>
+<li>本站收到邻站的LSR分组后，发送<strong>LSU分组</strong>对链路进行更新；更新完毕后，邻站返回<strong>LSA分组</strong>确认</li>
+</ol>
+<p><strong>注意</strong>：只要有一个路由器链路状态发生改变，就要使用<strong>洪泛法</strong>更新全网链路状态，且收到更新分组后要<strong>返回确认</strong></p></li>
+<li><p>OSPF协议：属于链路状态路由协议，直接通过IP数据报传送（不使用UDP）</p>
+<ul>
+<li><p>OSPF特点：</p>
+<ul>
+<li>收敛速度快：当链路状态发生变化时，通过<strong>洪泛</strong>方式告知本AS中的其它节点
+<br><strong>注意</strong>：“洪泛”是指向除了输入链路外的所有其他链路发送数据，之后每个相邻路由器接着向所有相邻路由器发送数据("BFS")</li>
+<li>适用于<u>较大规模</u>的网络：仅在<u>链路状态发生<strong>变化</strong>时</u>发送洪泛信息，不会产生很大的通信量</li>
+</ul></li>
+<li><p>OSPF类型：Hello确定<strong>可达性</strong>，其余类型用于达到<strong>数据库的同步</strong></p>
+<ul>
+<li>问候(Hello)分组：用来发现和维持邻站可达性</li>
+<li>数据库描述(DD)分组：向邻站给出<u>自己的链路状态数据库</u>中<strong>所有链路状态项目</strong>的<u><strong>摘要</strong></u></li>
+<li>链路状态请求(LSR)分组：向对方请求某些链路状态项目的<u><strong>详细信息</strong></u></li>
+<li>链路状态更新(LSU)分组：用<strong>洪泛法</strong>对全网络更新链路状态</li>
+<li>链路状态确认(LSA)分组：对链路更新分组(LSU)的确认</li>
+</ul>
+<p><img src="/2024/03/27/computer_network/network-layer/OSPF分组.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<li><p>划分区域：OSPF将一个AS进一步划分为若干个区域，便于管理大规模网络</p>
+<ul>
+<li><p>优势：将<u>洪泛范围限制在一个区域</u>而不是整个自治系统，<strong>减少整个网络上的通信量</strong></p></li>
+<li><p>层次结构的区域划分：每个区域拥有一个32位的<strong>区域标识符</strong>（用点分十进制表示）；主干区域用于连通其它下层区域</p>
+<p><img src="/2024/03/27/computer_network/network-layer/AS区域划分.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+</ul>
+<p><strong>注意</strong>：一个区域内的路由器只知道本区域内的完整网络拓扑，不知道其它区域的网络拓扑</p></li>
+</ul>
+<hr></li>
+<li><p>外部网关路由协议
+BGP：<u>不同AS路由器之间</u>交换路由信息的协议</p>
+<ul>
+<li><p>BGP发言人：每个AS至少要选择一个路由器作为BGP
+speaker，与其它AS的BGP speaker交路由换信息</p>
+<ul>
+<li>连接方式 与
+选择条件：通过一个<strong>共享网络</strong>连接、一般选自<strong>AS边界路由器</strong>（也可以不是）</li>
+<li>通信条件：路由信息交换由<strong>TCP协议</strong>进行，在TCP连接上<u>交换BGP报文</u>建立BGP会话</li>
+</ul>
+<p><strong>注意</strong>：BGP发言人除了运行BGP协议外，还要运行<u>AS内部网关路由协议</u>（RIP
+or OSPF）</p></li>
+<li><p>信息交换 与 路由生成</p>
+<ul>
+<li>信息交换：交换<strong>网络可达性信息</strong>，即要到<u>达某个网络所经过的<strong>一系列AS</strong></u>（路径向量）</li>
+<li>路由生成：BGP发言人交换了<strong>网络可达性信息</strong>后，根据策略找到到达各AS的较好的路由</li>
+</ul></li>
+<li><p>BGP-4报文：包括以下4种</p>
+<ul>
+<li>OPEN报文：与相邻的另一个BGP发言人<strong>建立联系</strong></li>
+<li>UPDATE报文：发送某一<strong>路由信息</strong> +
+列出要<strong>撤销</strong>的多条路由，路由信息变化时发送</li>
+<li>KEEPALIVE报文：确认打开报文(OPEN) +
+<strong>周期性</strong>证实邻站关系</li>
+<li>NOTIFICATION报文：传送检验到的<strong>差错</strong></li>
+</ul></li>
+<li><p>BGP协议的特点：</p>
+<ul>
+<li><u>交换路由信息的节点</u>数量级 约等于
+<u>AS</u>个数，大大少于所有AS中的网络数</li>
+<li>各AS中的<u>BGP发言人数量很少</u>，使AS之间的路由选择不至于过于复杂</li>
+<li>BGP支持<strong>CIDR</strong>，故BGP路由表中包括目的网络前缀 +
+下一跳路由器</li>
+<li>BGP<u>刚开始运行</u>时，邻站交换<strong>完整的BGP路由表</strong>；之后只在发生变化时更新，有利于<strong>节省网络带宽</strong>
++ <strong>减少处理开销</strong></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+<ul>
+<li><p>路由器：具有多个输入/输出端口的<u>专用计算机</u>，任务是<strong>转发分组</strong></p>
+<ul>
+<li><p>路由器组成：路由选择（控制层面，根据路由选择协议<strong>构建路由表</strong>）+
+分组转发（数据层面，交换结构 + 一组输入/输出端口）</p></li>
+<li><p>分组转发：</p>
+<ul>
+<li>报文转发速率影响因素：输入/输出端口性能 + 交换机构的性能</li>
+<li>衡量路由器性能的指标：packet per second，简写为pps</li>
+</ul></li>
+<li><p>输入和输出端口处理：</p>
+<p><img src="/2024/03/27/computer_network/network-layer/输入输出端口.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p><strong>注意</strong>：在端口队列中排队会产生时延；分组处理速率 &lt;
+分组进队速率 会导致丢包（无队列存储空间）</p></li>
+</ul>
+<hr></li>
+<li><p>网络的控制平面与数据平面</p>
+<ul>
+<li>控制平面：<strong>生成</strong>路由表 +
+转发表；数据平面：进行分组的快速<strong>转发</strong></li>
+<li>软件定义网络SDN：
+<ul>
+<li>控制层面：
+<ul>
+<li>SDN控制器：<strong>维护</strong>准确的网络状态信息 +
+为运行在控制平面的网络控制应用程序<strong>提供</strong>这些状态信息</li>
+<li>网络控制应用程序：根据SDN控制器提供的方法，<strong>监视</strong>、<strong>编程</strong>、<strong>控制</strong>下方的网络设备</li>
+</ul></li>
+<li>数据层面：根据转发表进行数据<strong>转发</strong></li>
+<li>特点：
+<ul>
+<li><u>控制平面</u>与<u>数据平面</u><strong>分离</strong>：控制器负责<strong>计算</strong>转发表，路由器仅实现<strong>转发</strong></li>
+<li>网络控制远离数据层面的网络交换机：由<strong>软件</strong>实现控制层面，包含
+SDN控制器 + 若干网络控制应用程序</li>
+<li>可编程的网络：利用<u>控制层面</u>的网络控制应用程序，使网络成为<strong>可编程的</strong></li>
+</ul></li>
+<li>优势：可以灵活快速地控制路由 /
+转发策略；适用于路由策略变化频繁的网络</li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="六ip组播">六、IP组播</h3>
+<ul>
+<li>组播（多播）：用于实现<u>一点</u>对<u>多点</u>的数据传输
+<ul>
+<li>优势：可大大<strong>减少网络流量</strong>，应用于<u>网络视频服务</u></li>
+<li>组播数据报：使用D类IP地址(1110...)，每个D类地址标志一个<strong>多播组</strong>，其IP首部协议字段是2，表示使用IGMP协议
+<br><strong>注意</strong>：多播地址<u>只能用于目的地址</u>，不能用于源地址；多播数据报不产生ICMP差错报文</li>
+<li>组播类别：包含以下2种
+<ul>
+<li>在局域网中的硬件组播：将<strong>MAC地址</strong>中特定地址段作为组播地址，并与IP组播地址形成对应关系</li>
+<li>在Internet中的组播：
+<ul>
+<li>需要<strong>组播路由器</strong></li>
+<li><u>主机</u>通过<strong>IGMP协议</strong>与<u>组播路由器</u>通信，加入
+or 退出某个组播组</li>
+<li><u>组播路由器之间</u>通过<strong>组播路由协议</strong>实现组播数据报的传输</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="七nat-与-vpn">七、NAT 与 VPN</h3>
+<ul>
+<li><p>网络地址转换 NAT：</p>
+<ul>
+<li>专用地址：只能用于<strong>机构内部</strong>的保留地址，Internet中的路由器<u>不转发目的地址为<strong>专用地址</strong>的包</u>
+<strong>注意</strong>：专用地址可减少IP地址空间的占用，提高安全性</li>
+<li>网络地址转换：当<u>内部网络使用<strong>专用地址</strong></u>时，<u>与Internet通信</u>需要经过NAT路由器，实现<u>外网数据包</u>向<u>内网地址</u>的转换</li>
+</ul>
+<hr></li>
+<li><p>虚拟专用网 VPN：涉及隧道、加密、身份认证等技术</p>
+<ul>
+<li><p>多个企业 or 机构的<strong>内部网络间互连</strong>实现方法：</p>
+<ul>
+<li>租用专用网络，形成<strong>专用网</strong>，成本高昂</li>
+<li>基于公用网路，形成<strong>虚拟专用网</strong>VPN</li>
+</ul></li>
+<li><p><u>基于<strong>Internet</strong></u>建立VPN的两种情形：</p>
+<ul>
+<li><strong>内部网络间</strong>通过Internet互连</li>
+<li><strong>远程用户</strong>访问某内部网络（remote access VPN）</li>
+</ul></li>
+<li><p>典型的VPN实现技术：IPSec(工作在网络层) or
+SSL(Web浏览器内置支持)</p></li>
+<li><p>VPN架构：使用<strong>隧道技术</strong>，效果好像在<u>本部门的专用网</u>上传输</p>
+<p><img src="/2024/03/27/computer_network/network-layer/VPN.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+</ul></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/computer-network/">#computer network</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>3.network_layer</div>
+      <div>http://larry0454.github.io/2024/03/27/computer_network/network-layer/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 27, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/27/link_and_load/static-link/" title="static_link">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">static_link</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/03/27/computer_network/transport-layer/" title="4.transport_layer">
+                        <span class="hidden-mobile">4.transport_layer</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,757 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="支持向量机  一、支持向量  超平面：设训练样本集\(D &#x3D; \{(x_1, y_1), ..., (x_m, y_m\}\)，其中\(y_i \in \{-1, +1\}\) 超平面可将二分类样本集D划分为两部分，实现正确分类 支持向量与二分类：设超平面为\(\omega^T x + b &#x3D; 0\)，其中\(\omega &#x3D; (\omega_1; \omega_2; ...;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.SVM">
+<meta property="og:url" content="http://larry0454.github.io/2024/03/28/machine_learning/SVM/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="支持向量机  一、支持向量  超平面：设训练样本集\(D &#x3D; \{(x_1, y_1), ..., (x_m, y_m\}\)，其中\(y_i \in \{-1, +1\}\) 超平面可将二分类样本集D划分为两部分，实现正确分类 支持向量与二分类：设超平面为\(\omega^T x + b &#x3D; 0\)，其中\(\omega &#x3D; (\omega_1; \omega_2; ...;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-03-28T00:30:05.000Z">
+<meta property="article:modified_time" content="2024-03-28T02:38:53.057Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>6.SVM - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="6.SVM"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-28 08:30" pubdate>
+          March 28, 2024 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">6.SVM</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="支持向量机">支持向量机</h2>
+<hr>
+<h3 id="一支持向量">一、支持向量</h3>
+<ul>
+<li><p>超平面：设训练样本集<span class="math inline">\(D = \{(x_1, y_1),
+..., (x_m, y_m\}\)</span>，其中<span class="math inline">\(y_i \in \{-1,
++1\}\)</span></p>
+<p>超平面可将二分类样本集D划分为两部分，实现<strong>正确分类</strong></p></li>
+<li><p>支持向量与二分类：设超平面为<span class="math inline">\(\omega^T
+x + b = 0\)</span>，其中<span class="math inline">\(\omega = (\omega_1;
+\omega_2; ...; \omega_d)\)</span> 为超平面<strong>法向量</strong></p>
+<p>设对于训练样本<span class="math inline">\((x_i, y_i) \in
+D\)</span>，通过以下方式实现分类： <span class="math display">\[
+\begin{cases}
+\omega^T x_i + b \ge +1 &amp; y_i = +1 \\
+\omega^T x_i + b \le -1 &amp; y_i = -1
+\end{cases}
+\]</span>
+则称<u>距离超平面<strong>最近</strong></u>的，<u>满足上式约束</u>的训练样本为<strong>支持向量</strong></p>
+<p>两异类支持向量<u>到超平面的距离之和<span class="math inline">\(\gamma\)</span></u>称为<strong>间隔</strong>：
+<span class="math display">\[
+\gamma = \frac{2}{|{|{\omega}||}}
+\]</span></p></li>
+<li><p>支持向量机的<strong>基本型</strong>：求解两类样本“<strong>正中间</strong>”的划分超平面，即求解<strong>间隔最大</strong>的超平面
+<span class="math display">\[
+\begin{align}
+&amp; \underset{\omega, b}{\min} \quad \frac{1}{2} |{|{\omega}||}^2 \\
+\\
+&amp; \text{s.t.} \quad y_i(\omega^T x_i + b) \ge 1, \quad i=1,2,..,m
+\end{align}
+\]</span></p></li>
+</ul>
+<hr>
+<h3 id="二对偶问题">二、对偶问题</h3>
+<ul>
+<li><p>拉格朗日函数：设超平面 <span class="math inline">\(f(x) =
+\omega^T x + b\)</span>，SVM基本型的拉格朗日函数可以写成： <span class="math display">\[
+L(\omega, b,  \alpha) = \frac{1}{2} |{|{\omega}||}^2 + \sum_{i=1}^m
+\alpha_i(1 - y_i(\omega^Tx_i + b))
+\]</span> 其中每个约束的拉格朗日乘子<span class="math inline">\(\alpha_i
+\ge 0\)</span>，<u>令L对<span class="math inline">\(\omega\)</span>和b的偏导为0</u>： <span class="math display">\[
+\begin{align}
+\omega &amp;= \sum_{i=1}^m \alpha_i y_i x_i \\
+0 &amp;= \sum_{i=1}^m \alpha_i y_i
+\end{align}
+\]</span> 将上式代入拉格朗日函数得到<strong>对偶函数</strong>： <span class="math display">\[
+  \underset{\omega, b}{inf} L(\omega, b, \alpha) = \sum_{i=1}^m \alpha_i
+- \frac{1}{2} \sum_{i=1}^m \sum_{j=1}^m \alpha_i \alpha_j y_i y_j x_i^T
+x_j \\ \\
+  \]</span></p>
+<p>SVM基本型的<strong>对偶问题</strong>（即求解SVM基本型的<strong>最优下界</strong>）：
+<span class="math display">\[
+  \begin{align}
+  &amp; \underset{\alpha}{max} \quad \underset{\omega, b}{\text{inf}}
+\quad L(\omega, b, \alpha) \\
+  &amp; s.t. \quad \sum_{i=1}^m \alpha_i y_i = 0 \\
+  &amp; \quad \quad \quad \alpha_i \ge 0
+  \end{align}
+  \]</span> <strong>注意</strong>：由约束条件，总有$inf L(, b, ) L(, b,
+) ^2 $</p>
+<p>求解对偶问题得到<span class="math inline">\(\alpha\)</span>，再根据<span class="math inline">\(\alpha\)</span>解出<span class="math inline">\(\omega\)</span>与b，最终获得划分超平面 <span class="math inline">\(f(x) = \sum_{i=1}^m \alpha_i y_i x_i^Tx +
+b\)</span></p></li>
+</ul>
+<hr>
+<h3 id="三核函数">三、核函数</h3>
+<ul>
+<li><p>核函数的用途：将样本空间<strong>映射到高维</strong>，以解决原始数据<strong>线性不可分</strong>的问题</p></li>
+<li><p>核函数定义：<span class="math inline">\(k(x_i, x_j) =
+&lt;\phi(x_i), \phi(x_j)&gt; = \phi(x_i)^T \phi(x_j)\)</span></p>
+<p>其中<span class="math inline">\(\phi(x)\)</span>表示将向量<span class="math inline">\(x\)</span>映射到更高的特征空间，在<u>特征空间</u>中划分超平面的形式变成<span class="math inline">\(f(x) = \omega^T \phi(x) + b\)</span></p>
+<p>最终求解可得到 <span class="math inline">\(f(x) = \sum_{i=1}^m
+\alpha_i y_i k(x_i, x_j) + b\)</span>，其中<span class="math inline">\(\alpha_i \ge 0\)</span>
+是SVM基本型对应的拉格朗日乘子</p></li>
+<li><p>核函数定理：设<span class="math inline">\(X\)</span>为输入空间，<span class="math inline">\(k(\cdot,\cdot)\)</span>是<span class="math inline">\(X \times
+X\)</span>上的<strong>对称函数</strong></p>
+<p>则<span class="math inline">\(k\)</span>是核函数 <span class="math inline">\(\leftrightarrow\)</span> 对任意输入数据<span class="math inline">\(D = \{x_1, ..., x_m\}\)</span>，核矩阵<span class="math inline">\((k(x_i, x_j))_{m \times
+m}\)</span>是<strong>半正定</strong>的</p></li>
+<li><p>常用核函数：直接计算高维向量的内积较为复杂，故可使用核函数<strong>直接应用于原始样本</strong></p>
+<ol type="1">
+<li>线性核：<span class="math inline">\(k(x_i, x_j) =
+x_i^Tx_j\)</span></li>
+<li>多项式核：<span class="math inline">\(k(x_i, x_j) =
+(x_i^Tx_j)^d\)</span>，其中d为多项式<u>次数</u></li>
+<li>高斯核：<span class="math inline">\(k(x_i, x_j) = e^{-\frac{|{|{x_i
+- x_j}||}^2}{2\sigma^2}}\)</span>，其中<span class="math inline">\(\sigma \gt 0\)</span>为高斯核<u>带宽</u></li>
+<li>拉普拉斯核：<span class="math inline">\(k(x_i, x_j) =
+e^{-|{|NaN||^2}{\sigma}}\)</span>，其中<span class="math inline">\(\sigma \gt 0\)</span></li>
+<li>Sigmoid核：<span class="math inline">\(k(x_i, x_j) = tanh(\beta
+x_i^Tx_j + \theta)\)</span>，其中<span class="math inline">\(\beta &gt;
+0\)</span>，<span class="math inline">\(\theta \lt 0\)</span></li>
+</ol>
+<p><strong>注意</strong>：核函数隐式定义了特征空间，应<strong>选取合适的核函数</strong>将样本空间映射到合适的特征空间</p></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/machine-learning/">#machine learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>6.SVM</div>
+      <div>http://larry0454.github.io/2024/03/28/machine_learning/SVM/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 28, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/03/28/machine_learning/neural-network/" title="7.neural_network">
+                        <span class="hidden-mobile">7.neural_network</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

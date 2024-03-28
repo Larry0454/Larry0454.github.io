@@ -1,0 +1,834 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="数据库设计  一、数据库设计阶段概览  需求分析：对应用环境进行详细调查，收集支持系统目标的基础数据及其处理 数据库概念结构设计：  对用户需求进行综合、归纳与抽象 设计独立于数据库逻辑结构与DBMS的概念模型（可用 E-R 图表示）  数据库逻辑结构设计：  将概念结构转换为某个DBMS所支持的数据模型，并作优化 将得到的逻辑结构转换成特定的DBMS能处理的模式、子模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5.database_design">
+<meta property="og:url" content="http://larry0454.github.io/2024/03/27/database/database-design/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="数据库设计  一、数据库设计阶段概览  需求分析：对应用环境进行详细调查，收集支持系统目标的基础数据及其处理 数据库概念结构设计：  对用户需求进行综合、归纳与抽象 设计独立于数据库逻辑结构与DBMS的概念模型（可用 E-R 图表示）  数据库逻辑结构设计：  将概念结构转换为某个DBMS所支持的数据模型，并作优化 将得到的逻辑结构转换成特定的DBMS能处理的模式、子模">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/database-design/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/database-design/%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/database-design/B+%E6%A0%91.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/database-design/HASH.png">
+<meta property="article:published_time" content="2024-03-27T13:21:39.000Z">
+<meta property="article:modified_time" content="2024-03-27T13:22:35.605Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="database">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/database/database-design/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>5.database_design - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="5.database_design"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-27 21:21" pubdate>
+          March 27, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">5.database_design</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="数据库设计">数据库设计</h2>
+<hr>
+<h3 id="一数据库设计阶段概览">一、数据库设计阶段概览</h3>
+<ol type="1">
+<li><p>需求分析：对<u>应用环境</u>进行详细调查，收集支持系统目标的<strong>基础数据</strong>及其处理</p></li>
+<li><p>数据库概念结构设计：</p>
+<ul>
+<li>对用户需求进行<u>综合</u>、<u>归纳</u>与<u>抽象</u></li>
+<li>设计<u>独立于</u>数据库逻辑结构与DBMS的概念模型（可用 E-R
+图表示）</li>
+</ul></li>
+<li><p>数据库逻辑结构设计：</p>
+<ul>
+<li>将概念结构转换为某个DBMS所支持的数据模型，并作优化</li>
+<li>将得到的逻辑结构转换成特定的DBMS能处理的<strong>模式</strong>、<strong>子模式</strong></li>
+</ul></li>
+<li><p>数据库物理结构设计：设计物理设备的<u>存储结构</u>与<u>存取方法</u></p>
+<ol type="1">
+<li>确定数据库的<strong>内模式</strong></li>
+<li>对物理结构进行时间与空间效率的<strong>评价</strong></li>
+</ol></li>
+<li><p>数据库实施：用<strong>DDL</strong>描述三级模式，并调试产生<strong>目标模式</strong>，组织数据入库并<strong>试运行</strong></p></li>
+<li><p>数据库运行与维护：数据库正式运行后，由DBA对数据库维护</p>
+<figure style="text-align:center">
+<p><img src="/2024/03/27/database/database-design/数据库设计基本步骤.png" srcset="/img/loading.gif" lazyload>
+<figurecap>数据库设计阶段</figurecap></p>
+</figure></li>
+</ol>
+<hr>
+<h3 id="二需求分析">二、需求分析</h3>
+<ul>
+<li><p>需求分析的目标：调查重点是“数据”与“处理”</p>
+<ul>
+<li>处理要求：用户需要完成何种<strong>处理功能</strong></li>
+<li>信息要求：指系统中所涉及的<strong>数据</strong>及<strong>数据间联系</strong></li>
+<li>安全性与完整性约束</li>
+</ul></li>
+<li><p>需求分析的步骤：</p>
+<ol type="1">
+<li>调查用户实际需求，与用户达成共识</li>
+<li>使用<u>数据流图</u>表达<strong>数据处理间的关系</strong>；使用<u>数据字典</u>描述系统中的<strong>各类数据</strong></li>
+</ol></li>
+<li><p>数据流图：以图形方式表达系统功能、数据在系统内部的逻辑流向</p>
+<figure style="text-align:center">
+<p><img src="/2024/03/27/database/database-design/数据流图.png" srcset="/img/loading.gif" lazyload> <figurecap>自顶向下分解的 销售管理系统
+数据流图</figurecap></p>
+</figure>
+<hr></li>
+<li><p>数据字典：对数据库中数据的描述（即<strong>元数据</strong>），其原子单位是数据项，包含以下</p>
+<ul>
+<li>数据项语义定义：名字 + 实际含义</li>
+<li>数据项类型定义：数据类型 + 数据宽度 + 小数位数</li>
+<li>完整性约束定义：值约束 + 空值约束 + 其它完整性约束</li>
+</ul>
+<p><strong>注意</strong>：数据字典还包括数据在系统内的<u>传输路径</u>、<u>存储位置</u>等</p></li>
+</ul>
+<hr>
+<h3 id="三概念结构设计">三、概念结构设计</h3>
+<ul>
+<li><p>E-R 法：使用 <strong>E-R图</strong> 描述现实世界</p></li>
+<li><p>E-R 图：由<u>实体</u>、<u>联系</u>、<u>属性</u>构成</p></li>
+<li><p>自底向上的 E-R
+图设计方法：先设计<strong>局部</strong>应用的概念结构，再将其<strong>集成</strong>起来</p>
+<ul>
+<li><p>局部 E-R 图设计：</p>
+<ol type="1">
+<li>选择局部应用：将需求分解形成不同的概念模式</li>
+<li>以需求分析中的数据元素为基础，利用<strong>数据抽象</strong>机制，得到<u>实体</u>与<u>属性</u>
+<br><strong>注意</strong>：“数据抽象”包括分类（对象的类型）、聚集（类型的组成）和概括（类型间的联系）</li>
+<li>确定实体间的联系类型，用 E-R
+图表示这些<u>实体与实体间的<strong>联系</strong></u>，形成分 E -R
+图</li>
+</ol></li>
+<li><p>综合局部 E-R 图：将分 E-R
+图<u>合并</u>，<u>消除冲突与冗余</u>，最终形成基本 E-R 图</p>
+<ul>
+<li><p>生成初步 E-R 图：消除分 E-R 图的冲突，需消除属性冲突 + 命名冲突 +
+结构冲突</p>
+<ul>
+<li>属性冲突：属性的<u>类型</u>、<u>取值范围</u>或<u>取值集合</u>不同</li>
+<li>命名冲突：不同意义的对象具有相同名字 or
+相同意义的对象具有不同名字</li>
+<li>结构冲突：同一对象在<u>不同应用</u>中具有<strong>不同层次的抽象</strong>；同一实体拥有<strong>不同的属性</strong></li>
+</ul></li>
+<li><p>生成基本 E-R 图：对初步 E-R
+图<strong>消除冗余</strong>；方法包括分析法 + 规范化</p>
+<ul>
+<li><p>冗余数据：可由基本数据<strong>导出</strong>的数据；系总人数 =
+<span class="math inline">\(\sum
+\text{各系人数}\)</span>，系总人数为冗余数据</p></li>
+<li><p>冗余联系：可由其它联系<strong>导出</strong>的联系</p>
+<hr></li>
+<li><p><strong>规范化</strong>消除冗余联系：筛除分E-R图中的冗余关系</p>
+<ol type="1">
+<li>确定分E-R图中的数据依赖：将<u>每对联系</u>表示为<u>实体码间</u>的<strong>函数依赖</strong>集合F</li>
+<li>对上述依赖集进行<strong>极小化处理</strong>获得 <span class="math inline">\(\text{F}_m\)</span>，设 D = F - <span class="math inline">\(\text{F}_m\)</span></li>
+<li>考察 D 中的每个依赖式，筛除其中的冗余联系</li>
+</ol>
+<p><strong>注意</strong>：冗余信息或许能够提高数据库效率，可以选择保留</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="三逻辑结构设计">三、逻辑结构设计</h3>
+<ul>
+<li>E-R 图向关系模式的转化：
+<ul>
+<li>实体型 <span class="math inline">\(\Rightarrow\)</span>
+关系模式：关系的属性 <span class="math inline">\(\gets\)</span>
+实体的属性；关系的码 <span class="math inline">\(\gets\)</span>
+实体的码</li>
+<li>联系 <span class="math inline">\(\Rightarrow\)</span>
+关系模式：关系的属性 <span class="math inline">\(\gets\)</span>
+各实体的<strong>码</strong> + <strong>联系的属性</strong>
+<ul>
+<li>1: 1联系：<u>每个实体的码</u>都是该关系的候选码</li>
+<li>1:
+n联系：该关系的码是<u><strong>n端</strong>实体的码</u>（唯一确定性）</li>
+<li>n:
+m联系：该关系的码是<u><strong>两端</strong>实体码的<strong>组合</strong></u>（唯一确定性）</li>
+</ul></li>
+</ul></li>
+<li>关系模型的优化：考虑 <u>水平分解</u> + <u>垂直分解</u>
+<ul>
+<li>水平分解：将<strong>经常使用的那部分<u>元组</u></strong>分离出来单独作为一个关系</li>
+<li>垂直分解：将关系模式R中<strong>经常在一起使用的<u>属性</u></strong>分解出来形成子模式</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="四物理结构设计">四、物理结构设计</h3>
+<ul>
+<li><p>数据库物理结构：包含物理设备上的 <u>存储结构</u> +
+<u>存取方法</u></p></li>
+<li><p>存取方法：包括 索引 + 聚集 + HASH</p>
+<ul>
+<li><p>索引记录：索引文件中的记录，包括 索引域 + 指针；常用 B+ 树</p>
+<ul>
+<li>索引域：存储数据文件中若干域的<strong>特定值K</strong>
+<br><strong>注意</strong>：索引域应选择<u>经常被查询</u>到的属性、max（min）函数的<u>参数</u>、<u>连接属性</u>等</li>
+<li>指针：指向<strong>索引域值K</strong>的记录所<u>在磁盘块的地址</u></li>
+</ul>
+<p><strong>注意</strong>：索引也会占据内存，同时具有维护开销，故索引不是越多越好</p>
+<figure style="text-align:center">
+<p><img src="/2024/03/27/database/database-design/B+树.png" srcset="/img/loading.gif" lazyload> <figurecap>各关键字按递增顺序 从左到右
+链接在叶结点上</figurecap></p>
+</figure></li>
+<li><p>聚集：将在若干属性上<u>值相同</u>的记录集中存放在<strong>连续的物理块</strong>上</p>
+<ul>
+<li>选择原则：经常进行<u>自然连接</u>操作的关系、某属性<u>值重复率高</u>的模式</li>
+</ul>
+<p><strong>注意</strong>：建立聚集系统的开销很大，对于更新操作<strong>远多于连接操作</strong>的关系，不应建立聚集</p></li>
+<li><p>HASH：利用hash函数将<strong>记录关键字</strong>转化为地址；记录r（A上值为a）的存储地址
+addr = hash(a)</p>
+<figure style="text-align:center">
+<p><img src="/2024/03/27/database/database-design/HASH.png" srcset="/img/loading.gif" lazyload> <figurecap>Hash查找</figurecap></p>
+</figure></li>
+</ul></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/database/">#database</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>5.database_design</div>
+      <div>http://larry0454.github.io/2024/03/27/database/database-design/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 27, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/27/database/optimization/" title="7.optimization">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">7.optimization</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/03/27/database/relational-data-theory/" title="4.relational_data_theory">
+                        <span class="hidden-mobile">4.relational_data_theory</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

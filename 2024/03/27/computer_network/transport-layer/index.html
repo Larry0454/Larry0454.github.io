@@ -1,0 +1,958 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="传输层 一、传输层协议概述  传输层（应用层）功能：为上面的应用层提供（端到端）通信服务  实现可靠传输：差错控制 + 顺序控制 + 拥塞控制  注意：网络层实现主机之间的逻辑通信；传输层实现应用进程之间的逻辑通信（端到端通信） 传输层主要协议：传输控制协议(TCP) + 用户数据报协议(UDP)  TCP协议：可靠传输协议，典型协议包括HTTP、FTP  提供面向连接的服">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.transport_layer">
+<meta property="og:url" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="传输层 一、传输层协议概述  传输层（应用层）功能：为上面的应用层提供（端到端）通信服务  实现可靠传输：差错控制 + 顺序控制 + 拥塞控制  注意：网络层实现主机之间的逻辑通信；传输层实现应用进程之间的逻辑通信（端到端通信） 传输层主要协议：传输控制协议(TCP) + 用户数据报协议(UDP)  TCP协议：可靠传输协议，典型协议包括HTTP、FTP  提供面向连接的服">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/UDP%E6%95%B0%E6%8D%AE%E6%8A%A5.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/TCP%E9%A6%96%E9%83%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E4%B8%A4%E4%B8%AA%E7%AA%97%E5%8F%A3.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/5.%20%E4%BC%A0%E8%BE%93%E5%B1%82/TCP%E7%BC%93%E5%AD%98.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E6%9B%B2%E7%BA%BF%E5%9B%BE1.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E5%BF%AB%E9%87%8D%E4%BC%A0.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E6%9B%B2%E7%BA%BF%E5%9B%BE2.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E8%BF%9E%E6%8E%A5%E9%87%8A%E6%94%BE.png">
+<meta property="article:published_time" content="2024-03-27T12:23:59.000Z">
+<meta property="article:modified_time" content="2024-03-27T13:15:32.395Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="computer network">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/UDP%E6%95%B0%E6%8D%AE%E6%8A%A5.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>4.transport_layer - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="4.transport_layer"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-27 20:23" pubdate>
+          March 27, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          38 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">4.transport_layer</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="传输层">传输层</h2>
+<h3 id="一传输层协议概述">一、传输层协议概述</h3>
+<ul>
+<li><p>传输层（应用层）功能：为<u>上面的应用层</u>提供（端到端）通信服务</p>
+<ul>
+<li>实现可靠传输：差错控制 + 顺序控制 + 拥塞控制</li>
+</ul>
+<p><strong>注意</strong>：网络层实现<strong>主机之间</strong>的逻辑通信；传输层实现<strong>应用进程之间</strong>的逻辑通信（<strong>端到端通信</strong>）</p></li>
+<li><p>传输层主要协议：传输控制协议(TCP) + 用户数据报协议(UDP)</p>
+<ul>
+<li>TCP协议：<u><strong>可靠</strong></u>传输协议，典型协议包括HTTP、FTP
+<ul>
+<li>提供<strong>面向连接</strong>的服务（传输数据前建立连接 +
+传输结束后释放连接）</li>
+<li>需进行确认、流量控制、计时器、连接管理，<u>处理开销较大</u></li>
+</ul></li>
+<li>UDP协议：<u><strong>不可靠</strong></u>传输协议，典型协议包括DNS、RIP
+<ul>
+<li>传输时<strong>无需建立连接</strong></li>
+<li>比TCP效率更高，但可能出现数据错误、丢包、顺序错误等问题</li>
+</ul></li>
+</ul></li>
+<li><p>传输层端口：用于为多个应用进程AP提供服务</p>
+<ul>
+<li><p>端口复用：应用层<u><strong>多个</strong>应用进程</u>通过传输层发送数据（向下）</p></li>
+<li><p>端口分用：传输层收到的数据必须<u><strong>交付给指明</strong>的应用进程</u>（向上）</p>
+<hr></li>
+<li><p>端口号：TCP/IP协议使用16位整数作为端口号，用于表示 源端口号 +
+目的端口号</p>
+<ul>
+<li>熟知端口号（系统端口号）：0 ~ 1023，如 HTTP 服务使用80、FTP
+服务使用21</li>
+<li>登记端口号：1024 ~
+49151，提供给<strong>没有熟知端口号的AP</strong>使用；须在IANA<strong>登记</strong>（以防重复）</li>
+<li>客户端口号（短暂端口号）：49152 ~ 65535，供客户进程临时使用</li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="二用户数据报协议-udp">二、用户数据报协议 UDP</h3>
+<ul>
+<li><p>UDP概述：<strong>不可靠</strong>传输协议，只在IP数据报服务基础上增加了<u>端口和差错检测</u>，包含以下特点：</p>
+<ul>
+<li>无连接：发送数据前无需建立连接</li>
+<li>尽最大努力交付：不保证可靠交付，同时<u>不使用拥塞控制</u>（很适合多媒体通信）</li>
+<li>支持一对一、一对多、多对一、多对多的交互通信</li>
+<li>首部开销小，仅有8Byte</li>
+</ul></li>
+<li><p>UDP首部格式：共8Byte，包含以下5个字段</p>
+<ul>
+<li>源端口：标注 源端口号（2Byte）</li>
+<li>目的端口：标注 目的端口号（2Byte）
+<br><strong>注意</strong>：若接收方的<u>目的端口</u>上没有AP接收数据，<u>则会向源主机返回ICMP的"<strong>目的不可达</strong>"报文</u></li>
+<li>长度：UDP数据报长度（2Byte）</li>
+<li>校验和：UDP数据报的校验和（2Byte）</li>
+<li>伪首部：不实际传输，仅在计算校验和时使用（12Byte）</li>
+</ul>
+<p><img src="/2024/03/27/computer_network/transport-layer/UDP数据报.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p><strong>注意</strong>：网络传输一般使用Big
+Endian，源端口号发送在前</p></li>
+<li><p>计算校验和：计算整个UDP数据报的<strong>二进制反码和</strong>，计算过程类似<u>网络层IP首部校验和</u></p>
+<ul>
+<li>计算校验和前需要添加12Byte的<strong>伪首部</strong></li>
+<li>若UDP数据报长度为奇数字节，先通过<u>零填充</u>将其转化为<strong>偶数字节</strong>再计算</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="三传输控制协议-tcp">三、传输控制协议 TCP</h3>
+<ul>
+<li><p>TCP概述：<strong>可靠</strong>传输协议，主要包括以下特点：</p>
+<ul>
+<li><p>面向连接：传输前必须建立连接，数据传输完毕后要释放连接</p></li>
+<li><p>点对点连接：每条TCP连接仅能有<strong>两个端点</strong></p></li>
+<li><p>可靠交付服务：无差错、不丢失、不重复、按需到达</p></li>
+<li><p>全双工通信：在一个连接上，通信双方<u>可<strong>同时</strong>向对方传输数据</u></p></li>
+<li><p>面向字节流：AP以<strong>数据块</strong>为单位与TCP交互，而TCP将数据块视为<strong>无结构的<u>字节流</u></strong>
+<br><strong>注意</strong>：TCP可把过长的数据块<strong>划分短一些</strong>再发送，也可<strong>等积累足够多的字节</strong>后再发送</p>
+<hr></li>
+<li><p>TCP对AP一次把多长的报文发送到<u>TCP缓存</u>中是不关心的</p></li>
+<li><p>TCP根据<u>对方给出的<strong>窗口值</strong></u> +
+<u>当前网路<strong>拥塞程度</strong></u>决定一个报文段应该包含多少字节
+UDP发送的报文段长度是<u>由AP给出的</u></p></li>
+</ul></li>
+<li><p>TCP的连接：TCP把<strong>连接</strong>看作<u>最基本的抽象</u>；TCP连接是<strong>虚连接</strong>而非真正的物理连接</p>
+<ul>
+<li>套接字：TCP连接的端点，socket ::= (IP地址, 端口号)</li>
+<li>TCP连接<strong>唯一地</strong>由两个端点确定，TCP连接 ::= {(IP1:
+port1), (IP2: port2)}</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="四tcp报文段首部">四、TCP报文段首部</h3>
+<ul>
+<li><p>TCP报文的首部格式</p>
+<ul>
+<li>源端口 + 目的端口：各占2Byte</li>
+<li>序号字段：指明本报文段数据<strong>首字节的序号</strong>，占4Byte；TCP连接的数据流中的<u>每个字节都按顺序编号</u></li>
+<li>确认号字段：<u>期望</u>收到对方<u>下一个报文段</u>数据的<strong>首字节序号</strong>，占4Byte</li>
+<li>数据偏移：数据部分相较起始位置的<strong>偏移</strong>（即首部长度），单位为4Byte，占4bit</li>
+<li>保留字段：无意义，占6bit</li>
+<li>紧急URG：值取1表示有<u>紧急数据</u>，应<strong>尽快传送</strong>（紧急数据放在数据的最前面），占1bit</li>
+<li>确认ACK：值取1时<u><strong>确认号字段</strong>有效</u>，占1bit</li>
+<li>推送PSH：值取1时<u>接收方将<strong>尽快</strong>向AP交付</u>此报文段，不等到整个缓存填满，占1bit</li>
+<li>复位FST：值取1时表明TCP连接出现<strong>严重差错</strong>，须先释放连接再<u>重新建立连接</u>，占1bit</li>
+<li>同步SYN：值取1时表明这是一个 <u>连接请求</u> or <u>连接接受</u>
+报文，占1bit</li>
+<li>终止FIN：值取1时表明要求<u><strong>释放</strong>TCP连接</u>，占1bit</li>
+<li>窗口大小：用以向对方设置<u>发送窗口</u>的依据，单位为字节，占2Byte</li>
+<li>检验和：伪首部 + 首部 + 数据部分
+的<strong>校验和</strong>，占2Byte</li>
+<li>紧急指针：指出报文中<strong>紧急数据字节数</strong>，占2Byte</li>
+<li>选项：一种选项被称为<strong>最大报文段长度</strong>，告知对方报文段<u>数据部分最大长度</u>；可变长，最长占40Byte</li>
+<li>填充字段：为了让整个首部长度是<u>4Byte的整数倍</u></li>
+</ul>
+<p><img src="/2024/03/27/computer_network/transport-layer/TCP首部.png" srcset="/img/loading.gif" lazyload width="75%"></p></li>
+</ul>
+<hr>
+<h3 id="五tcp的可靠传输">五、TCP的可靠传输</h3>
+<ul>
+<li><p>以字节为单位的滑动窗口：</p>
+<ul>
+<li><p>发送窗口：包含 <u>已发送但未收到确认</u> +
+<u>允许发送但尚未发送</u> 的字节</p>
+<ul>
+<li><p>window_size：由接收方发送过来，实现拥塞控制</p></li>
+<li><p>ack_num：由接收方发送过来，控制窗口后沿；表示此序号之前的字节已被正确接收</p>
+<hr></li>
+<li><p>发送窗口前移：收到接收方的ack_num后，将窗口下沿挪至ack_num处</p></li>
+<li><p>若发送窗口已满，暂停发送</p></li>
+</ul>
+<p><strong>注意</strong>：发送窗口的<u>前沿不建议回退收缩</u>（因为收缩部分的数据可能已经被发送出去了）</p></li>
+<li><p>接收窗口：包含 <u>允许接受</u> 的字节</p>
+<ul>
+<li>接收窗口前移：收到<u><strong>连续</strong>下沿字节</u>后，窗口挪至首个尚未接收的字节处</li>
+<li>对于未按序收到的字节，先缓存，仅返回窗口下沿对应的ack_num；最后按序交付上层的AP</li>
+</ul>
+<p><strong>注意</strong>：由于传送窗口值有一定的滞后，故发送窗口和接收窗口<u>不总是一样大</u></p>
+<p><img src="/2024/03/27/computer_network/transport-layer/两个窗口.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<hr></li>
+<li><p>缓存：发送方 和 接收方 均设有缓存，如下图：</p>
+<p><img src="/2024/03/27/computer_network/transport-layer/学习/计算机网络\计算机网络笔记\5. 传输层\TCP缓存.png" srcset="/img/loading.gif" lazyload></p></li>
+</ul>
+<hr></li>
+<li><p>超时重传时间的选择：发送方在规定时间内未收到确认，就要重传超时的报文段，直至收到应答</p>
+<ul>
+<li><p>加权平均往返时间<span class="math inline">\(\text{RTT}_S\)</span>：平滑的往返时间，计算方式如下：</p>
+<ul>
+<li><strong>首次</strong>测量到一个RTT样本时，<span class="math inline">\(\text{RTT}_S\)</span> = RTT</li>
+<li>之后每测得一个新的RTT样本，更新<span class="math inline">\(\text{RTT}_S\)</span>：<span class="math inline">\(\text{RTT}_S \gets (1 - \alpha) \times
+\text{RTT}_S + \alpha \times \text{RTT}\)</span>；其中 <span class="math inline">\(0 \le \alpha \lt 1\)</span>，越小更新越慢</li>
+</ul></li>
+<li><p>超时重传时间RTO：RTO = <span class="math inline">\(\text{RTT}_S +
+4 \times \text{RTT}_D\)</span>，其中 <span class="math inline">\(\text{RTT}_D\)</span>
+表示<u>RTT的偏差的加权平均值</u>，计算方式如下：</p>
+<ul>
+<li>首次测得一个RTT样本时：<span class="math inline">\(\text{RTT}_D
+\gets \dfrac{\text{RTT}}{2}\)</span></li>
+<li>之后每侧的一个新的RTT样本，更新<span class="math inline">\(\text{RTT}_D\)</span>：<span class="math inline">\(\text{RTT}_D \gets (1-\beta) \times \text{RTT}_D +
+\beta \times |\text{RTT}_S - \text{RTT}|\)</span>；其中 <span class="math inline">\(0 \le \beta \le 1\)</span></li>
+</ul>
+<p><strong>注意</strong>：RTO 应略大于 <span class="math inline">\(\text{RTT}_S\)</span>（从公式中也可看出）</p></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="六tcp的流量控制">六、TCP的流量控制</h3>
+<ul>
+<li><p>流量控制的目的：让<u>发送方</u>的发送速率不要太快，使接收方来得及接收</p>
+<ul>
+<li>TCP建立时，接收方将自己接收窗口的大小告知对方（window_size）</li>
+<li>发送方根据接收方发来的window_size<strong>调整发送窗口大小</strong>，发送窗口
+<span class="math inline">\(\le\)</span> 接收窗口rwnd</li>
+</ul></li>
+<li><p>持续计时器：防止接收方发送rwnd=0报文后，接收方发送的<u>窗口报文丢失</u>导致<strong>死锁</strong></p>
+<ul>
+<li>TCP为每个连接设置一个持续计时器；只要一方收到对方的<strong>零窗口通知</strong>、就启动持续计时器</li>
+<li>若持续计时器设置的时间到，发送方就发送一个零窗口探测报文段（1Byte），对方返回当前窗口值</li>
+<li>若窗口仍是0，重新设置持续计数器；若窗口不是0（接收缓存腾出了空间），继续发送数据</li>
+</ul>
+<hr></li>
+<li><p>传输效率：控制TCP报文段的<strong>发送时机</strong></p>
+<ul>
+<li>缓存数据达到一定量就发送：若缓存中的数据<u><strong>累计</strong>达到MSS字节</u>，就组装成一个TCP报文发送出去</li>
+<li>应用进程控制：由<u>发送方<strong>AP</strong></u>指明要求发送报文段（push）</li>
+<li>定时发送：发送方<u><strong>计时器</strong>期限到了</u>，就把当前缓存中已有数据装成报文段（<span class="math inline">\(\le\)</span> MSS）发送出去</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="七tcp的拥塞控制">七、TCP的拥塞控制</h3>
+<ul>
+<li><p>拥塞的产生原因：网络中对某资源的<strong>需求</strong>超过了该资源所能<strong>提供</strong>的部分</p>
+<ul>
+<li>网络资源：链路带宽、路由节点缓存、处理能力 等</li>
+</ul>
+<p><strong>注意</strong>：网络拥塞是由多种原因导致的，通过<u>简单增加某种资源数量</u>并不能消除拥塞</p></li>
+<li><p>网络拥塞的表现：吞吐率下降、报文传输时延增大、丢包率增加，响应时间变长（主机未收到ack就说明拥塞了）
+<br><strong>注意</strong>：<strong>TCP重传机制</strong>是<u>拥塞恶性循环</u>的起因（网络中被注入了更多报文）</p>
+<hr></li>
+<li><p>慢启动：每收到一个ack，cwnd就加1 <span class="math inline">\(\Rightarrow\)</span>
+每经过一个传输轮次（RTT），<u><strong>cwnd就加倍</strong></u>（逐步增大cwnd）</p>
+<ul>
+<li>拥塞窗口cwnd：由<strong>发送方</strong>维持，根据网络的拥塞程度<strong>动态变化</strong>（无拥塞就增大、有拥塞就减小）</li>
+<li>慢启动门限ssthresh：防止cwnd增长过快导致拥塞
+<ul>
+<li>cwnd &lt; ssthresh：使用<u>慢启动</u>算法</li>
+<li>cwnd &gt; ssthresh：改用<u>拥塞避免算法</u></li>
+<li>cwnd = ssthresh：<u>两种算法</u>都可以使用</li>
+</ul></li>
+</ul></li>
+<li><p>拥塞避免算法：每经过一个传输轮次（RTT），就把<u><strong>cwnd加1</strong></u>（而非翻倍）</p>
+<ul>
+<li>拥塞处理：
+<ol type="1">
+<li>只要发送方判断网络出现拥塞（未按时收到ack），就令 ssthresh <span class="math inline">\(\gets\)</span> cwnd / 2</li>
+<li>令 cwnd <span class="math inline">\(\gets\)</span>
+1，并重新执行<u>慢启动算法</u></li>
+</ol></li>
+</ul>
+<p><img src="/2024/03/27/computer_network/transport-layer/曲线图1.png" srcset="/img/loading.gif" lazyload></p>
+<hr></li>
+<li><p>快重传：尽快对超时报文做处理</p>
+<ul>
+<li>拥塞处理：
+<ol type="1">
+<li>接收方每收到一个<strong>失序</strong>的报文段，就只对<u>最近按序接收的报文段</u>回复<strong>重复确认</strong></li>
+<li>若发送方<u>连续接收到3个重复确认</u>，就<strong>立即重传</strong>对方尚未收到的报文段</li>
+</ol></li>
+</ul>
+<p><img src="/2024/03/27/computer_network/transport-layer/快重传.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<li><p>快恢复：跳过慢启动算法，直接执行拥塞避免算法</p>
+<ul>
+<li>拥塞处理：
+<ol type="1">
+<li>发送端<u>连续收到3个重复确认</u>时，令 ssthresh <span class="math inline">\(\gets\)</span> cwnd / 2</li>
+<li>令 cwnd <span class="math inline">\(\gets\)</span>
+ssthresh，直接执行<strong>拥塞避免算法</strong></li>
+</ol></li>
+</ul>
+<p><strong>注意</strong>：连续收到3个重复确认不代表发生拥塞（仅可能代表<strong>拥塞征兆</strong>）</p>
+<p><img src="/2024/03/27/computer_network/transport-layer/曲线图2.png" srcset="/img/loading.gif" lazyload></p>
+<hr></li>
+<li><p>发送窗口的上限值 = min[rwnd, cwnd]，由该式可知：</p>
+<ul>
+<li>当 rwnd &lt; cwnd
+时：接收方的<strong>接受能力</strong>限制发送窗口最大值</li>
+<li>当 rwnd &gt; cwnd
+时：<strong>网络拥塞</strong>限制发送窗口的最大值</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="八tcp的连接管理">八、TCP的连接管理</h3>
+<ul>
+<li><p>TCP传输连接：</p>
+<ul>
+<li>连接三阶段：连接建立 + 数据传送 + 连接释放</li>
+<li>客户 / 服务器方式：TCP连接的方式
+<ul>
+<li>客户：<strong>主动</strong>发起连接建立的AP</li>
+<li>服务器：<strong>被动</strong>等待连接建立的AP</li>
+</ul></li>
+</ul></li>
+<li><p>三次握手：TCP建立连接的方式</p>
+<ul>
+<li>采用3次而非2次握手的原因：2次握手可能导致“已在网络中失效的请求报文”突然又传送到服务器端，建立冗余连接占用资源</li>
+<li>TCP SYN Flooding 攻击：攻击者发送大量SYN报文，但<u>不对返回的SYN
+ACK报文做回应</u>，导致挂有大量TCP半连接资源
+<ul>
+<li>攻击效果：服务器<u>内部资源满</u>，无法相应正常用户的TCP连接请求</li>
+<li>SYN_Cookies：服务器返回SYN_ACK时，根据自身特有信息<strong>计算Cookies</strong>作为seq返回，并在收到应答前不为其分配资源</li>
+</ul></li>
+</ul>
+<p><img src="/2024/03/27/computer_network/transport-layer/三次握手.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<li><p>连接释放：该过程可由任意一方发起，设A主动关闭连接（FIN）</p>
+<ul>
+<li>MSL：报文最大存活时间，建议2mins</li>
+</ul>
+<p><img src="/2024/03/27/computer_network/transport-layer/连接释放.png" srcset="/img/loading.gif" lazyload width="90%">‘</p>
+<p><strong>注意</strong>：A发送完最后一个ACK后，再经过2MSL就可以让本连接产生的所有报文段都<strong>从网络中消失</strong>；新连接中不会残留旧连接的报文段</p></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/computer-network/">#computer network</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>4.transport_layer</div>
+      <div>http://larry0454.github.io/2024/03/27/computer_network/transport-layer/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 27, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/27/computer_network/network-layer/" title="3.network_layer">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">3.network_layer</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/03/27/computer_network/data-link-layer/" title="2.data_link_layer">
+                        <span class="hidden-mobile">2.data_link_layer</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
