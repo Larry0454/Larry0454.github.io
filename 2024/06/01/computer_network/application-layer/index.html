@@ -18,35 +18,35 @@
   
     <meta name="description" content="应用层 一、套接字编程接口  套接字socket：应用进程 和 传输层协议间的接口，AP为获得网络通信服务与OS进行交互的机制 注意：套接字是最常用的应用层编程接口，应用程序通过socket接入网络 基于TCP系统的系统调用接口：  连接建立阶段：  bind：客户端和服务器分别将端口号 + IP地址绑定在socket上 listen：服务器调用listen将套接字设置为被">
 <meta property="og:type" content="article">
-<meta property="og:title" content="5.appilcation_layer">
-<meta property="og:url" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/index.html">
+<meta property="og:title" content="5.application_layer">
+<meta property="og:url" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/index.html">
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="应用层 一、套接字编程接口  套接字socket：应用进程 和 传输层协议间的接口，AP为获得网络通信服务与OS进行交互的机制 注意：套接字是最常用的应用层编程接口，应用程序通过socket接入网络 基于TCP系统的系统调用接口：  连接建立阶段：  bind：客户端和服务器分别将端口号 + IP地址绑定在socket上 listen：服务器调用listen将套接字设置为被">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/UDP_socket.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/TCP_socket.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/%E5%A5%97%E6%8E%A5%E5%AD%97%E6%8F%8F%E8%BF%B0%E7%AC%A6.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/%E5%9F%9F%E5%90%8D%E7%A9%BA%E9%97%B4.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/%E5%9F%9F%E5%90%8D%E6%9F%A5%E8%AF%A2.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/ftp.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/HTTP1.0.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E7%A4%BA%E4%BE%8B.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/HTTP%E5%BA%94%E7%AD%94%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/HTTP%E5%BA%94%E7%AD%94%E6%8A%A5%E6%96%87%E7%A4%BA%E4%BE%8B.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%B3%BB%E7%BB%9F.png">
-<meta property="article:published_time" content="2024-03-27T12:30:32.000Z">
-<meta property="article:modified_time" content="2024-03-27T13:15:47.463Z">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/UDP_socket.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/TCP_socket.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/%E5%A5%97%E6%8E%A5%E5%AD%97%E6%8F%8F%E8%BF%B0%E7%AC%A6.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/%E5%9F%9F%E5%90%8D%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/%E5%9F%9F%E5%90%8D%E6%9F%A5%E8%AF%A2.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/ftp.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/HTTP1.0.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/HTTP%E5%BA%94%E7%AD%94%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/HTTP%E5%BA%94%E7%AD%94%E6%8A%A5%E6%96%87%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%B3%BB%E7%BB%9F.png">
+<meta property="article:published_time" content="2024-06-01T02:42:10.000Z">
+<meta property="article:modified_time" content="2024-06-01T02:43:13.517Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="computer network">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/UDP_socket.png">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/06/01/computer_network/application-layer/UDP_socket.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>5.appilcation_layer - Blog</title>
+  <title>5.application_layer - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="5.appilcation_layer"></span>
+            <span id="subtitle" data-typed-text="5.application_layer"></span>
           
         </div>
 
@@ -211,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-27 20:30" pubdate>
-          March 27, 2024 pm
+        <time datetime="2024-06-01 10:42" pubdate>
+          June 1, 2024 am
         </time>
       </span>
     
@@ -280,7 +280,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">5.appilcation_layer</h1>
+            <h1 style="display: none">5.application_layer</h1>
             
             
               <div class="markdown-body">
@@ -309,12 +309,12 @@
 <li>连接释放阶段：调用close释放连接，撤销套接字</li>
 </ol></li>
 <li><p>基于UDP系统的系统调用接口：<strong>无需建立连接</strong>，没有connect与listen+accept</p>
-<p><img src="/2024/03/27/computer_network/appilcation-layer/UDP_socket.png" srcset="/img/loading.gif" lazyload width="50%"><img src="/2024/03/27/computer_network/appilcation-layer/TCP_socket.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<p><img src="/2024/06/01/computer_network/application-layer/UDP_socket.png" srcset="/img/loading.gif" lazyload width="50%"><img src="/2024/06/01/computer_network/application-layer/TCP_socket.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
 <li><p>套接字描述符：AP发出socket系统调用后，OS为其分配<u><strong>网络通信</strong>所需系统资源</u>，并将这些资源用套接字描述符表示并<strong>返回</strong>给AP
 <br><strong>注意</strong>：几乎所有网络系统调用都使用socket
 descriptor作为第一个参数，用于识别完成网络请求所需的各种资源（CPU、带宽
 等）</p>
-<p><img src="/2024/03/27/computer_network/appilcation-layer/套接字描述符.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<p><img src="/2024/06/01/computer_network/application-layer/套接字描述符.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 </ul>
 <hr>
 <h3 id="二域名系统-dns">二、域名系统 DNS</h3>
@@ -334,7 +334,7 @@ descriptor作为第一个参数，用于识别完成网络请求所需的各种�
 <span class="math inline">\(\le\)</span> 255字符</p>
 <ul>
 <li><p>顶级域名TLD：国家顶级域名(.cn, .us, ...) + 通用顶级域名(.com,
-.edu, .gov, org, ...) <img src="/2024/03/27/computer_network/appilcation-layer/域名空间.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+.edu, .gov, org, ...) <img src="/2024/06/01/computer_network/application-layer/域名空间.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 <li><p>域名服务器：主要分为以下4类：</p>
 <ul>
 <li>根域名服务器：存有其所知的所有<u><strong>顶级域名服务器</strong>的域名
@@ -366,7 +366,7 @@ descriptor作为第一个参数，用于识别完成网络请求所需的各种�
 </ul></li>
 </ul>
 <p><strong>注意</strong>：为了提高查询效率，通常使用<strong>高速缓存</strong>存储域名映射；以下8步查询共需要8个UDP用户数据报</p>
-<p><img src="/2024/03/27/computer_network/appilcation-layer/域名查询.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<p><img src="/2024/06/01/computer_network/application-layer/域名查询.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul></li>
 </ul>
 <hr>
@@ -388,7 +388,7 @@ descriptor作为第一个参数，用于识别完成网络请求所需的各种�
 <strong>注意</strong>：控制进程不用于传送文件，仅用于发送控制信息</li>
 <li>数据连接：收到客户发来的文件传输请求后，服务器控制进程<strong>创建数据连接</strong>，负责<u>实际完成文件传送</u>；传送完毕后关闭连接</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/appilcation-layer/ftp.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<p><img src="/2024/06/01/computer_network/application-layer/ftp.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul></li>
 </ul>
 <hr>
@@ -423,7 +423,7 @@ HTTP：面向事务的应用层协议，基于<strong>TCP</strong>协议</p>
 <li>客户需要请求某个页面时，与服务器<u><strong>建立</strong>TCP连接</u>，并传送文件；传送完毕后<u><strong>释放</strong>TCP连接</u></li>
 </ol></li>
 <li><p>HTTP/1.0：每请求一个文档都需要建立一次TCP连接，<strong>非持续连接</strong>，加重服务器负担
-<img src="/2024/03/27/computer_network/appilcation-layer/HTTP1.0.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<img src="/2024/06/01/computer_network/application-layer/HTTP1.0.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
 <li><p>HTTP/1.1：使用<strong>持续连接</strong>，发送响应后<u>在一段时间内保持连接</u>，包括非流水线方式
 + 流水线方式</p>
 <ul>
@@ -444,7 +444,7 @@ HTTP：面向事务的应用层协议，基于<strong>TCP</strong>协议</p>
 <ul>
 <li><p>请求行：&lt;方法&gt; + &lt;URL&gt; +
 &lt;HTTP版本&gt;；"方法"也是命令，包括OPTION、GET、POST等</p>
-<p><img src="/2024/03/27/computer_network/appilcation-layer/HTTP请求报文格式.png" srcset="/img/loading.gif" lazyload width="30%"><img src="/2024/03/27/computer_network/appilcation-layer/HTTP请求报文示例.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<p><img src="/2024/06/01/computer_network/application-layer/HTTP请求报文格式.png" srcset="/img/loading.gif" lazyload width="30%"><img src="/2024/06/01/computer_network/application-layer/HTTP请求报文示例.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
 <li><p>状态行：&lt;HTTP版本&gt; + &lt;状态码&gt; +
 &lt;简单短语&gt;；"状态码"都是三位数字，分为以下5类：</p>
 <ul>
@@ -454,7 +454,7 @@ HTTP：面向事务的应用层协议，基于<strong>TCP</strong>协议</p>
 <li>4xx：<u>客户</u>差错，如请求中有错误的语法 or 不能完成</li>
 <li>5xx：<u>服务器</u>差错，如服务器无法完成请求</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/appilcation-layer/HTTP应答报文格式.png" srcset="/img/loading.gif" lazyload width="30%"><img src="/2024/03/27/computer_network/appilcation-layer/HTTP应答报文示例.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<p><img src="/2024/06/01/computer_network/application-layer/HTTP应答报文格式.png" srcset="/img/loading.gif" lazyload width="30%"><img src="/2024/06/01/computer_network/application-layer/HTTP应答报文示例.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
 </ul></li>
 <li><p>首部行：用来说明浏览器 or 服务器 or
 报文主体的<strong>信息</strong>；每行都有首部字段名 + 对应值</p></li>
@@ -485,7 +485,7 @@ Layer，为TCP协议提供<u>信息加密</u>和<u>完整性</u></li>
 <li>邮件服务器：用于<u>发送</u>和<u>接收</u>邮件，并向发信人报告传送结果；可以作为客户
 or 服务器</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/appilcation-layer/电子邮件系统.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/2024/06/01/computer_network/application-layer/电子邮件系统.png" srcset="/img/loading.gif" lazyload></p></li>
 <li><p>简单邮件传送协议
 SMTP：用于<strong>发送邮件</strong>的协议；发件方是客户、接收方是服务器</p>
 <ul>
@@ -562,8 +562,8 @@ or 视频</li>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>5.appilcation_layer</div>
-      <div>http://larry0454.github.io/2024/03/27/computer_network/appilcation-layer/</div>
+      <div>5.application_layer</div>
+      <div>http://larry0454.github.io/2024/06/01/computer_network/application-layer/</div>
     </div>
     <div class="license-meta">
       
@@ -575,7 +575,7 @@ or 视频</li>
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>March 27, 2024</div>
+          <div>June 1, 2024</div>
         </div>
       
       
@@ -607,18 +607,12 @@ or 视频</li>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/27/link_and_load/static-link/" title="static_link">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">static_link</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/03/27/computer_network/network-layer/" title="3.network_layer">
-                        <span class="hidden-mobile">3.network_layer</span>
+                      <a href="/2024/03/28/linux/view-from-shell/" title="1.view_from_shell">
+                        <span class="hidden-mobile">1.view_from_shell</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
