@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>『robotics-1』spatial transformations</title>
+    <link href="/2024/07/07/robotics/spatial-transformations/"/>
+    <url>/2024/07/07/robotics/spatial-transformations/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>robotics</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>『signal and system-2』LTI</title>
     <link href="/2024/06/29/signal_and_system/linear-time-invariant-system/"/>
     <url>/2024/06/29/signal_and_system/linear-time-invariant-system/</url>
@@ -42,7 +61,7 @@
   
   
   <entry>
-    <title>『computer network-5』application-layer</title>
+    <title>『computer network-5』application layer</title>
     <link href="/2024/06/01/computer_network/application-layer/"/>
     <url>/2024/06/01/computer_network/application-layer/</url>
     
@@ -61,7 +80,7 @@
   
   
   <entry>
-    <title>『linux-1』view_from_shell</title>
+    <title>『linux-1』view from shell</title>
     <link href="/2024/03/28/linux/view-from-shell/"/>
     <url>/2024/03/28/linux/view-from-shell/</url>
     
@@ -99,7 +118,7 @@
   
   
   <entry>
-    <title>『machine learning-7』neural_network</title>
+    <title>『machine learning-7』neural network</title>
     <link href="/2024/03/28/machine_learning/neural-network/"/>
     <url>/2024/03/28/machine_learning/neural-network/</url>
     
@@ -118,7 +137,7 @@
   
   
   <entry>
-    <title>『machine learning-5』decision_tree</title>
+    <title>『machine learning-5』decision tree</title>
     <link href="/2024/03/28/machine_learning/decision-tree/"/>
     <url>/2024/03/28/machine_learning/decision-tree/</url>
     
@@ -137,7 +156,7 @@
   
   
   <entry>
-    <title>『machine learning-4』linear_model</title>
+    <title>『machine learning-4』linear model</title>
     <link href="/2024/03/28/machine_learning/linear-model/"/>
     <url>/2024/03/28/machine_learning/linear-model/</url>
     
@@ -175,7 +194,7 @@
   
   
   <entry>
-    <title>『machine learning-2』model_selection_and_evaluation</title>
+    <title>『machine learning-2』model selection and evaluation</title>
     <link href="/2024/03/28/machine_learning/model-selection-and-evaluation/"/>
     <url>/2024/03/28/machine_learning/model-selection-and-evaluation/</url>
     
@@ -213,7 +232,7 @@
   
   
   <entry>
-    <title>『cyber security-1』encryption_algorithm</title>
+    <title>『cyber security-1』encryption algorithm</title>
     <link href="/2024/03/27/cyber_security/encryption-algorithm/"/>
     <url>/2024/03/27/cyber_security/encryption-algorithm/</url>
     
@@ -232,7 +251,7 @@
   
   
   <entry>
-    <title>『system programming-1』C_system_programming</title>
+    <title>『system programming-1』C system programming</title>
     <link href="/2024/03/27/system_programming/C-system-programming/"/>
     <url>/2024/03/27/system_programming/C-system-programming/</url>
     
@@ -251,7 +270,7 @@
   
   
   <entry>
-    <title>『database-6』memory_management</title>
+    <title>『database-6』memory management</title>
     <link href="/2024/03/27/database/memory-management/"/>
     <url>/2024/03/27/database/memory-management/</url>
     
@@ -308,7 +327,7 @@
   
   
   <entry>
-    <title>『compiler-6』syntax_directed_translation</title>
+    <title>『compiler-6』syntax directed translation</title>
     <link href="/2024/03/27/compiler/syntax-directed-translation/"/>
     <url>/2024/03/27/compiler/syntax-directed-translation/</url>
     
@@ -327,7 +346,7 @@
   
   
   <entry>
-    <title>『compiler-5』runtime_memory_management</title>
+    <title>『compiler-5』runtime memory management</title>
     <link href="/2024/03/27/compiler/runtime-memory-management/"/>
     <url>/2024/03/27/compiler/runtime-memory-management/</url>
     
@@ -346,7 +365,7 @@
   
   
   <entry>
-    <title>『compiler-4』symbol_table</title>
+    <title>『compiler-4』symbol table</title>
     <link href="/2024/03/27/compiler/symbol-table/"/>
     <url>/2024/03/27/compiler/symbol-table/</url>
     
@@ -422,7 +441,7 @@
   
   
   <entry>
-    <title>『database-10』distributed_database</title>
+    <title>『database-10』distributed database</title>
     <link href="/2024/03/27/database/distributed-database/"/>
     <url>/2024/03/27/database/distributed-database/</url>
     
@@ -479,7 +498,7 @@
   
   
   <entry>
-    <title>『database-5』database_design</title>
+    <title>『database-5』database design</title>
     <link href="/2024/03/27/database/database-design/"/>
     <url>/2024/03/27/database/database-design/</url>
     
@@ -498,7 +517,7 @@
   
   
   <entry>
-    <title>『database-4』relational_data_theory</title>
+    <title>『database-4』relational data theory</title>
     <link href="/2024/03/27/database/relational-data-theory/"/>
     <url>/2024/03/27/database/relational-data-theory/</url>
     
@@ -517,7 +536,7 @@
   
   
   <entry>
-    <title>『database-3』secruity_control</title>
+    <title>『database-3』secruity control</title>
     <link href="/2024/03/27/database/secruity-control/"/>
     <url>/2024/03/27/database/secruity-control/</url>
     
@@ -555,7 +574,7 @@
   
   
   <entry>
-    <title>『database-1』relational_database</title>
+    <title>『database-1』relational database</title>
     <link href="/2024/03/27/database/relational-database/"/>
     <url>/2024/03/27/database/relational-database/</url>
     
@@ -574,7 +593,7 @@
   
   
   <entry>
-    <title>『link and load-3』runtime_library</title>
+    <title>『link and load-3』runtime library</title>
     <link href="/2024/03/27/link_and_load/runtime-library/"/>
     <url>/2024/03/27/link_and_load/runtime-library/</url>
     
@@ -593,7 +612,7 @@
   
   
   <entry>
-    <title>『link and load-2』dynamic_link</title>
+    <title>『link and load-2』dynamic link</title>
     <link href="/2024/03/27/link_and_load/dynamic-link/"/>
     <url>/2024/03/27/link_and_load/dynamic-link/</url>
     
@@ -612,7 +631,7 @@
   
   
   <entry>
-    <title>『link and load-1』static_link</title>
+    <title>『link and load-1』static link</title>
     <link href="/2024/03/27/link_and_load/static-link/"/>
     <url>/2024/03/27/link_and_load/static-link/</url>
     
@@ -631,7 +650,7 @@
   
   
   <entry>
-    <title>『computer network-3』network_layer</title>
+    <title>『computer network-3』network layer</title>
     <link href="/2024/03/27/computer_network/network-layer/"/>
     <url>/2024/03/27/computer_network/network-layer/</url>
     
@@ -650,7 +669,7 @@
   
   
   <entry>
-    <title>『computer network-4』transport_layer</title>
+    <title>『computer network-4』transport layer</title>
     <link href="/2024/03/27/computer_network/transport-layer/"/>
     <url>/2024/03/27/computer_network/transport-layer/</url>
     
@@ -669,7 +688,7 @@
   
   
   <entry>
-    <title>『computer network-2』data_link_layer</title>
+    <title>『computer network-2』data link layer</title>
     <link href="/2024/03/27/computer_network/data-link-layer/"/>
     <url>/2024/03/27/computer_network/data-link-layer/</url>
     
@@ -688,7 +707,7 @@
   
   
   <entry>
-    <title>『computer network-1』physical_layer</title>
+    <title>『computer network-1』physical layer</title>
     <link href="/2024/03/27/computer_network/physical-layer/"/>
     <url>/2024/03/27/computer_network/physical-layer/</url>
     
