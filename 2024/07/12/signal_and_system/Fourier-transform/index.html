@@ -16,35 +16,24 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="空间变换与运动 一、自由度  位形：机器人上每个点位的全体的集合，可根据位形确定机器人上所有点的位置；如二维坐标 (x, y) 可表示平面上任意点位置 位形空间：包含所有可能的机器人位形的 n 维空间，一般记作 C-space；机器人位形通常用 C-space 中的一个特征点表示 自由度定义：表示机器人位形的最少连续实值坐标数 刚体的自由度：系统自由度 &#x3D; (系统内各点的自由度之和">
+    <meta name="description" content="傅里叶变换 后续补充...">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『robotics-1』spatial transform">
-<meta property="og:url" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/index.html">
+<meta property="og:title" content="『signal and system-3』Fourier transform">
+<meta property="og:url" content="http://larry0454.github.io/2024/07/12/signal_and_system/Fourier-transform/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="空间变换与运动 一、自由度  位形：机器人上每个点位的全体的集合，可根据位形确定机器人上所有点的位置；如二维坐标 (x, y) 可表示平面上任意点位置 位形空间：包含所有可能的机器人位形的 n 维空间，一般记作 C-space；机器人位形通常用 C-space 中的一个特征点表示 自由度定义：表示机器人位形的最少连续实值坐标数 刚体的自由度：系统自由度 &#x3D; (系统内各点的自由度之和">
+<meta property="og:description" content="傅里叶变换 后续补充...">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%BD%AC%E5%8A%A8%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E7%A7%BB%E5%8A%A8%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%9E%BA%E6%97%8B%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E5%9C%86%E6%9F%B1%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%99%8E%E5%85%8B%E9%93%B0.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E7%90%83%E9%93%B0.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E5%BC%80%E9%93%BE%E7%BB%93%E6%9E%84.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E9%97%AD%E9%93%BE%E7%BB%93%E6%9E%84.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E6%9B%B2%E6%9F%84%E6%BB%91%E5%9D%97%E7%BB%93%E6%9E%84.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/Delta%E6%9C%BA%E5%99%A8%E4%BA%BA.jpg">
-<meta property="article:published_time" content="2024-07-07T14:55:44.000Z">
-<meta property="article:modified_time" content="2024-07-17T07:10:03.847Z">
+<meta property="article:published_time" content="2024-07-12T15:10:21.000Z">
+<meta property="article:modified_time" content="2024-07-12T15:14:22.824Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="robotics">
+<meta property="article:tag" content="signal and system">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%BD%AC%E5%8A%A8%E5%89%AF.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『robotics-1』spatial transform - Blog</title>
+  <title>『signal and system-3』Fourier transform - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +187,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『robotics-1』spatial transform"></span>
+            <span id="subtitle" data-typed-text="『signal and system-3』Fourier transform"></span>
           
         </div>
 
@@ -209,8 +198,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-07 22:55" pubdate>
-          July 7, 2024 pm
+        <time datetime="2024-07-12 23:10" pubdate>
+          July 12, 2024 pm
         </time>
       </span>
     
@@ -221,7 +210,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k words
+          12 words
         
       </span>
     
@@ -232,7 +221,7 @@
         
         
         
-          15 mins
+          1 mins
         
       </span>
     
@@ -278,128 +267,13 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『robotics-1』spatial transform</h1>
+            <h1 style="display: none">『signal and system-3』Fourier transform</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="空间变换与运动">空间变换与运动</h2>
-<h3 id="一自由度">一、自由度</h3>
-<ul>
-<li><p>位形：机器人上每个<strong>点位的全体</strong>的集合，可根据位形确定机器人上所有点的位置；如二维坐标
-(x, y) 可表示平面上任意点位置</p>
-<p>位形空间：包含所有可能的机器人位形的 n 维空间，一般记作
-C-space；机器人位形通常用 C-space 中的一个特征点表示</p></li>
-<li><p>自由度定义：表示机器人位形的<strong>最少<u>连续实值</u>坐标数</strong></p></li>
-<li><p>刚体的自由度：系统自由度 = (系统内各点的自由度之和) -
-(系统<strong>独立约束</strong>数)</p>
-<ul>
-<li><p>三维空间中的刚体：6 个自由度，推导过程如下：</p>
-<ol type="1">
-<li>任选三维空间中刚体上的三个点A、B、C，分别记作 <span class="math inline">\((x_A, y_A, z_A)\)</span>、<span class="math inline">\((x_B, y_B, z_B)\)</span>、<span class="math inline">\((x_C, y_C, z_C)\)</span></li>
-<li>由刚体性质，A和B的间距恒定值<span class="math inline">\(d_{AB}\)</span>，故B只可能分布在以A为球心、<span class="math inline">\(d_{AB}\)</span>为半径的球面上，即B可用经纬度 <span class="math inline">\((\lambda, \phi)\)</span> 表示</li>
-<li>由刚体性质，A和C、B和C的间距均为定值<span class="math inline">\(d_{AC}\)</span>、<span class="math inline">\(d_{BC}\)</span>，故C只可能分布在球A和球B的交圆上，即C可用圆上转角
-<span class="math inline">\(\theta\)</span> 表示</li>
-</ol>
-<p>故三维空间内的刚体自由度为 6，可以用 <span class="math inline">\((x_A, y_A, z_A, \lambda, \phi, \theta)\)</span>
-表示</p></li>
-<li><p>二维平面中的刚体：3
-个自由度，相当于在三维空间的情形下新增了三个独立约束 <span class="math inline">\(z_A = 0, z_B = 0, z_C = 0\)</span></p></li>
-</ul></li>
-<li><p>机器人的自由度：通过<u>刚体</u>和<u>关节</u>得到机器人的自由度</p>
-<ul>
-<li><p>机器人关节：连接两个构件，可分为以下几个类别：</p>
-<ul>
-<li><p>转动副：关节自由度 =
-1，允许两个构件绕同一个关节轴旋转，又称<strong>铰链</strong>
-<br><img src="/2024/07/07/robotics/spatial-transformations/转动副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
-<blockquote>
-<p><strong>注意</strong>：转动副 对另一<u>平面刚体</u>的约束 =
-2，对另一<u>空间刚体</u>的约束 = 5（保留一个旋转自由度）</p>
-</blockquote></li>
-<li><p>移动副：关节自由度 =
-1，允许关节沿轴线方向平移运动，又称<strong>滑动</strong>
-<br><img src="/2024/07/07/robotics/spatial-transformations/移动副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
-<blockquote>
-<p><strong>注意</strong>：移动副 对另一<u>平面刚体</u>的约束 =
-2，对另一<u>空间刚体</u>的约束 = 5（保留一个平移自由度）</p>
-</blockquote></li>
-<li><p>螺旋副：关节自由度 =
-1，允许两个构件绕同一个关节轴旋转、且在旋转的<strong>同时</strong>平移运动
-<br><img src="/2024/07/07/robotics/spatial-transformations/螺旋副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
-<blockquote>
-<p><strong>注意</strong>：螺旋副 对<u>空间刚体</u>的约束 =
-5（保留一个旋转自由度，无法讨论对平面刚体的约束，下同）</p>
-</blockquote></li>
-<li><p>圆柱副：关节自由度 =
-2，允许两个构件沿关节轴做<strong>独立</strong>的平移和旋转
-<br><img src="/2024/07/07/robotics/spatial-transformations/圆柱副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
-<blockquote>
-<p><strong>注意</strong>：圆柱副 对另一<u>空间刚体</u>的约束 =
-4（保留一个旋转 + 一个平移自由度）</p>
-</blockquote></li>
-<li><p>虎克铰：关节自由度 =
-2，由两个<strong>正交排列</strong>的转动副组成，又称<strong>万向节</strong>
-<br><img src="/2024/07/07/robotics/spatial-transformations/虎克铰.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
-<blockquote>
-<p><strong>注意</strong>：虎克铰 对另一<u>空间刚体</u>的约束 =
-4（保留两个旋转自由度）</p>
-</blockquote></li>
-<li><p>球铰：关节自由度 = 3，类似人类的<strong>肩关节</strong>
-<br><img src="/2024/07/07/robotics/spatial-transformations/球铰.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
-<blockquote>
-<p><strong>注意</strong>：球铰 对另一<u>空间刚体</u>的约束 =
-3（保留三个旋转自由度）</p>
-</blockquote></li>
-</ul></li>
-<li><p>Grubler 公式：设机构有 <span class="math inline">\(N\)</span>
-个构件（含基座），有 <span class="math inline">\(J\)</span> 个关节；第
-<span class="math inline">\(i\)</span> 个关节的自由度为 <span class="math inline">\(f_i\)</span>、独立约束数为 <span class="math inline">\(c_i\)</span> <br>则该机器人的自由度如下： <span class="math display">\[
-\begin{align}
-\text{dof} &amp;= m(N - 1) - \sum_{i=1}^{J}c_i \\
-&amp;=m(N-1) - \sum_{i=1}^{J}(m-f_i) \\
-&amp;=m(N-1-J) + \sum_{i=1}^{J} f_i
-\end{align}
-\]</span> 其中 <span class="math inline">\(m\)</span>
-表示刚体自由度，对于空间刚体 <span class="math inline">\(m =
-6\)</span>、对于平面刚体 <span class="math inline">\(m =
-3\)</span>；对于所有关节都满足 <span class="math inline">\(f_i + c_i =
-m\)</span></p>
-<ul>
-<li><p>平面 <span class="math inline">\(k\)</span>
-杆结构（例）：属于平面机构，<span class="math inline">\(m =
-3\)</span></p>
-<ul>
-<li>开链结构：又称<strong>串联</strong>机构，机构中不存在任何闭环
-<br>设机构有 <span class="math inline">\(k\)</span>
-个关节，则（含地面）有 <span class="math inline">\(k+1\)</span>
-个构件，<span class="math inline">\(\text{dof}=3((k+1) - 1 - k) + k*1 =
-k\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/开链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
-<li>闭链结构：有<strong>闭环</strong>的结构，由于地面本身也是一个构件，故可以与地面构成闭环
-<br>设机构有 <span class="math inline">\(k\)</span>
-个关节，则（含地面）有 <span class="math inline">\(k\)</span>
-个构件，<span class="math inline">\(\text{dof} = 3(k - 1 - k) + k*1 = k
-- 3\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/闭链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
-<li>曲柄滑块结构：属于<strong>闭链</strong>结构；如下图共有 3 个转动副和
-1 个移动副，与地面形成闭环<br><span class="math inline">\(\text{dof} =
-3(4 - 1 - 4) + 3 * 1 + 1 * 1 = 1\)</span>
-<br><img src="/2024/07/07/robotics/spatial-transformations/曲柄滑块结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
-</ul></li>
-<li><p>空间结构（例）：如下图 Delta 机器人，<span class="math inline">\(m = 6\)</span>；如下图每条腿有 4 个球铰、3
-个转动副、5 根杆<br><span class="math inline">\(\text{则 dof} = 6(3*5+2
-- 1 - (4*3+3*3)) + 3*3 * 1 + 3*4 * 3 = 15\)</span> <br>
-<img src="/2024/07/07/robotics/spatial-transformations/Delta机器人.jpg" srcset="/img/loading.gif" lazyload width="40%"></p>
-<blockquote>
-<p><strong>注意</strong>：上平台为静平台（自由度 =
-0），下平台为<strong>动平台</strong>（自由度 = 3），剩余 12 个自由度表示
-3 个平行四边形分别绕其长轴旋转的自由度</p>
-</blockquote></li>
-</ul></li>
-</ul></li>
-</ul>
-<hr>
-<h3 id="二刚体运动">二、刚体运动</h3>
-<h4 id="待补充-..">待补充 ..</h4>
+                <h2 id="傅里叶变换">傅里叶变换</h2>
+<h3 id="后续补充...">后续补充...</h3>
 
                 
               </div>
@@ -412,7 +286,7 @@ k\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/开链结�
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/robotics/">#robotics</a>
+        <a href="/tags/signal-and-system/">#signal and system</a>
       
     </div>
   
@@ -424,8 +298,8 @@ k\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/开链结�
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『robotics-1』spatial transform</div>
-      <div>http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/</div>
+      <div>『signal and system-3』Fourier transform</div>
+      <div>http://larry0454.github.io/2024/07/12/signal_and_system/Fourier-transform/</div>
     </div>
     <div class="license-meta">
       
@@ -437,7 +311,7 @@ k\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/开链结�
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>July 7, 2024</div>
+          <div>July 12, 2024</div>
         </div>
       
       
@@ -469,18 +343,12 @@ k\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/开链结�
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/12/signal_and_system/Fourier-transform/" title="『signal and system-3』Fourier transform">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『signal and system-3』Fourier transform</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/06/29/signal_and_system/linear-time-invariant-system/" title="『signal and system-2』LTI">
-                        <span class="hidden-mobile">『signal and system-2』LTI</span>
+                      <a href="/2024/07/07/robotics/spatial-transformations/" title="『robotics-1』spatial transform">
+                        <span class="hidden-mobile">『robotics-1』spatial transform</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
