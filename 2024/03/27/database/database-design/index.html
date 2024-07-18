@@ -23,16 +23,16 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="数据库设计  一、数据库设计阶段概览  需求分析：对应用环境进行详细调查，收集支持系统目标的基础数据及其处理 数据库概念结构设计：  对用户需求进行综合、归纳与抽象 设计独立于数据库逻辑结构与DBMS的概念模型（可用 E-R 图表示）  数据库逻辑结构设计：  将概念结构转换为某个DBMS所支持的数据模型，并作优化 将得到的逻辑结构转换成特定的DBMS能处理的模式、子模">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/database-design/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/database-design/%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/database-design/B+%E6%A0%91.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/database-design/HASH.png">
+<meta property="og:image" content="http://larry0454.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="http://larry0454.github.io/%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE.png">
+<meta property="og:image" content="http://larry0454.github.io/B+%E6%A0%91.png">
+<meta property="og:image" content="http://larry0454.github.io/HASH.png">
 <meta property="article:published_time" content="2024-03-27T13:21:39.000Z">
 <meta property="article:modified_time" content="2024-07-07T14:59:17.095Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="database">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/database/database-design/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4.png">
+<meta name="twitter:image" content="http://larry0454.github.io/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -301,7 +301,7 @@
 <li><p>数据库实施：用<strong>DDL</strong>描述三级模式，并调试产生<strong>目标模式</strong>，组织数据入库并<strong>试运行</strong></p></li>
 <li><p>数据库运行与维护：数据库正式运行后，由DBA对数据库维护</p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/database/database-design/数据库设计基本步骤.png" srcset="/img/loading.gif" lazyload>
+<p><img src="/数据库设计基本步骤.png" srcset="/img/loading.gif" lazyload>
 <figurecap>数据库设计阶段</figurecap></p>
 </figure></li>
 </ol>
@@ -321,7 +321,7 @@
 </ol></li>
 <li><p>数据流图：以图形方式表达系统功能、数据在系统内部的逻辑流向</p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/database/database-design/数据流图.png" srcset="/img/loading.gif" lazyload> <figurecap>自顶向下分解的 销售管理系统
+<p><img src="/数据流图.png" srcset="/img/loading.gif" lazyload> <figurecap>自顶向下分解的 销售管理系统
 数据流图</figurecap></p>
 </figure>
 <hr></li>
@@ -421,7 +421,7 @@ m联系：该关系的码是<u><strong>两端</strong>实体码的<strong>组合
 </ul>
 <p><strong>注意</strong>：索引也会占据内存，同时具有维护开销，故索引不是越多越好</p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/database/database-design/B+树.png" srcset="/img/loading.gif" lazyload> <figurecap>各关键字按递增顺序 从左到右
+<p><img src="/B+树.png" srcset="/img/loading.gif" lazyload> <figurecap>各关键字按递增顺序 从左到右
 链接在叶结点上</figurecap></p>
 </figure></li>
 <li><p>聚集：将在若干属性上<u>值相同</u>的记录集中存放在<strong>连续的物理块</strong>上</p>
@@ -432,7 +432,7 @@ m联系：该关系的码是<u><strong>两端</strong>实体码的<strong>组合
 <li><p>HASH：利用hash函数将<strong>记录关键字</strong>转化为地址；记录r（A上值为a）的存储地址
 addr = hash(a)</p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/database/database-design/HASH.png" srcset="/img/loading.gif" lazyload> <figurecap>Hash查找</figurecap></p>
+<p><img src="/HASH.png" srcset="/img/loading.gif" lazyload> <figurecap>Hash查找</figurecap></p>
 </figure></li>
 </ul></li>
 </ul>

@@ -23,28 +23,28 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="数据链路层 一、数据链路层设计要点  数据链路层概述  数据链路层在物理层（传输比特流）的基础上实现了帧的传输，该层的协议数据单元PDU是帧 链路：一条点到点的物理线路，且中间没有任何其它的交换节点；数据链路：链路 + 协议的硬件和软件 信道类型：  点对点信道：使用一对一的点对点通信方式 广播信道：使用一对多的广播通信方式，广播信道上连接多个主机，必须采用专门的共享信道协议">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/CRC.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/%E6%97%A0%E9%99%90%E5%88%B6%E5%8D%95%E5%B7%A5%E5%8D%8F%E8%AE%AE.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/%E5%8D%95%E5%B7%A5%E5%81%9C-%E7%AD%89%E5%8D%8F%E8%AE%AE.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/%E6%9C%89%E5%99%AA%E5%A3%B0%E4%BF%A1%E9%81%93%E7%9A%84%E5%8D%95%E5%B7%A5%E5%8D%8F%E8%AE%AE.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/GBN.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/GBN%E5%8F%91%E9%80%81.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/SR.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/SR%E5%8F%91%E9%80%81.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/PPP%E5%B8%A7%E6%A0%BC%E5%BC%8F.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/PPP.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/%E6%8A%80%E6%9C%AF%E6%A0%87%E5%87%86.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/%E7%A2%B0%E6%92%9E.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/%E9%80%82%E9%85%8D%E5%99%A8.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/MAC%E5%B8%A7.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/802.1Q%E5%B8%A7.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/VLAN.png">
+<meta property="og:image" content="http://larry0454.github.io/CRC.png">
+<meta property="og:image" content="http://larry0454.github.io/%E6%97%A0%E9%99%90%E5%88%B6%E5%8D%95%E5%B7%A5%E5%8D%8F%E8%AE%AE.png">
+<meta property="og:image" content="http://larry0454.github.io/%E5%8D%95%E5%B7%A5%E5%81%9C-%E7%AD%89%E5%8D%8F%E8%AE%AE.png">
+<meta property="og:image" content="http://larry0454.github.io/%E6%9C%89%E5%99%AA%E5%A3%B0%E4%BF%A1%E9%81%93%E7%9A%84%E5%8D%95%E5%B7%A5%E5%8D%8F%E8%AE%AE.png">
+<meta property="og:image" content="http://larry0454.github.io/GBN.png">
+<meta property="og:image" content="http://larry0454.github.io/GBN%E5%8F%91%E9%80%81.png">
+<meta property="og:image" content="http://larry0454.github.io/SR.png">
+<meta property="og:image" content="http://larry0454.github.io/SR%E5%8F%91%E9%80%81.png">
+<meta property="og:image" content="http://larry0454.github.io/PPP%E5%B8%A7%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="http://larry0454.github.io/PPP.png">
+<meta property="og:image" content="http://larry0454.github.io/%E6%8A%80%E6%9C%AF%E6%A0%87%E5%87%86.png">
+<meta property="og:image" content="http://larry0454.github.io/%E7%A2%B0%E6%92%9E.png">
+<meta property="og:image" content="http://larry0454.github.io/%E9%80%82%E9%85%8D%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/MAC%E5%B8%A7.png">
+<meta property="og:image" content="http://larry0454.github.io/802.1Q%E5%B8%A7.png">
+<meta property="og:image" content="http://larry0454.github.io/VLAN.png">
 <meta property="article:published_time" content="2024-03-27T12:18:52.000Z">
 <meta property="article:modified_time" content="2024-07-07T14:58:43.138Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="computer network">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/computer_network/data-link-layer/CRC.png">
+<meta name="twitter:image" content="http://larry0454.github.io/CRC.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -331,7 +331,7 @@ EOT）作为帧的开始/结束标志，并使用<u>字符填充</u>将标志字
 <li>接收方接收到M'后除以P，得到余数R'，可断言发送数据无差错 <span class="math inline">\(\Leftrightarrow\)</span> R'=0</li>
 </ol>
 <p><strong>注意</strong>：CRC只能判断发送帧内部是否<strong><u>存在</u>差错</strong>（即检错编码），无法判断具体是哪些比特位出现了差错</p>
-<p><img src="/2024/03/27/computer_network/data-link-layer/CRC.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<p><img src="/CRC.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 <li><p>纠错编码：通过增加冗余信息得知错误的<strong><u>具体</u>位置</strong>，而检错编码只能判断是否存在错误</p>
 <p><strong>注意</strong>：检错码和纠错码可以保证帧的无差错接收（<strong>无比特差错</strong>），<u>但不意味着可靠传输</u>，还可能发生帧丢失、帧重复、帧失序</p></li>
 </ul>
@@ -347,21 +347,21 @@ EOT）作为帧的开始/结束标志，并使用<u>字符填充</u>将标志字
 <li>发送方总有数据发送</li>
 <li>接收方总能<strong>及时处理</strong>所收到的数据</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/data-link-layer/无限制单工协议.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/无限制单工协议.png" srcset="/img/loading.gif" lazyload></p></li>
 </ul></li>
 <li><p>单工停-等协议：增加<u>流量控制</u>，防止接收方处理帧速度不及发送方从而导致的<strong>帧丢失</strong></p>
 <ul>
 <li>接收方每<u>收到</u>一帧，都向发送方返回一个<strong>应答帧</strong></li>
 <li>发送方每<u>发送</u>一帧，都先等待来自接收方的<strong>应答帧</strong>，才继续发送</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/data-link-layer/单工停-等协议.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/单工停-等协议.png" srcset="/img/loading.gif" lazyload></p></li>
 <li><p>有噪声信道的单工协议（ARQ协议）：在<u>有噪声信道</u>中防止帧的传输出错</p>
 <ul>
 <li><p>校验和：使接收方能够检测帧<strong>是否出错</strong></p></li>
 <li><p>确认帧：使发送方知道帧已被<strong>正确接收</strong></p></li>
 <li><p>超时重发：发送方在规定时间内未收到确认帧，则<strong>重发帧</strong></p></li>
 <li><p>帧序号：保证接收方不会收到重复帧（若重复接收则丢弃当前重复帧）</p>
-<p><img src="/2024/03/27/computer_network/data-link-layer/有噪声信道的单工协议.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/有噪声信道的单工协议.png" srcset="/img/loading.gif" lazyload></p></li>
 </ul></li>
 </ul>
 <hr>
@@ -377,7 +377,7 @@ EOT）作为帧的开始/结束标志，并使用<u>字符填充</u>将标志字
 1]\)</span>（n为帧编码位数），表示<strong>允许发送</strong>的帧（包括已经发送的帧）</p></li>
 <li><p>接收方：接收窗口长度 =
 1，表示<strong>允许接收</strong>的帧（窗口外的帧一律丢弃，直至遇到连续合法的帧）</p>
-<p><img src="/2024/03/27/computer_network/data-link-layer/GBN.png" srcset="/img/loading.gif" lazyload width="60%"></p>
+<p><img src="/GBN.png" srcset="/img/loading.gif" lazyload width="60%"></p>
 <hr></li>
 <li><p>发送过程：</p>
 <ul>
@@ -391,13 +391,13 @@ k，表示<u>k以及k之前的帧</u>已经被<strong>成功接收</strong>，�
 k，单窗口后移一帧</li>
 <li>否则，直接丢弃发送帧，并仅为<strong>最近成功接收的帧</strong>发送ACK；发送方的等待ACK的计时器<strong>超时</strong>后，会<strong>重发</strong>错误帧</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/data-link-layer/GBN发送.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<p><img src="/GBN发送.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
 </ul>
 <hr></li>
 <li><p>选择重传协议：超时可以仅重传异常帧；发送方和接收方的<strong>窗口大小相同</strong></p>
 <ul>
 <li><p>发送方 or 接收方：窗口长度 = <span class="math inline">\(2^{\text{n-1}}\)</span>，其中n为标记帧号所需要的比特位数</p>
-<p><img src="/2024/03/27/computer_network/data-link-layer/SR.png" srcset="/img/loading.gif" lazyload width="60%"></p>
+<p><img src="/SR.png" srcset="/img/loading.gif" lazyload width="60%"></p>
 <hr></li>
 <li><p>发送过程：</p>
 <ul>
@@ -411,7 +411,7 @@ k，单窗口后移一帧</li>
 <strong>注意</strong>：NAK可以让错误重传<strong>更及时</strong>，不必让发送方等到ACK超时后才重传（帧丢失只能依靠超时检测重传对应帧）</li>
 </ul></li>
 </ul>
-<p><img src="/2024/03/27/computer_network/data-link-layer/SR发送.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<p><img src="/SR发送.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul>
 <p>​
 <strong>注意</strong>：两种窗口协议都要保证接收方按照<u>帧序号顺序</u>上交网络层</p>
@@ -448,7 +448,7 @@ k，单窗口后移一帧</li>
 <p><strong>注意</strong>：信息字段（载荷）的长度是<strong>可变</strong>的，<u>不超过1500字节</u></p></li>
 <li><p>帧检验序列：尾部的第一个字段，占两个字节，使用CRC的FCS</p></li>
 </ul>
-<p><img src="/2024/03/27/computer_network/data-link-layer/PPP帧格式.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/PPP帧格式.png" srcset="/img/loading.gif" lazyload></p></li>
 <li><p>字节填充：应用在<strong>异步填充</strong>（逐个字符发送）中，使用字符0x7D对信息字段进行<strong>转义</strong></p>
 <ul>
 <li>信息字段中的0x7E (标志字段) <span class="math inline">\(\Rightarrow\)</span> (0x7D, 0x5E)</li>
@@ -494,7 +494,7 @@ k，单窗口后移一帧</li>
 以<strong>检查链路状态</strong></p></li>
 <li><p>链路终止：数据传输结束后，一方发送<u>终止请求LCP</u>，收到<u>终止确认LCP</u>后转入“链路终止”状态；链路故障时也会转入“链路终止”</p></li>
 </ol>
-<p><img src="/2024/03/27/computer_network/data-link-layer/PPP.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<p><img src="/PPP.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul>
 <hr>
 <h3 id="六使用广播信道的数据链路层">六、使用广播信道的数据链路层</h3>
@@ -529,7 +529,7 @@ or CSMA/CA(无线网)</li>
 <li><p>介质访问控制子层(MAC)：存放与接入到<u>传输媒体有关</u>的内容，不同局域网采用不同的MAC方法</p></li>
 </ul></li>
 </ul>
-<p><img src="/2024/03/27/computer_network/data-link-layer/技术标准.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/技术标准.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li><p>IEEE 802.3：CSMA/CD介质访问控制 + 物理层技术规范，包括：</p>
 <ul>
@@ -560,7 +560,7 @@ or CSMA/CA(无线网)</li>
 </ul>
 <p>重传次数 <strong>&gt;
 16</strong>后，丢弃该帧，并向上层报告（表明同时打算发送数据的站太多）</p>
-<p><img src="/2024/03/27/computer_network/data-link-layer/碰撞.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/碰撞.png" srcset="/img/loading.gif" lazyload></p></li>
 <li><p>争用期：即碰撞窗口，时长 = <span class="math inline">\(2\tau\)</span></p>
 <ul>
 <li>若<u>过了争用期</u>仍未检测到碰撞，就肯定没发生碰撞</li>
@@ -627,7 +627,7 @@ or CSMA/CA(无线网)</li>
 <li>广播：发送给本局域网上<u>所有站点</u>的帧（一对全体）</li>
 <li>多播：发送给本局域网上<u>一部分站点</u>的帧（一对多）</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/data-link-layer/适配器.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p><img src="/适配器.png" srcset="/img/loading.gif" lazyload width="80%"></p>
 <p><strong>注意</strong>：若适配器受到有差错的帧，就把该帧直接丢弃无需通知CPU；若受到正确帧，就用<strong>中断</strong>通知CPU</p></li>
 </ul></li>
 <li><p>MAC帧的帧格式：5个字段</p>
@@ -638,7 +638,7 @@ or CSMA/CA(无线网)</li>
 1500字节（可变长，46=64-len(首部)-len(尾部FCS), 1500同理）</li>
 <li>FCS：4字节，帧校验序列，采用<strong>CRC</strong>校验</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/data-link-layer/MAC帧.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p><img src="/MAC帧.png" srcset="/img/loading.gif" lazyload width="80%"></p>
 <p><strong>注意</strong>："前同步码"的作用在于接收MAC帧时能够迅速<u>调整时钟频率</u>，与发送端实现<strong>比特同步</strong>；SONET/SDH
 无需同步码</p></li>
 </ul></li>
@@ -732,10 +732,10 @@ B的端口号)，向除了“A端口”的<u>所有端口</u>广播；否则只�
 <li><p>VLAN划分规则：按 交换机端口、MAC地址、协议
 等进行<strong>逻辑分组</strong>；每个VLAN内部构成一个<u><strong>广播域</strong></u>（无法跨VLAN广播）</p></li>
 <li><p>802.1Q帧：在以太网帧中<u>类型字段前</u>新插入一个4字节的<strong>VLAN标签</strong></p>
-<p><img src="/2024/03/27/computer_network/data-link-layer/802.1Q帧.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/802.1Q帧.png" srcset="/img/loading.gif" lazyload></p></li>
 <li><p><strong>同</strong>交换机下同VLAN内的转发：普通以太网中的帧转发（#1根据帧首部目的MAC得知其属于VLAN-10），<u>无需使用VLAN标签</u></p></li>
 <li><p><strong>跨</strong>交换机下同VLAN内的转发：#1<strong>插入</strong>VLAN标签（指导#2转发给VLAN-10），#2<strong>删除</strong>VLAN标签（形成标准以太帧）</p>
-<p><img src="/2024/03/27/computer_network/data-link-layer/VLAN.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/VLAN.png" srcset="/img/loading.gif" lazyload></p></li>
 </ul></li>
 </ul></li>
 </ul>

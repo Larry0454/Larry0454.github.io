@@ -23,16 +23,16 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="语法制导翻译技术  一、翻译文法  输入文法：未插入动作符号的文法，可以推导产生输入序列 翻译文法：一种上下文无关文法，其终结符号集合由输入符号 + 动作符号（@）组成，可以推导产生活动序列  活动序列：插入了动作符号的输入序列，由终结符和动作符号组成 输入序列：从活动序列中抽去动作符号，得到输入序列（原始的程序输入） 输出序列：从活动序列中抽去输入序列，得到动作序列（执行动作">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/syntax-directed-translation/%E6%94%B9%E5%86%99SL-ATG.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/syntax-directed-translation/%E7%BF%BB%E8%AF%91%E6%96%87%E6%B3%95%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/syntax-directed-translation/%E5%B1%9E%E6%80%A7%E7%BF%BB%E8%AF%91%EF%BC%88%E4%B8%8A%EF%BC%89.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/syntax-directed-translation/%E5%B1%9E%E6%80%A7%E7%BF%BB%E8%AF%91%EF%BC%88%E4%B8%8B%EF%BC%89.png">
+<meta property="og:image" content="http://larry0454.github.io/%E6%94%B9%E5%86%99SL-ATG.png">
+<meta property="og:image" content="http://larry0454.github.io/%E7%BF%BB%E8%AF%91%E6%96%87%E6%B3%95%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B.png">
+<meta property="og:image" content="http://larry0454.github.io/%E5%B1%9E%E6%80%A7%E7%BF%BB%E8%AF%91%EF%BC%88%E4%B8%8A%EF%BC%89.png">
+<meta property="og:image" content="http://larry0454.github.io/%E5%B1%9E%E6%80%A7%E7%BF%BB%E8%AF%91%EF%BC%88%E4%B8%8B%EF%BC%89.png">
 <meta property="article:published_time" content="2024-03-27T13:46:36.000Z">
 <meta property="article:modified_time" content="2024-07-07T14:58:28.286Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="compiler">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/compiler/syntax-directed-translation/%E6%94%B9%E5%86%99SL-ATG.png">
+<meta name="twitter:image" content="http://larry0454.github.io/%E6%94%B9%E5%86%99SL-ATG.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -363,7 +363,7 @@ SL-ATG，当且仅当满足以下两个条件：</p>
 <li><p>将 L-ATG 改写为 SL-ATG：设有求值函数 f 及其求值规则 I :=
 f(R,S)</p>
 <figure>
-<p><img src="/2024/03/27/compiler/syntax-directed-translation/改写SL-ATG.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/改写SL-ATG.png" srcset="/img/loading.gif" lazyload></p>
 </figure>
 <p><strong>注意</strong>：如果将 <span class="citation" data-cites="f">@f</span> 插入到 a 后 &lt;B&gt; 前，继承属性 <span class="math inline">\(\text{I}_2\)</span> 就无法借助 S
 求出值（违反了L-ATG中继承属性的求值规则）</p></li>
@@ -373,7 +373,7 @@ f(R,S)</p>
 <ul>
 <li><p>翻译文法的自顶向下翻译（无参数）：直接在解析到对应位置时<strong>执行动作符号</strong>即可</p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/compiler/syntax-directed-translation/翻译文法自顶向下.png" srcset="/img/loading.gif" lazyload width="60%"></p>
+<p><img src="/翻译文法自顶向下.png" srcset="/img/loading.gif" lazyload width="60%"></p>
 </figure></li>
 <li><p>属性翻译文法的自顶向下翻译（含形参与引用）</p>
 <ul>
@@ -393,8 +393,8 @@ S}_{\downarrow z} @v_{\downarrow P}b\)</span> ；求值规则为：P := Q +
 U、Z := U - 3
 <br>其中<u>左部P</u>是综合属性，传入指针P；<u>U</u>是终结符c的综合属性，自带初始值；<u>Q和Z</u>分别传值和地址</p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/compiler/syntax-directed-translation/属性翻译（上）.png" srcset="/img/loading.gif" lazyload width="80%">
-<img src="/2024/03/27/compiler/syntax-directed-translation/属性翻译（下）.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p><img src="/属性翻译（上）.png" srcset="/img/loading.gif" lazyload width="80%">
+<img src="/属性翻译（下）.png" srcset="/img/loading.gif" lazyload width="80%"></p>
 </figure></li>
 </ul></li>
 </ul>

@@ -23,26 +23,26 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="网络层 一、网络层提供的两种服务  面向连接的服务：虚电路；以电信公司为代表的一派支持，电话没有差错处理能力，故传输网络必须可靠  通信双方开始数据传输前，先由网络建立连接，由网络保证数据传输可靠性 虚电路通信时，首部无需填写完整的目的主机地址，只需要填写虚电路编号（减少分组开销）  注意：虚电路只是一种逻辑连接，分组沿逻辑连接传送，并不是真正建立了一条物理连接 无连接的服务：数">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/%E5%AF%B9%E6%AF%94%E8%A1%A8%E6%A0%BC.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/IP%E5%9C%B0%E5%9D%80.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/%E7%89%B9%E6%AE%8A%E5%9C%B0%E5%9D%80.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/IP%E5%9C%B0%E5%9D%80%E4%B8%8EMAC%E5%9C%B0%E5%9D%80.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/ARP.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E9%A6%96%E9%83%A8.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/IP%E6%A0%A1%E9%AA%8C%E5%92%8C.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/ICMP.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/RIP%E6%8A%A5%E6%96%87.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/OSPF%E5%88%86%E7%BB%84.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/AS%E5%8C%BA%E5%9F%9F%E5%88%92%E5%88%86.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%AB%AF%E5%8F%A3.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/VPN.png">
+<meta property="og:image" content="http://larry0454.github.io/%E5%AF%B9%E6%AF%94%E8%A1%A8%E6%A0%BC.png">
+<meta property="og:image" content="http://larry0454.github.io/IP%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://larry0454.github.io/%E7%89%B9%E6%AE%8A%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://larry0454.github.io/IP%E5%9C%B0%E5%9D%80%E4%B8%8EMAC%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://larry0454.github.io/ARP.png">
+<meta property="og:image" content="http://larry0454.github.io/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E9%A6%96%E9%83%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/IP%E6%A0%A1%E9%AA%8C%E5%92%8C.png">
+<meta property="og:image" content="http://larry0454.github.io/%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81.png">
+<meta property="og:image" content="http://larry0454.github.io/ICMP.png">
+<meta property="og:image" content="http://larry0454.github.io/RIP%E6%8A%A5%E6%96%87.png">
+<meta property="og:image" content="http://larry0454.github.io/OSPF%E5%88%86%E7%BB%84.png">
+<meta property="og:image" content="http://larry0454.github.io/AS%E5%8C%BA%E5%9F%9F%E5%88%92%E5%88%86.png">
+<meta property="og:image" content="http://larry0454.github.io/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%AB%AF%E5%8F%A3.png">
+<meta property="og:image" content="http://larry0454.github.io/VPN.png">
 <meta property="article:published_time" content="2024-03-27T12:26:28.000Z">
 <meta property="article:modified_time" content="2024-07-07T14:58:49.094Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="computer network">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/computer_network/network-layer/%E5%AF%B9%E6%AF%94%E8%A1%A8%E6%A0%BC.png">
+<meta name="twitter:image" content="http://larry0454.github.io/%E5%AF%B9%E6%AF%94%E8%A1%A8%E6%A0%BC.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -303,7 +303,7 @@
 </ul>
 <p><strong>注意</strong>：网络层<u>不保证服务质量</u>，分组可能出错、丢失、重复或失序；由上层运输层负责可靠通信</p></li>
 </ul>
-<p><img src="/2024/03/27/computer_network/network-layer/对比表格.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/对比表格.png" srcset="/img/loading.gif" lazyload></p>
 <hr>
 <h3 id="二网际协议ip">二、网际协议IP</h3>
 <ul>
@@ -331,7 +331,7 @@ Protocol）：TCP/IP体系中最重要的两个协议之一</p>
 <li><p>IP地址的表示方法：32bit，采用<strong>点分十进制记法</strong>，将IP地址用<strong>4段十进制</strong>数字表示，并在段间插入一个<strong>小数点</strong></p></li>
 <li><p>IP地址的分类：分为A、B、C、D、E五类，IP地址 ::= {&lt;网络号&gt;,
 &lt;主机号&gt;}</p>
-<p><img src="/2024/03/27/computer_network/network-layer/IP地址.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<p><img src="/IP地址.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 <li><p>各地址的范围：看点分十进制的<strong>最高字节</strong></p>
 <ul>
 <li>A类地址：最高字节 <span class="math inline">\(\le\)</span> 127</li>
@@ -342,7 +342,7 @@ Protocol）：TCP/IP体系中最重要的两个协议之一</p>
 </ul></li>
 </ul></li>
 <li><p>特殊IP地址：这些IP地址不会被指派，仅用于特定情况</p>
-<p><img src="/2024/03/27/computer_network/network-layer/特殊地址.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p><img src="/特殊地址.png" srcset="/img/loading.gif" lazyload width="80%"></p>
 <ul>
 <li>{0, 0}：本网络上的本主机；能作为源地址，不能作为目的地址</li>
 <li>{0, X}：本网络上主机号为 X
@@ -376,7 +376,7 @@ Protocol）：TCP/IP体系中最重要的两个协议之一</p>
 <li>物理地址：<u>数据链路层</u> 以及
 <u>物理层</u>使用的地址；设置在<strong>MAC帧首部</strong></li>
 </ul>
-<p><img src="/2024/03/27/computer_network/network-layer/IP地址与MAC地址.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/IP地址与MAC地址.png" srcset="/img/loading.gif" lazyload></p></li>
 <li><p>ARP与RARP协议：分别实现<strong>同一局域网内</strong> IP地址 <span class="math inline">\(\rightarrow\)</span> MAC地址 <strong>与</strong>
 MAC地址 <span class="math inline">\(\rightarrow\)</span> IP地址
 的<strong>转换</strong></p>
@@ -402,12 +402,12 @@ MAC地址 <span class="math inline">\(\rightarrow\)</span> IP地址
 <li><span class="math inline">\(\text{R}_1\)</span>发送数据至<strong>邻接网络</strong>的<span class="math inline">\(\text{H}_3\)</span>：<span class="math inline">\(\text{R}_1\)</span>广播(<span class="math inline">\(\text{N}_2\)</span>)ARP请求分组，获得<span class="math inline">\(\text{H}_2\)</span>的MAC地址</li>
 <li><span class="math inline">\(\text{R}_1\)</span>发送数据至<strong>非邻接网络</strong>的<span class="math inline">\(\text{H}_4\)</span>：<span class="math inline">\(\text{R}_1\)</span>广播(<span class="math inline">\(\text{N}_2\)</span>)ARP请求分组，获得连接<span class="math inline">\(\text{N}_2\)</span>的<span class="math inline">\(\text{R}_2\)</span>的MAC地址（剩余工作由<span class="math inline">\(\text{R}_2\)</span>完成）</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/network-layer/ARP.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/ARP.png" srcset="/img/loading.gif" lazyload></p>
 <p><strong>注意</strong>：ARP
 cache中的每个映射项目都有<strong>生存时间</strong>，超过生存时间的项目会被删除</p></li>
 </ul></li>
 <li><p>IP数据报的格式：首部 + 数据</p>
-<p><img src="/2024/03/27/computer_network/network-layer/IP数据报首部.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p><img src="/IP数据报首部.png" srcset="/img/loading.gif" lazyload width="80%"></p>
 <ul>
 <li><p>首部固定部分：</p>
 <ul>
@@ -443,7 +443,7 @@ or 0</li>
 <p><strong>注意</strong>：也可用16进制计算，各列求和后<strong>拆分</strong>得到<u>16的倍数
 + &lt;16的数</u>，<strong>进位 + 循环迭代</strong>直至各列位置均 &lt; 16
 (0~9A~F)</p>
-<p><img src="/2024/03/27/computer_network/network-layer/IP校验和.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<p><img src="/IP校验和.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 <li><p>源地址、目的地址：各占32bit，分别表示<strong>发送</strong>IP数据报的主机IP地址
 和 <strong>接收</strong>IP数据报的主机IP地址</p></li>
 </ul></li>
@@ -460,7 +460,7 @@ or 0</li>
 <li>三级IP地址：net-id + <strong>subnet-id</strong> + host-id</li>
 <li>子网掩码：net-id 和 subnet-id 部分全1，host-id 部分全0</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/network-layer/子网掩码.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/子网掩码.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>子网地址 = 主机IP地址 <strong>&amp;</strong> 子网掩码</li>
 </ul></li>
@@ -517,7 +517,7 @@ IP地址 &amp;&amp; 地址掩码</p></li>
 <ul>
 <li><p>ICMP的作用：报告错误 + 测试</p></li>
 <li><p>ICMP报文格式：ICMP位于IP层，封装在IP包内传输</p>
-<p><img src="/2024/03/27/computer_network/network-layer/ICMP.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p><img src="/ICMP.png" srcset="/img/loading.gif" lazyload width="80%"></p>
 <p>​
 <strong>注意</strong>：首部的检验和<strong>检验首部</strong>，ICMP报文中的检验和<strong>检验数据报</strong></p></li>
 <li><p>ICMP报文协议：差错报告报文 +
@@ -579,7 +579,7 @@ IP地址 &amp;&amp; 地址掩码</p></li>
 <li>仅与<strong>相邻路由器</strong>交换信息（即路由表），每30s交换一次</li>
 </ul></li>
 <li><p>RIP格式：属于用户层协议，封装在UDP用户数据报中</p>
-<p><img src="/2024/03/27/computer_network/network-layer/RIP报文.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<p><img src="/RIP报文.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 <li><p>RIP优势与缺陷：</p>
 <ul>
 <li>优势：实现简单，开销较小</li>
@@ -642,12 +642,12 @@ or 可更新的信息</li>
 <li>链路状态更新(LSU)分组：用<strong>洪泛法</strong>对全网络更新链路状态</li>
 <li>链路状态确认(LSA)分组：对链路更新分组(LSU)的确认</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/network-layer/OSPF分组.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<p><img src="/OSPF分组.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 <li><p>划分区域：OSPF将一个AS进一步划分为若干个区域，便于管理大规模网络</p>
 <ul>
 <li><p>优势：将<u>洪泛范围限制在一个区域</u>而不是整个自治系统，<strong>减少整个网络上的通信量</strong></p></li>
 <li><p>层次结构的区域划分：每个区域拥有一个32位的<strong>区域标识符</strong>（用点分十进制表示）；主干区域用于连通其它下层区域</p>
-<p><img src="/2024/03/27/computer_network/network-layer/AS区域划分.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<p><img src="/AS区域划分.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 </ul>
 <p><strong>注意</strong>：一个区域内的路由器只知道本区域内的完整网络拓扑，不知道其它区域的网络拓扑</p></li>
 </ul>
@@ -702,7 +702,7 @@ or OSPF）</p></li>
 <li>衡量路由器性能的指标：packet per second，简写为pps</li>
 </ul></li>
 <li><p>输入和输出端口处理：</p>
-<p><img src="/2024/03/27/computer_network/network-layer/输入输出端口.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p><img src="/输入输出端口.png" srcset="/img/loading.gif" lazyload width="80%"></p>
 <p><strong>注意</strong>：在端口队列中排队会产生时延；分组处理速率 &lt;
 分组进队速率 会导致丢包（无队列存储空间）</p></li>
 </ul>
@@ -778,7 +778,7 @@ or 退出某个组播组</li>
 <li><p>典型的VPN实现技术：IPSec(工作在网络层) or
 SSL(Web浏览器内置支持)</p></li>
 <li><p>VPN架构：使用<strong>隧道技术</strong>，效果好像在<u>本部门的专用网</u>上传输</p>
-<p><img src="/2024/03/27/computer_network/network-layer/VPN.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<p><img src="/VPN.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 </ul></li>
 </ul>
 

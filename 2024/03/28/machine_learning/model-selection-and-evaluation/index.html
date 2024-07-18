@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="模型评估与选择  一、误差  误差：学习器实际预测输出与样本真实输出之间的差异 训练误差（经验误差）：学习器在训练集上的误差 测试误差（泛化误差）：学习器在测试集或新样本上的误差 注意：由于新样本是未知的，故常用 min(测试误差) 代替 min(泛化误差)   二、模型选择  对于同一个问题，可以选择多种算法 对于同一个算法，选择不同的参数配置 注意：对于机器学习问">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/28/machine_learning/model-selection-and-evaluation/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/28/machine_learning/model-selection-and-evaluation/ROC.png">
+<meta property="og:image" content="http://larry0454.github.io/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.png">
+<meta property="og:image" content="http://larry0454.github.io/ROC.png">
 <meta property="article:published_time" content="2024-03-28T00:20:24.000Z">
 <meta property="article:modified_time" content="2024-07-07T15:00:46.410Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/28/machine_learning/model-selection-and-evaluation/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.png">
+<meta name="twitter:image" content="http://larry0454.github.io/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -334,7 +334,7 @@ y_i)\)</span></p>
 <li>真负例TN：被正确分类的负例</li>
 </ul>
 <figure style="text-align:center">
-<p><img src="/2024/03/28/machine_learning/model-selection-and-evaluation/混淆矩阵.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
+<p><img src="/混淆矩阵.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
 </figure></li>
 <li><p>敏感性（查全率）：评估分类器正确<strong>识别正例</strong>的能力（即将<u>尽可能多</u>的正例挑选出来），避免<strong><u>漏识别</u></strong>
 <span class="math display">\[
@@ -384,7 +384,7 @@ E(f:D) = \frac{1}{d} (\sum_{x_i \in D^+}(f(x_i) \ne y_i)\times
 <li>若当前样例是FP，对应标记点是<span class="math inline">\((\text{x}+\dfrac{1}{\text{m}^-},
 \text{y})\)</span>，即向右平移，其中<span class="math inline">\(\text{m}^-\)</span>表示负例数量</li>
 </ul>
-<p><img src="/2024/03/28/machine_learning/model-selection-and-evaluation/ROC.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<p><img src="/ROC.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 <li><p>AUC：ROC曲线下方的面积，越大越好</p></li>
 </ul></li>
 </ul>

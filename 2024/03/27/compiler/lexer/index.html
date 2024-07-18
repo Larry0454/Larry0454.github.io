@@ -23,22 +23,22 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="词法分析  一、词法分析的功能  词法分析程序的功能：  对词法进行分析：根据词法规则识别（组合）单词，并进行词法检查 对常数值实现数字字符串到二进制数值的转变 删除空格符 + 注释  单词：语言的基本语法单位，一般有四类单词：  保留字：由源程序语言定义，如 BEGIN、IF 等 标识符：由程序员定义的，表示各种名字的符号串 常数：无符号数、布尔常数、字符串常数等">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/lexer/%E5%8D%95%E9%81%8D%E7%BB%93%E6%9E%84.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/lexer/%E7%8A%B6%E6%80%81%E5%9B%BE.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/lexer/NFA.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/lexer/%E5%9F%BA%E6%9C%AC%E5%BD%92%E7%BA%B31.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/lexer/%E5%9F%BA%E6%9C%AC%E5%BD%92%E7%BA%B32.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/lexer/%E5%B9%B6%E5%BD%92%E7%BA%B3.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/lexer/%E8%BF%9E%E6%8E%A5%E5%BD%92%E7%BA%B3.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/lexer/%E9%97%AD%E5%8C%85%E5%BD%92%E7%BA%B3.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/lexer/NFA%E8%BD%AC%E5%8C%96%E4%B8%BADFA.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/lexer/%E6%9C%80%E5%B0%8F%E5%8C%96.png">
+<meta property="og:image" content="http://larry0454.github.io/%E5%8D%95%E9%81%8D%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="http://larry0454.github.io/%E7%8A%B6%E6%80%81%E5%9B%BE.png">
+<meta property="og:image" content="http://larry0454.github.io/NFA.png">
+<meta property="og:image" content="http://larry0454.github.io/%E5%9F%BA%E6%9C%AC%E5%BD%92%E7%BA%B31.png">
+<meta property="og:image" content="http://larry0454.github.io/%E5%9F%BA%E6%9C%AC%E5%BD%92%E7%BA%B32.png">
+<meta property="og:image" content="http://larry0454.github.io/%E5%B9%B6%E5%BD%92%E7%BA%B3.png">
+<meta property="og:image" content="http://larry0454.github.io/%E8%BF%9E%E6%8E%A5%E5%BD%92%E7%BA%B3.png">
+<meta property="og:image" content="http://larry0454.github.io/%E9%97%AD%E5%8C%85%E5%BD%92%E7%BA%B3.png">
+<meta property="og:image" content="http://larry0454.github.io/NFA%E8%BD%AC%E5%8C%96%E4%B8%BADFA.png">
+<meta property="og:image" content="http://larry0454.github.io/%E6%9C%80%E5%B0%8F%E5%8C%96.png">
 <meta property="article:published_time" content="2024-03-27T13:32:45.000Z">
 <meta property="article:modified_time" content="2024-06-28T15:35:01.437Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="compiler">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/compiler/lexer/%E5%8D%95%E9%81%8D%E7%BB%93%E6%9E%84.png">
+<meta name="twitter:image" content="http://larry0454.github.io/%E5%8D%95%E9%81%8D%E7%BB%93%E6%9E%84.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -332,13 +332,13 @@ t</li>
 <ul>
 <li><p><u>单遍扫描</u>的词法分析程序：以<strong>词法分析</strong>为核心</p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/compiler/lexer/单遍结构.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
+<p><img src="/单遍结构.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
 </figure></li>
 <li><p>词法规则：规定了<u>四类<strong>单词</strong></u>的构造方式</p></li>
 <li><p>词法状态图：根据<strong>词法规则</strong>构造
 <br><strong>注意</strong>：小的单词集合可被简单构造为无环转移图；<u>无限</u>的词类（如标识符、无符号整数）需要构造<strong><u>有环</u>转移图</strong></p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/compiler/lexer/状态图.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
+<p><img src="/状态图.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
 </figure></li>
 <li><p>词法分析程序：设计<u>单词分类</u>、分析程序所需的<u>全局变量</u>、<u>词法分析程序算法</u></p></li>
 </ul>
@@ -385,7 +385,7 @@ S\)</span></li>
 <p><strong>注意</strong>：对于不确定的状态机，其<u>不确定性</u>在于<span class="math inline">\(\delta\)</span>是一个<strong>多值函数</strong>（状态对<u>同一输入符号</u>可能有<u>多个后继状态</u>），且<strong>允许特殊输入为
 <span class="math inline">\(\epsilon\)</span></strong>（可以在<u>无任何输入字符</u>的情况下<u>直接转移</u>）</p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/compiler/lexer/NFA.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
+<p><img src="/NFA.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
 <figcaption>
 <p>NFA的状态转移</p>
 </figcaption>
@@ -451,13 +451,13 @@ e_2e_3\)</span></li>
 <ul>
 <li><p>基本规则：对于正则表达式的两条<strong>归纳基础</strong>：</p>
 <figure style="text-align:center;">
-<p><img src="/2024/03/27/compiler/lexer/基本归纳1.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
+<p><img src="/基本归纳1.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
 <figcaption>
 <p>空串规则</p>
 </figcaption>
 </figure>
 <figure style="text-align:center;">
-<p><img src="/2024/03/27/compiler/lexer/基本归纳2.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
+<p><img src="/基本归纳2.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
 <figcaption>
 <p>字符规则</p>
 </figcaption>
@@ -465,7 +465,7 @@ e_2e_3\)</span></li>
 <hr></li>
 <li><p>归纳规则：对于正则表达式的三种<strong>归纳步骤</strong>：</p>
 <figure style="text-align:center;">
-<p><img src="/2024/03/27/compiler/lexer/并归纳.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
+<p><img src="/并归纳.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
 <figcaption>
 <p>并归纳</p>
 </figcaption>
@@ -473,7 +473,7 @@ e_2e_3\)</span></li>
 <p>合并后，原先的两个有穷自动机<strong>共享</strong>一个初始状态和接受状态</p>
 <hr>
 <figure style="text-align:center;">
-<p><img src="/2024/03/27/compiler/lexer/连接归纳.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
+<p><img src="/连接归纳.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
 <figcaption>
 <p>连接归纳</p>
 </figcaption>
@@ -482,7 +482,7 @@ e_2e_3\)</span></li>
 的初始状态<strong>合并</strong>成一个中间状态</p>
 <hr>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/compiler/lexer/闭包归纳.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
+<p><img src="/闭包归纳.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
 <figcaption>
 <p>闭包归纳</p>
 </figcaption>
@@ -512,7 +512,7 @@ a)\)</span>，即从<u>状态集I</u>中的<strong>所有状态</strong>经过<s
 <li>对DFA的各状态<strong>重新标记</strong>（DFA的每个状态都是原NFA状态的<strong>集合</strong>）；确定新的转移函数</li>
 </ol>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/compiler/lexer/NFA转化为DFA.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
+<p><img src="/NFA转化为DFA.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
 <figcaption>
 <p>DFA的每一个状态都是NFA状态集合的子集</p>
 </figcaption>
@@ -544,7 +544,7 @@ a)\)</span>，即从<u>状态集I</u>中的<strong>所有状态</strong>经过<s
 <li>对化简后的DFA各分区<strong>重新标记</strong>（每个分区都是原DFA的<strong>状态集合</strong>）；确定新的转移函数</li>
 </ol>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/compiler/lexer/最小化.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/最小化.png" srcset="/img/loading.gif" lazyload></p>
 <figcaption>
 <p>总是将DFA的分区一分为二</p>
 </figcaption>

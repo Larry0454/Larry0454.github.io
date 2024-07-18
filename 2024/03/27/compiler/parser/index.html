@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="语法分析  一、语法分析的功能  根据文法规则，从源程序单词符号串中识别语法成分 进行语法检查、报告错误   二、自顶向下分析  分析过程：给定符号串s，根据文法为s构造语法树；若成功，则s为语法树对应的语法成分，即 s\(\in\) L(G[Z]) 注意：该过程之前需要先预测串s属于哪种语法成分，且可能会回溯   三、二义性问题  文法的二义性：对于文法的某个句">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/parser/%E9%87%8D%E6%96%B0%E6%8E%92%E5%88%97.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/compiler/parser/%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D.png">
+<meta property="og:image" content="http://larry0454.github.io/%E9%87%8D%E6%96%B0%E6%8E%92%E5%88%97.png">
+<meta property="og:image" content="http://larry0454.github.io/%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D.png">
 <meta property="article:published_time" content="2024-03-27T13:36:47.000Z">
 <meta property="article:modified_time" content="2024-06-27T13:37:40.780Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="compiler">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/compiler/parser/%E9%87%8D%E6%96%B0%E6%8E%92%E5%88%97.png">
+<meta name="twitter:image" content="http://larry0454.github.io/%E9%87%8D%E6%96%B0%E6%8E%92%E5%88%97.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -321,7 +321,7 @@ P&#39;} \rightarrow \text{vP&#39; | }\epsilon\)</span>，即改成右递归</p>
 <ol type="1">
 <li><p>将文法各规则<u>重新排列</u>，使得<strong>后续规则产生式体</strong>中的非终结符仅来自<strong>其前规则的产生式头</strong></p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/compiler/parser/重新排列.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/重新排列.png" srcset="/img/loading.gif" lazyload></p>
 </figure></li>
 <li><p>根据以下算法消除左递归</p></li>
 </ol>
@@ -379,7 +379,7 @@ j），即需要有<u>确定的产生式选择</u></li>
 <li>分析程序结束前，需要<strong>预读下一个单词</strong>，以保证当前子程序退出时，已经预读好了下一个单词</li>
 </ol>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/compiler/parser/递归下降.png" srcset="/img/loading.gif" lazyload>
+<p><img src="/递归下降.png" srcset="/img/loading.gif" lazyload>
 <figurecap>非终结符Z的分析流程</figurecap></p>
 </figure>
 <p><strong>注意</strong>：递归下降语法分析是<strong>最左推导</strong>的过程</p></li>

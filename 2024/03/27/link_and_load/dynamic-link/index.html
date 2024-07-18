@@ -23,15 +23,15 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="装载与动态链接  一、可执行文件的装载与进程  进程虚拟地址空间：每个运行的程序拥有自己独立的虚拟地址空间 在32位平台下：  Linux：高1GB分给操作系统，低3GB分给用户程序 Windows：高2GB分给操作系统，低2GB分给用户程序  注意：硬件位数决定了寻址空间的上限：如32位的硬件平台决定了虚拟地址空间为 0 ~ \(2^{32} - 1\) PAE（Phys">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/link_and_load/dynamic-link/%E8%B0%83%E7%94%A8%E6%A0%91.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/link_and_load/dynamic-link/VMA.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/link_and_load/dynamic-link/%E6%A0%88.png">
+<meta property="og:image" content="http://larry0454.github.io/%E8%B0%83%E7%94%A8%E6%A0%91.png">
+<meta property="og:image" content="http://larry0454.github.io/VMA.png">
+<meta property="og:image" content="http://larry0454.github.io/%E6%A0%88.png">
 <meta property="article:published_time" content="2024-03-27T12:52:37.000Z">
 <meta property="article:modified_time" content="2024-07-07T14:59:57.198Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="link and load">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/link_and_load/dynamic-link/%E8%B0%83%E7%94%A8%E6%A0%91.png">
+<meta name="twitter:image" content="http://larry0454.github.io/%E8%B0%83%E7%94%A8%E6%A0%91.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -305,7 +305,7 @@ Extension）：<strong>扩充硬件地址线</strong>，以扩展32位平台的�
 <li><p>覆盖规则：若模块A和模块B<strong>不会相互调用</strong>，两者就可能<strong>互相覆盖</strong></p></li>
 <li><p>调用树：程序员将各模块按调用关系组织成<u>树结构</u>：</p>
 <figure style="text-align:center;">
-<p><img src="/2024/03/27/link_and_load/dynamic-link/调用树.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
+<p><img src="/调用树.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
 <figcaption>
 <p>调用树图示</p>
 </figcaption>
@@ -368,7 +368,7 @@ VMA表示<u>虚拟地址</u>与<u>ELF中指定段的位置</u>间的关系（段
 <li>栈 VMA：权限可读写、不可执行；无映像文件（匿名）</li>
 </ol>
 <figure style="text-align:center;">
-<p><img src="/2024/03/27/link_and_load/dynamic-link/VMA.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
+<p><img src="/VMA.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
 <figcaption>
 <p>VMA 映射图示</p>
 </figcaption>
@@ -388,7 +388,7 @@ VMA表示<u>虚拟地址</u>与<u>ELF中指定段的位置</u>间的关系（段
 <ul>
 <li><p>栈空间布局：由esp指针指向栈顶</p>
 <figure style="text-align:center;">
-<p><img src="/2024/03/27/link_and_load/dynamic-link/栈.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
+<p><img src="/栈.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
 <figcaption>
 <p>栈空间图示</p>
 </figcaption>

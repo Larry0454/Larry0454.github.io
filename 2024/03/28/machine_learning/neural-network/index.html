@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="神经网络  一、感知器  感知器的定义：以一个实值向量为输入，计算输入中各分量的线性组合，最后通过激活函数计算输出 感知器的输出计算公式： \[ o(x_1, ..., x_n) &#x3D; \begin{cases} 1 &amp; \omega_0 + \omega_1 x_1 + ... + \omega_n x_n \gt 0 \\ -1 &amp; otherwise \en">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/28/machine_learning/neural-network/BP%E7%AE%97%E6%B3%95.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/28/machine_learning/neural-network/Elman%E7%BD%91%E7%BB%9C.png">
+<meta property="og:image" content="http://larry0454.github.io/BP%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="http://larry0454.github.io/Elman%E7%BD%91%E7%BB%9C.png">
 <meta property="article:published_time" content="2024-03-28T00:29:00.000Z">
 <meta property="article:modified_time" content="2024-07-07T15:00:51.148Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/28/machine_learning/neural-network/BP%E7%AE%97%E6%B3%95.png">
+<meta name="twitter:image" content="http://larry0454.github.io/BP%E7%AE%97%E6%B3%95.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -361,7 +361,7 @@ sigmoid(x) = \frac{1}{1 + e^{-x}}
 <p>设<span class="math inline">\(x_{ji}\)</span>为神经元j的第i个<strong>输入</strong>，<span class="math inline">\(\omega_{ji}\)</span>表示对应的<strong>权重</strong>，<span class="math inline">\(net_j\)</span>表示神经元j<strong>输入的线性加权</strong>，<span class="math inline">\(o_j\)</span>表示神经元j的<strong>阈值输出</strong></p>
 <p>downstream(j)表示以神经元j的输出为直接输入的<strong>下一层神经元</strong>的集合</p>
 <figure style="text-align:center;">
-<p><img src="/2024/03/28/machine_learning/neural-network/BP算法.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
+<p><img src="/BP算法.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
 <figcaption>
 <p>BP算法图示</p>
 </figcaption>
@@ -508,7 +508,7 @@ t_{kd}}{\partial x_d^j} - \frac{\partial o_{kd}}{\partial x_d^j})^2]
 <ul>
 <li><p>递归神经网络：包含<strong>有向环</strong>结构，神经元的输出可反馈作为输入信号，可处理<strong>时序相关</strong>的变化</p>
 <figure style="text-align:center;">
-<p><img src="/2024/03/28/machine_learning/neural-network/Elman网络.png" srcset="/img/loading.gif" lazyload width="30%"></p>
+<p><img src="/Elman网络.png" srcset="/img/loading.gif" lazyload width="30%"></p>
 <figcaption>
 <p>Elman递归网络结构</p>
 </figcaption>

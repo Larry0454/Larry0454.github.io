@@ -23,21 +23,21 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="传输层 一、传输层协议概述  传输层（应用层）功能：为上面的应用层提供（端到端）通信服务  实现可靠传输：差错控制 + 顺序控制 + 拥塞控制  注意：网络层实现主机之间的逻辑通信；传输层实现应用进程之间的逻辑通信（端到端通信） 传输层主要协议：传输控制协议(TCP) + 用户数据报协议(UDP)  TCP协议：可靠传输协议，典型协议包括HTTP、FTP  提供面向连接的服">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/UDP%E6%95%B0%E6%8D%AE%E6%8A%A5.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/TCP%E9%A6%96%E9%83%A8.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E4%B8%A4%E4%B8%AA%E7%AA%97%E5%8F%A3.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/5.%20%E4%BC%A0%E8%BE%93%E5%B1%82/TCP%E7%BC%93%E5%AD%98.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E6%9B%B2%E7%BA%BF%E5%9B%BE1.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E5%BF%AB%E9%87%8D%E4%BC%A0.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E6%9B%B2%E7%BA%BF%E5%9B%BE2.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/%E8%BF%9E%E6%8E%A5%E9%87%8A%E6%94%BE.png">
+<meta property="og:image" content="http://larry0454.github.io/UDP%E6%95%B0%E6%8D%AE%E6%8A%A5.png">
+<meta property="og:image" content="http://larry0454.github.io/TCP%E9%A6%96%E9%83%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/%E4%B8%A4%E4%B8%AA%E7%AA%97%E5%8F%A3.png">
+<meta property="og:image" content="http://larry0454.github.io/D:/%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/5.%20%E4%BC%A0%E8%BE%93%E5%B1%82/TCP%E7%BC%93%E5%AD%98.png">
+<meta property="og:image" content="http://larry0454.github.io/%E6%9B%B2%E7%BA%BF%E5%9B%BE1.png">
+<meta property="og:image" content="http://larry0454.github.io/%E5%BF%AB%E9%87%8D%E4%BC%A0.png">
+<meta property="og:image" content="http://larry0454.github.io/%E6%9B%B2%E7%BA%BF%E5%9B%BE2.png">
+<meta property="og:image" content="http://larry0454.github.io/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
+<meta property="og:image" content="http://larry0454.github.io/%E8%BF%9E%E6%8E%A5%E9%87%8A%E6%94%BE.png">
 <meta property="article:published_time" content="2024-03-27T12:23:59.000Z">
 <meta property="article:modified_time" content="2024-07-07T14:58:58.409Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="computer network">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/computer_network/transport-layer/UDP%E6%95%B0%E6%8D%AE%E6%8A%A5.png">
+<meta name="twitter:image" content="http://larry0454.github.io/UDP%E6%95%B0%E6%8D%AE%E6%8A%A5.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -339,7 +339,7 @@
 <li>校验和：UDP数据报的校验和（2Byte）</li>
 <li>伪首部：不实际传输，仅在计算校验和时使用（12Byte）</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/transport-layer/UDP数据报.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p><img src="/UDP数据报.png" srcset="/img/loading.gif" lazyload width="80%"></p>
 <p><strong>注意</strong>：网络传输一般使用Big
 Endian，源端口号发送在前</p></li>
 <li><p>计算校验和：计算整个UDP数据报的<strong>二进制反码和</strong>，计算过程类似<u>网络层IP首部校验和</u></p>
@@ -396,7 +396,7 @@ port1), (IP2: port2)}</li>
 <li>选项：一种选项被称为<strong>最大报文段长度</strong>，告知对方报文段<u>数据部分最大长度</u>；可变长，最长占40Byte</li>
 <li>填充字段：为了让整个首部长度是<u>4Byte的整数倍</u></li>
 </ul>
-<p><img src="/2024/03/27/computer_network/transport-layer/TCP首部.png" srcset="/img/loading.gif" lazyload width="75%"></p></li>
+<p><img src="/TCP首部.png" srcset="/img/loading.gif" lazyload width="75%"></p></li>
 </ul>
 <hr>
 <h3 id="五tcp的可靠传输">五、TCP的可靠传输</h3>
@@ -419,10 +419,10 @@ port1), (IP2: port2)}</li>
 <li>对于未按序收到的字节，先缓存，仅返回窗口下沿对应的ack_num；最后按序交付上层的AP</li>
 </ul>
 <p><strong>注意</strong>：由于传送窗口值有一定的滞后，故发送窗口和接收窗口<u>不总是一样大</u></p>
-<p><img src="/2024/03/27/computer_network/transport-layer/两个窗口.png" srcset="/img/loading.gif" lazyload width="80%"></p>
+<p><img src="/两个窗口.png" srcset="/img/loading.gif" lazyload width="80%"></p>
 <hr></li>
 <li><p>缓存：发送方 和 接收方 均设有缓存，如下图：</p>
-<p><img src="/2024/03/27/computer_network/transport-layer/学习/计算机网络\计算机网络笔记\5. 传输层\TCP缓存.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/D:/学习\计算机网络\计算机网络笔记\5. 传输层\TCP缓存.png" srcset="/img/loading.gif" lazyload></p></li>
 </ul>
 <hr></li>
 <li><p>超时重传时间的选择：发送方在规定时间内未收到确认，就要重传超时的报文段，直至收到应答</p>
@@ -499,7 +499,7 @@ port1), (IP2: port2)}</li>
 1，并重新执行<u>慢启动算法</u></li>
 </ol></li>
 </ul>
-<p><img src="/2024/03/27/computer_network/transport-layer/曲线图1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/曲线图1.png" srcset="/img/loading.gif" lazyload></p>
 <hr></li>
 <li><p>快重传：尽快对超时报文做处理</p>
 <ul>
@@ -509,7 +509,7 @@ port1), (IP2: port2)}</li>
 <li>若发送方<u>连续接收到3个重复确认</u>，就<strong>立即重传</strong>对方尚未收到的报文段</li>
 </ol></li>
 </ul>
-<p><img src="/2024/03/27/computer_network/transport-layer/快重传.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<p><img src="/快重传.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
 <li><p>快恢复：跳过慢启动算法，直接执行拥塞避免算法</p>
 <ul>
 <li>拥塞处理：
@@ -520,7 +520,7 @@ ssthresh，直接执行<strong>拥塞避免算法</strong></li>
 </ol></li>
 </ul>
 <p><strong>注意</strong>：连续收到3个重复确认不代表发生拥塞（仅可能代表<strong>拥塞征兆</strong>）</p>
-<p><img src="/2024/03/27/computer_network/transport-layer/曲线图2.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/曲线图2.png" srcset="/img/loading.gif" lazyload></p>
 <hr></li>
 <li><p>发送窗口的上限值 = min[rwnd, cwnd]，由该式可知：</p>
 <ul>
@@ -552,12 +552,12 @@ ACK报文做回应</u>，导致挂有大量TCP半连接资源
 <li>SYN_Cookies：服务器返回SYN_ACK时，根据自身特有信息<strong>计算Cookies</strong>作为seq返回，并在收到应答前不为其分配资源</li>
 </ul></li>
 </ul>
-<p><img src="/2024/03/27/computer_network/transport-layer/三次握手.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<p><img src="/三次握手.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 <li><p>连接释放：该过程可由任意一方发起，设A主动关闭连接（FIN）</p>
 <ul>
 <li>MSL：报文最大存活时间，建议2mins</li>
 </ul>
-<p><img src="/2024/03/27/computer_network/transport-layer/连接释放.png" srcset="/img/loading.gif" lazyload width="90%">‘</p>
+<p><img src="/连接释放.png" srcset="/img/loading.gif" lazyload width="90%">‘</p>
 <p><strong>注意</strong>：A发送完最后一个ACK后，再经过2MSL就可以让本连接产生的所有报文段都<strong>从网络中消失</strong>；新连接中不会残留旧连接的报文段</p></li>
 </ul>
 

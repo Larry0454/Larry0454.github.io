@@ -23,16 +23,16 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="关系数据库  一、关系的数学定义  域：一组具有相同数据类型的值的集合，如整数、实数、布尔值等 元组和分量：设一组域为 \(D_1\), ..., \(D_n\)，这些域中可存在相同的 这些域的笛卡尔积为 \(D_1 \times \dots \times D_n &#x3D; \{(d_1, \dots d_n) | d_i \in D_i, i &#x3D; 1, \dots n\}\)  元">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/relational-database/%E8%BF%9E%E6%8E%A5%E8%BF%90%E7%AE%97.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/relational-database/%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/relational-database/%E4%B8%89%E7%B1%BB%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/27/database/relational-database/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E8%AF%AD%E8%A8%80.png">
+<meta property="og:image" content="http://larry0454.github.io/%E8%BF%9E%E6%8E%A5%E8%BF%90%E7%AE%97.png">
+<meta property="og:image" content="http://larry0454.github.io/%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97.png">
+<meta property="og:image" content="http://larry0454.github.io/%E4%B8%89%E7%B1%BB%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97.png">
+<meta property="og:image" content="http://larry0454.github.io/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E8%AF%AD%E8%A8%80.png">
 <meta property="article:published_time" content="2024-03-27T13:08:36.000Z">
 <meta property="article:modified_time" content="2024-07-07T14:59:33.814Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="database">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/03/27/database/relational-database/%E8%BF%9E%E6%8E%A5%E8%BF%90%E7%AE%97.png">
+<meta name="twitter:image" content="http://larry0454.github.io/%E8%BF%9E%E6%8E%A5%E8%BF%90%E7%AE%97.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -438,7 +438,7 @@ s[X]\}\)</span>，其中U为R和S的全体属性集合
 <br>计算自然连接：找出R和S在<u>公共属性X</u>上<strong>等值</strong>的<strong>元组对</strong>，将这些元组对<strong>拼接
 </strong>并 <strong>对列去重</strong>构成新的关系</p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/database/relational-database/连接运算.png" srcset="/img/loading.gif" lazyload> <figurecap>常见的连接运算</figurecap></p>
+<p><img src="/连接运算.png" srcset="/img/loading.gif" lazyload> <figurecap>常见的连接运算</figurecap></p>
 </figure>
 <p><strong>注意</strong>：若R和S具有<strong>同名属性A</strong>，<u>笛卡尔积</u>或<u>连接</u>后应使用<strong>各自关系名修饰属性A</strong>，如R.A、S.A以做区分</p>
 <hr></li>
@@ -450,7 +450,7 @@ R\}\)</span>
 <li><p>计算除法：先求出<span class="math inline">\(\Pi_X(R)\)</span>，再分别计算<span class="math inline">\(\Pi_X(R)\)</span>中各元素的<strong>象集<span class="math inline">\(Y_x\)</span></strong>，找出所有满足 <span class="math inline">\(\Pi_Y(S) \subseteq Y_x\)</span>
 的<strong>X值</strong></p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/database/relational-database/除法运算.png" srcset="/img/loading.gif" lazyload> <figurecap>除法运算</figurecap></p>
+<p><img src="/除法运算.png" srcset="/img/loading.gif" lazyload> <figurecap>除法运算</figurecap></p>
 </figure></li>
 <li><p>关系代数的适用场景：各运算之间常常<strong>组合使用</strong></p>
 <ul>
@@ -511,7 +511,7 @@ R(t)\}\)</span></li>
 </ul></li>
 <li><p>三类关系运算的等价性：经过安全约束的关系演算和关系代数的<strong>表达能力是等价的</strong>，可以相互转换</p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/database/relational-database/三类关系运算.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
+<p><img src="/三类关系运算.png" srcset="/img/loading.gif" lazyload width="75%" height="75%"></p>
 <figcaption>
 <p>三类关系运算</p>
 </figcaption>
@@ -538,7 +538,7 @@ R(t)\}\)</span></li>
 </ul></li>
 <li><p>查询语言：关系数据语言的<strong>核心是<u>查询</u></strong>，<u>关系运算</u>是设计<u>关系数据语言</u>的基础</p>
 <figure style="text-align:center">
-<p><img src="/2024/03/27/database/relational-database/关系数据语言.png" srcset="/img/loading.gif" lazyload>
+<p><img src="/关系数据语言.png" srcset="/img/loading.gif" lazyload>
 <figurecap>关系运算的分类决定查询语言的分类</figurecap></p>
 </figure></li>
 </ul>
