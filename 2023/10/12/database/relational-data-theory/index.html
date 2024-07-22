@@ -1,0 +1,1095 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="关系数据理论 一、函数依赖  函数依赖的定义：设 R(U) 是属性全集 U 上的关系模式，X、Y \(\subseteq\) U，r $$ R，t、s \(\in\) r 若 t[X] &#x3D; s[X]，则有 t[Y] &#x3D; t[Y]，称为 X 函数决定 Y，或 Y 函数依赖于 X，记作 X \(\rightarrow\) Y 注意：X \(\rightarrow\) Y 可以表述为对于属">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『database-4』relational data theory">
+<meta property="og:url" content="http://larry0454.github.io/2023/10/12/database/relational-data-theory/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="关系数据理论 一、函数依赖  函数依赖的定义：设 R(U) 是属性全集 U 上的关系模式，X、Y \(\subseteq\) U，r $$ R，t、s \(\in\) r 若 t[X] &#x3D; s[X]，则有 t[Y] &#x3D; t[Y]，称为 X 函数决定 Y，或 Y 函数依赖于 X，记作 X \(\rightarrow\) Y 注意：X \(\rightarrow\) Y 可以表述为对于属">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://larry0454.github.io/2023/10/12/database/relational-data-theory/%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96%E4%BE%8B%E5%9B%BE.png">
+<meta property="og:image" content="http://larry0454.github.io/2023/10/12/database/relational-data-theory/%E9%97%AD%E5%8C%85%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="http://larry0454.github.io/2023/10/12/database/relational-data-theory/%E8%A7%84%E8%8C%83%E5%8C%96%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="http://larry0454.github.io/2023/10/12/database/relational-data-theory/%E6%97%A0%E6%8D%9F%E5%88%86%E8%A7%A3%E5%88%A4%E5%AE%9A%E7%AE%97%E6%B3%95.png">
+<meta property="article:published_time" content="2023-10-12T13:18:40.000Z">
+<meta property="article:modified_time" content="2024-07-22T05:15:03.833Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="database">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://larry0454.github.io/2023/10/12/database/relational-data-theory/%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96%E4%BE%8B%E5%9B%BE.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>『database-4』relational data theory - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="『database-4』relational data theory"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-12 21:18" pubdate>
+          October 12, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.4k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          78 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">『database-4』relational data theory</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="关系数据理论">关系数据理论</h2>
+<h3 id="一函数依赖">一、函数依赖</h3>
+<ul>
+<li><p>函数依赖的定义：设 R(U) 是属性全集 U 上的关系模式，X、Y <span class="math inline">\(\subseteq\)</span> U，r $$ R，t、s <span class="math inline">\(\in\)</span> r <br>若 t[X] = s[X]，则有 t[Y] =
+t[Y]，称为 <strong>X 函数决定 Y</strong>，或 <strong>Y 函数依赖于
+X</strong>，记作 X <span class="math inline">\(\rightarrow\)</span> Y
+<br><strong>注意</strong>：X <span class="math inline">\(\rightarrow\)</span> Y
+可以表述为对于属性组X上的任一值，Y中有<u>唯一的值</u>与其对应</p></li>
+<li><p>平凡与非平凡的函数依赖：设 X <span class="math inline">\(\rightarrow\)</span> Y</p>
+<ul>
+<li>平凡的函数依赖：若 Y <span class="math inline">\(\subseteq\)</span>
+X，则称 X <span class="math inline">\(\rightarrow\)</span> Y
+是<strong>平凡</strong>的函数依赖；任一关系模式下<u>平凡依赖总是成立</u></li>
+<li>非平凡的函数依赖：若 Y <span class="math inline">\(\nsubseteq\)</span> X，则称 X <span class="math inline">\(\rightarrow\)</span> Y
+是<strong>非平凡</strong>的函数依赖</li>
+</ul></li>
+<li><p>决定因素：设 X <span class="math inline">\(\rightarrow\)</span>
+Y，则称 X 为<strong>决定因素</strong></p>
+<figure style="text-align:Center">
+<p><img src="/2023/10/12/database/relational-data-theory/函数依赖例图.png" srcset="/img/loading.gif" lazyload> <figurecap>从 X 到 Y
+满足单射</figurecap></p>
+</figure>
+<p><strong>注意</strong>：<strong>函数依赖不随时间而变</strong>；虽然关系
+R 随时间而变化，但 X <span class="math inline">\(\rightarrow\)</span> Y
+总保持不变</p></li>
+<li><p>函数依赖与属性间联系：可分为 1 : 1、1 : n、n : m 三种</p>
+<ul>
+<li>一对一：若 X 与 Y 满足一对一关系（学号 与 身份证号），则有 X <span class="math inline">\(\leftrightarrow\)</span> Y</li>
+<li>一对多：若 X 与 Y 满足一对多关系（部门号 与 部门员工号），则有且仅有
+Y <span class="math inline">\(\rightarrow\)</span> X</li>
+<li>多对多：若 X 与 Y 满足多对多关系（学号 与 课程号），则 X 与 Y
+之间不存在函数依赖</li>
+</ul>
+<p><strong>注意</strong>：函数依赖是根据<strong>具体场景下的<u>语义</u></strong>确定的</p>
+<hr></li>
+<li><p>函数依赖类型：设关系模式 R(U) 下有 X <span class="math inline">\(\rightarrow\)</span> Y</p>
+<ul>
+<li>完全函数依赖：若对 X 的<u>任意真子集</u> X'，<strong>都有 X' <span class="math inline">\(\nrightarrow\)</span> Y</strong>，则 Y 对 X
+完全函数依赖，记作 X <span class="math inline">\(\xrightarrow{f}\)</span> Y</li>
+<li>部分函数依赖：若不满足完全函数依赖，则为部分函数依赖，记作 X <span class="math inline">\(\xrightarrow{p}\)</span> Y</li>
+<li>传递函数依赖：若 X <span class="math inline">\(\rightarrow\)</span>
+Y、Y <span class="math inline">\(\rightarrow\)</span> Z，但 Y <span class="math inline">\(\nrightarrow\)</span> X，则称 Z 对 X
+<strong>传递函数依赖</strong>，记作 X <span class="math inline">\(\xrightarrow{t}\)</span> Z
+<strong>注意</strong>：这里若 Y <span class="math inline">\(\rightarrow\)</span> X，相当于 X 与 Y
+之间满足<u>一对一关系</u>，故有 X <span class="math inline">\(\xrightarrow{直接}\)</span> Z，而不是间接依赖</li>
+</ul>
+<hr></li>
+<li><p>候选码：设 K 为 R&lt;U, F&gt; 中的属性组，若 K <span class="math inline">\(\xrightarrow{f}\)</span> U，则称 K 是 R
+的候选码（主码是其中一个候选码）
+<br><strong>注意</strong>：“完全依赖”表明码具有<strong>最小性</strong>，若抽去任意一个属性该候选码将失去<strong>唯一标识性</strong></p></li>
+<li><p>主属性与非主属性：</p>
+<ul>
+<li>主属性：包含在任意一个候选码中的属性</li>
+<li>非主属性：不包含在任何码中的属性</li>
+</ul>
+<hr></li>
+<li><p>逻辑蕴含：设关系模式为 R&lt;U, F&gt;，若可从 F
+中的函数依赖<strong>推导出</strong> X <span class="math inline">\(\rightarrow\)</span> Y，则称 F 逻辑蕴含 X <span class="math inline">\(\rightarrow\)</span> Y</p></li>
+<li><p>函数依赖集F的闭包：为 F
+所<strong><u>逻辑蕴含</u>的函数依赖的全体</strong>称作F的闭包，记作
+<span class="math inline">\(\text{F}^+\)</span></p></li>
+<li><p>Armstrong公理系统：设关系模式为 R&lt;U, F&gt;</p>
+<ul>
+<li>自反律：若 Y <span class="math inline">\(\subseteq\)</span> X，则 X
+<span class="math inline">\(\rightarrow\)</span> Y 为 F
+所蕴含（平凡依赖）</li>
+<li>增广律：若 X <span class="math inline">\(\rightarrow\)</span> Y 被 F
+所蕴含，则 XZ <span class="math inline">\(\rightarrow\)</span> YZ 被 F
+所蕴含（可拼接相同的属性组）</li>
+<li>传递律：若 X <span class="math inline">\(\rightarrow\)</span> Y 和 Y
+<span class="math inline">\(\rightarrow\)</span> Z 为 F 所蕴含，则 X
+<span class="math inline">\(\rightarrow\)</span> Z 为 F
+所蕴含（注意这不是传递依赖）</li>
+</ul></li>
+<li><p>Armstrong公理系统推论：</p>
+<ul>
+<li><p>合并规则：设 X <span class="math inline">\(\rightarrow\)</span>
+Y，X <span class="math inline">\(\rightarrow\)</span> Z，有 X <span class="math inline">\(\rightarrow\)</span> YZ（直接用定义证明）</p></li>
+<li><p>伪传递规则：设 X <span class="math inline">\(\rightarrow\)</span>
+Y、WY <span class="math inline">\(\rightarrow\)</span> Z，有 WX <span class="math inline">\(\rightarrow\)</span> Z（增广律WX <span class="math inline">\(\rightarrow\)</span> WY + 传递律）</p></li>
+<li><p>分解规则：设 X <span class="math inline">\(\rightarrow\)</span>
+Y，若 Z <span class="math inline">\(\subseteq\)</span> Y，有 X <span class="math inline">\(\rightarrow\)</span> Z（自反律Y <span class="math inline">\(\rightarrow\)</span> Z + 传递律）</p>
+<hr></li>
+<li><p>合并规则 + 分解规则：X <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(A_1A_2\dots A_k\)</span> 成立 <span class="math inline">\(\Leftrightarrow\)</span> X <span class="math inline">\(\rightarrow A_i\)</span> 成立（i = 1, 2, ...,
+k）</p></li>
+</ul></li>
+<li><p>依赖集的闭包：设关系模式为 R&lt;U, F&gt;，为 F
+所<strong>逻辑蕴含的函数依赖的全体</strong>称作 F 的闭包，记作 <span class="math inline">\(\text{F}^+\)</span></p></li>
+<li><p>属性集X关于依赖集F的闭包：设关系模式 R&lt;U, F&gt;，且 X <span class="math inline">\(\subseteq\)</span> U <br><span class="math inline">\(X_F^+ = \{A \text{ | } X \rightarrow A \text{
+能由F根据Armstrong公理推导出}\}\)</span>（可理解为<u>X所能决定的</u><strong>属性</strong>集合）</p>
+<p>如何求解 <span class="math inline">\(X_F^+\)</span>
+？利用以下算法<strong>反复迭代</strong>（计算不动点）</p>
+<figure style="text-align:center">
+<p><img src="/2023/10/12/database/relational-data-theory/闭包算法.png" srcset="/img/loading.gif" lazyload></p>
+</figure>
+<p><strong>注意</strong>：迭代中的每一步，是抽取闭包集合中的一个<u>属性<strong>子集A</strong></u>，查找是否存在由<u>以该子集为<strong>决定因素</strong></u>的函数依赖</p></li>
+<li><p><strong>定理</strong>：X <span class="math inline">\(\rightarrow\)</span> Y 能够由 F 根据 Armstrong
+公理导出 <span class="math inline">\(\Leftrightarrow\)</span> Y <span class="math inline">\(\subseteq\)</span> <span class="math inline">\(\text{X}_F^+\)</span></p></li>
+<li><p>Armstrong公理系统的有效性与完备性:</p>
+<ul>
+<li>有效性：由 F 出发根据 Armstrong
+公理推导出的<strong>每个函数依赖</strong>必定在 F
+所蕴含的函数依赖的全体中</li>
+<li>完备性：F 所蕴含的函数依赖全体为 <span class="math inline">\(\text{F}^+\)</span>
+中的<strong>每个函数依赖</strong>，必可由F根据Armstrong公理导出</li>
+</ul>
+<hr></li>
+<li><p>函数依赖集等价：设函数依赖集F、G，若<span class="math inline">\(\text{F}^+ = \text{G}^+\)</span>，则称 F 与 G
+等价；<span class="math inline">\(\text{F}^+ = \text{G}^+
+\Leftrightarrow \text{F} \subseteq \text{G}^+\)</span> 且 <span class="math inline">\(\text{G} \subseteq \text{F}^+\)</span></p></li>
+<li><p>极小依赖集：若 F 同时满足下列条件，则称 F
+为一个极小函数依赖集</p>
+<ol type="1">
+<li>依赖右部A必须是<strong>单属性</strong>：F 中的任一函数依赖 X <span class="math inline">\(\rightarrow\)</span> A，A 必须是单属性的</li>
+<li>不存在<strong>多余的函数依赖</strong> X <span class="math inline">\(\rightarrow\)</span> A：F 中不存在函数依赖 X <span class="math inline">\(\rightarrow\)</span> A，使得 F 与 F - {X <span class="math inline">\(\rightarrow\)</span> A} 等价</li>
+<li>依赖<strong>左部无多余属性Z</strong>：F 中不存在函数依赖 X <span class="math inline">\(\rightarrow\)</span> A，使得 Z <span class="math inline">\(\subset\)</span> A，F 与 F - {X <span class="math inline">\(\rightarrow\)</span> A} <span class="math inline">\(\cup\)</span> {Z <span class="math inline">\(\rightarrow\)</span> A} 等价</li>
+</ol></li>
+<li><p>依赖集的极小化算法：每个函数依赖集 F 均等价于一个极小依赖集 <span class="math inline">\(\text{F}_m\)</span></p>
+<ol type="1">
+<li>对 F 中的所有依赖 X <span class="math inline">\(\rightarrow\)</span>
+<span class="math inline">\(A_1A_2\dots A_n\)</span>，直接用 X <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(A_k\)</span>（k = 1, ...,
+n）替代它（右部单属性化）</li>
+<li>对 F 中的所有依赖X <span class="math inline">\(\rightarrow\)</span>
+A，设X = <span class="math inline">\(B_1B_2\dots B_n\)</span>，若A <span class="math inline">\(\in\)</span> <span class="math inline">\((X -
+B_i)_F^+\)</span>，则X = X - <span class="math inline">\(B_i\)</span>（消去左部多余属性）
+<br><strong>注意</strong>：这一步 <u>不需要</u> 更改依赖集合 F</li>
+<li>对 F 中的所有依赖 X <span class="math inline">\(\rightarrow\)</span>
+A，令 G = F - {X <span class="math inline">\(\rightarrow\)</span> A}，若
+A <span class="math inline">\(\in\)</span> <span class="math inline">\((X)_G^+\)</span>，则从F中去掉 X <span class="math inline">\(\rightarrow\)</span> A（消去多余依赖）</li>
+</ol></li>
+</ul>
+<hr>
+<h3 id="二规范化">二、规范化</h3>
+<ul>
+<li><p>范式的等级：1NF <span class="math inline">\(\supset\)</span> 2NF
+<span class="math inline">\(\supset\)</span> 3NF <span class="math inline">\(\supset\)</span> BCNF <span class="math inline">\(\supset\)</span> 4NF <span class="math inline">\(\supset\)</span>
+5NF；低级关系模式可以<strong>分解</strong>为若干高一级的关系模式</p></li>
+<li><p>1NF：关系表中每一行和列的交叉位置上总是一个单一的值（而非值的集合），即不允许“表中套表”</p></li>
+<li><p>2NF：R <span class="math inline">\(\in\)</span> 1NF，且
+每个<strong>非主属性<u>完全依赖</u>于所有候选码</strong></p>
+<ul>
+<li>1NF <span class="math inline">\(\rightarrow\)</span>
+2NF：将不完全依赖于码的非主属性A<strong>分离出来</strong>，<u>与其依赖的主属性搭配</u>起来形成新的2NF模式</li>
+</ul></li>
+<li><p>3NF：R <span class="math inline">\(\in\)</span>
+2NF（非主属性不部分依赖于任何候选码），且
+每个<strong>非主属性都<u>不传递依赖于</u>的任何候选码</strong></p>
+<ul>
+<li>2NF <span class="math inline">\(\rightarrow\)</span>
+3NF：将传递路径上的各<u>决定因素</u>分离出来作为新的码，<strong>切断原先的传递路径</strong></li>
+</ul></li>
+<li><p>BCNF：设关系模式 R&lt;U, F&gt;，若 F
+中的每个<strong>决定因素都<u>包含了候选码</u></strong>，则 R <span class="math inline">\(\in\)</span> BCNF
+<br><strong>注意</strong>：根据上述定义，BCNF
+也可以定义为：不存在<u><strong>主属性</strong></u>和非主属性，部分依赖or传递依赖于任何候选码</p>
+<ul>
+<li>所有非主属性都完全函数依赖于每个候选码</li>
+<li>所有<u><strong>主属性</strong></u>都完全函数依赖于每个不包含它的候选码</li>
+<li>没有任何属性完全函数依赖于非码的任何一组属性</li>
+</ul>
+<p><strong>注意</strong>：若决定因素仅包含候选码的<u>一部分</u>，则存在对候选码的<strong>部分依赖</strong>
+<br>若决定因素<u>不包含</u>候选码，则存在对候选码的<strong>传递依赖</strong></p></li>
+</ul>
+<hr>
+<h3 id="三多值依赖与第四范式">三、多值依赖与第四范式</h3>
+<ul>
+<li><p>多值依赖的定义：设关系模式为 R(U)，X、Y、Z <span class="math inline">\(\subseteq\)</span> U，且 Z = U - X - Y（Z 与
+X和Y均互不相容） <br>给定（X, Z）下的<u>任一值</u>（x, z），有<u>一组 Y
+的值</u> <span class="math inline">\(\{y \text{ | } y \in
+\text{Dom(Y)}\}\)</span>，使得该组Y值<strong><u>仅取决于x值</u>而与z值无关</strong>
+<br>记作 X <span class="math inline">\(\rightarrow \rightarrow\)</span>
+Y <br><strong>注意</strong>：多值依赖反映了属性之间 <strong>1 :
+n</strong>
+的关系，常出现在<strong>同一组织下客体间<u>双向全选</u></strong>的情景中</p></li>
+<li><p>关系中存在多值依赖：找到<strong>X值相同</strong>的两个元组，仅交换Y值，若两个<strong>新的元组均仍在原关系中</strong>，说明
+X <span class="math inline">\(\rightarrow \rightarrow\)</span> Y
+<br><strong>注意</strong>：上述方法说明，只需取定X的值，就足以对<u>Y的值集</u>产生决定性影响</p></li>
+<li><p>平凡与非平凡的多值依赖：设 X <span class="math inline">\(\rightarrow \rightarrow\)</span> Y，Z = U - X -
+Y</p>
+<ul>
+<li>平凡多值依赖：若 Z = <span class="math inline">\(\varnothing\)</span>
+，则为平凡多值依赖（U仅由X和Y组成）</li>
+<li>非平凡多值依赖：若 Z <span class="math inline">\(\ne\)</span> <span class="math inline">\(\varnothing\)</span>，则为非平凡多值依赖（U除了X和Y，还有Z）</li>
+</ul></li>
+<li><p>多值依赖的性质：设 Z = U - X - Y</p>
+<ul>
+<li>对称性：若 X <span class="math inline">\(\rightarrow
+\rightarrow\)</span> Y，则 X <span class="math inline">\(\rightarrow
+\rightarrow\)</span> Z（Y 与 Z 对称）</li>
+<li>传递性：若 X <span class="math inline">\(\rightarrow
+\rightarrow\)</span> Y，Y <span class="math inline">\(\rightarrow
+\rightarrow\)</span> Z，则 X <span class="math inline">\(\rightarrow
+\rightarrow\)</span> Z - Y</li>
+<li>X <span class="math inline">\(\rightarrow\)</span> Y 可以看作是 X
+<span class="math inline">\(\rightarrow \rightarrow\)</span> Y
+的特殊情况 （Y值集 <span class="math inline">\(\Rightarrow\)</span>
+Y单值）
+<ul>
+<li>若 X <span class="math inline">\(\rightarrow \rightarrow\)</span>
+Y，X <span class="math inline">\(\rightarrow \rightarrow\)</span>
+Z，则有 X <span class="math inline">\(\rightarrow \rightarrow\)</span>
+YZ</li>
+<li>若 X <span class="math inline">\(\rightarrow \rightarrow\)</span>
+Y，X <span class="math inline">\(\rightarrow \rightarrow\)</span>
+Z，则有 X <span class="math inline">\(\rightarrow \rightarrow\)</span> Y
+<span class="math inline">\(\cap\)</span> Z</li>
+<li>若 X <span class="math inline">\(\rightarrow \rightarrow\)</span>
+Y，X <span class="math inline">\(\rightarrow \rightarrow\)</span>
+Z，则有 X <span class="math inline">\(\rightarrow \rightarrow\)</span> Y
+- Z，X <span class="math inline">\(\rightarrow \rightarrow\)</span> Z -
+Y</li>
+</ul></li>
+</ul></li>
+<li><p>多值依赖与函数依赖的区别：</p>
+<ul>
+<li>X <span class="math inline">\(\rightarrow \rightarrow\)</span> Y 在
+U 上成立，则必在W（XY <span class="math inline">\(\subseteq\)</span> W
+<span class="math inline">\(\subseteq\)</span>
+U）上成立，<u><strong>反之不一定</strong></u>（多值依赖与其余属性Z有关）
+<br>X <span class="math inline">\(\rightarrow\)</span> Y
+在任意属性集W（XY <span class="math inline">\(\subseteq\)</span> W <span class="math inline">\(\subseteq\)</span> U）上总是成立</li>
+<li>X <span class="math inline">\(\rightarrow\)</span> Y 在 R(U)
+上成立，则对于任意 Y' <span class="math inline">\(\subseteq\)</span>
+Y，X <span class="math inline">\(\rightarrow\)</span> Y' 总是成立 <br>X
+<span class="math inline">\(\rightarrow \rightarrow\)</span> Y 在 R(U)
+上成立，但对于任意 Y' <span class="math inline">\(\subseteq\)</span>
+Y，X <span class="math inline">\(\rightarrow \rightarrow\)</span> Y'
+不一定成立</li>
+</ul>
+<hr></li>
+<li><p>4NF：设关系模式 R&lt;U, F&gt;，对于R的每个<u>非平凡的多值依赖</u>
+X <span class="math inline">\(\rightarrow \rightarrow\)</span>
+Y，<strong>X都含有码</strong>
+<br>由于“码”表示依赖具有<strong>唯一值性</strong>，故非平凡<u>且左部含码</u>的多值依赖本质上即为<u><strong>函数依赖</strong></u>
+<br><strong>注意</strong>：4NF也可定义为：R <span class="math inline">\(\in\)</span>
+BCNF，且不存在<strong><u>非平凡的非函数依赖</u>的多值依赖</strong></p></li>
+<li><p>规范化过程：见下图</p>
+<figure>
+<p><img src="/2023/10/12/database/relational-data-theory/规范化过程.png" srcset="/img/loading.gif" lazyload></p>
+</figure></li>
+<li><p>证明 (x+1)NF <span class="math inline">\(\subset\)</span>
+xNF：反设 R <span class="math inline">\(\in\)</span> (x+1)NF 且 R <span class="math inline">\(\notin\)</span> xNF， 由 xNF 的反向性质推出
+(x+1)NF 的矛盾</p></li>
+</ul>
+<hr>
+<h3 id="四模式分解理论">四、模式分解理论</h3>
+<ul>
+<li><p>关系模式分解：</p>
+<ul>
+<li>函数依赖的投影 <span class="math inline">\(F_i\)</span>：<span class="math inline">\(F_i = \{X \rightarrow Y \text{ | }X \rightarrow Y
+\in F^+ \land XY \subseteq U_i\}\)</span>，称 <span class="math inline">\(F_i\)</span> 为 <strong>F 在 <span class="math inline">\(U_i\)</span> 上的投影</strong>
+<br><strong>注意</strong>：函数依赖的分集合要求依赖的<strong>左右两侧必须均在<span class="math inline">\(U_i\)</span>中</strong>，且 <strong>X <span class="math inline">\(\rightarrow\)</span> Y可由 F 推导</strong></li>
+<li>关系模式的分解 <span class="math inline">\(\rho\)</span>：<span class="math inline">\(\rho = \{R_1&lt;U_1, F_1&gt;, \dots,R_n&lt;U_n,
+F_n&gt;\}\)</span> 其中 $_{i=1}^n U_i = $ U，且不存在 <span class="math inline">\(U_i \subseteq U_j\)</span>（i <span class="math inline">\(\ne\)</span> j）</li>
+</ul></li>
+<li><p>无损分解：设 <span class="math inline">\(\rho = \{R_1&lt;U_1,
+F_1&gt;, \dots ,R_n&lt;U_n, F_n&gt;\}\)</span> 是 R&lt;U, F&gt;
+的一个<strong>分解</strong>，定义 <span class="math inline">\(m_{\rho} =
+\Join \Pi_{R_i}(r)\)</span> <br>其中 <span class="math inline">\(\Pi_{R_i}(r)\)</span> 为 关系 r <span class="math inline">\(\in\)</span> R 上关于对应属性列 <span class="math inline">\(U_i\)</span> 的<strong>投影</strong>，<span class="math inline">\(\Join \Pi_{R_i}(r)\)</span>
+表示将<strong><u>各分模式上的属性列</u>连接起来</strong>
+<br>若对<strong>任意关系</strong> r <span class="math inline">\(\in\)</span> R，都有 r = <span class="math inline">\(m_{\rho}(r)\)</span>，则称 <span class="math inline">\(\rho\)</span> 为无损分解</p></li>
+<li><p>无损分解的判定算法：设 <span class="math inline">\(\rho =
+\{R_1&lt;U_1, F_1&gt;, \dots,R_k&lt;U_k, F_k&gt;\}\)</span>，<span class="math inline">\(U = \{A_1, \dots A_n\}\)</span></p>
+<ol type="1">
+<li>建立n列k行的二维表M：列表示属性<span class="math inline">\(A_i\)</span>、行表示一个分模式<span class="math inline">\(R_i\)</span></li>
+<li>初始化二维表：若 <span class="math inline">\(A_j \in
+U_i\)</span>，则 <span class="math inline">\(m_{ij} = a_j\)</span>；若
+<span class="math inline">\(A_j \notin U_i\)</span>，则 <span class="math inline">\(m_{ij} = b_{ij}\)</span></li>
+<li>对 <span class="math inline">\(F_i\)</span> 中的<u>每个函数依赖</u>
+X <span class="math inline">\(\rightarrow\)</span>
+Y，若M中存在<u>横向元组</u><span class="math inline">\(t_1\)</span>、<span class="math inline">\(t_2\)</span>，使得 <span class="math inline">\(t_1[X] =
+t_2[X]\)</span>，则对<strong>每个</strong><span class="math inline">\(A_i \in Y\)</span>：
+<ul>
+<li>若 <span class="math inline">\(t_1[A_i] = t_2[A_i]\)</span>
+中有一个为 <span class="math inline">\(a_i\)</span>，则将另一个也改成
+<span class="math inline">\(a_i\)</span></li>
+<li>否则，令 <span class="math inline">\(t_1[A_i] \gets
+t_2[A_i]\)</span>（二维表中<span class="math inline">\(t_1\)</span>在<span class="math inline">\(t_2\)</span>的上方）</li>
+</ul></li>
+<li>反复迭代第3步，根据最终结果判断是否为无损分解：
+<ul>
+<li>若二维表中的某行为 <span class="math inline">\(a_1\dots
+a_n\)</span>，则为无损分解</li>
+<li>否则，为有损分解</li>
+</ul></li>
+</ol></li>
+<li><p>无损分解的充要条件：设 R&lt;U, F&gt; 的一个分解为 <span class="math inline">\(\rho = \{R_1&lt;U_1, F_1&gt;,R_2&lt;U_2,
+F_2&gt;\}\)</span> <br><span class="math inline">\(\rho\)</span>
+为无损分解 <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(R_1\)</span> 和 <span class="math inline">\(R_2\)</span> 的<u>共同属性</u>至少构成 <span class="math inline">\(R_1\)</span>、<span class="math inline">\(R_2\)</span> <strong>之一的候选码</strong>，即
+<span class="math inline">\(U_1 \cap U_2 \rightarrow U_1 - U_2 \in
+F^+\)</span></p>
+<figure>
+<p><img src="/2023/10/12/database/relational-data-theory/无损分解判定算法.png" srcset="/img/loading.gif" lazyload></p>
+</figure>
+<hr></li>
+<li><p>分解的保持函数依赖性：若 <span class="math inline">\(F^+ =
+(\bigcup_{i=1}^n F_i)^+\)</span>，则称 <span class="math inline">\(\rho\)</span> 保持<strong>函数依赖</strong> <br>即
+R 中的每个函数依赖都可以从 <span class="math inline">\(F_1, \dots
+F_n\)</span> 的<u>并集</u>中<strong>逻辑导出</strong></p></li>
+<li><p>判断是否保持函数依赖：设 <span class="math inline">\(G =
+\{\bigcup_{i=1}^n F_i\}\)</span>，则保持函数依赖有<span class="math inline">\(F^+ = G^+\)</span> <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(F \subseteq G^+ \land G \subseteq F^+\)</span>
+<br>即对<strong>任意 X <span class="math inline">\(\rightarrow\)</span>
+Y <span class="math inline">\(\in\)</span> F</strong>，若总有 Y <span class="math inline">\(\in\)</span> <span class="math inline">\(X_{G^+}^+\)</span>，说明 <strong>X <span class="math inline">\(\rightarrow\)</span> Y <span class="math inline">\(\in\)</span> <span class="math inline">\(G^+\)</span></strong>（充要性定理），即 <span class="math inline">\(F \subseteq G^+\)</span>，反之亦然
+<br><strong>注意</strong>：这里是在判断对于 F 中的 X <span class="math inline">\(\rightarrow\)</span> Y，X 能否借助 <span class="math inline">\(G^+\)</span> 决定 Y</p>
+<hr></li>
+<li><p>模式分解能够达到的范式等级：</p>
+<ul>
+<li>若要求分解<strong>保持函数依赖</strong>，模式分解总可以达到<strong>3NF</strong>，但不一定能达到BCNF</li>
+<li>若要求分解<strong>保持函数依赖</strong>，且保持<u>无损连接性</u>，模式分解可以达到<strong>3NF</strong>，但不一定能够达到BCNF</li>
+<li>若要求分解具有<strong>无损连接性</strong>，模式分解一定至少能够达到<strong>4NF</strong></li>
+</ul></li>
+<li><p>达到3NF的、<strong>保持函数依赖</strong>的模式分解：（自底向上合成法）</p>
+<ol type="1">
+<li><p>对F进行<strong>极小化</strong>处理，并令 F <span class="math inline">\(\gets\)</span> <span class="math inline">\(\text{F}_m\)</span></p></li>
+<li><p>将<u>不在F中的属性</u><span class="math inline">\(\text{U}&#39; =
+\{A_1, \dots A_k\}\)</span>剔除出来，单独构成一个关系模式<span class="math inline">\(\text{R}&#39;\)</span>，并令 U <span class="math inline">\(\gets\)</span> U - <span class="math inline">\(\text{U}&#39;\)</span></p></li>
+<li><p>若有 X <span class="math inline">\(\rightarrow\)</span> A，且 XA
+= U，则最终分解为 <span class="math inline">\(\rho =
+\{\text{R}\}\)</span>，分解算法结束</p></li>
+<li><p>对F中具有<u>相同左部</u>的规则<strong>分成k组</strong>，每组函数依赖所涉及的<strong>全体属性</strong>（左部
++ 右部）设为<span class="math inline">\(\text{U}_i\)</span> <br>若有
+<span class="math inline">\(\text{U}_i \subseteq \text{U}_j\)</span>（i
+<span class="math inline">\(\ne\)</span> j，出现冗余模式），则要去掉
+<span class="math inline">\(\text{U}_i\)</span>；设 <span class="math inline">\(\text{F}_i\)</span> 是 F 在 <span class="math inline">\(\text{U}_i\)</span> 上的投影 <br>则 <span class="math inline">\(\rho = \{\text{R}_i &lt;\text{U}_i, \text{F}_i&gt;
+\text{ | } i = 1 \dots k \} \cup \text{R}&#39;\)</span> 是 R&lt;U, F&gt;
+的<strong>保持函数依赖</strong>的分解，且均有 $_i $ 3NF</p></li>
+</ol></li>
+<li><p>达到3NF的、同时<strong>保持无损连接</strong>与<strong>函数依赖</strong>的分解：</p>
+<ol type="1">
+<li><p>设<span class="math inline">\(\rho\)</span>是R&lt;U,
+F&gt;上的依据<u>合成法</u>分解得到的<strong>已经保持函数依赖</strong>的3NF分解，<u>X是R的码</u></p></li>
+<li><p>若有某个分<span class="math inline">\(\text{U}_i\)</span>，X
+<span class="math inline">\(\subseteq \text{U}_i\)</span>，则 <span class="math inline">\(\rho\)</span> 为所求</p></li>
+<li><p>否则，令<span class="math inline">\(\tau = \rho \cup
+\{\text{R}^*&lt;\text{X}, \text{F}_X&gt;\}\)</span>，<span class="math inline">\(\tau\)</span> 即为所求分解（<span class="math inline">\(\text{F}_X\)</span> 表示F在X上的投影）</p></li>
+</ol></li>
+<li><p>达到BCNF、具有<strong>无损连接性</strong>分解算法：（自顶向下分解法）令
+<span class="math inline">\(\rho = \{\text{R}&lt;\text{U},
+\text{F}&gt;\}\)</span></p>
+<ol type="1">
+<li><p>若 <span class="math inline">\(\rho\)</span> 中的各关系模式均
+<span class="math inline">\(\in\)</span> BCNF，则算法结束</p></li>
+<li><p>否则，设 <span class="math inline">\(\rho\)</span> 中的<span class="math inline">\(\text{R}_i&lt;\text{U}_i, \text{F}_i&gt;\)</span>
+<span class="math inline">\(\notin\)</span> BCNF，则存在 X <span class="math inline">\(\rightarrow\)</span> A <span class="math inline">\(\in\)</span> <span class="math inline">\(\text{F}_i^+\)</span>，<strong>X 不是 <span class="math inline">\(\text{R}_i\)</span> 的码</strong>；故 XA <span class="math inline">\(\subset\)</span> <span class="math inline">\(\text{U}_i\)</span> <br>对 <span class="math inline">\(\text{R}_i\)</span> 分解为 <span class="math inline">\(\sigma = \{\text{S}_1,
+\text{S}_2\}\)</span>，<span class="math inline">\(\text{U}_{\text{S}_1}
+= \text{XA}\)</span>（避免决定因素不含码），且 <span class="math inline">\(\text{U}_{\text{S}_2} = \text{U}_i -
+\{\text{A}\}\)</span>，再令 <span class="math inline">\(\text{R}_i \gets
+\sigma\)</span></p></li>
+<li><p>反复执行上一步骤，直至无法继续分解（<span class="math inline">\(\rho\)</span> 中均为 BCNF）</p></li>
+</ol></li>
+</ul>
+<hr>
+<h3 id="五候选码的求解理论与算法">五、候选码的求解理论与算法</h3>
+<ul>
+<li><p>依赖中的属性类型：可分为4类</p>
+<ul>
+<li>L类：<strong>仅</strong>出现在F的函数依赖<u>左部</u>的属性</li>
+<li>R类：<strong>仅</strong>出现在F的函数依赖<u>右部</u>的属性</li>
+<li>N类：在F的函数依赖的<strong>左右两侧均未出现过</strong>的属性</li>
+<li>LR类：在F的函数依赖<strong>左右两边均出现过</strong>的属性</li>
+</ul></li>
+<li><p>快速求解候选码：设关系模式 R&lt;U, F&gt;，X（X <span class="math inline">\(\subseteq\)</span> U）的类型分类如下</p>
+<ul>
+<li>L类属性：X必出现在R的所有候选码中 <br><strong>注意</strong>：若
+<span class="math inline">\(\text{X}_{\text{F}}^+ =
+\text{U}\)</span>，则X为R的唯一候选码</li>
+<li>R类属性：X不出现在R的任意候选码中</li>
+<li>N类属性：X必出现在R的所有候选码中 <br><strong>注意</strong>：若 X
+是N类和L类组成的属性集，且 <span class="math inline">\(\text{X}_{\text{F}}^+ =
+\text{U}\)</span>，则X为R的唯一候选码</li>
+</ul>
+<hr></li>
+<li><p>函数关系依赖图：设关系模式为R&lt;U, F&gt;</p>
+<ul>
+<li><p>节点：对应 U 中的<strong>单属性</strong></p></li>
+<li><p>有向边：&lt;<span class="math inline">\(\text{A}_i\)</span>,
+<span class="math inline">\(\text{A}_j\)</span>&gt; 表示一个函数依赖
+<span class="math inline">\(\text{A}_i \rightarrow
+\text{A}_j\)</span></p>
+<hr></li>
+<li><p><strong>原始点</strong>：仅有引出线而无引入线，对应L类属性</p></li>
+<li><p>终结点：仅有引入线而无引出线，对应R类属性</p></li>
+<li><p>途中点：既有引出线又有引入线，对应LR类属性</p></li>
+<li><p><strong>孤立点</strong>：既无引出线又无引入线，对应N类属性</p>
+<hr></li>
+<li><p>关键点：<u>原始点</u>和<u>孤立点</u>统称为关键点</p></li>
+<li><p>关键属性：关键点对应的属性</p>
+<hr></li>
+<li><p>回路：类比有向图中的有向环</p></li>
+<li><p>孤立回路：不能由其它节点到达的回路</p></li>
+</ul></li>
+<li><p>候选码的图论判定方法：</p>
+<ul>
+<li>若依赖图中存在关键点，则<u>关键点</u>对应属性必在R的所有候选码中，所有<u>终结点</u>必不在任何候选码中</li>
+<li>属性集X是R的唯一候选码 <span class="math inline">\(\Leftrightarrow\)</span> X可到达G中的任意节点
+<br><strong>注意</strong>：在单属性依赖集中，R具有唯一候选码 <span class="math inline">\(\Leftrightarrow\)</span> G中不存在独立回路</li>
+<li>设 Y 是<u>中途点</u>，则Y必在某个候选码中 <span class="math inline">\(\Leftrightarrow\)</span>
+Y为某个<strong>独立回路的节点</strong></li>
+</ul></li>
+<li><p>单属性依赖集候选码图论求解法：设 F
+为<u><strong>单属性</strong>依赖集</u></p>
+<ol type="1">
+<li>求出F的极小依赖集<span class="math inline">\(\text{F}_m\)</span>，构造对应的函数依赖图G</li>
+<li>从G中找出<strong>关键属性集X</strong></li>
+<li>若G中不存在独立回路，则X为R的唯一候选码</li>
+<li>否则，从<u>各独立回路中取一节点</u>对应属性与<u>X</u>组成一个候选码（<strong>取尽所有组合</strong>）</li>
+</ol></li>
+<li><p>多属性依赖集候选码图论求解法：设 F
+不是<u><strong>单属性</strong>依赖集</u></p>
+<ol type="1">
+<li>将R的所有属性分为四类，并令X代表L、N（即关键属性），Y代表LR类</li>
+<li>求 <span class="math inline">\(\text{X}_{F}^+\)</span>，若 <span class="math inline">\(\text{X}_{F}^+ =
+\text{U}\)</span>，即X为R的唯一候选码，候选码求解结束</li>
+<li>否则，求 <span class="math inline">\((\text{XB})_{F}^+\)</span>，若
+<span class="math inline">\((\text{XB})_{F}^+ = \text{U}\)</span>，则 XB
+是一个候选码，候选码中属性的个数由此确定
+<br>其中B是Y中的若干个属性；迭代求解的过程要按照B中<u>属性个数<strong>递增</strong>的顺序</u>（1,
+2, ..., n）求解</li>
+</ol></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/database/">#database</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>『database-4』relational data theory</div>
+      <div>http://larry0454.github.io/2023/10/12/database/relational-data-theory/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 12, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/10/18/compiler/syntax-directed-translation/" title="『compiler-6』syntax directed translation">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">『compiler-6』syntax directed translation</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/10/compiler/runtime-memory-management/" title="『compiler-5』runtime memory management">
+                        <span class="hidden-mobile">『compiler-5』runtime memory management</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,775 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="查询处理与优化 一、关系查询处理步骤  查询分析：SQL 词法分析 + 语法分析 查询检查：语义检查 + 存取权限检查 + SQL \(\Rightarrow\) 关系代数 查询优化：选择高效执行的查询处理策略 查询执行：生成查询计划代码  查询代价度量：  驻留在磁盘上的大型数据库：I&#x2F;O代价 取一个块就访问一次磁盘：访盘块数    二、查询操作的实现  选择操">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『database-7』optimization">
+<meta property="og:url" content="http://larry0454.github.io/2023/11/14/database/optimization/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="查询处理与优化 一、关系查询处理步骤  查询分析：SQL 词法分析 + 语法分析 查询检查：语义检查 + 存取权限检查 + SQL \(\Rightarrow\) 关系代数 查询优化：选择高效执行的查询处理策略 查询执行：生成查询计划代码  查询代价度量：  驻留在磁盘上的大型数据库：I&#x2F;O代价 取一个块就访问一次磁盘：访盘块数    二、查询操作的实现  选择操">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-14T13:25:19.000Z">
+<meta property="article:modified_time" content="2024-07-22T05:14:17.455Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="database">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>『database-7』optimization - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="『database-7』optimization"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-14 21:25" pubdate>
+          November 14, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">『database-7』optimization</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="查询处理与优化">查询处理与优化</h2>
+<h3 id="一关系查询处理步骤">一、关系查询处理步骤</h3>
+<ul>
+<li><p>查询分析：SQL 词法分析 + 语法分析</p></li>
+<li><p>查询检查：语义检查 + 存取权限检查 + SQL <span class="math inline">\(\Rightarrow\)</span> 关系代数</p></li>
+<li><p>查询优化：选择高效执行的查询处理策略</p></li>
+<li><p>查询执行：生成查询计划代码</p>
+<hr></li>
+<li><p>查询代价度量：</p>
+<ul>
+<li>驻留在磁盘上的大型数据库：I/O代价</li>
+<li>取一个块就访问一次磁盘：访盘块数</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="二查询操作的实现">二、查询操作的实现</h3>
+<ul>
+<li><p>选择操作：</p>
+<ul>
+<li>全表扫描法：按物理顺序读取表的 M 块到内存，将 M 块中满足条件的元组 t
+输出</li>
+<li>索引扫描法：若在选择条件的属性上建有索引，先根据索引域找到目标索引项，再通过索引项找到元组t</li>
+</ul></li>
+<li><p>连接操作：</p>
+<ul>
+<li>嵌套-循环法：将<strong>较小表 s 作为外表</strong>，r
+作为内表，缓冲区 k-1 块分配给外表 r，1 块分配给内表 s <br>则总 I/O 次数
+= <span class="math inline">\(\text{b}_r + \dfrac{\text{b}_r}{k-1} *
+\text{b}_s\)</span>，前项表示内表的总 I/O 次数、后项表示外表的总 I/O
+次数</li>
+<li>索引连接法：若关系s的连接属性上有索引，对于每个元组<span class="math inline">\(\text{t}_r\)</span>，可根据索引查找s中满足连接条件的<span class="math inline">\(\text{t}_s\)</span></li>
+<li>排序合并法：分为两步
+<ol type="1">
+<li>将关系r和s分别根据连接属性排序</li>
+<li>设两个动指针 <span class="math inline">\(\text{p}_r\)</span> 和
+<span class="math inline">\(\text{p}_s\)</span>，对于 <span class="math inline">\(\text{p}_r\)</span> 指向的连接属性值，移动 <span class="math inline">\(\text{p}_s\)</span> 找到 s 中与 r
+值相等的元组</li>
+</ol></li>
+<li>Hash-Join 法：设哈希函数为hash
+<ol type="1">
+<li>hash 将连接属性映射到{0, ..., n}，根据连接属性将关系 r 划分为 <span class="math inline">\(\text{r}_0, ..., \text{r}_n\)</span>，将 s 划分为
+<span class="math inline">\(\text{s}_0, ..., \text{s}_n\)</span></li>
+<li>将 <span class="math inline">\(\text{r}_i\)</span> 和 <span class="math inline">\(\text{s}_i\)</span>
+中的元组相比较进行连接运算；这种方法仅适用于等值（or 自然）连接</li>
+</ol></li>
+</ul></li>
+<li><p>排序：分两种情况</p>
+<ul>
+<li>内存中可完全容纳的关系：直接快速排序</li>
+<li>内存中不可完全容纳关系：外排序 -
+归并法，即先建立多个内部有序的归并段，再对各归并段排序</li>
+</ul></li>
+<li><p>去重：先使重复数据相邻，再保留其中一个</p></li>
+<li><p>投影：在每个元组上执行投影，之后去重</p></li>
+<li><p>集合运算：类似 排序合并法 or Hash-Join 法</p>
+<hr></li>
+<li><p>表达式的执行：分为 物化 or 流水线方法</p>
+<ul>
+<li>物化：运算结果被物化到一个临时关系中，临时关系一般需要写回磁盘（适用范围广，但读写开销大）</li>
+<li>流水线：直接将运算结果传递给下一个运算，不存储临时关系</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="三查询优化">三、查询优化</h3>
+<ul>
+<li><p>查询优化目标：选择高效执行的查询处理策略，使查询代价最小，即访问磁盘块数最少</p></li>
+<li><p>关系代数表达式等价变换规则：</p>
+<ul>
+<li>连接（×）和 笛卡尔积（<span class="math inline">\(\Join\)</span>）遵循交换律、结合律</li>
+<li>投影 和 选择 遵循串接律（两步压缩成一步运算）</li>
+<li>选择 和 投影 遵循交换律（先选择，后投影）</li>
+<li>选择 与 笛卡尔积 遵循交换律（可将“选择F”拆分作用在内层仅含 <span class="math inline">\(\text{F}_i\)</span>
+中属性的关系上，达到<strong>先选择后求积</strong>）</li>
+<li>选择 与 并、差、自然连接
+遵循分配律（可将“选择F”直接作用在内层关系上，再做并、差、自然连接运算，达到<strong>先选择后运算</strong>）</li>
+<li>投影 与 笛卡尔积
+遵循分配律（可将投影属性按关系拆成两部分，先分别投影再连接，达到<strong>先投影后求积</strong>）</li>
+<li>投影 与 并
+遵循分配律（可将投影直接作用在内层关系上，再取并集，达到<strong>先投影后求并</strong>）</li>
+</ul></li>
+<li><p>查询树的启发式优化：</p>
+<ul>
+<li><strong>选择</strong>运算尽早执行（减少元组数目）</li>
+<li>投影运算尽早执行（减少属性数目）</li>
+<li>笛卡尔积 + 选择 <span class="math inline">\(\Rightarrow\)</span>
+条件连接（笛卡尔积得到的中间结果往往很大）</li>
+<li>找出公共子表达式，把公共子表达式的结果写入中间文件，复用运算结果</li>
+</ul>
+<hr></li>
+<li><p>物理优化：</p>
+<ul>
+<li>基于启发式规则的操作算法选择：
+<ul>
+<li>选择操作：小关系直接全表扫描；大关系可采用索引扫描</li>
+<li>连接操作：
+<ul>
+<li>两表均按连接属性排序使用：排序-合并法</li>
+<li>一个表上的连接属性有索引：索引连接法</li>
+<li>连接属性上未建索引 且 未排序：Hash-Join法</li>
+<li>最后使用嵌套循环法，并选择小表作为外循环表</li>
+</ul></li>
+</ul></li>
+<li>基于代价估算的优化：基于<strong>数据库统计信息</strong>计算各种操作的执行代价，选择具有最小代价的执行计划</li>
+</ul></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/database/">#database</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>『database-7』optimization</div>
+      <div>http://larry0454.github.io/2023/11/14/database/optimization/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/11/16/database/transaction/" title="『database-8』transaction">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">『database-8』transaction</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/07/database/memory-management/" title="『database-6』memory management">
+                        <span class="hidden-mobile">『database-6』memory management</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -23,23 +23,23 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="空间变换与运动 一、自由度  位形：机器人上每个点位的全体的集合，可根据位形确定机器人上所有点的位置；如二维坐标 (x, y) 可表示平面上任意点位置 位形空间：包含所有可能的机器人位形的 n 维空间，一般记作 C-space；机器人位形通常用 C-space 中的一个特征点表示 自由度定义：表示机器人位形的最少连续实值坐标数 刚体的自由度：系统自由度 &#x3D; (系统内各点的自由度之和">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/%E8%BD%AC%E5%8A%A8%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/%E7%A7%BB%E5%8A%A8%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/%E8%9E%BA%E6%97%8B%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/%E5%9C%86%E6%9F%B1%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/%E8%99%8E%E5%85%8B%E9%93%B0.jpg">
-<meta property="og:image" content="http://larry0454.github.io/%E7%90%83%E9%93%B0.jpg">
-<meta property="og:image" content="http://larry0454.github.io/%E5%BC%80%E9%93%BE%E7%BB%93%E6%9E%84.jpg">
-<meta property="og:image" content="http://larry0454.github.io/%E9%97%AD%E9%93%BE%E7%BB%93%E6%9E%84.jpg">
-<meta property="og:image" content="http://larry0454.github.io/%E6%9B%B2%E6%9F%84%E6%BB%91%E5%9D%97%E7%BB%93%E6%9E%84.jpg">
-<meta property="og:image" content="http://larry0454.github.io/Delta%E6%9C%BA%E5%99%A8%E4%BA%BA.jpg">
-<meta property="og:image" content="http://larry0454.github.io/%E6%97%8B%E8%BD%AC%E7%AE%97%E5%AD%90.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%BD%AC%E5%8A%A8%E5%89%AF.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E7%A7%BB%E5%8A%A8%E5%89%AF.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%9E%BA%E6%97%8B%E5%89%AF.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E5%9C%86%E6%9F%B1%E5%89%AF.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%99%8E%E5%85%8B%E9%93%B0.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E7%90%83%E9%93%B0.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E5%BC%80%E9%93%BE%E7%BB%93%E6%9E%84.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E9%97%AD%E9%93%BE%E7%BB%93%E6%9E%84.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E6%9B%B2%E6%9F%84%E6%BB%91%E5%9D%97%E7%BB%93%E6%9E%84.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/Delta%E6%9C%BA%E5%99%A8%E4%BA%BA.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E6%97%8B%E8%BD%AC%E7%AE%97%E5%AD%90.png">
 <meta property="article:published_time" content="2024-07-07T14:55:44.000Z">
-<meta property="article:modified_time" content="2024-07-18T11:19:54.085Z">
+<meta property="article:modified_time" content="2024-07-22T04:28:44.679Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="robotics">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/%E8%BD%AC%E5%8A%A8%E5%89%AF.jpg">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%BD%AC%E5%8A%A8%E5%89%AF.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.8k words
+          6.3k words
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          32 mins
+          53 mins
         
       </span>
     
@@ -313,41 +313,41 @@ C-space；机器人位形通常用 C-space 中的一个特征点表示</p></li>
 <ul>
 <li><p>转动副：关节自由度 =
 1，允许两个构件绕同一个关节轴旋转，又称<strong>铰链</strong>
-<br><img src="/转动副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/2024/07/07/robotics/spatial-transformations/转动副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：转动副 对另一<u>平面刚体</u>的约束 =
 2，对另一<u>空间刚体</u>的约束 = 5（保留一个旋转自由度）</p>
 </blockquote></li>
 <li><p>移动副：关节自由度 =
 1，允许关节沿轴线方向平移运动，又称<strong>滑动</strong>
-<br><img src="/移动副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/2024/07/07/robotics/spatial-transformations/移动副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：移动副 对另一<u>平面刚体</u>的约束 =
 2，对另一<u>空间刚体</u>的约束 = 5（保留一个平移自由度）</p>
 </blockquote></li>
 <li><p>螺旋副：关节自由度 =
 1，允许两个构件绕同一个关节轴旋转、且在旋转的<strong>同时</strong>平移运动
-<br><img src="/螺旋副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/2024/07/07/robotics/spatial-transformations/螺旋副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：螺旋副 对<u>空间刚体</u>的约束 =
 5（保留一个旋转自由度，无法讨论对平面刚体的约束，下同）</p>
 </blockquote></li>
 <li><p>圆柱副：关节自由度 =
 2，允许两个构件沿关节轴做<strong>独立</strong>的平移和旋转
-<br><img src="/圆柱副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/2024/07/07/robotics/spatial-transformations/圆柱副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：圆柱副 对另一<u>空间刚体</u>的约束 =
 4（保留一个旋转 + 一个平移自由度）</p>
 </blockquote></li>
 <li><p>虎克铰：关节自由度 =
 2，由两个<strong>正交排列</strong>的转动副组成，又称<strong>万向节</strong>
-<br><img src="/虎克铰.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/2024/07/07/robotics/spatial-transformations/虎克铰.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：虎克铰 对另一<u>空间刚体</u>的约束 =
 4（保留两个旋转自由度）</p>
 </blockquote></li>
 <li><p>球铰：关节自由度 = 3，类似人类的<strong>肩关节</strong>
-<br><img src="/球铰.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/2024/07/07/robotics/spatial-transformations/球铰.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：球铰 对另一<u>空间刚体</u>的约束 =
 3（保留三个旋转自由度）</p>
@@ -375,21 +375,21 @@ m\)</span></p>
 <br>设机构有 <span class="math inline">\(k\)</span>
 个关节，则（含地面）有 <span class="math inline">\(k+1\)</span>
 个构件，<span class="math inline">\(\text{dof}=3((k+1) - 1 - k) + k*1 =
-k\)</span> <br><img src="/开链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
+k\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/开链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
 <li>闭链结构：有<strong>闭环</strong>的结构，由于地面本身也是一个构件，故可以与地面构成闭环
 <br>设机构有 <span class="math inline">\(k\)</span>
 个关节，则（含地面）有 <span class="math inline">\(k\)</span>
 个构件，<span class="math inline">\(\text{dof} = 3(k - 1 - k) + k*1 = k
-- 3\)</span> <br><img src="/闭链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
+- 3\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/闭链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
 <li>曲柄滑块结构：属于<strong>闭链</strong>结构；如下图共有 3 个转动副和
 1 个移动副，与地面形成闭环<br><span class="math inline">\(\text{dof} =
 3(4 - 1 - 4) + 3 * 1 + 1 * 1 = 1\)</span>
-<br><img src="/曲柄滑块结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
+<br><img src="/2024/07/07/robotics/spatial-transformations/曲柄滑块结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
 </ul></li>
 <li><p>空间结构（例）：如下图 Delta 机器人，<span class="math inline">\(m = 6\)</span>；如下图每条腿有 4 个球铰、3
 个转动副、5 根杆<br><span class="math inline">\(\text{则 dof} = 6(3*5+2
 - 1 - (4*3+3*3)) + 3*3 * 1 + 3*4 * 3 = 15\)</span> <br>
-<img src="/Delta机器人.jpg" srcset="/img/loading.gif" lazyload width="40%"></p>
+<img src="/2024/07/07/robotics/spatial-transformations/Delta机器人.jpg" srcset="/img/loading.gif" lazyload width="40%"></p>
 <blockquote>
 <p><strong>注意</strong>：上平台为静平台（自由度 =
 0），下平台为<strong>动平台</strong>（自由度 = 3），剩余 12 个自由度表示
@@ -399,7 +399,7 @@ k\)</span> <br><img src="/开链结构.jpg" srcset="/img/loading.gif" lazyload w
 </ul></li>
 </ul>
 <hr>
-<h3 id="二刚体运动">二、刚体运动</h3>
+<h3 id="二刚体位形与转动">二、刚体位形与转动</h3>
 <ul>
 <li><p>空间拓扑表示：</p>
 <ul>
@@ -420,7 +420,7 @@ k\)</span> <br><img src="/开链结构.jpg" srcset="/img/loading.gif" lazyload w
 <blockquote>
 <p><strong>注意</strong>：任何参考<strong>三维</strong>坐标系都满足<strong><u>右手系</u></strong></p>
 </blockquote></li>
-<li><p>旋转与角速度</p>
+<li><p>旋转操作与角速度：</p>
 <ul>
 <li><p>旋转矩阵：记作 <span class="math inline">\(\textbf{R} =
 (r_{ij})_{3 \times 3} = (\hat{x}_b, \hat{y}_b,
@@ -440,7 +440,7 @@ k\)</span> <br><img src="/开链结构.jpg" srcset="/img/loading.gif" lazyload w
 <li><p>旋转矩阵的应用：主要包含以下三种</p>
 <ul>
 <li><p>表示姿态：<span class="math inline">\(\textbf{R}\)</span>
-本身就是原点与O重合的坐标系，<span class="math inline">\(\textbf{R}_{bc}\)</span> 表示 系c 相对 系b
+本身就是原点与O重合的<strong><u>坐标系</u></strong>，<span class="math inline">\(\textbf{R}_{bc}\)</span> 表示 {c} 相对 {b}
 的位姿态；若基础坐标系默认为 {s} 系：</p>
 <ul>
 <li>第一列表示 <span class="math inline">\(\textbf{R}\)</span> 的
@@ -483,7 +483,7 @@ k\)</span> <br><img src="/开链结构.jpg" srcset="/img/loading.gif" lazyload w
 \theta &amp; 0 \\  \sin\theta &amp; \cos \theta &amp; 0 \\ 0 &amp; 0
 &amp; 1 \end{bmatrix} \]</span></li>
 </ul></li>
-<li><p>旋转算子：考虑将 {b} 绕单位轴 <span class="math inline">\(\hat{\omega}\)</span> 旋转 <span class="math inline">\(\theta\)</span> 角，即 <span class="math inline">\(\textbf{R} = \textbf{Rot}(\hat{\omega},
+<li><p>旋转坐标系：考虑将 {b} 绕单位轴 <span class="math inline">\(\hat{\omega}\)</span> 旋转 <span class="math inline">\(\theta\)</span> 角，即 <span class="math inline">\(\textbf{R} = \textbf{Rot}(\hat{\omega},
 \theta)\)</span></p>
 <ul>
 <li><span class="math inline">\(\hat{\omega}\)</span> 在 {s}
@@ -498,10 +498,109 @@ R}\)</span>，即<u>算子右乘</u></li>
 的值是相等的</strong>（比如都是各自坐标系下的 z
 轴），但实际很可能不是空间内同一个轴</p>
 </blockquote>
-<p><img src="/旋转算子.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
-</ul>
-<p><strong>未完待续...</strong></p></li>
+<p><img src="/2024/07/07/robotics/spatial-transformations/旋转算子.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>旋转向量：<span class="math inline">\(v&#39; = \textbf{R}
+v\)</span>，其中 <span class="math inline">\(\textbf{R}\)</span>
+是旋转算子（表示绕哪个<u>轴</u>旋转多少<u>角度</u>的 <span class="math inline">\(\textbf{R}\)</span>）</p></li>
 </ul></li>
+</ul>
+<hr></li>
+<li><p>角速度：设一个单位坐标系 <span class="math inline">\((\hat{x},
+\hat{y}, \hat{z})\)</span> 附着在一个旋转物体上，旋转轴为 <span class="math inline">\(\hat{\omega}\)</span></p>
+<ul>
+<li>旋转角速度：<span class="math inline">\(\omega = \hat{\omega}
+\dot{\theta}\)</span>，方向沿 <span class="math inline">\(\hat{\omega}\)</span> 方向</li>
+<li>单位轴速度：<span class="math inline">\(\dot{\hat{x}} = \omega
+\times \hat{x}\)</span>，<span class="math inline">\(\dot{\hat{y}} =
+\omega \times \hat{y}\)</span>，<span class="math inline">\(\dot{\hat{z}} = \omega \times
+\hat{z}\)</span>，方向沿旋转切线方向</li>
+<li>角速度矩阵表示：设 <span class="math inline">\(\mathbf{R}(t)\)</span> 是 {b} 相对 {s} 在时刻 t
+的姿态矩阵，<span class="math inline">\(\omega_s\)</span> 表示 {s}
+中的角速度，<span class="math inline">\(r_1(t)\)</span> 表示{s} 中的
+<span class="math inline">\(\hat{x}\)</span>，其余轴同理 <br>则有 <span class="math inline">\(\dot{r}_i = \omega_s \times r_i\)</span>，<span class="math inline">\(i = 1,2,3\)</span>；<span class="math inline">\(\dot{\mathbf{R}} = [\omega_s \times r_1, \omega_s
+\times r_2, \omega_s \times r_3] =\omega_s \times
+\mathbf{R}\)</span></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="三刚体的一般运动">三、刚体的一般运动</h3>
+<ul>
+<li><p>齐次变换矩阵：又称<strong>刚体运动群</strong>，是所有 <span class="math inline">\(4 \times 4\)</span> 的实矩阵 <span class="math inline">\(T\)</span> 的集合： <span class="math display">\[T
+= \begin{bmatrix} R &amp; p \\ 0 &amp; 1 \end{bmatrix} = \begin{bmatrix}
+r_{11} &amp; r_{12} &amp; r_{13} &amp; p_1 \\ r_{21} &amp; r_{22} &amp;
+r_{23} &amp; p_2 \\ r_{13} &amp; r_{23} &amp; r_{33} &amp; p_3 \\ 0
+&amp;  0 &amp;0 &amp; 1 \end{bmatrix}\]</span></p>
+<blockquote>
+<p><strong>注意</strong>：<span class="math inline">\(R\)</span>
+是旋转矩阵，描述 {b} 相对 {s} 的姿态；<span class="math inline">\(p \in
+\mathbb{R}^3\)</span> 是 {b}原点 在 {s} 中的坐标</p>
+</blockquote>
+<ul>
+<li><p>齐次变换矩阵的性质：</p>
+<ul>
+<li><span class="math inline">\(T^{-1}\)</span> 也是齐次变换矩阵，<span class="math display">\[T^{-1} = \begin{bmatrix} R^T &amp; -R^Tp \\ 0
+&amp; 1 \\ \end{bmatrix}\]</span></li>
+<li>两个齐次变换矩阵的乘积也是齐次变换矩阵</li>
+<li>满足乘法结合律 <span class="math inline">\((T_1T_2)T_3 =
+T_1(T_2T_3)\)</span>，但一般不满足交换律 <span class="math inline">\(T_1T_2 \ne T_2T_1\)</span></li>
+</ul></li>
+<li><p>齐次变换的性质：设 <span class="math inline">\(x, y \in
+\mathbb{R}^3\)</span>，用 <span class="math inline">\((R, p)\)</span>
+表示 <span class="math inline">\(T\)</span>，用 <span class="math inline">\(Rx + p\)</span> 表示 <span class="math inline">\(Tx\)</span></p>
+<ul>
+<li>保等距性：<span class="math inline">\(||Tx - Ty|| = ||x -
+y||\)</span>，其中 <span class="math inline">\(||\cdot||\)</span> 表示
+<span class="math inline">\(\mathbb{R}^3\)</span> 中的标准范数</li>
+<li>保角性：对 <span class="math inline">\(\forall z \in
+\mathbb{R}^3\)</span>，都有 <span class="math inline">\(&lt;Tx-Tz,
+Ty-Tz&gt; = &lt;x-z, y-z&gt;\)</span>，<span class="math inline">\(&lt;\cdot, \cdot&gt;\)</span> 表示 <span class="math inline">\(\mathbb{R}^3\)</span> 中的标准内积</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：三角形(x, y, z)和变换后的新三角形(Tx, Ty,
+Tz)是<strong><u>全等</u></strong>的，即刚体运动</p>
+</blockquote></li>
+</ul></li>
+<li><p>齐次变换矩阵的用途：</p>
+<ul>
+<li><p>表示位形：<span class="math inline">\(T_{ab} \leftarrow (R_{ab},
+p_{ab})\)</span>，其中 <span class="math inline">\(R_{ab}\)</span> 表示
+{b} 相对 {a} 的位姿，<span class="math inline">\(p_{ab}\)</span> 表示
+{b}原点 在 {a} 中的坐标<br></p>
+<blockquote>
+<p><strong>注意</strong>：对于任意两个坐标系 {a} 和 {b}，总有 <span class="math inline">\(T_{ab} = T_{ba}^{-1}\)</span></p>
+</blockquote></li>
+<li><p>改变参考坐标系：类似于旋转运动中的<u>下角标相消</u>原则</p>
+<ul>
+<li><span class="math inline">\(T_{a\mathbf{b}}T_{\mathbf{b}c} =
+T_{ac}\)</span>，相当于把 {c} 在 {b} 中的位形转移到 {a}</li>
+<li><span class="math inline">\(T_{a\mathbf{b}} v_{\mathbf{b}} =
+v_{a}\)</span>，其中 <span class="math inline">\(v_b\)</span>
+指向量<span class="math inline">\(v\)</span>在{b}中的表达，<span class="math inline">\(v_a\)</span> 指向量<span class="math inline">\(v\)</span>在{a}中的表达</li>
+</ul></li>
+<li><p>移动坐标系：</p>
+<ul>
+<li><p>旋转算子：<span class="math display">\[\textbf{Rot}(\hat{\omega},
+\theta) = \begin{bmatrix} \textbf{R} &amp; 0 \\ 0 &amp; 1
+\end{bmatrix}\]</span></p></li>
+<li><p>移动算子：<span class="math inline">\(\textbf{Trans}(p) =
+\begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; p_x  \\ 0 &amp; 1 &amp; 0 &amp;
+p_y \\ 0 &amp; 0 &amp; 1 &amp; p_z \\ 0 &amp; 0 &amp; 0 &amp;  1
+\end{bmatrix}\)</span></p></li>
+<li><p>{b} 先相对 {s} 的 轴 <span class="math inline">\(\hat{\omega}\)</span> 旋转 <span class="math inline">\(\theta\)</span>，再相对 {s} 移动 <span class="math inline">\(p\)</span>：（"先转再移"左乘）</p>
+<p><span class="math display">\[T_{sb&#39;} = TT_{sb} =
+\textbf{Trans}(p) \textbf{Rot}(\hat{\omega}, \theta)T_{sb} \\ =
+\begin{bmatrix} RR_{sb} &amp; R p_{sb} + p \\ 0 &amp; 1
+\end{bmatrix}\]</span></p></li>
+<li><p>{b} 先相对自身移动 <span class="math inline">\(p\)</span>，再相对移动后坐标系的轴 <span class="math inline">\(\hat{\omega}\)</span> 转动：（"先移再转"右乘）</p>
+<p><span class="math display">\[T_{sb&#39;} = T_{sb}T =
+T_{sb}\textbf{Trans}(p) \textbf{Rot}(\hat{\omega}, \theta) \\ =
+\begin{bmatrix} R_{sb}R &amp; R_{sb}p + p_{sb} \\ 0 &amp;
+1  \end{bmatrix}\]</span></p></li>
+</ul></li>
+<li><p>移动向量：<span class="math inline">\(v&#39; = \textbf{R}v +
+p\)</span>，其中 <span class="math inline">\(\textbf{R}\)</span>
+为旋转算子（表示绕哪个<u>轴</u>旋转多少<u>角度</u>的 <span class="math inline">\(\textbf{R}\)</span>），<span class="math inline">\(p\)</span> 为平移向量</p></li>
 </ul></li>
 </ul>
 

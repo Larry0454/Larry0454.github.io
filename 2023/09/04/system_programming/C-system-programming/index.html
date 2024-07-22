@@ -1,0 +1,1260 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="C语言系统级编程  一、内存的基本概念  字节：内存的基本单位，由8个0&#x2F;1比特位组成 机器位宽：表示内存中byte的编号，如32位机表示共可以访问\(2^{32}\)个字节（0 ~ \(2^{32} - 1\)）   二、非数组与数组变量的声明  内存的相关操作：分配内存、内存赋值、读取内存、释放内存 分配内存：C语言中主要有两种方式，即“变量声明”（无需手动free）与“">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『system programming-1』C system programming">
+<meta property="og:url" content="http://larry0454.github.io/2023/09/04/system_programming/C-system-programming/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="C语言系统级编程  一、内存的基本概念  字节：内存的基本单位，由8个0&#x2F;1比特位组成 机器位宽：表示内存中byte的编号，如32位机表示共可以访问\(2^{32}\)个字节（0 ~ \(2^{32} - 1\)）   二、非数组与数组变量的声明  内存的相关操作：分配内存、内存赋值、读取内存、释放内存 分配内存：C语言中主要有两种方式，即“变量声明”（无需手动free）与“">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://larry0454.github.io/2023/09/04/system_programming/C-system-programming/%E5%86%85%E5%AD%98%E5%85%AD%E5%85%83%E7%BB%84.png">
+<meta property="article:published_time" content="2023-09-04T14:39:38.000Z">
+<meta property="article:modified_time" content="2024-07-22T05:26:58.771Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="system programming">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://larry0454.github.io/2023/09/04/system_programming/C-system-programming/%E5%86%85%E5%AD%98%E5%85%AD%E5%85%83%E7%BB%84.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>『system programming-1』C system programming - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="『system programming-1』C system programming"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-04 22:39" pubdate>
+          September 4, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          99 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">『system programming-1』C system programming</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="c语言系统级编程">C语言系统级编程</h2>
+<hr>
+<h3 id="一内存的基本概念">一、内存的基本概念</h3>
+<ul>
+<li>字节：内存的基本单位，由8个0/1比特位组成</li>
+<li>机器位宽：表示内存中byte的编号，如32位机表示共可以<strong>访问<span class="math inline">\(2^{32}\)</span>个字节</strong>（0 ~ <span class="math inline">\(2^{32} - 1\)</span>）</li>
+</ul>
+<hr>
+<h3 id="二非数组与数组变量的声明">二、非数组与数组变量的声明</h3>
+<ul>
+<li><p>内存的相关操作：分配内存、内存赋值、读取内存、释放内存</p></li>
+<li><p>分配内存：C语言中主要有两种方式，即“变量声明”（无需手动free）与“使用malloc”（需要手动free）</p></li>
+<li><p>变量要素：变量类型（约定了<u>内存类型与大小</u>） +
+变量名称（标记<u>内存的别名</u>）</p>
+<ul>
+<li><p>非数组变量类型：包括int、char、结构体等</p></li>
+<li><p>数组变量类型：由多个<strong>相同变量类型</strong>（可以是非数组
+or 数组类型）组成的<u><strong>一维</strong></u>构造类型
+<br>如int[2]表示由2个int类型构成的数组；double[2][3][4]表示由2个double[3][4]类型构成的数组</p>
+<p><strong>注意</strong>：可以使用 <strong>sizeof</strong>
+关键字获取某个变量类型的占用内存大小</p></li>
+<li><p>指针变量类型：实质上是一种<strong>非数组变量类型</strong>，任意一种类型都有指向其的指针类型：</p>
+<ol type="1">
+<li>指向<u>非数组变量类型</u>变量的指针：Var_T <span class="math inline">\(\rightarrow\)</span> Var_T*</li>
+<li>指向<u>数组变量类型</u>的指针：Var_T[10] <span class="math inline">\(\rightarrow\)</span> Var_T(*)
+[10]，注意加<strong>括号</strong>
+<br><strong>注意</strong>：指针类型也是一种普通的变量类型，要将Var_T*
+看作一个<strong>整体</strong>PTYPE <br>如int* [2]对应的指针变量为int*(*)
+[2]，其中int* 可看作一个整体PINT</li>
+<li>指向<u>指针变量类型</u>的指针：Var_T* <span class="math inline">\(\rightarrow\)</span> Var_T**，Var_T(*) [10] <span class="math inline">\(\rightarrow\)</span> Var_T(**) [10]</li>
+</ol>
+<p><strong>注意</strong>：使用sizeof计算任意指针的大小都是4字节，这与机器位宽有关</p></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="三内存的变量类型和表示值类型">三、<strong>内存</strong>的变量类型和表示值类型</h3>
+<ul>
+<li>值（Value）：包括值本身 + 表示值类型 &lt;V, V_T&gt;
+<br><strong>注意</strong>：C语言中<strong>任何表达式都是有值的</strong>，如10
+对应值&lt;10, int&gt;，(10 &gt; 20) 对应值&lt;0, int&gt;</li>
+<li>变量类型（Var_T）与表示值（V_T）类型：
+<ul>
+<li>变量类型：包括<strong>非数组</strong>和<strong>数组</strong>变量类型，是系统分配内存的依据（物理视角）</li>
+<li>表示值类型：从系统<strong>外部观察</strong>内存得到的值的类型，<strong>由变量类型Var_T决定</strong>：
+<ol type="1">
+<li>Var_T为非数组类型：V_T = Var_T，V表示通过 Var_T
+<strong>解释内存</strong>比特串代表的值</li>
+<li>Var_T为数组类型：V_T表示<u>数组元素</u>对应的<strong>指针变量类型</strong>，V表示数组在内存中<strong>首字节的编号</strong>
+如变量类型为char [2][3][4] 对应的表示值类型为 char(*)[3][4]</li>
+</ol></li>
+</ul></li>
+<li>“内存六元组”模型：M = {Address, Var_T, Name, Size, Value, V_T }
+<ul>
+<li>Address：该段内存的首字节编号，由系统分配，一旦确定直至回收都无法更改</li>
+<li>Var_T：分配内存的<strong>变量类型</strong>，在<u>变量声明语句</u>中确定</li>
+<li>Name：分配内存的<strong>变量名称</strong>，在<u>变量声明语句</u>中确定</li>
+<li>Size：该段内存的<strong>大小</strong>（字节数量）</li>
+<li>Value：该段内存的<strong>表示值</strong>，取值由<u>Var_T</u>确定
+<br><strong>注意</strong>：对于结构体或联合体变量，由于其内存块可能包含多个成员变量，故无法获取内存块的具体值</li>
+<li>V_T：分配内存的<strong>表示值类型</strong>，类型由<u>Var_T</u>确定</li>
+</ul></li>
+<li>malloc(
+)：分配<strong>指定大小</strong>的连续内存，其变量类型与表示值类型均不确定</li>
+</ul>
+<hr>
+<h3 id="四声明与赋值">四、声明与赋值</h3>
+<ul>
+<li><p>变量声明：利用声明语句，在内存中某处（<strong>Address</strong>）分配<strong>特定字节的Size</strong>，并为其标记<strong>Name</strong>，设置<strong>两个类型T</strong>
+<br><strong>注意</strong>：仅声明不赋值，内存中的表示值<strong>Value</strong>是随机的（undefined）</p></li>
+<li><p>变量赋值：对一块内存进行赋值</p>
+<ul>
+<li>赋值表达式：包括左值（用于定位待赋值内存块）与右值（用于为内存块赋值）
+<ul>
+<li>左值：通过<strong>变量名称或*运算符</strong>（V_T为指针类型）定位特定的内存</li>
+<li>右值：一个<strong>有效表达式</strong>，可求出对应的值</li>
+</ul></li>
+<li>赋值流程：
+<ol type="1">
+<li>根据左值定位待赋值内存</li>
+<li>计算右值表达式的值&lt;V, V_T&gt;</li>
+<li>检查<strong>内存表示值类型</strong>与<strong>右值表示值类型</strong>是否一致，若不一致则warning/error
+<br>如 <code>int a; a = "123";</code> 会报错</li>
+<li>将右值V按V_T类型<strong>转化为比特串</strong>放入待赋值内存中</li>
+</ol></li>
+</ul>
+<p><strong>注意</strong>：无法直接向数组类型变量赋值（<strong>数组类型变量</strong>的<u>表示值Value</u>总是等于其<u>首地址Address</u>，改不了）</p></li>
+</ul>
+<hr>
+<h3 id="五观察内存的三种视角">五、观察内存的三种视角</h3>
+<ul>
+<li><p>&amp;：对于变量类型为Var_T的变量a，表达式&amp;a的返回值为&lt;Address,
+Var_T*&gt;；故有赋值语句<code>int* p = &amp;a;</code></p></li>
+<li><p>sizeof：对于内存大小为Size的变量a，表达式sizeof(a)的返回值为&lt;Size,
+size_t&gt;；故有赋值语句<code>size_t n = sizeof(a);</code>
+<br><strong>注意</strong>：size_t是C语言中表示<strong>内存大小</strong>的类型</p></li>
+<li><p>变量名：对于变量类型为Var_T，表示值为V的变量a，表达式a的返回值为&lt;V,
+V_T&gt;，即<strong>直接取其表示值</strong>；故有赋值语句<code>int b = a;</code></p>
+<p><strong>注意</strong>：与变量有关的三种表达式依次代表了<strong>内存</strong>地址、<strong>内存</strong>大小以及<strong>内存</strong>表示值</p>
+<figure style="text-align:center;">
+<p><img src="/2023/09/04/system_programming/C-system-programming/内存六元组.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
+<figcaption>
+<p>内存六元组模型图示</p>
+</figcaption>
+</figure></li>
+</ul>
+<hr>
+<h3 id="六左值与右值">六、左值与右值</h3>
+<ul>
+<li>表达式：一般由变量、常量、操作符构成</li>
+<li>左值：能够定位内存的表达式
+<br><strong>注意</strong>：等号左侧识别出的内存符号，一旦<u>与任何<strong>操作符</strong>结合</u>，就会变成对表达式的<strong>取值操作</strong>，即不再能够定位一块内存，<strong>会报错</strong></li>
+<li>右值：一个表达式的返回值&lt;V, V_T&gt;</li>
+</ul>
+<hr>
+<h3 id="七sizeof-操作符">七、sizeof 操作符</h3>
+<ul>
+<li>sizeof(Var_T)：计算变量类型Vat_T的空间大小</li>
+<li>sizeof(Name)：计算变量Name占用的空间大小</li>
+<li>sizeof(exp)：计算表达式exp<strong>返回值的类型</strong>的大小
+<br><strong>注意</strong>：对于表达式exp的情形，并不需要先计算exp的返回值&lt;V,
+V_T&gt;再求出sizeof(V_T)
+<br>这是因为sizeof是<strong>编译时关键字</strong>，exp的返回值类型早在<strong>编译时</strong>（而非运行时）就已经确定了</li>
+<li>有关字面量的问题：由于'a'、'b'等字符在C语言中被视为<strong>Integer</strong>
+Character Constant，故sizeof('a') = 4 != 1
+<br><strong>注意</strong>：在C++中 sizeof('a') =
+1，故需要在移植C/C++程序时考虑这个问题</li>
+</ul>
+<hr>
+<h3 id="八-操作符">八、 * 操作符</h3>
+<ul>
+<li><p>定位内存的两种方式：变量名称 or *操作符</p></li>
+<li><p>*操作符：用于<strong>定位</strong>指针变量指向的<strong>内存</strong>，定位流程如下：设<code>int* p; *p = 10;</code></p>
+<ol type="1">
+<li><p>p不与&amp;和sizeof结合，故定位p的内存并仅<strong>取其值</strong>（即某块内存的始址，表示值类型为指针）</p></li>
+<li><p>p与*操作符结合，定位指针变量p指向的内存</p></li>
+<li><p><span class="math display">\[
+\text{对变量内存 (*p) 的操作}
+\begin{cases}
+\text{左值操作：对内存赋值，注意会检查类型是否匹配} \\
+\text{右值操作：包括取地址\&amp;、求大小sizeof、或与其它操作符结合}
+\end{cases}
+\]</span></p></li>
+</ol>
+<p><strong>注意</strong>：*操作符与指针变量结合<strong>获得该指针变量指向的类型</strong>；若不与指针变量结合就会报错</p></li>
+</ul>
+<hr>
+<h3 id="九指针加减法">九、指针加减法</h3>
+<ul>
+<li><p>对任意<strong>表达式exp</strong>，若exp的返回值类型是一个<strong>有效的指针类型</strong>，则有：
+<span class="math display">\[
+*(\text{exp+n}) \Leftrightarrow \text{exp[n]}
+\]</span>
+故任何一个返回值为<u>指针类型</u>的表达式，都蕴含着位于对应内存的<strong>数组</strong>（<u>大小未知</u>），其元素类型为指针变量类型指向的类型（Reference
+Type）</p>
+<p><br>如 (p + 1)[2] <span class="math inline">\(\Leftrightarrow\)</span> *(p+1<strong>+2</strong>)
+<span class="math inline">\(\Leftrightarrow\)</span> *(p + 3) <span class="math inline">\(\Leftrightarrow\)</span> p[3]</p>
+<hr></li>
+<li><p>指针加常数：设 p : &lt;Value, Value_T &gt;，则 p+n : &lt;Value +
+n <span class="math inline">\(\times\)</span> sizeof(*p), Value_T
+&gt;</p></li>
+<li><p>指针相减：设 p : &lt;Value1, int*&gt;，q : &lt;Value2,
+int*&gt;，则 p-q : &lt; (Value1 - Value2) / sizeof(*p),
+<strong>ptrdiff_t</strong> &gt;
+<br><strong>注意</strong>：相减的指针类型必须<strong>相同</strong>；相减得到的表示值是<strong>两个地址之间的变量个数</strong></p></li>
+</ul>
+<hr>
+<h3 id="十数组的内存访问">十、数组的内存访问</h3>
+<ul>
+<li>设数组变量g为int g[2][3]，则有：
+<ul>
+<li>&amp;g：&lt;address of g, int(*)[2][3]&gt;</li>
+<li>sizeof(g)：&lt;size of g, size_t&gt;</li>
+<li>g + 1：&lt;(<strong>address of g</strong>) + 1 <span class="math inline">\(\times\)</span> sizeof(*g),
+int(*)[3]&gt;，注意V_T为数组元素的<strong>指针类型</strong>保持不变</li>
+</ul></li>
+<li>数组名：是一个<strong>标识符</strong>，一个<strong>左值表达式</strong>（可以定位一块内存）</li>
+</ul>
+<hr>
+<h3 id="十一参数传递">十一、参数传递</h3>
+<ul>
+<li>实参与形参：先获取实参表达式exp的<strong>返回值</strong>，再用该返回值初始化函数<strong>形参名对应的内存中</strong>（Pass
+By Value）
+<br><strong>注意</strong>：<u>实参表示值类型</u>与<u>形参类型</u>必须一致</li>
+<li>非数组变量传参：将实参返回值写入形参的内存块中</li>
+<li>数组变量传参：可以省略形参的第一维大小，即省略数组大小信息
+<br><strong>注意</strong>：由于函数<u>形参</u>与<u>实参</u>的表示值类型都是<strong>元素的指针变量类型</strong>，故数组的大小信息可以被省略</li>
+</ul>
+<hr>
+<h3 id="十二malloc">十二、malloc</h3>
+<ul>
+<li><p>使用malloc分配堆内存的特点：</p>
+<ol type="1">
+<li>内存<strong>没有名称Name</strong></li>
+<li>malloc返回值类型为void*，指向分配内存的首字节，需要先强转类型
+如<code>Var_T* p = (Var_T*)malloc(sizeof(Var_T)*N);</code></li>
+<li>malloc分配的内存空间未初始化</li>
+<li>需要用 <strong>free(p)</strong>
+释放内存，有多少次malloc就有多少次free（避免memory leak）</li>
+</ol>
+<p><strong>注意</strong>：一般使用 malloc(sizeof(Var_T) * N)
+分配内存空间，表示申请了一个 Var_T[N]
+类型的空间，其表示值类型为Var_T*</p></li>
+</ul>
+<hr>
+<h3 id="十三typedef">十三、typedef</h3>
+<ul>
+<li>为非数组类型提供别名：<code>typedef char INT1;</code>，即将char重定义为INT1类型</li>
+<li>为数组类型提供别名：<code>typedef int AINT[2];</code>，即将int[2]重定义为AINT类型</li>
+</ul>
+<hr>
+<h3 id="十四const限定符">十四、const限定符</h3>
+<ul>
+<li><p>限定<u>非数组</u>变量类型：<code>Var_T const a;</code>，Var_T
+const是一个<u><strong>整体</strong></u>，表示Var_T指向的内存是<strong>只读的</strong>
+<br><strong>注意</strong>：由const修饰的变量类型，其表示值类型为对应的<strong>非限定变量类型</strong>；如
+int* const 的表示值类型为 int*</p></li>
+<li><p>限定<u>数组</u>变量类型：Var_T const[2][3]，
+其对应的表示值类型为Var_T
+const(*)[3]，表示其元素类型是<strong>只读的</strong>
+<br><strong>注意</strong>：此时应把 Var_T const
+看作一个<u><strong>整体</strong></u></p>
+<hr></li>
+<li><p>Var_T const对应的<strong>指针</strong>变量类型：Var_T
+const*，其表示值类型也是Var_T const*
+<br><strong>注意</strong>：只有最后一个“干净”的const修饰只读变量，如：
+<br>由 Var_T const*
+定义的变量是可以修改的，但指向的内存是<strong>只读的</strong>（其V_T为Var_T
+const*，解引用后为Var_T const） <br>由 Var_T const* const
+定义的变量是不可被修改的（const修饰），其指向的内存也是<strong>只读的</strong>（其V_T为Var_T
+const*，解引用后为Var_T const）</p></li>
+<li><p>Var_T const VS. const
+Var_T：推荐使用前者，避免解读歧义；C语言中对const的位置无明确语义规范
+<br><strong>注意</strong>：指针变量 const Var_T*
+会存在解读歧义：不确定*是与整个 const Var_T 结合还是只跟 Var_T
+结合</p></li>
+</ul>
+<hr>
+<h3 id="十五字符串">十五、字符串</h3>
+<ul>
+<li>字符数组：变量类型为char[N]，表示值类型为char*，与其它数组变量类型类似</li>
+<li>字符串初始化：使用<strong>双引号括起来</strong>的字符串常量，其末尾包含一个隐藏的'\0'
+<br><strong>注意</strong>：字符串"hello"被放置在<strong>静态区</strong>，其元素无法被修改，如<code>"hello"[0] = 'e'</code>会运行崩溃</li>
+<li>String Literal <strong>VS.</strong>
+String：前者字符串内部可以包含任何字符（包括'\0'），后者只是在最后有'\0'
+<br><strong>注意</strong>：两者使用 sizeof 得到的大小是相同的，但使用
+strlen 得到的长度是不同的</li>
+<li>访问字符串：字符数组<strong>本身</strong>可以定位一块内存，如&amp;"hello"，sizeof("hello")，"hello"[0]等</li>
+</ul>
+<hr>
+<h3 id="十六左值与表达式">十六、左值与表达式</h3>
+<ul>
+<li><p>表达式：C语言中由一系列<strong>操作符</strong>和<strong>操作对象</strong>组成的序列</p></li>
+<li><p>左值（<strong>lvalue</strong>）：一种可以<u>定位一个<strong>对象</strong></u>的<strong>表达式</strong>
+<br><strong>注意</strong>：C语言中Type分为Object Type和Function Type</p>
+<ol type="1">
+<li>变量标识符：int <strong>a</strong></li>
+<li>字符串："hello"</li>
+<li>解引用 *exp：*(p + 1)</li>
+<li>数组取值 exp1[exp2]：e[1] <strong>注意</strong>：E1[E2] <span class="math inline">\(\Leftrightarrow\)</span> *(E1 +
+E2)，要求其中一个表达式返回<strong>指针类型</strong>、另一个E返回<strong>整数类型</strong></li>
+<li>复合字面量 (type-name){ initializer }：如(int){1}，(int[3]) {1, 2,
+3}</li>
+<li>成员变量引用：h.name，p-&gt;name</li>
+</ol></li>
+<li><p>可被放在等号左边的左值（<strong>modifiable
+lvalue</strong>）：需同时满足以下条件：</p>
+<ul>
+<li>非数组变量类型：表示值总是等于内存首地址，无法被修改</li>
+<li>不是不完全类型：如extern int
+<strong>a</strong>[]，其中不完全类型是指除函数类型外<strong>大小无法确定</strong>的类型</li>
+<li>不能被 const 修饰；对于结构体类型变量，其各成员变量不能被 const
+修饰</li>
+</ul>
+<p><strong>注意</strong>：若对非modifiable
+lvalue赋值，则会报编译错误</p></li>
+<li><p>右值（rvalue）：即表达式的值&lt;V,
+V_T&gt;，表达式之间通过<strong>表示值</strong>计算返回值</p></li>
+</ul>
+<hr>
+<h3 id="十七函数指针">十七、函数指针</h3>
+<ul>
+<li>函数类型（Function
+Type）：规定了<strong>函数返回值类型</strong>与<strong>参数数量及类型</strong>，如int(char,
+int)
+<br><strong>注意</strong>：区别于对象类型，函数类型不是lvalue，故函数类型变量不能被赋值</li>
+<li>函数类型对应的<strong>指针类型</strong>：如int(*)(char, int)</li>
+<li>函数类型六元组：仿照<u>对象类型六元组</u>提出
+<ol type="1">
+<li>Address：函数入口的地址</li>
+<li>Var_T：函数类型，如int(int, int)</li>
+<li>Name：函数标识符</li>
+<li>Size ：N/A，函数类型无大小，不能与 sizeof 结合</li>
+<li>V：表示值与Address的值相同</li>
+<li>V_T：表示值类型是<strong>函数类型对应的指针类型</strong>，如int(*)(int,
+int)</li>
+</ol></li>
+<li>函数调用：函数标识符 + 参数列表，其中函数标识符即为函数名称
+<br><strong>注意</strong>：函数标识符func属于基础<strong>表达式</strong>，其返回值为&lt;函数<strong>入口地址</strong>,
+函数对应的<strong>指针类型</strong>&gt;</li>
+<li>&amp;func与*pfunc：
+<ul>
+<li>&amp;func：由&amp;操作符的性质，&amp;func返回<strong>函数指针变量</strong>，其表示值即为address
+由此可见<u>&amp;func</u>与<u>func</u>表达式的返回值是完全相同的</li>
+<li>*pfunc：由解引用操作的性质，*pfunc返回<strong>函数类型变量</strong>，其表示值类型为函数指针
+由此可见<u>*pfunc</u>与<u>pfunc</u>表达式的返回值是完全相同的</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="十八compound-literal">十八、Compound Literal</h3>
+<ul>
+<li><p>复合字面量：<strong>匿名</strong>对象类型，其定义为 (type-name){
+initializer-list }</p>
+<ul>
+<li>type-name：该对象的<strong>变量类型</strong></li>
+<li>initializer-list：对该对象进行<strong>初始化</strong>的列表</li>
+</ul>
+<p><strong>注意</strong>：符合字面量即<strong>匿名的变量</strong>，除了不含Name外与非数组/数组变量类型类似</p></li>
+<li><p>赋值问题：复合字面量本身是合法的<strong>左值</strong>，但其是否为
+modifiable lvalue 取决于存储位置：</p>
+<ul>
+<li>位于函数内部：生命周期为 automatic storage duration，是 modifiable
+lvalue</li>
+<li>作为全局变量：生命周期为 static storage duration，不是 modifiable
+lvalue，<u><strong>只能初始化</strong></u></li>
+</ul>
+<p><strong>注意</strong>：复合字面量是合法的左值，可以<u>定位一块内存</u>，并能够与
+&amp;、sizeof 结合</p></li>
+<li><p>空间分配规则：<u>同一作用域内</u>，各 Compound Literal
+在内存中<strong>仅保持一份</strong>
+<br><strong>注意</strong>：由上述特点可知，在循环中反复声明<strong>同值</strong>复合字面量，实际获得的是<strong>同一内存块中的数据</strong></p></li>
+<li><p>使用<strong>同一个</strong>复合字面量：使用对应的<strong>指针类型存储</strong>变量地址，通过指针解引用操作访问</p></li>
+</ul>
+<hr>
+<h3 id="十九type">十九、Type</h3>
+<ul>
+<li><p>Object
+Type：定位一个<strong>内存块</strong>，可通过变量类型解析出一个值</p>
+<ul>
+<li><p>Integer Related：主要包括以下类型：</p>
+<ol type="1">
+<li>Signed Integer Type：标准有符号整型（signed）+ 扩展有符号整型</li>
+<li>Unsigned Integer Type：布尔型（_Bool）+ 对应无符号整型（unsigned）+
+扩展无符号类型</li>
+</ol></li>
+<li><p>Floating Type：主要包括以下类型：</p>
+<ol type="1">
+<li>Real Floating Type：标准浮点类型（float、double）+
+高精度浮点类型（_Decimal32等）</li>
+<li>Complex Type：复数浮点类型（float_complex、double_complex）
+<br><strong>注意</strong>：C语言中并未规定必须支持复数类型</li>
+</ol></li>
+<li><p>Character Related：字符类型（char）+ 有符号字符类型（signed）+
+无符号字符类型（unsigned）
+<br><strong>注意</strong>：对于平时使用的char，其是否为有符号类型取决于平台，一般只用于存储ASCII码（0~127）</p></li>
+<li><p>Enumerated
+Type：定义一系列<u>文字表述的<strong>整数</strong></u></p>
+<hr></li>
+<li><p>Basic Type ：char + Signed Integer Type + Unsigned Integer Type +
+Floating Type，均为<strong>完全对象类型</strong></p></li>
+<li><p>Integer Type ：char + Signed Integer Type + Unsigned Integer Type
++ Enumerated Type</p></li>
+<li><p>Arithmetic Type ：Integer Type + Floating Type</p></li>
+</ul>
+<hr></li>
+<li><p>Derived
+Type：可由其它类型<strong>递归</strong>地构造出来，包括数组类型、结构体类型、<strong>函数类型</strong>、指针类型等</p>
+<ul>
+<li><p>Array Type：给定任何一个Object
+Type，都可以其为元素类型构造对应的<strong>一维数组</strong>类型
+<br><strong>注意</strong>：对于“高维数组”类型，均可通过“低维数组”类型递归地构造</p></li>
+<li><p>Function Type：其定义包括返回值类型 + 参数数量及类型</p></li>
+<li><p>Pointer Type：给定任何一个Type（Reference
+Type），都有对应的<strong>指针类型</strong>（Pointer Type）
+<br><strong>注意</strong>：任何指针类型都是一个普通的Object Type</p>
+<hr></li>
+<li><p>Scalar Type ：Arithmetic Type + Pointer
+Type（可进行标量加减操作）</p></li>
+<li><p>Aggregate Type ：Array Type + Struct Type
+<br><strong>注意</strong>：Union Type不是聚合类型</p></li>
+<li><p>Incomplete Object
+Type：缺少确定object大小的信息，如数组缺少元素个数、void类型、包含不完全类型的结构体或联合体等</p></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="二十赋值表达式">二十、赋值表达式</h3>
+<ul>
+<li><p>赋值操作符：包括 =、+=、&gt;&gt;= 等赋值操作符</p></li>
+<li><p>赋值表达式：定义为 exp1 assignment_operator
+exp2，其中exp1一定是modifiable lvalue</p>
+<ul>
+<li>C：上面表达式不是lvalue，其返回值为exp1更新过的值</li>
+<li>C++：上面表达式是lvalue，指向exp1定位的、已被更新的对象</li>
+</ul></li>
+<li><p>后缀加减 or 前缀加减：exp++ or ++exp</p>
+<ul>
+<li>exp++：<u><strong>返回值为exp的值</strong></u>，<strong>副作用</strong>是让exp对应对象的值+1；exp++不是lvalue</li>
+<li>++exp：等价于<code>exp += 1</code>，返回值是<strong>exp更新后的值</strong>，故其在C语言中是lvalue、而在C++中不是lvalue</li>
+</ul>
+<p><strong>注意</strong>：为了维护程序的<strong>可读性</strong>，<u>GJB中规定禁止使用
+++、-- 操作符</u></p>
+<hr></li>
+<li><p>Evaluation of Expression：主要包括两个步骤</p>
+<ul>
+<li>Value Computation：计算表达式的返回值&lt;V, V_T&gt;</li>
+<li>Initiation of Side
+Effect：确定表达式的副作用，即执行状态的变化，如<u>改变内存值</u>
+<br><strong>注意</strong>：副作用利用<u>等号右侧<strong>表达式的返回值</strong></u>，改变等号左侧的<strong>内存值</strong></li>
+</ul>
+<p><strong>注意</strong>：a++ 和 ++a
+这两个表达式都有各自的返回值，但什么时候真的+1（即副作用的出现顺序）则是<strong>不确定</strong>的</p></li>
+<li><p>Sequenced Before：描述两个表达式之间 evaluation 的先后顺序
+<br>exp1 Sequenced Before exp2
+表示exp1的<strong>求值与副作用</strong>全部发生在exp2的<strong>求值与副作用</strong>之前</p></li>
+<li><p>Sequence Point ：exp1 Sequenced Point exp2 <span class="math inline">\(\Leftrightarrow\)</span> exp1 Sequenced Before
+exp2 <br>常见的Sequence
+Point：<u>实参求值与函数调用</u>之间、<u>两个独立分隔的表达式</u>之间 等
+<br><strong>注意</strong>：两个Sequence Point内部的表达式之间没有约定
+evaluation 的先后顺序</p></li>
+<li><p>有关自增/自减的undefined behavior：对于一个scalar
+object，如果满足其中一种条件：</p>
+<ul>
+<li>产生<strong>两次副作用</strong>，且两次副作用之间没有先后顺序的约定，如<code>int i = 1; i = ++i + 1;</code>
+<br>若 ++i 副作用先执行，则最后将 i 赋值为表达式 ++i + 1 的返回值3
+<br>若 i = ++i + 1 副作用先执行，则先将 i 赋值为 ++i + 1 的返回值3，最后
+i 自增得到4</li>
+<li>产生的<strong>副作用</strong>与<strong>对其取值</strong>之间没有先后顺序的约定，如<code>int i = 1; a[i++] = i;</code>
+<br>若 i++ 的副作用发生在等号右侧对 i 求值之前，则 i 先自增为2，再将
+<strong>a[1] 赋值为2</strong> <br>若 i++ 的副作用发生在等号右侧对 i
+求值之后，则先将 <strong>a[1] 赋值为1</strong>，i 再自增为2
+<br><strong>注意</strong>：表达式 i++ 的返回值始终为1，故均是对 a[1]
+赋值</li>
+</ul>
+<p>则最终内存结果不确定，取决于编译器的优化方法等行为</p></li>
+</ul>
+<hr>
+<h3 id="二十一volatile限定符">二十一、volatile限定符</h3>
+<ul>
+<li>变量声明：<code>Var_T volatile N;</code>，其中变量N的表示值类型为Var_T
+<br>volatile
+限定符表示这块内存的值可能<strong>以未知的方式变化</strong></li>
+<li>Volatile 在 MMIO 中的应用：
+<ul>
+<li>MMIO：内存和I/O共享同一个地址空间</li>
+<li>定义外设映射内存：<code>#define NUM (*(int volatile*)0x12340000)</code>
+<br>这样变量NUM的内存值可能被<strong>硬件</strong>而非程序改变，表现为NUM值不可控</li>
+</ul></li>
+<li>abstract machine 和 volatile
+：“抽象机”是一种<u>不考虑优化</u>的模型；volatile
+修饰的变量遵循“抽象机”模型 <br>每次访问 volatile
+修饰的变量都会严格从<strong>内存</strong>中获取值，而不是直接从<strong>寄存器等缓存</strong>中获取值</li>
+<li>volatile
+的使用注意事项：由于每次都只从内存中读数据，而数据又可能被硬件改变，所以每次值都不确定
+<ul>
+<li>编译器优化：如果从<u>寄存器等缓存</u>中读值，结果就是<strong>正确</strong>的；如果只从<u>内存</u>中读值，结果就是<strong>不确定</strong>的</li>
+<li>volatile access：获取被 volatile
+修饰的值的行为是<strong>副作用</strong></li>
+</ul></li>
+<li>Var_T volatile 对应的指针类型：变量类型 和 表示值类型 都是Var_T
+volatile*（Var_T volatile是一个<strong>整体</strong>）</li>
+<li>Var_T const
+volatile：从<u>程序代码角度</u>看是<strong>只读</strong>的，但从<u>硬件角度</u>看是会被<strong>随机修改</strong>的</li>
+</ul>
+<hr>
+<h3 id="二十二literal">二十二、Literal</h3>
+<ul>
+<li><p>Literal的含义：仅从<strong>字面义</strong>去理解，不做任何演绎</p></li>
+<li><p>String
+Literal：按<strong>字面意思</strong>理解的字符串（不包含转义），其内存值无法修改（编译警告、运行出错）</p></li>
+<li><p>Compound Literal：按<strong>字面意思</strong>理解 (type-name){
+initializer-list } 这种组合形式，其内存值可以修改</p>
+<hr></li>
+<li><p>C语言常量（constant）：整数常量 + 浮点常量 + 枚举常量 + 字符常量
+<br><strong>注意</strong>：常量不是左值，不能像 Literal 和
+const修饰变量一样<strong>定位一块内存</strong></p></li>
+<li><p>C++中的Literal：主要包括integer-literal、floating-literal、character-literal和string-literal</p>
+<ul>
+<li>string-literal：在C++中，其返回值类型为<strong>const</strong>
+char*；若尝试修改string-literal的值则会直接编译出错
+<br><strong>注意</strong>：C语言中string-literal的返回值类型为char*；<strong>const</strong>
+char* 体现literal在C++中具有<strong>常量</strong>的含义</li>
+<li>compound-literal
+：C++中没有compound-literal，程序移植时要特别注意</li>
+</ul>
+<p><strong>注意</strong>：C++中的literal，对应C中的constant</p></li>
+</ul>
+<hr>
+<h3 id="二十三padding">二十三、padding</h3>
+<ul>
+<li><p>字节大小：C语言中规定一个Byte含有 <strong>CHAR_BIT</strong>
+个二进制位，其中 <strong>CHAR_BIT</strong> 规定要 <span class="math inline">\(\ge\)</span> 8 <br><strong>注意</strong>：“1Byte =
+8bits”是长期发展形成的工业标准，部分平台的字节大小大于8</p></li>
+<li><p>padding：<strong>填充</strong>类型中剩余的二进制位；设某类型的
+size 为 n <span class="math inline">\(\times\)</span> CHAR_BIT
+个比特，即 n 个字节：</p>
+<ul>
+<li><p>无符号整数类型：包含 value bits 和 padding bits <br>设 value bits
+共有N位（宽度为N），则该类型的表示值范围是 0 ~ <span class="math inline">\(2^N - 1\)</span></p></li>
+<li><p>有符号整数类型：包含 sign bit，value bits 和 padding bits <br>设
+sign bit 和 value bits 共有N位（宽度为N），则该类型的表示值范围是 <span class="math inline">\(-(2^{N-1})\)</span> ~ <span class="math inline">\(2^{N-1} - 1\)</span></p>
+<p><strong>注意</strong>：其中C语言规定 unsigned char 和 signed char
+类型均不允许有 padding bits</p></li>
+</ul></li>
+<li><p>整型变量 int / unsigned
+int：规定宽度N必须$$16，具体<strong>宽度不确定</strong></p></li>
+<li><p>intN_t 和 uintN_t：表示无
+padding，且宽度<strong>确定为N</strong>的整型变量
+<br><strong>注意</strong>：若某平台提供了无
+padding，且宽度为32位的int类型，则应该
+<code>typedef int int32_t;</code></p></li>
+<li><p>int_leastN_t 和
+uint_leastN_t：表示宽度<strong>至少为N</strong>的整型变量
+<br><strong>注意</strong>：C语言规定编译器必须定义含 least
+的整数类型；若编译器定义了intN_t，则 int_leastN_t 和 intN_t相同</p></li>
+<li><p>int_fastN_t 和
+uint_fastN_t：表示<strong>宽度至少为N</strong>，且处理速度最快的整型变量（最快最小）
+<br><strong>注意</strong>：C语言规定编译器必须定义含 fast
+的整数类型；fast不代表总是最快，而是代表<strong>尽可能满足速度要求</strong></p></li>
+</ul>
+<hr>
+<h3 id="二十四alignment">二十四、alignment</h3>
+<ul>
+<li><p>地址对齐：规定对象内存的<strong>首地址</strong>的限制；对齐值必须是2的n次方
+<br><strong>注意</strong>：“对象对齐”是指 <u>对象首地址 %
+对象的alignment == 0</u>，一般char的对齐数为1、int的对齐数为4</p></li>
+<li><p>_Alignof ：对于类型为T的对象O，_Alignof(T)
+表示类型T的对齐数，_Alignof(O) 表示对象O的对齐数
+<br><strong>注意</strong>：对象O的对齐数默认为<strong>其类型T的对齐数</strong>，且可被修改</p></li>
+<li><p>_Alignas：为类型为T的对象O设置<strong>更大的对齐数</strong>，声明句<code>_Alignas(N) T O;</code>表示将对象O的对齐数<strong>调大到N</strong></p>
+<ul>
+<li>修改<u>非数组类型</u>的对齐数：_Alignas(64) int a; <span class="math inline">\(\Rightarrow\)</span> _Alignof(a) ==
+64；且int的<strong>大小和类型对齐数均不变</strong></li>
+<li>修改<u>数组类型</u>的对齐数：数组类型的对齐数 ==
+其<strong>元素类型</strong>的对齐数（<strong>递归定义</strong>）
+_Alignas(64) int a[N]; <span class="math inline">\(\Rightarrow\)</span>
+_Alignof(a) ==
+64；且int[N]的<strong>大小和类型对齐数均不变</strong></li>
+</ul>
+<p><strong>注意</strong>：通过 _Alignas
+改变对象的对齐数，并不会改变该对象的size，也不会改变其类型的对齐数</p></li>
+<li><p>结构体的对齐要求：对于类型T为为结构体类型的对象O，_Alignof(T) ==
+max(_Alignof(<span class="math inline">\(\text{E}_i\)</span>))
+<br>其中<span class="math inline">\(\text{E}_i\)</span>表示结构体中第 i
+个<strong>成员对象的对齐数</strong></p>
+<ul>
+<li>通过 _Alignas(<span class="math inline">\(\text{E}_i\)</span>)
+调整<u>结构体成员对象</u>的对齐数，会改变该结构体类型的对齐数</li>
+<li>通过 _Alignas(stru)
+调整<u>结构体对象</u>的对齐数，会使该对象的对齐数 &gt;
+结构体类型对齐数</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="二十五结构体类型的size">二十五、结构体类型的size</h3>
+<ul>
+<li><p>计算结构体类型的大小：遍历所有成员对象，确定各成员对象的 offset
+和 padding；对于每个成员对象：</p>
+<ol type="1">
+<li>根据<u>该<strong>对象</strong>的对齐数</u>，找到满足其<strong>对齐要求</strong>的<strong>最小offset</strong>
+该对象与上一个成员对象间的空白距离称为 <strong>internal
+padding</strong></li>
+<li>将该成员对象O填充在 offset 处，其占据了sizeof(O) 的内存空间</li>
+</ol>
+<p>填写了所有成员变量后，根据<u>该结构体<strong>类型</strong>的对齐数</u>，在末尾留出<strong>最小trailing
+padding</strong></p>
+<p><span class="math inline">\(\Rightarrow\)</span> sizeof(T) = <span class="math inline">\(\sum\)</span> sizeof(<span class="math inline">\(\text{O}_i\)</span>) + <span class="math inline">\(\sum\)</span> internal padding + trailing
+padding</p>
+<p><strong>注意</strong>：由上述过程可知，结构体类型的size是其对齐数的<strong>整数倍</strong></p></li>
+<li><p>#pragma pack(n) ：调整结构体<strong>内部</strong>对象的对齐要求
+<br>对于结构体类型T，设其第 i 个成员对象为<span class="math inline">\(\text{E}_i\)</span>，则 _Alignof(<span class="math inline">\(\text{E}_i\)</span>) = min(_Alignof(<span class="math inline">\(\text{E}_i\)</span>), n)
+<br><strong>注意</strong>：对于结构体类型T，_Alignof(T) =
+max(_Alignof(<span class="math inline">\(\text{E}_i\)</span>))，该规则保持不变，用于最后计算
+trailing padding</p></li>
+<li><p>申请<strong>指定对齐要求</strong>的空间：<code>void* aligned_alloc(size_t alignment, size_t size);</code></p></li>
+<li><p>指针类型强转的对齐问题：对指针表达式的类型强制转换后需要保持<strong>地址对齐</strong>
+<br>如 char* 类型的内存对齐数为1，int*
+类型的内存对齐数是4，则<code>char* p; (int*)(p + 1);</code>会不对齐，属于ub</p></li>
+</ul>
+<hr>
+<h3 id="二十六restrict限定符">二十六、restrict限定符</h3>
+<ul>
+<li><strong>指针</strong>变量声明：<code>Var_T* restrict p;</code>
+<br><strong>注意</strong>：restrict 只能修饰指针变量类型</li>
+<li>restrict 的使用：设 p 为 restrict
+修饰的指针变量，则程序员需要保证<u>在指针 p
+的生命周期内</u>，其指向的对象不会被其它指针<strong>同时引用</strong></li>
+<li>restrict
+与编译器优化：对于两个位于<u>同一作用域</u>的指针变量，若其指向了不同的内存块，编译器可以采用<strong>载入立即数</strong>等方式修改两个内存块数据，以达到<strong>优化代码</strong>的目的（减少访存次数）</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/system-programming/">#system programming</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>『system programming-1』C system programming</div>
+      <div>http://larry0454.github.io/2023/09/04/system_programming/C-system-programming/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 4, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/09/06/compiler/grammar/" title="『compiler-1』grammar">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">『compiler-1』grammar</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/16/machine_learning/Bayes/" title="『machine learning-3』Bayes">
+                        <span class="hidden-mobile">『machine learning-3』Bayes</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

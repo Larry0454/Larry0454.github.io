@@ -1,0 +1,792 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="符号表管理技术 一、语义分析  语义分析任务：对识别出的各种语法成分进行语义分析，产生相应的中间代码  上下文相关分析：标识符的作用域 类型的一致性检查 语义处理：主要处理声明语句 + 执行语句  注意：上下文无关语法只能描述语法结构，而不能描述其语义，故只能把上下文相关分析交给语义分析 通过语义分析的程序未必是“正确的程序”   二、符号表  符号表的概念：编译过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『compiler-4』symbol table">
+<meta property="og:url" content="http://larry0454.github.io/2023/10/09/compiler/symbol-table/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="符号表管理技术 一、语义分析  语义分析任务：对识别出的各种语法成分进行语义分析，产生相应的中间代码  上下文相关分析：标识符的作用域 类型的一致性检查 语义处理：主要处理声明语句 + 执行语句  注意：上下文无关语法只能描述语法结构，而不能描述其语义，故只能把上下文相关分析交给语义分析 通过语义分析的程序未必是“正确的程序”   二、符号表  符号表的概念：编译过">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://larry0454.github.io/2023/10/09/compiler/symbol-table/%E7%89%B9%E6%80%A7.png">
+<meta property="og:image" content="http://larry0454.github.io/2023/10/09/compiler/symbol-table/%E6%A0%88%E5%BC%8F%E7%AC%A6%E5%8F%B7%E8%A1%A8.png">
+<meta property="article:published_time" content="2023-10-09T13:39:22.000Z">
+<meta property="article:modified_time" content="2024-07-22T04:48:26.690Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="compiler">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://larry0454.github.io/2023/10/09/compiler/symbol-table/%E7%89%B9%E6%80%A7.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>『compiler-4』symbol table - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="『compiler-4』symbol table"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-09 21:39" pubdate>
+          October 9, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">『compiler-4』symbol table</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="符号表管理技术">符号表管理技术</h2>
+<h3 id="一语义分析">一、语义分析</h3>
+<ul>
+<li><p>语义分析任务：对识别出的各种语法成分进行<strong>语义分析</strong>，产生相应的<strong>中间代码</strong></p>
+<ul>
+<li>上下文<u>相关</u>分析：标识符的作用域</li>
+<li>类型的一致性检查</li>
+<li>语义处理：主要处理<strong>声明语句</strong> +
+<strong>执行语句</strong></li>
+</ul>
+<p><strong>注意</strong>：上下文无关语法只能描述语法结构，而<u>不能描述其语义</u>，故只能把上下文相关分析交给语义分析
+<br>通过语义分析的程序未必是“正确的程序”</p></li>
+</ul>
+<hr>
+<h3 id="二符号表">二、符号表</h3>
+<ul>
+<li><p>符号表的概念：编译过程中用于记录源程序中的各种<strong>名字</strong>及其<strong>特性</strong>信息</p>
+<ul>
+<li><p>名字：存放<strong>标识符</strong>（如变量、函数等）的符号串</p></li>
+<li><p>特性：表示标识符的有关信息，有关信息包括：</p>
+<figure>
+<p><img src="/2023/10/09/compiler/symbol-table/特性.png" srcset="/img/loading.gif" lazyload></p>
+</figure></li>
+</ul></li>
+<li><p>符号表的组织方式：</p>
+<ul>
+<li><p>统一符号表：将任何符号都填入<strong>统一格式</strong>的符号表中；符号表的属性数量需<strong>兼顾信息量最大</strong>的符号</p></li>
+<li><p>分类符号表：对于不同种类的名字分别建立符号表</p>
+<p><strong>注意</strong>：统一符号表查表简便、但浪费空间；分类符号表节省空间、但填查表不方便</p></li>
+<li><p>折中符号表：将所有符号的大部分信息组成统一格式的符号表，<u>特殊信息另外附设表</u>，两表用指针连接</p></li>
+</ul></li>
+<li><p>非分程序的符号表：</p>
+<ul>
+<li><p>非分程序结构语言：每个可独立编译的程序单元<strong>不包含子模块</strong></p></li>
+<li><p>标识符作用域：分为全局作用域 + 局部作用域</p>
+<ul>
+<li>具有全局作用域：<u>子程序名</u> + <u>函数名</u> +
+<u>公共区名</u></li>
+<li>具有局部作用域：<strong>程序单元内部</strong>声明的变量（即局部变量）</li>
+</ul></li>
+<li><p>符号表管理：分为全局符号表 + 局部符号表</p>
+<ol type="1">
+<li>子程序名 + 函数名 + 公共区名填入全局符号表（具有全局作用域）</li>
+<li>在子程序的<strong>声明部分</strong>读到标识符，先查本单元的表：
+<ul>
+<li>若该符号已经存在，说明重复声明，报错</li>
+<li>若该符号不存在，则直接填表</li>
+</ul></li>
+<li>在<strong>可执行语句部分</strong>读到标识符，先查本单元的表：
+<ul>
+<li>若该符号已经存在，说明已被正确声明</li>
+<li>若该符号不存在，转去查全局符号表；若仍不存在说明未声明，报错</li>
+</ul></li>
+<li>程序单元编译结束：释放该单元的局部符号表</li>
+<li>整个程序编译完成：将全部符号表都释放掉</li>
+</ol></li>
+<li><p>符号表组织方式：</p>
+<ul>
+<li><p>无序符号表：仅<u>按扫描顺序</u>建立表，查表需要<strong>线性查找</strong></p></li>
+<li><p>有序符号表：符号表按照变量名进行<u>字典式排序</u>，可使用<strong>折半查找</strong>，但插入开销大</p>
+<p><strong>注意</strong>：平均查找长度：线性查表（ n + 1 /
+2）；折半查表（<span class="math inline">\(\log\)</span>n - 1）</p></li>
+<li><p>散列符号表：符号表地址 = Hash (标识符名称)</p></li>
+</ul></li>
+</ul>
+<hr></li>
+<li><p>分程序的符号表：</p>
+<ul>
+<li>分程序结构语言：模块内部可以嵌套子模块</li>
+<li>作用域：标识符的作用域为<strong>定义该标识符的子程序</strong>
+<ul>
+<li>函数内定义的标识符：作用域为函数体本身</li>
+<li>循环语句中定义的标识符：作用域为该循环语句</li>
+</ul></li>
+<li>符号表管理：
+<ol type="1">
+<li>在<strong>声明部分</strong>读到标识符，先查本单元的表：
+<ul>
+<li>若该符号已经存在，说明重复生命，报错</li>
+<li>若该符号不存在，则直接查表</li>
+</ul></li>
+<li>在<strong>可执行语句</strong>部分读到标识符，先查本单元的表：
+<ul>
+<li>若该符号已经存在，说明该符号已被正确声明</li>
+<li>若该符号不存在，逐层向外查直接外层的符号表；若在最外层表中仍未查到，报错</li>
+</ul></li>
+<li>语言<strong>预先定义</strong>的标准标识符，用户不必声明即可使用，一般放于<u>最外层表</u></li>
+<li>编译中识别出是分程序开始时，执行定位操作；分程序结束时执行重定位操作</li>
+</ol></li>
+</ul></li>
+<li><p>定位与重定位：</p>
+<ul>
+<li><p>定位：编译<strong>进入</strong>新的分程序时，为新声明的标识符建立一个子表</p></li>
+<li><p>重定位：编译<strong>离开</strong>当前分程序时，将符号表恢复为进入该分程序前的状态</p></li>
+</ul></li>
+</ul>
+<hr>
+<ul>
+<li><p>栈式符号表：分程序结构语言最简单的符号表组织形式</p>
+<ul>
+<li><p>符号表管理：</p>
+<ul>
+<li>遇到标识符声明：考虑插入符号表</li>
+<li>分程序结尾：将当前分程序对应的符号表弹栈</li>
+</ul></li>
+<li><p>插入符号：先查找考虑<strong>栈顶</strong>（当前编译步骤）符号表的符号信息，若未重复声明则将其插入</p></li>
+<li><p>查表符号：<strong>从栈顶表到栈底表</strong>进行线性搜索，确保最内层定义的变量最先被找到</p></li>
+<li><p>定位与重定位：</p>
+<ul>
+<li>定位：在分程序索引表顶端<strong>创建新的分区索引</strong>，并将索引值填为当前TOP值（开辟新表）</li>
+<li>重定位：<strong>TOP下移</strong>至当前分区索引表顶端的元素值（移除顶表）</li>
+</ul>
+<figure style="text-align:center">
+<p><img src="/2023/10/09/compiler/symbol-table/栈式符号表.png" srcset="/img/loading.gif" lazyload></p>
+</figure></li>
+<li><p>带有哈希表的栈式符号表：hash(ident) = ident
+符号在栈式符号表中的位置</p></li>
+</ul></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/compiler/">#compiler</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>『compiler-4』symbol table</div>
+      <div>http://larry0454.github.io/2023/10/09/compiler/symbol-table/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 9, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/10/10/machine_learning/linear-model/" title="『machine learning-4』linear model">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">『machine learning-4』linear model</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/09/27/compiler/parser/" title="『compiler-3』parser">
+                        <span class="hidden-mobile">『compiler-3』parser</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,810 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="数据库保护 一、数据库安全性控制  安全性含义：防止不合法使用导致的数据泄露、更改或破坏  向授权用户提供可靠服务 拒绝对数据的非授权访问请求  数据库系统的安全性模型：    用户标识与鉴别：系统最外层的安全保护措施  标识：系统采取一定方式标识其用户或应用程序的名字或身份 认证：用户或应用程序登录时判断是否为合法的授权用户 注意：标识常使用“用户名”，认证常使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『database-3』secruity control">
+<meta property="og:url" content="http://larry0454.github.io/2023/10/10/database/secruity-control/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="数据库保护 一、数据库安全性控制  安全性含义：防止不合法使用导致的数据泄露、更改或破坏  向授权用户提供可靠服务 拒绝对数据的非授权访问请求  数据库系统的安全性模型：    用户标识与鉴别：系统最外层的安全保护措施  标识：系统采取一定方式标识其用户或应用程序的名字或身份 认证：用户或应用程序登录时判断是否为合法的授权用户 注意：标识常使用“用户名”，认证常使用">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://larry0454.github.io/2023/10/10/database/secruity-control/%E5%AE%89%E5%85%A8%E6%80%A7%E7%B3%BB%E7%BB%9F.png">
+<meta property="og:image" content="http://larry0454.github.io/2023/10/10/database/secruity-control/%E8%A7%A6%E5%8F%91%E5%99%A8.png">
+<meta property="article:published_time" content="2023-10-10T13:16:12.000Z">
+<meta property="article:modified_time" content="2024-07-22T05:22:42.116Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="database">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://larry0454.github.io/2023/10/10/database/secruity-control/%E5%AE%89%E5%85%A8%E6%80%A7%E7%B3%BB%E7%BB%9F.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>『database-3』secruity control - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="『database-3』secruity control"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-10 21:16" pubdate>
+          October 10, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">『database-3』secruity control</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="数据库保护">数据库保护</h2>
+<h3 id="一数据库安全性控制">一、数据库安全性控制</h3>
+<ul>
+<li><p>安全性含义：防止<u>不合法使用</u>导致的<strong>数据泄露</strong>、<strong>更改</strong>或<strong>破坏</strong></p>
+<ul>
+<li>向授权用户提供可靠服务</li>
+<li>拒绝对数据的非授权访问请求</li>
+</ul></li>
+<li><p>数据库系统的安全性模型：</p>
+<figure>
+<p><img src="/2023/10/10/database/secruity-control/安全性系统.png" srcset="/img/loading.gif" lazyload></p>
+</figure></li>
+<li><p>用户标识与鉴别：系统最外层的安全保护措施</p>
+<ul>
+<li><p>标识：系统采取一定方式标识其用户或应用程序的<strong>名字或身份</strong></p></li>
+<li><p>认证：用户或应用程序登录时<strong>判断</strong>是否为合法的授权用户</p>
+<p><strong>注意</strong>：标识常使用“<strong>用户名</strong>”，认证常使用“<strong>口令</strong>”</p></li>
+</ul></li>
+<li><p>存取控制：<u>合法用户</u>可以访问、<u>非法用户</u>不能访问</p>
+<ul>
+<li><p>用户权限定义：将用户权限记录定义在<strong>数据字典</strong>中，形成安全性规则或授权规则</p></li>
+<li><p>合法权限检查：根据数据字典中的安全规则，对用户的操作请求进行<strong>合法权限检查</strong>，决定是否接受用户请求</p>
+<hr></li>
+<li><p>自主存取控制（<strong>DAC</strong>）：用户可以将拥有的权限<strong>转授</strong>给其他用户，用户权限包含<u>数据对象</u>和<u>操作类型</u>：</p>
+<ul>
+<li>数据对象：分为 <strong>模式</strong> （三级模式）+
+<strong>数据</strong>（表 + 属性列）</li>
+<li>操作类型：包括 <u>建立 + 修改 + 检索</u>（模式）、<u>检索 + 插入 +
+删除 + 修改</u>（数据）</li>
+</ul>
+<p><strong>注意</strong>：对用户的授权应包括 用户名 + 数据对象名 +
+允许的操作类型</p>
+<ul>
+<li>角色：一组相关<strong>权限的集合</strong>，分配权限 <span class="math inline">\(\Leftrightarrow\)</span> 授予角色</li>
+<li>SQL的数据安全性控制：包括<strong>GRANT</strong>和<strong>REVOKE</strong>语句</li>
+</ul></li>
+<li><p>强制存取控制（<strong>MAC</strong>）：每个用户和数据对象均标记一定的<strong>密级</strong></p>
+<ul>
+<li>主体与客体：主体包括实际用户 +
+用户进程；客体包括用户操纵的被动实体（如基本表等）</li>
+<li>敏感度标记：主体称作<strong>许可证级别</strong>，客体称作<strong>密级</strong></li>
+<li>对客体的存取规则：
+<ul>
+<li>许可证级别 <span class="math inline">\(\ge\)</span>
+密级：主体允许<strong>读取</strong>相应客体（但不能写）</li>
+<li>许可证级别 = 密级：主体允许<strong>改写</strong>相应客体</li>
+</ul></li>
+</ul>
+<hr></li>
+<li><p>视图机制：为每个用户定义不同的视图，可将对数据的<strong>访问限制</strong>在一定范围中</p></li>
+<li><p>审计：将用户<u>对数据库的所有操作</u>自动记录在<strong>审计日志</strong>，支持DBA重现数据库操作，找出非法记录</p></li>
+<li><p>数据加密：使用一定的算法将原始数据转变为不可识别的密文</p></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="二数据库完整性控制">二、数据库完整性控制</h3>
+<ul>
+<li><p>完整性内涵：数据的正确性和相容性（数据库对真实世界的表征）</p>
+<ul>
+<li>正确性：数据<strong>类型合法</strong> +
+数据处在<strong>取值范围</strong>内</li>
+<li>相容性：<u>表示同一事实</u>的两个数据应该相同</li>
+</ul>
+<p><strong>注意</strong>：安全性防范非法用户or非法操作；完整性防范<strong>不合语义</strong>的数据</p></li>
+<li><p>完整性约束条件：施加在数据库上的语义约束条件，作用对象包括
+<u>列、元组、关系</u></p>
+<ul>
+<li>实体完整性：元组的完整性约束；SQL中使用<strong>PRIMARY
+KEY</strong></li>
+<li>参照完整性：关系的完整性约束；SQL中使用<strong>FOREIGN
+KEY</strong></li>
+<li>用户自定义完整性：对列or元组的完整性约束；SQL中使用<strong>UNIQUE</strong>、<strong>NOT
+NULL</strong>、<strong>CHECK</strong></li>
+</ul></li>
+<li><p>静态约束：</p>
+<ul>
+<li>静态列级约束：对<strong>列取值域</strong>的说明，如数据类型、取值范围</li>
+<li>静态元组约束：规定<strong>元组中各列间</strong>的约束关系</li>
+<li>静态关系约束：各元组或各关系间的联系与约束，如<strong>实体完整性约束</strong>、<strong>参照完整性约</strong>束等</li>
+</ul></li>
+<li><p>动态约束：</p>
+<ul>
+<li>动态列级约束：<strong>修改</strong>列定义or列值时应满足的约束条件</li>
+<li>动态元组约束：<strong>修改</strong>元组值时需要满足的约束条件</li>
+<li>动态关系约束：关系<strong>变化前后</strong>状态上的限制条件</li>
+</ul>
+<p><strong>注意</strong>：静态约束反映数据库在<strong>确定状态</strong>下的约束条件；动态约束反映数据库<strong>状态变迁</strong>的约束条件</p>
+<hr></li>
+<li><p>完整性控制的功能实现：</p>
+<ul>
+<li>定义功能：提供<strong>定义</strong>完整性约束条件的机制</li>
+<li>检查功能：<strong>检查</strong>用户请求是否违背完整性约束条件</li>
+<li>违约响应：在<u>违背了完整性约束的情况</u>下，采取一定措施保证数据完整性</li>
+</ul></li>
+<li><p>完整性检查的时机：</p>
+<ul>
+<li>立即执行约束：在一条语句执行后<strong>立即进行</strong>完整性约束</li>
+<li>延迟执行约束：在整个用户事务<strong>执行完毕后</strong>，再进行完整性约束的检查</li>
+</ul></li>
+<li><p>完整性规则的表示：五元组 (D, O, A, C, P)</p>
+<ul>
+<li>D（数据）：约束<strong>作用的数据对象</strong></li>
+<li>O（操作）：<strong>触发</strong>完整性检查的数据操作</li>
+<li>A（断言）：数据对象必须满足的断言or语义约束</li>
+<li>C（谓词）：若对数据对象施加断言A，则该对象必须满足的谓词条件</li>
+<li>P（过程）：违反完整性约束规则时触发的过程</li>
+</ul></li>
+<li><p>SQL中的完整性约束：</p>
+<ul>
+<li><p>CREATE TABLE 语句：定义列级完整性约束、表级完整性约束</p></li>
+<li><p><strong>CREATE ASSERTION</strong> &lt;断言名&gt;
+<strong>CHECK</strong>(约束条件)</p></li>
+<li><p>触发器：用户对表的更新操作，<strong>自动激活相应触发器</strong>执行完整性约束（事件驱动）</p>
+<figure>
+<p><img src="/2023/10/10/database/secruity-control/触发器.png" srcset="/img/loading.gif" lazyload></p>
+</figure>
+<ul>
+<li><p>表名：触发器只能定义在<strong>基本表</strong>上，不能定义在视图上</p></li>
+<li><p>触发时机：BEFORE表示在执行触发事件前激活触发器，AFTER则相反</p></li>
+<li><p>触发事件：可以是 INSERT、UPDATE、DELETE
+或其组合，也可以指定操作列名 如 UPDATE <strong>OF</strong>
+(若干触发列)</p>
+<ul>
+<li><p>触发器类型：规定触发动作执行的间隔尺寸，对于每条SQL语句</p>
+<ul>
+<li><p>ROW：每操作一个元组，就执行一次触发动作</p></li>
+<li><p>STATEMENT：执行该SQL语句后，才执行一次触发动作</p>
+<p><strong>注意</strong>：若没有FOR语句，则可以<strong>引用</strong>
+OLDTABLE（表中原先内容）和 NEWTABLE（表中变化后的部分）</p></li>
+</ul></li>
+</ul></li>
+<li><p>触发条件：WHEN后的语句为真，触发动作才会执行（缺省则触发器激活后立即进行）</p></li>
+<li><p>触发动作体（匿名SQL块）：触发的SQL执行块；若触发动作体执行失败，触发事件也会失效
+<br><strong>注意</strong>：对于<strong>行级触发器</strong>，可以使用NEW/OLD引用<u>更新或插入后的新值</u>或<u>更新或删除前的旧值</u></p></li>
+</ul></li>
+</ul></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/database/">#database</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>『database-3』secruity control</div>
+      <div>http://larry0454.github.io/2023/10/10/database/secruity-control/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 10, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/10/10/compiler/runtime-memory-management/" title="『compiler-5』runtime memory management">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">『compiler-5』runtime memory management</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/10/machine_learning/linear-model/" title="『machine learning-4』linear model">
+                        <span class="hidden-mobile">『machine learning-4』linear model</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
