@@ -16,22 +16,22 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="装载与动态链接  一、可执行文件的装载与进程  进程虚拟地址空间：每个运行的程序拥有自己独立的虚拟地址空间 在32位平台下：  Linux：高1GB分给操作系统，低3GB分给用户程序 Windows：高2GB分给操作系统，低2GB分给用户程序  注意：硬件位数决定了寻址空间的上限：如32位的硬件平台决定了虚拟地址空间为 0 ~ \(2^{32} - 1\) PAE（Phys">
+    <meta name="description" content="装载与动态链接 一、可执行文件的装载与进程  进程虚拟地址空间：每个运行的程序拥有自己独立的虚拟地址空间 在32位平台下：  Linux：高1GB分给操作系统，低3GB分给用户程序 Windows：高2GB分给操作系统，低2GB分给用户程序  注意：硬件位数决定了寻址空间的上限：如32位的硬件平台决定了虚拟地址空间为 0 ~ \(2^{32} - 1\) PAE（Physic">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『link and load-2』dynamic link">
-<meta property="og:url" content="http://larry0454.github.io/2024/03/27/link_and_load/dynamic-link/index.html">
+<meta property="og:url" content="http://larry0454.github.io/2023/07/25/link_and_load/dynamic-link/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="装载与动态链接  一、可执行文件的装载与进程  进程虚拟地址空间：每个运行的程序拥有自己独立的虚拟地址空间 在32位平台下：  Linux：高1GB分给操作系统，低3GB分给用户程序 Windows：高2GB分给操作系统，低2GB分给用户程序  注意：硬件位数决定了寻址空间的上限：如32位的硬件平台决定了虚拟地址空间为 0 ~ \(2^{32} - 1\) PAE（Phys">
+<meta property="og:description" content="装载与动态链接 一、可执行文件的装载与进程  进程虚拟地址空间：每个运行的程序拥有自己独立的虚拟地址空间 在32位平台下：  Linux：高1GB分给操作系统，低3GB分给用户程序 Windows：高2GB分给操作系统，低2GB分给用户程序  注意：硬件位数决定了寻址空间的上限：如32位的硬件平台决定了虚拟地址空间为 0 ~ \(2^{32} - 1\) PAE（Physic">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/%E8%B0%83%E7%94%A8%E6%A0%91.png">
-<meta property="og:image" content="http://larry0454.github.io/VMA.png">
-<meta property="og:image" content="http://larry0454.github.io/%E6%A0%88.png">
-<meta property="article:published_time" content="2024-03-27T12:52:37.000Z">
-<meta property="article:modified_time" content="2024-07-07T14:59:57.198Z">
+<meta property="og:image" content="http://larry0454.github.io/2023/07/25/link_and_load/dynamic-link/%E8%B0%83%E7%94%A8%E6%A0%91.png">
+<meta property="og:image" content="http://larry0454.github.io/2023/07/25/link_and_load/dynamic-link/VMA.png">
+<meta property="og:image" content="http://larry0454.github.io/2023/07/25/link_and_load/dynamic-link/%E6%A0%88.png">
+<meta property="article:published_time" content="2023-07-25T12:52:37.000Z">
+<meta property="article:modified_time" content="2024-07-22T05:59:56.738Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="link and load">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/%E8%B0%83%E7%94%A8%E6%A0%91.png">
+<meta name="twitter:image" content="http://larry0454.github.io/2023/07/25/link_and_load/dynamic-link/%E8%B0%83%E7%94%A8%E6%A0%91.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -202,8 +202,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-27 20:52" pubdate>
-          March 27, 2024 pm
+        <time datetime="2023-07-25 20:52" pubdate>
+          July 25, 2023 pm
         </time>
       </span>
     
@@ -277,7 +277,6 @@
               <div class="markdown-body">
                 
                 <h2 id="装载与动态链接">装载与动态链接</h2>
-<hr>
 <h3 id="一可执行文件的装载与进程">一、可执行文件的装载与进程</h3>
 <ul>
 <li><p>进程虚拟地址空间：每个运行的程序拥有自己<strong>独立的虚拟地址空间</strong></p>
@@ -304,15 +303,10 @@ Extension）：<strong>扩充硬件地址线</strong>，以扩展32位平台的�
 <ul>
 <li><p>覆盖规则：若模块A和模块B<strong>不会相互调用</strong>，两者就可能<strong>互相覆盖</strong></p></li>
 <li><p>调用树：程序员将各模块按调用关系组织成<u>树结构</u>：</p>
-<figure style="text-align:center;">
-<p><img src="/调用树.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
-<figcaption>
-<p>调用树图示</p>
-</figcaption>
-</figure>
-<p>当一个模块被调用时，务必保证从<strong>该模块到树根</strong>的所有模块都在内存中</p>
-<p><strong>禁止跨树调用</strong>，如模块C不可调用D、B、E、F</p></li>
+<p><img src="/2023/07/25/link_and_load/dynamic-link/调用树.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
+<p>当一个模块被调用时，务必保证从<strong>该模块到树根</strong>的所有模块都在内存中</p></li>
 </ul>
+<p><strong>禁止跨树调用</strong>，如模块C不可调用D、B、E、F</p>
 <hr></li>
 <li><p>页映射：虚拟存储机制的一部分，通过<strong>物理页映射与页调换</strong>解决物理内存不足的问题</p>
 <ul>
@@ -367,12 +361,7 @@ VMA表示<u>虚拟地址</u>与<u>ELF中指定段的位置</u>间的关系（段
 <li>堆 VMA：权限可读写、可执行；无映像文件（匿名）</li>
 <li>栈 VMA：权限可读写、不可执行；无映像文件（匿名）</li>
 </ol>
-<figure style="text-align:center;">
-<p><img src="/VMA.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
-<figcaption>
-<p>VMA 映射图示</p>
-</figcaption>
-</figure></li>
+<p><img src="/2023/07/25/link_and_load/dynamic-link/VMA.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p></li>
 </ul>
 <hr></li>
 <li><p>段地址对齐（Segment）：段长往往不是页大小的整数倍，段地址往往不是页对齐的</p>
@@ -388,7 +377,7 @@ VMA表示<u>虚拟地址</u>与<u>ELF中指定段的位置</u>间的关系（段
 <ul>
 <li><p>栈空间布局：由esp指针指向栈顶</p>
 <figure style="text-align:center;">
-<p><img src="/栈.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
+<p><img src="/2023/07/25/link_and_load/dynamic-link/栈.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
 <figcaption>
 <p>栈空间图示</p>
 </figcaption>
@@ -938,7 +927,7 @@ Manager：并行（Side-By-Side）管理器，根据应用程序的<strong>manif
   <div class="license-box my-3">
     <div class="license-title">
       <div>『link and load-2』dynamic link</div>
-      <div>http://larry0454.github.io/2024/03/27/link_and_load/dynamic-link/</div>
+      <div>http://larry0454.github.io/2023/07/25/link_and_load/dynamic-link/</div>
     </div>
     <div class="license-meta">
       
@@ -950,7 +939,7 @@ Manager：并行（Side-By-Side）管理器，根据应用程序的<strong>manif
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>March 27, 2024</div>
+          <div>July 25, 2023</div>
         </div>
       
       
@@ -982,7 +971,7 @@ Manager：并行（Side-By-Side）管理器，根据应用程序的<strong>manif
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/27/link_and_load/runtime-library/" title="『link and load-3』runtime library">
+                      <a href="/2023/08/01/link_and_load/runtime-library/" title="『link and load-3』runtime library">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">『link and load-3』runtime library</span>
                         <span class="visible-mobile">Previous</span>
@@ -992,7 +981,7 @@ Manager：并行（Side-By-Side）管理器，根据应用程序的<strong>manif
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/03/27/link_and_load/static-link/" title="『link and load-1』static link">
+                      <a href="/2023/07/20/link_and_load/static-link/" title="『link and load-1』static link">
                         <span class="hidden-mobile">『link and load-1』static link</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
