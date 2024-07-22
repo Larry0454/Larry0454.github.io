@@ -23,23 +23,23 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="空间变换与运动 一、自由度  位形：机器人上每个点位的全体的集合，可根据位形确定机器人上所有点的位置；如二维坐标 (x, y) 可表示平面上任意点位置 位形空间：包含所有可能的机器人位形的 n 维空间，一般记作 C-space；机器人位形通常用 C-space 中的一个特征点表示 自由度定义：表示机器人位形的最少连续实值坐标数 刚体的自由度：系统自由度 &#x3D; (系统内各点的自由度之和">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%BD%AC%E5%8A%A8%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E7%A7%BB%E5%8A%A8%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%9E%BA%E6%97%8B%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E5%9C%86%E6%9F%B1%E5%89%AF.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%99%8E%E5%85%8B%E9%93%B0.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E7%90%83%E9%93%B0.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E5%BC%80%E9%93%BE%E7%BB%93%E6%9E%84.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E9%97%AD%E9%93%BE%E7%BB%93%E6%9E%84.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E6%9B%B2%E6%9F%84%E6%BB%91%E5%9D%97%E7%BB%93%E6%9E%84.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/Delta%E6%9C%BA%E5%99%A8%E4%BA%BA.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E6%97%8B%E8%BD%AC%E7%AE%97%E5%AD%90.jpg">
+<meta property="og:image" content="http://larry0454.github.io/%E8%BD%AC%E5%8A%A8%E5%89%AF.jpg">
+<meta property="og:image" content="http://larry0454.github.io/%E7%A7%BB%E5%8A%A8%E5%89%AF.jpg">
+<meta property="og:image" content="http://larry0454.github.io/%E8%9E%BA%E6%97%8B%E5%89%AF.jpg">
+<meta property="og:image" content="http://larry0454.github.io/%E5%9C%86%E6%9F%B1%E5%89%AF.jpg">
+<meta property="og:image" content="http://larry0454.github.io/%E8%99%8E%E5%85%8B%E9%93%B0.jpg">
+<meta property="og:image" content="http://larry0454.github.io/%E7%90%83%E9%93%B0.jpg">
+<meta property="og:image" content="http://larry0454.github.io/%E5%BC%80%E9%93%BE%E7%BB%93%E6%9E%84.jpg">
+<meta property="og:image" content="http://larry0454.github.io/%E9%97%AD%E9%93%BE%E7%BB%93%E6%9E%84.jpg">
+<meta property="og:image" content="http://larry0454.github.io/%E6%9B%B2%E6%9F%84%E6%BB%91%E5%9D%97%E7%BB%93%E6%9E%84.jpg">
+<meta property="og:image" content="http://larry0454.github.io/Delta%E6%9C%BA%E5%99%A8%E4%BA%BA.jpg">
+<meta property="og:image" content="http://larry0454.github.io/%E6%97%8B%E8%BD%AC%E7%AE%97%E5%AD%90.jpg">
 <meta property="article:published_time" content="2024-07-07T14:55:44.000Z">
-<meta property="article:modified_time" content="2024-07-18T01:59:30.114Z">
+<meta property="article:modified_time" content="2024-07-18T11:19:54.085Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="robotics">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E8%BD%AC%E5%8A%A8%E5%89%AF.jpg">
+<meta name="twitter:image" content="http://larry0454.github.io/%E8%BD%AC%E5%8A%A8%E5%89%AF.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -313,41 +313,41 @@ C-space；机器人位形通常用 C-space 中的一个特征点表示</p></li>
 <ul>
 <li><p>转动副：关节自由度 =
 1，允许两个构件绕同一个关节轴旋转，又称<strong>铰链</strong>
-<br><img src="/2024/07/07/robotics/spatial-transformations/转动副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/转动副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：转动副 对另一<u>平面刚体</u>的约束 =
 2，对另一<u>空间刚体</u>的约束 = 5（保留一个旋转自由度）</p>
 </blockquote></li>
 <li><p>移动副：关节自由度 =
 1，允许关节沿轴线方向平移运动，又称<strong>滑动</strong>
-<br><img src="/2024/07/07/robotics/spatial-transformations/移动副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/移动副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：移动副 对另一<u>平面刚体</u>的约束 =
 2，对另一<u>空间刚体</u>的约束 = 5（保留一个平移自由度）</p>
 </blockquote></li>
 <li><p>螺旋副：关节自由度 =
 1，允许两个构件绕同一个关节轴旋转、且在旋转的<strong>同时</strong>平移运动
-<br><img src="/2024/07/07/robotics/spatial-transformations/螺旋副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/螺旋副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：螺旋副 对<u>空间刚体</u>的约束 =
 5（保留一个旋转自由度，无法讨论对平面刚体的约束，下同）</p>
 </blockquote></li>
 <li><p>圆柱副：关节自由度 =
 2，允许两个构件沿关节轴做<strong>独立</strong>的平移和旋转
-<br><img src="/2024/07/07/robotics/spatial-transformations/圆柱副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/圆柱副.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：圆柱副 对另一<u>空间刚体</u>的约束 =
 4（保留一个旋转 + 一个平移自由度）</p>
 </blockquote></li>
 <li><p>虎克铰：关节自由度 =
 2，由两个<strong>正交排列</strong>的转动副组成，又称<strong>万向节</strong>
-<br><img src="/2024/07/07/robotics/spatial-transformations/虎克铰.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/虎克铰.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：虎克铰 对另一<u>空间刚体</u>的约束 =
 4（保留两个旋转自由度）</p>
 </blockquote></li>
 <li><p>球铰：关节自由度 = 3，类似人类的<strong>肩关节</strong>
-<br><img src="/2024/07/07/robotics/spatial-transformations/球铰.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
+<br><img src="/球铰.jpg" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>：球铰 对另一<u>空间刚体</u>的约束 =
 3（保留三个旋转自由度）</p>
@@ -375,21 +375,21 @@ m\)</span></p>
 <br>设机构有 <span class="math inline">\(k\)</span>
 个关节，则（含地面）有 <span class="math inline">\(k+1\)</span>
 个构件，<span class="math inline">\(\text{dof}=3((k+1) - 1 - k) + k*1 =
-k\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/开链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
+k\)</span> <br><img src="/开链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
 <li>闭链结构：有<strong>闭环</strong>的结构，由于地面本身也是一个构件，故可以与地面构成闭环
 <br>设机构有 <span class="math inline">\(k\)</span>
 个关节，则（含地面）有 <span class="math inline">\(k\)</span>
 个构件，<span class="math inline">\(\text{dof} = 3(k - 1 - k) + k*1 = k
-- 3\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/闭链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
+- 3\)</span> <br><img src="/闭链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
 <li>曲柄滑块结构：属于<strong>闭链</strong>结构；如下图共有 3 个转动副和
 1 个移动副，与地面形成闭环<br><span class="math inline">\(\text{dof} =
 3(4 - 1 - 4) + 3 * 1 + 1 * 1 = 1\)</span>
-<br><img src="/2024/07/07/robotics/spatial-transformations/曲柄滑块结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
+<br><img src="/曲柄滑块结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
 </ul></li>
 <li><p>空间结构（例）：如下图 Delta 机器人，<span class="math inline">\(m = 6\)</span>；如下图每条腿有 4 个球铰、3
 个转动副、5 根杆<br><span class="math inline">\(\text{则 dof} = 6(3*5+2
 - 1 - (4*3+3*3)) + 3*3 * 1 + 3*4 * 3 = 15\)</span> <br>
-<img src="/2024/07/07/robotics/spatial-transformations/Delta机器人.jpg" srcset="/img/loading.gif" lazyload width="40%"></p>
+<img src="/Delta机器人.jpg" srcset="/img/loading.gif" lazyload width="40%"></p>
 <blockquote>
 <p><strong>注意</strong>：上平台为静平台（自由度 =
 0），下平台为<strong>动平台</strong>（自由度 = 3），剩余 12 个自由度表示
@@ -496,9 +496,9 @@ R}\)</span>，即<u>算子右乘</u></li>
 <blockquote>
 <p><strong>注意</strong>：对于两个坐标系，<strong><span class="math inline">\(\omega\)</span>
 的值是相等的</strong>（比如都是各自坐标系下的 z
-轴），但实际很可能不是空间呢同一个轴</p>
+轴），但实际很可能不是空间内同一个轴</p>
 </blockquote>
-<p><img src="/2024/07/07/robotics/spatial-transformations/旋转算子.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<p><img src="/旋转算子.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul>
 <p><strong>未完待续...</strong></p></li>
 </ul></li>
