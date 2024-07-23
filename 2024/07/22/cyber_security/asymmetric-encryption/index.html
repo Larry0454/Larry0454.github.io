@@ -16,21 +16,21 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、公钥密码概述  非对称加密方法：用两个不同的密钥进行加密 or 解密 两个密钥：公钥 + 私钥  公开密钥：公开的，可用于加密 + 验签 私有密钥：秘密的，可用于解密 + 签名  非对称的内涵：用于 加密 + 验签 的密钥 无法 解密 or 签名 公钥算法的条件：加密可行 + 破密不可行  加密可行：  产生一对密钥是计算可行的 已知公钥 + 明文，产生密文是计">
+    <meta name="description" content="公钥密码体系 一、非对称加密概述  非对称加密方法：用两个不同的密钥进行加密 or 解密 两个密钥：公钥 + 私钥  公开密钥：公开的，可用于加密 + 验签 私有密钥：秘密的，可用于解密 + 签名  非对称的内涵：用于 加密 + 验签 的密钥 无法 解密 or 签名 公钥算法的条件：加密可行 + 破密不可行  加密可行：  产生一对密钥是计算可行的 已知公钥 +">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『cyber security-2』asymmetric encryption">
 <meta property="og:url" content="http://larry0454.github.io/2024/07/22/cyber_security/asymmetric-encryption/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="一、公钥密码概述  非对称加密方法：用两个不同的密钥进行加密 or 解密 两个密钥：公钥 + 私钥  公开密钥：公开的，可用于加密 + 验签 私有密钥：秘密的，可用于解密 + 签名  非对称的内涵：用于 加密 + 验签 的密钥 无法 解密 or 签名 公钥算法的条件：加密可行 + 破密不可行  加密可行：  产生一对密钥是计算可行的 已知公钥 + 明文，产生密文是计">
+<meta property="og:description" content="公钥密码体系 一、非对称加密概述  非对称加密方法：用两个不同的密钥进行加密 or 解密 两个密钥：公钥 + 私钥  公开密钥：公开的，可用于加密 + 验签 私有密钥：秘密的，可用于解密 + 签名  非对称的内涵：用于 加密 + 验签 的密钥 无法 解密 or 签名 公钥算法的条件：加密可行 + 破密不可行  加密可行：  产生一对密钥是计算可行的 已知公钥 +">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/22/cyber_security/asymmetric-encryption/%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/22/cyber_security/asymmetric-encryption/DH%E4%B8%AD%E9%97%B4%E4%BA%BA.png">
+<meta property="og:image" content="http://larry0454.github.io/%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="http://larry0454.github.io/DH%E4%B8%AD%E9%97%B4%E4%BA%BA.png">
 <meta property="article:published_time" content="2024-07-22T12:12:08.000Z">
-<meta property="article:modified_time" content="2024-07-22T12:13:56.966Z">
+<meta property="article:modified_time" content="2024-07-23T01:35:00.615Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="cyber security">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/07/22/cyber_security/asymmetric-encryption/%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.png">
+<meta name="twitter:image" content="http://larry0454.github.io/%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -275,7 +275,8 @@
             
               <div class="markdown-body">
                 
-                <h3 id="一公钥密码概述">一、公钥密码概述</h3>
+                <h2 id="公钥密码体系">公钥密码体系</h2>
+<h3 id="一非对称加密概述">一、非对称加密概述</h3>
 <ul>
 <li><p>非对称加密方法：用<strong>两个<u>不同</u></strong>的密钥进行加密
 or 解密</p></li>
@@ -307,7 +308,7 @@ or 解密</p></li>
 </ul>
 <p><strong>注意</strong>：公钥密码不一定比对称密钥更安全（取决于<strong>密钥长度</strong>）；且公钥密码计算开销很大，暂时难以取代传统密码</p></li>
 <li><p>对称密钥加密 VS. 非对称密钥加密：</p>
-<p><img src="/2024/07/22/cyber_security/asymmetric-encryption/算法对比.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<p><img src="/算法对比.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 </ul>
 <hr>
 <h3 id="二rsa算法">二、RSA算法</h3>
@@ -426,7 +427,7 @@ b\)</span> (mod) <span class="math inline">\(n\)</span> 指的是 <span class="m
 使得 <span class="math inline">\(Y_B = a^{X_B}\)</span> mod <span class="math inline">\(p\)</span>，很困难</li>
 </ul></li>
 <li><p>中间人攻击：DH算法对中间人攻击并不安全，中间人可能跟A共享一个密钥<span class="math inline">\(K_2\)</span>、而跟B共享一个密钥<span class="math inline">\(K_1\)</span></p>
-<p><img src="/2024/07/22/cyber_security/asymmetric-encryption/DH中间人.png" srcset="/img/loading.gif" lazyload width="60%"></p>
+<p><img src="/DH中间人.png" srcset="/img/loading.gif" lazyload width="60%"></p>
 <ul>
 <li><p>攻击方式：</p>
 <ul>
