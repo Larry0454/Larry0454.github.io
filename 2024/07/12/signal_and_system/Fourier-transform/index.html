@@ -16,15 +16,15 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="傅立叶变换 一、傅立叶级数  傅立叶级数的非复数表达形式：设 \(X(t)\) 以 \(T_0\) 为周期，则有 \[ \begin{align} &amp;x(t) &#x3D; B_0 + \sum_{k&#x3D;1}^\infty B_k \cos(k \omega_0 t) + \sum_{k&#x3D;1}^\infty C_k \sin(k \omega_0 t) \\ &amp;\text{其中}">
+    <meta name="description" content="傅立叶变换 一、傅立叶级数  傅立叶级数的非复数表达形式：设 \(x(t)\) 以 \(T_0\) 为周期，则有 \[ \begin{align} &amp;x(t) &#x3D; B_0 + \sum_{k&#x3D;1}^\infty B_k \cos(k \omega_0 t) + \sum_{k&#x3D;1}^\infty C_k \sin(k \omega_0 t) \\ &amp;\text{其中}">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『signal and system-3』Fourier transform">
 <meta property="og:url" content="http://larry0454.github.io/2024/07/12/signal_and_system/Fourier-transform/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="傅立叶变换 一、傅立叶级数  傅立叶级数的非复数表达形式：设 \(X(t)\) 以 \(T_0\) 为周期，则有 \[ \begin{align} &amp;x(t) &#x3D; B_0 + \sum_{k&#x3D;1}^\infty B_k \cos(k \omega_0 t) + \sum_{k&#x3D;1}^\infty C_k \sin(k \omega_0 t) \\ &amp;\text{其中}">
+<meta property="og:description" content="傅立叶变换 一、傅立叶级数  傅立叶级数的非复数表达形式：设 \(x(t)\) 以 \(T_0\) 为周期，则有 \[ \begin{align} &amp;x(t) &#x3D; B_0 + \sum_{k&#x3D;1}^\infty B_k \cos(k \omega_0 t) + \sum_{k&#x3D;1}^\infty C_k \sin(k \omega_0 t) \\ &amp;\text{其中}">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-07-12T15:10:21.000Z">
-<meta property="article:modified_time" content="2024-07-26T14:28:20.551Z">
+<meta property="article:modified_time" content="2024-07-26T15:38:15.333Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="signal and system">
 <meta name="twitter:card" content="summary_large_image">
@@ -221,7 +221,7 @@
         
         
         
-          34 mins
+          35 mins
         
       </span>
     
@@ -275,13 +275,13 @@
                 <h2 id="傅立叶变换">傅立叶变换</h2>
 <h3 id="一傅立叶级数">一、傅立叶级数</h3>
 <ul>
-<li><p>傅立叶级数的非复数表达形式：设 <span class="math inline">\(X(t)\)</span> 以 <span class="math inline">\(T_0\)</span> 为周期，则有 <span class="math display">\[
+<li><p>傅立叶级数的非复数表达形式：设 <span class="math inline">\(x(t)\)</span> 以 <span class="math inline">\(T_0\)</span> 为周期，则有 <span class="math display">\[
 \begin{align}
 &amp;x(t) = B_0 + \sum_{k=1}^\infty B_k \cos(k \omega_0 t) +
 \sum_{k=1}^\infty C_k \sin(k \omega_0 t) \\
 &amp;\text{其中} \begin{cases}
-B_0 = \frac{1}{T_0} \int_0^{T_0} x(t) dt \\
-B_k = \frac{2}{T_0} \int_{0}^{T_0} x(t) \cos(k \omega_0 t) dt \\
+B_0 = \frac{1}{T_0} \int_0^{T_0} x(t) dt \\ \\
+B_k = \frac{2}{T_0} \int_{0}^{T_0} x(t) \cos(k \omega_0 t) dt \\ \\
 C_k = \frac{2}{T_0} \int_{0}^{T_0} x(t) \sin(k \omega_0 t) dt \\
 \end{cases}
 \end{align}
@@ -303,14 +303,14 @@ dt \text{，} \omega_0 = \frac{2 \pi}{T_0} \\
 \pi}{T_0}\)</span> 是基波周期</p></li>
 <li><p>两种傅立叶级数间的<u>转换关系</u>：互相可推导 <span class="math display">\[
 \begin{cases}
-B_0 = a_0 \\
-B_k = a_{-k} + a_k \\
+B_0 = a_0 \\ \\
+B_k = a_{-k} + a_k \\ \\
 C_k = j(a_k - a_{-k}) \\
 \end{cases}
 \text{ }\text{ }\text{ }\text{ }
 \begin{cases}
-a_0 = B_0 \\
-a_k = \frac{1}{2} (B_k - jC_k) \\
+a_0 = B_0 \\ \\
+a_k = \frac{1}{2} (B_k - jC_k) \\ \\
 a_{-k} = \frac{1}{2} (B_k + jC_k) \\
 \end{cases}
 \]</span></p></li>
@@ -395,8 +395,10 @@ e^{ju\omega_0t}, e^{jk\omega_0 t}&gt; = \sum_{u=-\infty}^{+\infty}
 \dfrac{1}{2^n n!} \dfrac{d^n[(x^2 - 1)^n]}{dx^2}\)</span>；表示 <span class="math inline">\([-1, +1]\)</span> 上的函数 <span class="math inline">\(f(x) = \sum_{k=1}^{+\infty} a_k P_k(x)\)</span>
 <span class="math display">\[
 \begin{align}
-&amp;\int_{-1}^{+1} [P_n(x)]^2 dx = \dfrac{2}{2n + 1} &gt; 0 \\
-&amp;\int_{-1}^{+1} P_m(x)P_n(x) dx = 0 \text{ }\text{ }(m \ne n) \\
+&amp;\text{与自身做内积：} \int_{-1}^{+1} [P_n(x)]^2 dx = \dfrac{2}{2n +
+1} &gt; 0 \\
+&amp;\text{两不同函数内积：} \int_{-1}^{+1} P_m(x)P_n(x) dx = 0 \text{
+}\text{ }(m \ne n) \\
 \end{align}
 \]</span></p></li>
 <li><p>Haar 小波：短时域上的方波</p></li>
