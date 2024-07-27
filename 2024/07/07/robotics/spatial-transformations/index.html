@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/Delta%E6%9C%BA%E5%99%A8%E4%BA%BA.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E6%97%8B%E8%BD%AC%E7%AE%97%E5%AD%90.png">
 <meta property="article:published_time" content="2024-07-07T14:55:44.000Z">
-<meta property="article:modified_time" content="2024-07-22T06:12:28.261Z">
+<meta property="article:modified_time" content="2024-07-27T03:28:47.915Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="robotics">
 <meta name="twitter:card" content="summary_large_image">
@@ -375,16 +375,24 @@ m\)</span></p>
 <br>设机构有 <span class="math inline">\(k\)</span>
 个关节，则（含地面）有 <span class="math inline">\(k+1\)</span>
 个构件，<span class="math inline">\(\text{dof}=3((k+1) - 1 - k) + k*1 =
-k\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/开链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
+k\)</span> <br>
+<div style="text-align: center;">
+<img src="/2024/07/07/robotics/spatial-transformations/开链结构.jpg" srcset="/img/loading.gif" lazyload width="40%">
+</div></li>
 <li>闭链结构：有<strong>闭环</strong>的结构，由于地面本身也是一个构件，故可以与地面构成闭环
 <br>设机构有 <span class="math inline">\(k\)</span>
 个关节，则（含地面）有 <span class="math inline">\(k\)</span>
 个构件，<span class="math inline">\(\text{dof} = 3(k - 1 - k) + k*1 = k
-- 3\)</span> <br><img src="/2024/07/07/robotics/spatial-transformations/闭链结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
+- 3\)</span> <br>
+<div style="text-align: center;">
+<img src="/2024/07/07/robotics/spatial-transformations/闭链结构.jpg" srcset="/img/loading.gif" lazyload width="40%">
+</div></li>
 <li>曲柄滑块结构：属于<strong>闭链</strong>结构；如下图共有 3 个转动副和
 1 个移动副，与地面形成闭环<br><span class="math inline">\(\text{dof} =
-3(4 - 1 - 4) + 3 * 1 + 1 * 1 = 1\)</span>
-<br><img src="/2024/07/07/robotics/spatial-transformations/曲柄滑块结构.jpg" srcset="/img/loading.gif" lazyload width="40%"></li>
+3(4 - 1 - 4) + 3 * 1 + 1 * 1 = 1\)</span> <br>
+<div style="text-align: center;">
+<img src="/2024/07/07/robotics/spatial-transformations/曲柄滑块结构.jpg" srcset="/img/loading.gif" lazyload width="40%">
+</div></li>
 </ul></li>
 <li><p>空间结构（例）：如下图 Delta 机器人，<span class="math inline">\(m = 6\)</span>；如下图每条腿有 4 个球铰、3
 个转动副、5 根杆<br><span class="math inline">\(\text{则 dof} = 6(3*5+2
