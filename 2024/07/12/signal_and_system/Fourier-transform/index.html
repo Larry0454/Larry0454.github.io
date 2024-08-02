@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/07/12/signal_and_system/Fourier-transform/%E6%A8%A1%E9%95%BF1.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/07/12/signal_and_system/Fourier-transform/%E7%9B%B8%E4%BD%8D1.jpg">
 <meta property="article:published_time" content="2024-07-12T15:10:21.000Z">
-<meta property="article:modified_time" content="2024-07-27T04:10:39.604Z">
+<meta property="article:modified_time" content="2024-08-02T09:18:22.144Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="signal and system">
 <meta name="twitter:card" content="summary_large_image">
@@ -478,13 +478,13 @@ b^2}}\)</span>，相位 <span class="math inline">\(\theta\)</span>=<span class=
 <ul>
 <li>推导过程： <span class="math display">\[
 \begin{align}
-\text{左式推导：} &amp;x(j\omega) = \int_{-\infty}^{+\infty} x(t)
+\text{左式推导：} &amp;X(j\omega) = \int_{-\infty}^{+\infty} x(t)
 e^{-j\omega t} dt = \int_{-\infty}^{+\infty} \delta(t) e^{-j\omega t} dt
 \\
 &amp;\text{由 } \int_{-\infty}^{+\infty} x(t) \delta(t) dt = x(0) \text{
 ，} \int_{-\infty}^{+\infty} \delta(t) e^{-j\omega t} dt = e^{-j \omega
 \times 0} = 1 \\
-\text{右式推导：} &amp;x(j\omega) = \int_{-\infty}^{+\infty} e^{-j
+\text{右式推导：} &amp;X(j\omega) = \int_{-\infty}^{+\infty} e^{-j
 \omega t} dt = \lim_{N \rightarrow +\infty} \int_{-N}^{+N} e^{-j \omega
 t} dt = \lim_{N \rightarrow +\infty} \dfrac{1}{j\omega} ({e^{j\omega N}
 - e^{-j\omega N}}) \\ &amp;= \lim_{N \rightarrow +\infty}

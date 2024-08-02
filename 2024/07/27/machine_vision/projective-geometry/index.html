@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E4%BD%9C%E5%9B%BE%E6%B3%95%E7%A1%AE%E5%AE%9A%E6%B6%88%E5%BD%B1%E7%82%B9.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E5%BA%A6%E9%87%8F%E7%9F%AB%E6%AD%A3.jpg">
 <meta property="article:published_time" content="2024-07-27T07:00:18.000Z">
-<meta property="article:modified_time" content="2024-08-02T06:52:41.777Z">
+<meta property="article:modified_time" content="2024-08-02T11:16:50.880Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.4k words
+          13k words
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          79 mins
+          111 mins
         
       </span>
     
@@ -714,6 +714,177 @@ m_3&#39;  \end{pmatrix} = 0 \\
 相似变换，故矫正后的图像和真实图像间存在缩放差距</p>
 </blockquote>
 <p><img src="/2024/07/27/machine_vision/projective-geometry/度量矫正.jpg" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="二3d-射影几何">二、3D 射影几何</h3>
+<ul>
+<li><p>三维空间中的点：用四维度齐次向量 <span class="math inline">\(\textbf{X} = (X_1, X_2, X_3, X4_4)\)</span>
+表示；欧氏空间 和 射影空间 之间的转换 与 2D 类似：</p>
+<ul>
+<li><span class="math inline">\(\text{IP}^4 \Rightarrow
+\text{IR}^3\)</span>：设 三维欧氏空间中的点坐标为 <span class="math inline">\((X, Y, Z)\)</span>，则有 <span class="math inline">\(X = \dfrac{X_1}{X_4}\)</span>，<span class="math inline">\(Y = \dfrac{X_2}{X_4}\)</span>，<span class="math inline">\(Z = \dfrac{X_3}{X_4}\)</span></li>
+<li><span class="math inline">\(\text{IR}^3 \Rightarrow
+\text{IP}^4\)</span>：直接追加一个"1"，即 <span class="math inline">\(\textbf{X} = (X, Y, Z, 1)\)</span></li>
+</ul></li>
+<li><p><span class="math inline">\(\text{IP}^3\)</span>
+上的射影变换：点线性变换 <span class="math inline">\(X&#39; =
+HX\)</span>，其中 <span class="math inline">\(H_{4 \times 4}\)</span>
+为非奇异阵，共有 16 - 1 = 15 dof，</p></li>
+<li><p>三维空间中的平面：</p>
+<ul>
+<li><p>齐次 与 非齐次 表示：</p>
+<ul>
+<li><p>非齐次表示：3D 空间中的平面可表示为 <span class="math inline">\(\pi_1 X + \pi_2 Y + \pi_3 Z + \pi_4 =
+0\)</span></p>
+<ul>
+<li>法线方程：<span class="math inline">\(n = (\pi_1, \pi_2,
+\pi_3)^T\)</span></li>
+<li>非齐次向量：<span class="math inline">\(\widetilde{X} = (X, Y,
+Z)\)</span> <span class="math inline">\(\Rightarrow\)</span>
+非齐次平面方程 <span class="math inline">\(n \widetilde{X} + d =
+0\)</span></li>
+<li>原点到平面距离：<span class="math inline">\(=
+\dfrac{d}{||n||}\)</span>，其中 <span class="math inline">\(d =
+\pi_4\)</span></li>
+</ul></li>
+<li><p>齐次表示：用代换 <span class="math inline">\(X =
+\dfrac{X_1}{X_4}\)</span>，<span class="math inline">\(Y =
+\dfrac{X_2}{X_4}\)</span>，<span class="math inline">\(Z =
+\dfrac{X_3}{X_4}\)</span>，对应的齐次形式为 <span class="math inline">\(\pi_1 X_1 + \pi_2 X_2 + \pi_3 X_3 + \pi_4 X_4 =
+0\)</span></p>
+<p>或有简洁形式 <span class="math inline">\(\pi^T X =
+0\)</span>，即用在平面 <span class="math inline">\(\pi\)</span> 上的点
+<span class="math inline">\(X\)</span> 表示平面，<span class="math inline">\(\pi = (\pi_1, \pi_2, \pi_3, \pi_4)^T\)</span>
+是平面的齐次表示</p></li>
+</ul></li>
+<li><p>3D点与平面的关系：</p>
+<ul>
+<li><p>平面可以由一般位置的三个点确定：设三个点 <span class="math inline">\(X_i\)</span> 都在平面 <span class="math inline">\(\pi\)</span> 上，则有 <span class="math inline">\(\pi^T X_i = 0\)</span>（<span class="math inline">\(i = 1, 2, 3\)</span>），则有： <span class="math display">\[
+\begin{align}
+\begin{bmatrix}
+X_1^T \\ X_2^T \\ X_3^T  
+\end{bmatrix}\pi = 0
+\end{align}
+\]</span></p>
+<blockquote>
+<p><strong>注意</strong>：若 <span class="math inline">\(X_i\)</span>
+三点线性无关，则三个点组成的 <span class="math inline">\(3 \times
+4\)</span>
+的矩阵秩为3；若这些点共线，则矩阵的秩为2，定义了以共线点组成直线为轴的平面束</p>
+</blockquote></li>
+<li><p>三个一般的平面确定一点：设三个平面 <span class="math inline">\(\pi_i\)</span> 相交于点<span class="math inline">\(X\)</span>，则 <span class="math inline">\(X\)</span> 可由下面的矩阵方程求解： <span class="math display">\[
+\begin{align}
+\begin{bmatrix}
+\pi_1^T \\ \pi_2^T \\ \pi_3^T
+\end{bmatrix}X = 0
+\end{align}
+\]</span></p></li>
+</ul></li>
+<li><p>射影变换：在点变换 <span class="math inline">\(X&#39; =
+H^{-T}X\)</span> 下，平面变换为 <span class="math inline">\(\pi&#39; =
+H\pi\)</span></p></li>
+</ul></li>
+<li><p>三维空间中的直线：</p>
+<ul>
+<li><p>连线表示：设 <span class="math inline">\(A\)</span> 和 <span class="math inline">\(B\)</span>
+是两个不重合的空间点，则连接两点的直线可由 <span class="math inline">\(W_{2\times4}\)</span> 表示： <span class="math display">\[
+\begin{align}
+&amp;W = \begin{bmatrix} A^T \\ B^T \end{bmatrix} \\
+&amp;\text{例如：}X轴可表示为\text{ } W =\begin{bmatrix} 0 &amp; 0 &amp;
+0 &amp; 1 \\ 1 &amp; 0 &amp; 0 &amp; 0 \\
+\end{bmatrix} \\
+&amp;\text{即原点 和 X方向无穷远点的连线}
+\end{align}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(W^T\)</span> 的生成子空间是在直线 <span class="math inline">\(\lambda A + \mu B\)</span>
+上的<strong>点集</strong>，即 <span class="math inline">\(W^T\)</span>
+列向量张成的子空间</li>
+<li><span class="math inline">\(W\)</span>
+的零子空间是以该直线为轴的<strong>平面束</strong>，即令 <span class="math inline">\(Wx = 0\)</span> 的平面 <span class="math inline">\(x_{4\times1}\)</span> 的集合</li>
+</ul></li>
+<li><p>连线的对偶表示：设 <span class="math inline">\(P\)</span> 和
+<span class="math inline">\(Q\)</span>
+是两个一般的平面，则两平面的交线可由 <span class="math inline">\(W^{*}_{2\times4}\)</span> 表示 <span class="math display">\[
+\begin{align}
+&amp;W^* = \begin{bmatrix} P^T \\ Q^T \end{bmatrix} \\
+&amp;\text{例如：}X轴可表示为 \text{ } W^{*}= \begin{bmatrix} 0 &amp; 0
+&amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 \end{bmatrix} \\
+&amp;\text{即 } XY \text{ 和 }XZ\text{ 平面}的交线
+\end{align}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(W^{*T}\)</span>
+的生成子空间是以该直线为轴的平面束 <span class="math inline">\(\lambda P
++ \mu Q\)</span>，即 <span class="math inline">\(W^{*T}\)</span>
+列向量张成的子空间</li>
+<li><span class="math inline">\(W^{*}\)</span>
+的零子空间是该交线上的点集，即令 <span class="math inline">\(Wx =
+0\)</span> 的点 <span class="math inline">\(x_{4\times1}\)</span>
+的集合</li>
+</ul></li>
+<li><p><span class="math inline">\(\text{Pl}\ddot{\text{u}}\text{cker}\)</span>
+矩阵表示：设两点为 <span class="math inline">\(A\)</span> 和 <span class="math inline">\(B\)</span>，则连接两点的直线可表示为<u>反对称齐次矩阵</u>
+<span class="math inline">\(L_{4 \times 4} = AB^T - BA^T\)</span></p>
+<ul>
+<li>矩阵 <span class="math inline">\(L\)</span> 的元素表示为 <span class="math inline">\(l_{ij} = A_iB_j - B_iA_j\)</span></li>
+<li><span class="math inline">\(\text{rk(L)} = 2\)</span>，其 2
+维零空间由以该直线为轴的平面束组成，即令 <span class="math inline">\(Lx
+= 0\)</span> 的平面 <span class="math inline">\(x_{4\times1}\)</span>
+组成</li>
+<li><span class="math inline">\(L = AB^T - BA^T\)</span> 是平面关系
+<span class="math inline">\(I = x \times y\)</span> 的高维度推广（<span class="math inline">\(x, y\)</span> 是 3D 向量）</li>
+<li>在点变换 <span class="math inline">\(X&#39; = HX\)</span>
+下，矩阵变换为 <span class="math inline">\(L&#39; = HLH^T\)</span></li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：矩阵 <span class="math inline">\(L\)</span>
+与定义其的 <span class="math inline">\(A\)</span> 和 <span class="math inline">\(B\)</span> 无关：令直线 <span class="math inline">\(AB\)</span> 上一点 <span class="math inline">\(C =
+A + \mu B\)</span> 代替 <span class="math inline">\(B\)</span>，新定义下仍有 <span class="math inline">\(L&#39; = L\)</span></p>
+</blockquote></li>
+<li><p><span class="math inline">\(\text{Pl}\ddot{\text{u}}\text{cker}\)</span>
+矩阵对偶表示：设 <span class="math inline">\(P\)</span> 和 <span class="math inline">\(Q\)</span>
+是两个一般的平面，则两平面的<strong>交线</strong>可表示为对偶 <span class="math inline">\(L^{*} = PQ^T - QP^T\)</span></p>
+<ul>
+<li>快速重写 <span class="math inline">\(L^{*}\)</span>
+中的非零元素：<span class="math inline">\(l_{34}^{*}:l_{42}^{*}:l_{23}^{*}:l_{14}^{*}:l_{13}^{*}:l_{12}^{*}\)</span>
+= <span class="math inline">\(l_{12}:l_{13}:l_{14}:l_{23}:l_{42}:l_{34}\)</span></li>
+<li>在点变换 <span class="math inline">\(X&#39; = HX\)</span>
+下，矩阵变换为 <span class="math inline">\(L^{*}{&#39;} =
+H^{-T}L^{*}H^{-1}\)</span></li>
+<li>由 点<span class="math inline">\(X\)</span> 和 直线<span class="math inline">\(L\)</span> 联合确定的平面 <span class="math inline">\(\pi = L^{*}X\)</span>；且 <span class="math inline">\(L^{*} X = 0\)</span> <span class="math inline">\(\Leftrightarrow\)</span> 点<span class="math inline">\(X\)</span> 在 直线<span class="math inline">\(L\)</span> 上</li>
+<li>由 点<span class="math inline">\(X\)</span> 和 平面<span class="math inline">\(\pi\)</span> 联合确定的点 <span class="math inline">\(X = L \pi\)</span>；且 <span class="math inline">\(L \pi = 0\)</span> <span class="math inline">\(\Leftrightarrow\)</span> 直线<span class="math inline">\(L\)</span> 在 平面<span class="math inline">\(\pi\)</span>上</li>
+</ul></li>
+<li><p><span class="math inline">\(\text{Pl}\ddot{\text{u}}\text{cker}\)</span>
+直线坐标：Plucker矩阵<span class="math inline">\(L\)</span> 的 6
+个非零元素，即 <span class="math inline">\(\mathcal{L} = \{l_{12},
+l_{13}, l_{14}, l_{23}, l_{42}, l_{34}\}\)</span></p>
+<ul>
+<li>唯有满足 <span class="math inline">\(l_{12}l_{34} + l_{13}l_{42} +
+l_{14}l_{23} = 0\)</span>，<span class="math inline">\(\mathcal{L}\)</span> 才对应于一条 3D
+直线；该约束称为 <strong>Klein二次约束</strong></li>
+<li>设直线 <span class="math inline">\(\mathcal{L}\)</span> 和 <span class="math inline">\(\hat{\mathcal{L}}\)</span> 分别由连接 <span class="math inline">\(AB\)</span> 和 连接 <span class="math inline">\(\hat{A}\hat{B}\)</span> 获得，则 <span class="math inline">\(\mathcal{L}\)</span> 和 <span class="math inline">\(\hat{\mathcal{L}}\)</span> 相交（共面） <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(\det{[A, B, \hat{A}, \hat{B}]} =
+(\mathcal{L}|\hat{\mathcal{L}}|) = 0\)</span> <br>其中 <span class="math inline">\((\mathcal{L}|\hat{\mathcal{L}}|)\)</span>
+是<u><strong>双线性乘积</strong></u>，可证明 <span class="math inline">\((\mathcal{L}|\hat{\mathcal{L}}|) =
+l_{12}\hat{l}_{34} + \hat{l}_{12}l_{34} + l_{13}\hat{l}_{42} +
+\hat{l}_{13}l_{42} + l_{14}\hat{l}_{23} + \hat{l}_{14}l_{23}\)</span>
+<ul>
+<li>若 <span class="math inline">\((\mathcal{L}|\hat{\mathcal{L}}|) =
+0\)</span>，则 6 维向量 <span class="math inline">\(\mathcal{L}\)</span>
+仅表示 <span class="math inline">\(\text{IP}^3\)</span> 中的一条直线，与
+Klein约束等价</li>
+<li>若两直线 <span class="math inline">\(\mathcal{L},
+\hat{\mathcal{L}}\)</span> 分别是平面 <span class="math inline">\(P,
+Q\)</span> 和 <span class="math inline">\(\hat{P}, \hat{Q}\)</span>
+的交线，那么 <span class="math inline">\((\mathcal{L |
+\hat{\mathcal{L}}|}) = \det{[P, Q, \hat{P}, \hat{Q}]}\)</span>
+<br>且同样有 <span class="math inline">\((\mathcal{L} |
+\hat{\mathcal{L}}) = 0\)</span> <span class="math inline">\(\Leftrightarrow\)</span> 两条平面交线相交</li>
+<li>若 <span class="math inline">\(\mathcal{L}\)</span> 是两平面 <span class="math inline">\(P, Q\)</span> 的交线，<span class="math inline">\(\hat{\mathcal{L}}\)</span> 是两点 <span class="math inline">\(A, B\)</span> 的连线，则 <span class="math inline">\((\mathcal{L}|\hat{\mathcal{L}}|) = (P^TA)(Q^TB) -
+(Q^TA)(P^TB)\)</span></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>
