@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E4%BD%9C%E5%9B%BE%E6%B3%95%E7%A1%AE%E5%AE%9A%E6%B6%88%E5%BD%B1%E7%82%B9.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E5%BA%A6%E9%87%8F%E7%9F%AB%E6%AD%A3.jpg">
 <meta property="article:published_time" content="2024-07-27T07:00:18.000Z">
-<meta property="article:modified_time" content="2024-08-01T02:34:55.491Z">
+<meta property="article:modified_time" content="2024-08-02T06:52:41.777Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -331,7 +331,7 @@ x_2, 0)^T\)</span>，在"无穷远直线" <span class="math inline">\(I_{\infty}
 <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(\text{IP}^2\)</span> 中的点；当 <span class="math inline">\(k\)</span> 变化时，向量 <span class="math inline">\(k(x_1, x_2, x_3)\)</span>
 形成一条过原点的射线</li>
 <li><span class="math inline">\(\text{IR}^3\)</span> 中过原点的平面
-<span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(\text{IP}^2\)</span> 中的直线；两相异的 <span class="math inline">\(\text{IR}^3\)</span> 平面相交成一条射线 <span class="math inline">\(\rightarrow\)</span> 两相异的 <span class="math inline">\(\text{IP}^2\)</span> 直线相交于一个点</li>
+<span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(\text{IP}^2\)</span> 中的直线；两相异的 <span class="math inline">\(\text{IR}^3\)</span> 平面交成一条射线 <span class="math inline">\(\rightarrow\)</span> 两相异的 <span class="math inline">\(\text{IP}^2\)</span> 直线交于一个点</li>
 </ul>
 <blockquote>
 <p><strong>注意</strong>：<span class="math inline">\(\text{IP}^2\)</span> 中的点和直线可用 <span class="math inline">\(\text{IR}^3\)</span> 中的<strong>平面 <span class="math inline">\(x_3 = 1\)</span></strong> 截取 <span class="math inline">\(\text{IR}^3\)</span>
@@ -467,7 +467,8 @@ x \\ y \\ 1
 该变换的<strong><u>不变量</u></strong>是角度、长度间比率、面积间比率；<span class="math inline">\(s\)</span>
 是缩放系数，在保持形状不变的条件下改变图形大小</p></li>
 <li><p>仿射变换：<u>非奇异线性变换</u> 与 <u>平移变换</u>
-的复合，6dof（新增两个正交轴上的拉伸自由度），可表示为： <span class="math display">\[
+的复合，6dof（新增拉伸方向<span class="math inline">\(\phi\)</span> +
+拉伸比例<span class="math inline">\(\lambda\)</span>两个自由度）： <span class="math display">\[
 \begin{bmatrix}
 x&#39; \\ y&#39; \\ 1
 \end{bmatrix} =
@@ -483,7 +484,7 @@ x \\ y \\ 1
 A = R(\theta)R(-\phi)\begin{bmatrix} \lambda_1 &amp; 0 \\ 0 &amp;
 \lambda_2 \end{bmatrix}R(\phi)
 \]</span> 即 旋转 <span class="math inline">\(\phi\)</span> <span class="math inline">\(\rightarrow\)</span> <strong>在 x 和 y
-方向上分别按比例 <span class="math inline">\(\lambda_1\)</span> 和 <span class="math inline">\(\lambda_2\)</span> 缩放</strong> <span class="math inline">\(\rightarrow\)</span> 回旋 <span class="math inline">\(\phi\)</span> <span class="math inline">\(\rightarrow\)</span> 旋转 <span class="math inline">\(\theta\)</span>
+方向上分别按比例 <span class="math inline">\(\lambda_1\)</span> 和 <span class="math inline">\(\lambda_2\)</span> 缩放</strong> <span class="math inline">\(\rightarrow\)</span> 回旋 <span class="math inline">\(\phi\)</span> <span class="math inline">\(\xrightarrow{拉伸完毕后}\)</span> 旋转 <span class="math inline">\(\theta\)</span>
 <br>该变换的<strong><u>不变量</u></strong>是平行线关系、平行线段长度比、面积比等；<span class="math inline">\(\det{A} = \lambda_1\lambda_2\)</span>，<span class="math inline">\(\det{A} &gt; 0\)</span>
 说明是<u>保向的</u></p></li>
 <li><p>射影变换：<strong>非齐次</strong> <u>非奇异线性变换</u> 与
@@ -512,7 +513,8 @@ H &amp;= H_SH_AH_P \\&amp;= \begin{bmatrix} sR &amp; t \\ 0^T &amp; 1
 是单位矩阵；该变换的dof=2，负责移动无穷远直线</li>
 <li><span class="math inline">\(H_A\)</span> 为 仿射变换，<span class="math inline">\(K\)</span> 是满足 <span class="math inline">\(|K|
 = 1\)</span>
-的归一化上三角矩阵；该变换的dof=2，进一步影响仿射性质，不移动 <span class="math inline">\(I_{\infty}\)</span></li>
+的<u>归一化</u>上三角矩阵；该变换的dof=2，进一步影响仿射性质，不移动
+<span class="math inline">\(I_{\infty}\)</span></li>
 <li><span class="math inline">\(H_S\)</span> 为 一般的相似变换，<span class="math inline">\(R\)</span>
 是旋转矩阵；该变换的dof=4，不影响仿射和射影性质</li>
 </ul>
