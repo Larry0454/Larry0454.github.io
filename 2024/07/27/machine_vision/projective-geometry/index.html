@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E4%BD%9C%E5%9B%BE%E6%B3%95%E7%A1%AE%E5%AE%9A%E6%B6%88%E5%BD%B1%E7%82%B9.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E5%BA%A6%E9%87%8F%E7%9F%AB%E6%AD%A3.jpg">
 <meta property="article:published_time" content="2024-07-27T07:00:18.000Z">
-<meta property="article:modified_time" content="2024-08-02T11:16:50.880Z">
+<meta property="article:modified_time" content="2024-08-03T15:28:01.770Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          13k words
+          21k words
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          111 mins
+          176 mins
         
       </span>
     
@@ -652,7 +652,7 @@ C_{\infty}^* &amp;= \begin{bmatrix} 1 \\ i \\ 0 \end{bmatrix}
 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0\end{bmatrix}
 \end{align}
 \]</span> <span class="math inline">\(I_{\infty}\)</span> 是 <span class="math inline">\(C_{\infty}^*\)</span> 的零向量：<span class="math inline">\(C_{\infty}^* I_{\infty} = I(J^TI_{\infty}) +
-J(I^TI_{\infty}) = 0\)</span> <br>（虚圆点在 <span class="math inline">\(I_{\infty}\)</span> 上，故有 <span class="math inline">\(I^TI_{\infty} = J^T I_{\infty} =
+J(I^TI_{\infty}) = 0\)</span> <br>（虚圆点在 <span class="math inline">\(I_{\infty}\)</span> 上，故总有 <span class="math inline">\(I^TI_{\infty} = J^T I_{\infty} =
 0\)</span>）</p></li>
 <li><p><span class="math inline">\(C_{\infty}^{*}\)</span> 在射影变换
 <span class="math inline">\(H\)</span> 下不变 <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(H\)</span> 是<strong>相似变换</strong></p></li>
@@ -887,6 +887,247 @@ Q\)</span> 和 <span class="math inline">\(\hat{P}, \hat{Q}\)</span>
 </ul></li>
 </ul></li>
 </ul></li>
+</ul>
+<hr>
+<h3 id="三2d-变换估计">三、2D 变换估计</h3>
+<ul>
+<li><p>直接线性变换（DLT）算法：由 <strong><span class="math inline">\(n
+\ge 4\)</span></strong> 组 2D 到 2D 的点对 <span class="math inline">\(\textbf{x}_i \leftrightarrow
+\textbf{x}_i&#39;\)</span> 确定变换 <span class="math inline">\(\textbf{H}\)</span> 的一种简单线性算法</p>
+<ol type="1">
+<li><p>若把矩阵 <span class="math inline">\(\textbf{H}\)</span> 的第
+<span class="math inline">\(j\)</span> 行记作 <span class="math inline">\(h^{jT}\)</span>，则有： <span class="math display">\[
+\begin{align}
+&amp;\textbf{H}\textbf{x}_i = \begin{bmatrix} h^{1T}\textbf{x}_i \\
+h^{2T}\textbf{x}_i \\ h^{3T}\textbf{x}_i \end{bmatrix} \\
+&amp;\text{其中 }h^{jT} \text{ 表示矩阵 }\textbf{H}\text{
+的第}j\text{行}
+\end{align}
+\]</span> 记齐次向量 <span class="math inline">\(\textbf{x}_i&#39; =
+(x_i&#39;, y_i&#39;, \omega_i&#39;)^T\)</span>；由于变换前 <span class="math inline">\(\textbf{x}_i\)</span> 和 变换后 <span class="math inline">\(\textbf{x}_i&#39; =
+\textbf{H}\textbf{x}_i\)</span> 有相同的方向，故 <span class="math inline">\(\textbf{x}_i&#39;\times \textbf{H}\textbf{x}_i =
+0\)</span>，即： <span class="math display">\[
+\begin{align}
+&amp;\textbf{x}_i&#39;\times \textbf{H}\textbf{x}_i = \begin{bmatrix}
+y_i&#39;h^{3T}\textbf{x}_i - \omega_i&#39; h^{2T}\textbf{x}_i \\
+\omega_i&#39;h^{1T}\textbf{x}_i - {x}_i&#39;h^{3T}\textbf{x}_i  \\
+x_i&#39;h^{2T} \textbf{x}_i - y_i&#39;h^{1T}\textbf{x}_i \end{bmatrix} =
+0 \\ \\
+&amp;\text{由于 } h^{jT}\textbf{x}_i = \textbf{x}_i^Th^j \text{
+，故上式可改写为矩阵方程：} \\
+&amp;A_ih = \begin{bmatrix} 0^T &amp; -\omega_i&#39;\textbf{x}_i^T &amp;
+y_i&#39;\textbf{x}_i^T \\ \omega_i&#39;\textbf{x}_i^T &amp; 0^T &amp;
+-x_i&#39;\textbf{x}_i^T \\ -y_i&#39;\textbf{x}_i^T &amp;
+x_i&#39;\textbf{x}_i^T &amp; 0^T \end{bmatrix} \begin{bmatrix} h^1 \\
+h^2 \\ h^3  \end{bmatrix} = 0
+\end{align}
+\]</span></p></li>
+<li><p>对于每个点 <span class="math inline">\(\textbf{x}_i\)</span> 都有
+<span class="math inline">\(A_ih = 0\)</span> 的形式，其中 <span class="math inline">\(A_i\)</span> 形状为 <span class="math inline">\(3
+\times 9\)</span>，<span class="math inline">\(h\)</span> 形状为 <span class="math inline">\(9 \times 1\)</span></p>
+<ul>
+<li>由于 <span class="math inline">\(A_i\)</span>
+的第三行可由第一二行线性表出，故在解 <span class="math inline">\(\textbf{H}\)</span> 时可将第三行忽略，即 <span class="math inline">\(A_i\)</span> 形状为 <span class="math inline">\(2
+\times 9\)</span></li>
+<li>解 <span class="math inline">\(H\)</span> 时可取 <span class="math inline">\(\omega_i = 1\)</span>，此时 <span class="math inline">\((x_i&#39;, y_i&#39;)^T\)</span>
+是图像中测量得到的坐标</li>
+</ul></li>
+<li><p>把 <span class="math inline">\(n\)</span> 个 <span class="math inline">\(2\times 9\)</span> 的矩阵 <span class="math inline">\(A_i\)</span> 合并成一个 <span class="math inline">\(2n \times 9\)</span> 的大矩阵 <span class="math inline">\(A\)</span></p></li>
+<li><p>求解 <span class="math inline">\(A\)</span> 的
+SVD，对应于<u><strong>最小奇异值</strong></u>的单位奇异向量就是解<span class="math inline">\(h\)</span>： <span class="math display">\[
+\begin{align}
+&amp;\text{若 } \textbf{H} = \begin{bmatrix} h_1 &amp; h_2 &amp; h_3 \\
+h_4 &amp; h_5 &amp; h_6 \\ h_7 &amp; h_8 &amp; h_9 \\ \end{bmatrix} \\
+&amp;\text{则 }h_i\text{ 是解 }h\text{ 的第} i\text{个元素；求出
+}h\text{ 即是求出 }\textbf{H}
+\end{align}
+\]</span> 为什么要求最小特征值的单位向量？
+<br>图像上坐标的测量通常是不准确的（又称<u><strong>噪声</strong></u>），这导致方程
+<span class="math inline">\(Ah = 0\)</span>
+不存在精确解，只能找<strong>近似解</strong> <br>因此可考虑最小化范数
+<span class="math inline">\(||Ah||\)</span>；为避免出现平凡解 <span class="math inline">\(h = 0\)</span>，可在最小化过程中添加一个约束 <span class="math inline">\(||h || = 1\)</span> <br>以上表述等价于求商 <span class="math inline">\(\dfrac{||Ah||}{||h||}\)</span>
+的<strong>最小值</strong>问题，该问题的解法如下： <span class="math display">\[
+\begin{align}
+&amp;\text{目标：给定一个行数不少于列数的矩阵} A\text{，最小化}
+||Ah||\text{ 满足 }||h|| = 1\text{ 的解 } x \\
+&amp;\text{算法：求解 }A\text{ 的 }\textbf{SVD}\text{ ，即 }A =
+\textbf{UDV}^T\text{，解出 }h\text{ 是 }\textbf{V}\text{ 的最后一列} \\
+&amp;\qquad \text{ }\text{ 同时也是 }A^TA\text{
+的}\textbf{最小特征值}\text{对应的单位特征向量}
+\end{align}
+\]</span></p>
+<blockquote>
+<p><strong>注意</strong>：对于求解<strong>超定解</strong>问题（方程数
+&gt; 未知数数），一般通过优化方法找到<strong>近似解</strong></p>
+</blockquote></li>
+</ol></li>
+<li><p>不同的代价函数：</p>
+<ul>
+<li><p>代数距离：累积计算各点对 <span class="math inline">\(\textbf{x}_i
+\leftrightarrow \textbf{x}_i&#39;\)</span> 对应的误差向量 <span class="math inline">\(\epsilon_i\)</span>，单个误差向量可表示为： <span class="math display">\[
+\begin{align}
+d_{alg}(\textbf{x}_i&#39;, \textbf{H}\textbf{x}_i)^2 &amp;=
+||\epsilon_i||^2 \\
+&amp;= ||\begin{bmatrix} 0^T &amp; -\omega_i&#39;\textbf{x}_i^T &amp;
+y_i&#39;\textbf{x}_i^T \\ \omega_i&#39; \textbf{x}_i^T &amp; 0^T &amp;
+-x_i&#39;\textbf{x}_i^T \end{bmatrix}||^2 \\
+\end{align}
+\]</span> 在 DLT 算法中，给定点对集合，<span class="math inline">\(\epsilon = Ah\)</span> 是整个代数误差向量，即
+<span class="math inline">\(\sum_{i}||\epsilon_i|| = ||Ah||^2 =
+||\epsilon||^2\)</span></p></li>
+<li><p>几何距离：最小化 图像坐标测量值 和 估计值 差距</p>
+<ul>
+<li><p>记号：<span class="math inline">\(\textbf{x}\)</span>
+表示测量点的图像坐标，<span class="math inline">\(\hat{\textbf{x}}\)</span> 表示点的估计值，<span class="math inline">\(\overline{\textbf{x}}\)</span>
+表示点的真值</p></li>
+<li><p>单幅图像误差：假设第一幅图<span class="math inline">\(\textbf{x}\)</span>非常精确（经过标定），误差仅出现在第二幅图测量点<span class="math inline">\(\textbf{x}&#39;\)</span>，欧氏距离记作 <span class="math inline">\(d(\textbf{x}, \textbf{y})\)</span> <span class="math display">\[
+\begin{align}
+&amp;\text{转移误差}=\sum_{i}d(\textbf{x}_i&#39;,
+\textbf{H}\overline{\textbf{x}}_i)^2 \\
+&amp;\text{算法要估计使上式误差值最小的单应 }\hat{\textbf{H}}
+&amp;\text{转移误差}=\sum_{i}d(\textbf{x}_i&#39;,
+\textbf{H}\overline{\textbf{x}}_i)^2 \\
+&amp;\text{算法要估计使上式误差值最小的单应 }\hat{\textbf{H}}
+\end{align}
+\]</span></p></li>
+</ul></li>
+<li><p>对称图像误差：一般情况下两幅图都有测量误差，需同时考虑双向变换：
+<span class="math display">\[
+\begin{align}
+&amp;\text{对称转移误差}=\sum_{i}d(\textbf{x}_i,
+\textbf{H}^{-1}\textbf{x}_i&#39;)^2 + d(\textbf{x}_i&#39;,
+\textbf{H}\textbf{x}_i)^2 \\
+&amp;\text{算法要估计使上式误差值最小的单应 }\hat{\textbf{H}}
+\end{align}
+\]</span>
+第一项是第一幅图像的后向转移误差，第二项是第二幅图的前向转移误差</p></li>
+<li><p>重投影误差：评估每组点对应的"校正值"，即<u>实际测量值</u> 和
+<u>所求估计值</u>之间的误差 <span class="math display">\[
+\begin{align}
+&amp;\sum_{i}d(\textbf{x}_i, \hat{\textbf{x}}_i)^2 +
+d(\textbf{x}_i&#39;, \hat{\textbf{x}}_i&#39;)^2 \\
+&amp; \text{s.t. }\hat{\textbf{x}_i&#39;} =
+\hat{\textbf{H}}\hat{\textbf{x}}_i \text{ }(\forall i) \\
+\end{align}
+\]</span> 最小化上式需要同时确定 <span class="math inline">\(\hat{\textbf{H}}\)</span> 以及附加的完全匹配的点对
+<span class="math inline">\(\hat{\textbf{x}}_i \leftrightarrow
+\hat{\textbf{x}}&#39;_i\)</span>；其中 <span class="math inline">\(\hat{\textbf{H}}\)</span>
+是用某种算法求解的<strong><u>初始校正映射</u></strong></p>
+<blockquote>
+<p><strong>注意</strong>：<span class="math inline">\(\textbf{x}&#39;\)</span> 和 <span class="math inline">\(\textbf{H}\textbf{x}\)</span>
+不完全对应（存在误差），但估计的点 <span class="math inline">\(\hat{\textbf{x}}\)</span> 和 <span class="math inline">\(\hat{\textbf{x}}&#39;\)</span> 却通过 <span class="math inline">\(\hat{\textbf{x}}&#39; = \textbf{H}\hat{x}\)</span>
+完全对应</p>
+</blockquote></li>
+<li><p>Sampson误差：重投影误差优化的参数 <span class="math inline">\(\textbf{H}\)</span> 初值可由 DLT 算法近似给出，但
+<span class="math inline">\(\hat{\textbf{x}}\)</span> 和 <span class="math inline">\(\hat{\textbf{x}}&#39;\)</span> 仍"悬而未定"</p>
+<ol type="1">
+<li><p>将测量点对 <span class="math inline">\(\textbf{x}\)</span> 和
+<span class="math inline">\(\textbf{x}&#39;\)</span>
+的<u><strong>非齐次坐标</strong></u>拼起来作为 <span class="math inline">\(\text{IR}^4\)</span> 的一个点 <span class="math inline">\(\textbf{X} = (x_i, y_i, x_i&#39;,
+y_i&#39;)^T\)</span></p>
+<blockquote>
+<p><strong>注意</strong>：由于矩阵方程 <span class="math inline">\(A_i h
+= 0\)</span> 中 <span class="math inline">\(A_i\)</span>
+的每一行都是关于 <span class="math inline">\(x_i, y_i, x_i&#39;,
+y_i&#39;\)</span> 的二次方程，<span class="math inline">\(\textbf{X} \in
+\mathcal{V}_2\)</span></p>
+</blockquote></li>
+<li><p>令 <span class="math inline">\(\hat{\textbf{X}}_i = (\hat{x}_i,
+\hat{y}_i,\hat{x}_i&#39;,\hat{y}_i&#39;)^T\)</span>，<span class="math inline">\(||\textbf{X}_i - \hat{\textbf{X}}_i|| = (x_i -
+\hat{x}_i)^2 + \cdots (y_i&#39; - \hat{y}_i&#39;)\)</span> =
+<u><strong>重投影误差</strong></u> <br>故优化重投影误差 <span class="math inline">\(\Leftrightarrow\)</span> 找到 <span class="math inline">\(\mathcal{V}_2\)</span> 上最靠近 <span class="math inline">\(\textbf{X}_i\)</span> 的点 <span class="math inline">\(\hat{\textbf{X}}_i\)</span>；由于 <span class="math inline">\(\mathcal{V}_2\)</span> 是非线性的，故可考虑估计
+<span class="math inline">\(\hat{\textbf{X}}\)</span>
+的一阶近似</p></li>
+<li><p>对于给定单应 <span class="math inline">\(\textbf{H}\)</span>，将误差函数记作有关<span class="math inline">\(\textbf{X}\)</span>的 2 维向量 <span class="math inline">\(\mathcal{C}_\textbf{H}(\textbf{X})\)</span>，用
+Taylor 展开对其一阶逼近： <span class="math display">\[
+\begin{align}
+  \mathcal{C}_{\textbf{H}}(\textbf{X} + \delta_\textbf{X}) =
+\mathcal{C}_\textbf{H}(\textbf{X}) + \dfrac{\partial
+\mathcal{C}_\textbf{H}}{\partial \textbf{X}} \delta_\textbf{X}
+\end{align}
+\]</span> 记 <span class="math inline">\(\delta_{\textbf{X}} =
+\hat{\textbf{X}} - \textbf{X}\)</span>，当 <span class="math inline">\(\hat{\textbf{X}} \in \mathcal{V}_2\)</span> 时有
+<span class="math inline">\(\mathcal{C}_\textbf{H}(\hat{\textbf{X}}) =
+0\)</span>，即 <span class="math inline">\(\mathcal{C}_\textbf{H}(\textbf{X} +
+\delta_\textbf{X}) = 0\)</span> <br>故上式可化为 <span class="math inline">\(\textbf{J} \delta_{\textbf{X}} + \epsilon=
+0\)</span>，其中 <span class="math inline">\(\textbf{J} =
+\dfrac{\partial \mathcal{C}_\textbf{H}}{\partial \textbf{X}}\)</span>
+为偏导数矩阵，<span class="math inline">\(\epsilon =
+\mathcal{C}_\textbf{H}(\textbf{X})\)</span> 为关于 <span class="math inline">\(\textbf{X}\)</span> 的代价函数</p></li>
+<li><p>要求解 <span class="math inline">\(\hat{\textbf{X}}\)</span>，只要求解满足 <span class="math inline">\(\textbf{J}\delta_\textbf{X} = -\epsilon\)</span>
+的约束下使 <span class="math inline">\(||\delta_\textbf{X}||\)</span>
+取最小值的向量 <span class="math inline">\(\delta_\textbf{X}\)</span>（可使用 Lagrange
+乘子法）</p></li>
+<li><p>解得 <span class="math inline">\(\delta_\textbf{X} =
+-\textbf{J}^T (\textbf{J}\textbf{J}^T)^{-1}\epsilon\)</span>，<span class="math inline">\(\hat{\textbf{X}} = \textbf{X} +
+\delta_\textbf{X}\)</span>，其中范数 <span class="math inline">\(||\delta_\textbf{X}||^2 =
+\delta_\textbf{X}^T\delta_\textbf{X}\)</span> 就是
+<u><strong>Sampson误差</strong></u></p></li>
+</ol></li>
+</ul></li>
+<li><p>统计代价函数：设每张图像测量坐标都有<strong>零均值</strong>和<strong>均匀标准方差</strong>的高斯噪声，则每个独立测量点<span class="math inline">\(\textbf{x}\)</span>的PDF为： <span class="math display">\[
+\begin{align}
+\text{Pr}(\textbf{x}) = (\dfrac{1}{2\pi
+\sigma^2})e^{-\dfrac{d(\textbf{x}, \overline{\textbf{x}})^2}{2\sigma^2}}
+\end{align}
+\]</span></p>
+<ul>
+<li><p>单图像误差：假设误差仅出现于第二幅图象，则获得点对集 <span class="math inline">\(\{\overline{\textbf{x}}_i \leftrightarrow
+\textbf{x}_i&#39;\}\)</span> 的概率是单个 PDF 的乘积： <span class="math display">\[
+\begin{align}
+&amp;\text{Pr}(\{\textbf{x}_i&#39;\} | \textbf{H}) = \prod_{i}
+(\frac{1}{2\pi \sigma^2})e^{-\dfrac{d(\textbf{x}_i&#39;,
+\textbf{H}\overline{\textbf{x}}_i)^2}{2\sigma^2}}
+\end{align}
+\]</span> 其中符号 <span class="math inline">\(\text{Pr}(\{\textbf{x}_i&#39;\} |
+\textbf{H})\)</span> 表示给定真实单应 <span class="math inline">\(\textbf{H}\)</span> 时获得测量 <span class="math inline">\(\{\textbf{x}_i&#39;\}\)</span>
+的概率分布，其对数似然为： <span class="math display">\[
+\begin{align}
+\log{\text{Pr}(\textbf{x}_i&#39; | \textbf{H})} =
+-\dfrac{1}{2\sigma^2}\sum_{i} d(\textbf{x}_i&#39;,
+\textbf{H}\overline{\textbf{x}}_i)^2 + \text{const}
+\end{align}
+\]</span> 故对数最大似然估计 <span class="math inline">\(\Leftrightarrow\)</span> 最小化 <span class="math inline">\(\sum_{i}d(\textbf{x}_i&#39;,
+\textbf{H}\overline{\textbf{x}}_i)^2\)</span>，也就等价于最小化<u>几何误差</u></p></li>
+<li><p>双图像误差：设真值点对集为 <span class="math inline">\(\{\overline{\textbf{x}}_i \leftrightarrow
+\overline{\textbf{x}}_i&#39; = \textbf{H}\overline{\textbf{x}}_i
+\}\)</span>，则受噪声干扰的点对概率分布是： <span class="math display">\[
+\begin{align}
+\text{Pr}(\{\textbf{x}_i, \textbf{x}_i&#39;\} | \textbf{H},
+\{\overline{\textbf{x}}_i\}) = \prod_{i} (\dfrac{1}{2\pi \sigma^2})
+e^{-\dfrac{d(\textbf{x}_i, \overline{\textbf{x}}_i&#39;)^2 +
+d(\textbf{x}_i&#39;, \textbf{H}\overline{\textbf{x}}_i)^2}{2\sigma^2}}
+\end{align}
+\]</span> 用校正点对 <span class="math inline">\(\{\hat{\textbf{x}}_i
+\leftrightarrow \hat{\textbf{x}}_i&#39; \}\)</span>
+替换真值点对，可得到： <span class="math display">\[
+\begin{align}
+\sum_{i} d(\textbf{x}_i, \hat{\textbf{x}}_i)^2 + d(\textbf{x}_i&#39;,
+\hat{\textbf{x}}_i&#39;)^2
+\end{align}
+\]</span> 目标是求解最小化上式的单应 <span class="math inline">\(\hat{\textbf{H}}\)</span> 和 校正点对 <span class="math inline">\(\{\hat{\textbf{x}}_i \leftrightarrow
+\hat{\textbf{x}}_i&#39;\}\)</span>，其中校正点对满足约束 <span class="math inline">\(\hat{\textbf{x}}&#39; =
+\hat{\textbf{H}}\hat{\textbf{x}}_i\)</span></p></li>
+</ul></li>
+<li><p>黄金标准算法：给定 <span class="math inline">\(n &gt; 4\)</span>
+组图像点对 <span class="math inline">\(\{\textbf{x}_i \leftrightarrow
+\textbf{x}_i&#39;\}\)</span>，确定两图像间的单应估计 <span class="math inline">\(\hat{\textbf{H}}\)</span>，以及使重投影误差最小的附属点集
+<span class="math inline">\(\{\hat{\textbf{X}}_i\}\)</span></p>
+<ol type="1">
+<li>借助图像上四组点使用 DLT 算法计算一个初始估计 <span class="math inline">\(\hat{\textbf{H}}\)</span></li>
+<li>选取恰当的误差函数，使用 <strong>Sampson误差式</strong> 确定附属变量
+<span class="math inline">\(\{\hat{\textbf{x}}_i\}\)</span>
+的初始估计</li>
+<li>在 <span class="math inline">\(\hat{\textbf{H}}\)</span> 和 <span class="math inline">\(\hat{\textbf{x}}_i\)</span> (<span class="math inline">\(i = 1 \dots n\)</span>) 上最小化
+<strong>重投影误差函数</strong> <span class="math inline">\(\sum_{i}d(\textbf{x}_i, \hat{\textbf{x}}_i)^2 +
+d(\textbf{x}&#39;, \hat{\textbf{x}}_i&#39;)^2\)</span></li>
+</ol>
+<blockquote>
+<p><strong>注意</strong>：待优化参数共有 <span class="math inline">\(2n
++ 9\)</span> 个，分别是 <span class="math inline">\(2n\)</span>
+个估计点对和 9 个 <span class="math inline">\(\textbf{H}\)</span>
+的元素</p>
+</blockquote></li>
 </ul>
 
                 
