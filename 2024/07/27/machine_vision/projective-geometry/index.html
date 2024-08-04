@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E4%BD%9C%E5%9B%BE%E6%B3%95%E7%A1%AE%E5%AE%9A%E6%B6%88%E5%BD%B1%E7%82%B9.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E5%BA%A6%E9%87%8F%E7%9F%AB%E6%AD%A3.jpg">
 <meta property="article:published_time" content="2024-07-27T07:00:18.000Z">
-<meta property="article:modified_time" content="2024-08-04T08:01:26.696Z">
+<meta property="article:modified_time" content="2024-08-04T13:10:05.835Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -745,7 +745,7 @@ HX\)</span>，其中 <span class="math inline">\(H_{4 \times 4}\)</span>
 Z)\)</span> <span class="math inline">\(\Rightarrow\)</span>
 非齐次平面方程 <span class="math inline">\(n \widetilde{X} + d =
 0\)</span></li>
-<li>原点到平面距离：<span class="math inline">\(=
+<li>原点到平面距离 <span class="math inline">\(=
 \dfrac{d}{||n||}\)</span>，其中 <span class="math inline">\(d =
 \pi_4\)</span></li>
 </ul></li>
@@ -1026,8 +1026,8 @@ y_i&#39;)^T\)</span></p>
 <p><strong>注意</strong>：由于矩阵方程 <span class="math inline">\(A_i h
 = 0\)</span> 中 <span class="math inline">\(A_i\)</span>
 的每一行都是关于 <span class="math inline">\(x_i, y_i, x_i&#39;,
-y_i&#39;\)</span> 的二次方程，<span class="math inline">\(\textbf{X} \in
-\mathcal{V}_2\)</span></p>
+y_i&#39;\)</span> 的二次方程，故 <span class="math inline">\(\textbf{X}
+\in \mathcal{V}_2\)</span></p>
 </blockquote></li>
 <li><p>令 <span class="math inline">\(\hat{\textbf{X}}_i = (\hat{x}_i,
 \hat{y}_i,\hat{x}_i&#39;,\hat{y}_i&#39;)^T\)</span>，<span class="math inline">\(||\textbf{X}_i - \hat{\textbf{X}}_i|| = (x_i -
@@ -1149,7 +1149,7 @@ d(\textbf{x}&#39;, \hat{\textbf{x}}_i&#39;)^2\)</span><br></li>
 &amp;\text{init: }\text{N} = +\infty, \text{sample}\_\text{count} = 0 \\
 &amp;\textbf{while } \text{N} &gt; \text{sample}\_\text{count}: \\
 &amp;\qquad \quad \text{draw a sample and count inner points} \\
-&amp;\qquad \quad \text{let }\epsilon = 1 - \dfrac{|\text{inner
+&amp;\qquad \quad \text{let }\epsilon = 1 - \dfrac{|\text{inner} \text{
 points|}}{\text{|total samples|}} \\
 &amp;\qquad \quad \text{let }p = 99\% \text{ and calculate } \text{N} \\
 &amp;\qquad \quad \text{sample}\_\text{count} \leftarrow
@@ -1168,7 +1168,7 @@ points|}}{\text{|total samples|}} \\
 T\)</span>，说明该模型合理，用 <span class="math inline">\(S_i\)</span>
 内的所有点重估计模型（如最小二乘法）并结束</li>
 <li>若 <span class="math inline">\(|S_i| \lt
-T\)</span>，说明该模型不合理，重抽一个新的子集 <span class="math inline">\(S_i&#39;\)</span> 并重复 1、2 步骤</li>
+T\)</span>，说明该模型不合理，重抽一个新的子集 <span class="math inline">\(S_i&#39;\)</span> 并重复 a、b 步骤</li>
 </ul></li>
 <li>若经过 <span class="math inline">\(N\)</span>
 次试验仍未终止，选择一个<strong>最大一致集</strong> <span class="math inline">\(S_i\)</span>，并用 <span class="math inline">\(S_i\)</span>

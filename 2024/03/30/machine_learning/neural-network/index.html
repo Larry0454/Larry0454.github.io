@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/03/30/machine_learning/neural-network/BP%E7%AE%97%E6%B3%95.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/03/30/machine_learning/neural-network/Elman%E7%BD%91%E7%BB%9C.png">
 <meta property="article:published_time" content="2024-03-30T00:29:00.000Z">
-<meta property="article:modified_time" content="2024-07-22T05:32:53.837Z">
+<meta property="article:modified_time" content="2024-08-04T08:20:02.015Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary_large_image">
@@ -560,7 +560,7 @@ P(\vec{v}|\vec{h}) = \Pi_{i=1}^d P(v_i | \vec{h})
 <li>将上一层隐节点的输出作为输入</li>
 <li>将本层隐节点的输出作为下一层隐节点的输入</li>
 </ol></li>
-<li>微调：预训练全部完成后，对整个网络进行微调（如BP算法）</li>
+<li>微调：预训练全部完成后，对整个网络进行微调</li>
 </ul>
 <p>这种训练方式实际上是从各层<strong>局部最优</strong>出发寻找<strong>全局最优</strong></p>
 <hr></li>
@@ -570,7 +570,7 @@ P(\vec{v}|\vec{h}) = \Pi_{i=1}^d P(v_i | \vec{h})
 <li><p>特征映射：其中的<u>每个神经元</u>负责从<strong>输入的部分区域</strong>内通过卷积滤波器<strong>提取特征</strong></p></li>
 <li><p>采样层：其中的<u>每个神经元</u>负责从<strong>特征映射层的部分区域</strong>计算输出，起到<strong>精简数据量</strong>的作用</p>
 <p>通过复合卷积层 +
-采样层，最终实现了将<u>高维信息</u>映射到<u>低维数据</u>的xiao'guo</p></li>
+采样层，最终实现了将<u>高维信息</u>映射到<u>低维数据</u>的效果</p></li>
 </ul>
 <p><strong>注意</strong>：层数越多，特征越全局</p></li>
 <li><p>池化：对不同位置的特征值进行聚合统计（max or min or

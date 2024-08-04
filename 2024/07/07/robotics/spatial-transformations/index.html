@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/Delta%E6%9C%BA%E5%99%A8%E4%BA%BA.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E6%97%8B%E8%BD%AC%E7%AE%97%E5%AD%90.png">
 <meta property="article:published_time" content="2024-07-07T14:55:44.000Z">
-<meta property="article:modified_time" content="2024-08-02T11:18:18.315Z">
+<meta property="article:modified_time" content="2024-08-04T13:13:48.521Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="robotics">
 <meta name="twitter:card" content="summary_large_image">
@@ -234,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.3k words
+          8.2k words
         
       </span>
     
@@ -245,7 +245,7 @@
         
         
         
-          53 mins
+          69 mins
         
       </span>
     
@@ -508,10 +508,10 @@ k\)</span> <br>
 \theta)\)</span></p>
 <ul>
 <li><span class="math inline">\(\hat{\omega}\)</span> 在 {s}
-中表达，绕固定坐标系的轴 <span class="math inline">\(\hat{\omega}\)</span> 转动：<span class="math inline">\(\textbf{R}_{sb&#39;} = \textbf{R
+中表达，绕<u><strong>固定坐标系</strong></u>的轴 <span class="math inline">\(\hat{\omega}\)</span> 转动：<span class="math inline">\(\textbf{R}_{sb&#39;} = \textbf{R
 R}_{sb}\)</span>，即<u>算子左乘</u></li>
 <li><span class="math inline">\(\hat{\omega}\)</span> 在 {b}
-中表达，绕物体坐标系的轴 <span class="math inline">\(\hat{\omega}\)</span> 转动：<span class="math inline">\(\textbf{R}_{sb&#39;} = \textbf{R}_{sb}\textbf{
+中表达，绕<u><strong>物体坐标系</strong></u>的轴 <span class="math inline">\(\hat{\omega}\)</span> 转动：<span class="math inline">\(\textbf{R}_{sb&#39;} = \textbf{R}_{sb}\textbf{
 R}\)</span>，即<u>算子右乘</u></li>
 </ul>
 <blockquote>
@@ -545,7 +545,95 @@ v\)</span>，其中 <span class="math inline">\(\textbf{R}\)</span>
 </ul></li>
 </ul>
 <hr>
-<h3 id="三刚体的一般运动">三、刚体的一般运动</h3>
+<h3 id="三转动的其它表示方法">三、转动的其它表示方法</h3>
+<ul>
+<li><p>欧拉角：又称 ZYX
+欧拉角，总是围绕<u><strong>刚体自身附着的坐标系</strong></u>转动；令刚体
+{b} 初始时与 {s} 重合</p>
+<ol type="1">
+<li>令刚体绕 <span class="math inline">\(\hat{z}_b\)</span> 轴旋转角度
+<span class="math inline">\(\alpha\)</span></li>
+<li>令刚体绕<u><strong>新的</strong></u> <span class="math inline">\(\hat{y}_b\)</span> 轴旋转角度 <span class="math inline">\(\beta\)</span></li>
+<li>令刚体绕<u><strong>新的</strong></u> <span class="math inline">\(\hat{x}_b\)</span> 轴旋转角度 <span class="math inline">\(\gamma\)</span></li>
+</ol>
+<p>连续的欧拉角旋转运动可由以下算子描述： <span class="math display">\[
+\begin{align}
+&amp;R(\alpha, \beta, \gamma) = I \text{ Rot}(\hat{z}, \alpha)\text{
+Rot}(\hat{y}, \beta)\text{ Rot}(\hat{x}, \gamma) \\
+&amp;\text{由于始终是绕刚体附着坐标系旋转，故旋转算子都是}\textbf{右乘}
+\end{align}
+\]</span></p>
+<blockquote>
+<p><strong>注意</strong>：给定任意旋转矩阵 <span class="math inline">\(R\)</span>，总存在一组参数 <span class="math inline">\((\alpha, \beta, \gamma)\)</span> 满足上式；"ZYX"
+表示旋转轴顺序</p>
+</blockquote></li>
+<li><p>RPY角：相较于欧拉角，RPY角总是围绕<u><strong>固定坐标系转动</strong></u>；令刚体
+{b} 初始时与 {s} 重合</p>
+<ol type="1">
+<li>令刚体绕 <span class="math inline">\(\hat{x}_s\)</span> 轴转动角度
+<span class="math inline">\(\gamma\)</span></li>
+<li>令刚体绕 <span class="math inline">\(\hat{y}_s\)</span> 轴转动角度
+<span class="math inline">\(\beta\)</span></li>
+<li>令刚体绕 <span class="math inline">\(\hat{z}_s\)</span> 轴转动角度
+<span class="math inline">\(\alpha\)</span></li>
+</ol>
+<p>连续的RPY角旋转运动可由以下算子描述： <span class="math display">\[
+\begin{align}
+&amp;R(\alpha, \beta, \gamma) = \text{Rot}(\hat{z}, \alpha)\text{
+Rot}(\hat{y}, \beta)\text{ Rot}(\hat{x}, \gamma) \text{ }I \\
+&amp;\text{由于始终是围绕固定坐标系旋转，故旋转算子都是}\textbf{左乘}
+\end{align}
+\]</span></p>
+<blockquote>
+<p><strong>注意</strong>：RPY角通常用来描述飞机（或船）的转动，<span class="math inline">\(\hat{x}\)</span> 沿飞行方向、<span class="math inline">\(\hat{y}\)</span> 沿翼展方向、<span class="math inline">\(\hat{z}\)</span> 沿垂直指向地面方向</p>
+</blockquote></li>
+<li><p>单位四元数：设 <span class="math inline">\(R(\hat{\omega},
+\theta) \in SO(3)\)</span> 是旋转矩阵，则与 <span class="math inline">\(R\)</span> 对应的单位四元数 <span class="math inline">\(q \in \mathbb{R}^4\)</span> 定义为： <span class="math display">\[
+\begin{align}
+q = \begin{bmatrix} q_0 \\ q_1 \\ q_2 \\ q_3 \end{bmatrix} =
+\begin{bmatrix} \cos{(\dfrac{\theta}{2})} \\
+\hat{\omega}\sin{(\dfrac{\theta}{2})} \end{bmatrix} \in \mathbb{R}^4
+\end{align}
+\]</span> 其中 <span class="math inline">\(||\hat{\omega}|| = ||q|| =
+1\)</span>，<span class="math inline">\(\theta \in [0,
+\pi]\)</span>；单位四元数表示在<u>三维单位球面</u>上的一个动点</p>
+<ul>
+<li><p>单位四元数 和 旋转矩阵 之间的转换：</p>
+<ul>
+<li>旋转矩阵 <span class="math inline">\(\Rightarrow\)</span>
+单位四元数： <span class="math display">\[
+\begin{align}
+&amp;q_0 = \dfrac{1}{2} \sqrt{1 + r_{11} + r_{22} + r_{33}} \\
+&amp;\begin{bmatrix}  q_1 \\ q_2 \\ q_3 \end{bmatrix} = \dfrac{1}{4q_0}
+\begin{bmatrix} r_{32} - r_{23} \\ r_{13} - r_{31} \\ r_{21} - r_{12}
+\end{bmatrix}
+\end{align}
+\]</span></li>
+<li>单位四元数 <span class="math inline">\(\Rightarrow\)</span>
+旋转矩阵：设 <span class="math inline">\(q = (q_0, q_1, q_2,
+q_3)\)</span>，<span class="math inline">\(R\)</span> 表示绕朝 <span class="math inline">\((q_1, q_2, q_3)\)</span> 的单位轴旋转 <span class="math inline">\(2\cos^{-1} q_0\)</span> 角度</li>
+</ul></li>
+<li><p>单位四元数 和 旋转矩阵乘积：设 <span class="math inline">\(R_q,
+R_p\)</span> 分别表示两个旋转矩阵，对应四元数分别为 <span class="math inline">\(q, p\)</span></p>
+<ol type="1">
+<li><p>将 <span class="math inline">\(q, p\)</span>
+分别写成<strong>复数矩阵</strong>形式： <span class="math display">\[
+  Q = \begin{bmatrix} q_0 + iq_1 &amp; q_2 + iq_3 \\ -q_2 + iq_3 &amp;
+q_0 - iq_1 \end{bmatrix} \quad P = \begin{bmatrix} p_0 + ip_1 &amp; p_2
++ ip_3 \\ -p_2 + ip_3 &amp; p_0 - ip_1 \end{bmatrix}
+  \]</span></p></li>
+<li><p>令 <span class="math inline">\(N = QP\)</span>，记 <span class="math inline">\(N\)</span> 为： <span class="math display">\[
+  N = \begin{bmatrix} n_0 + in_1 &amp; n_2 + in_3 \\ -n_2 + in_3 &amp;
+n_0 - in_1 \end{bmatrix}
+  \]</span></p></li>
+<li><p>矩阵乘积 <span class="math inline">\(R_qR_p\)</span>
+对应的单位四元数即为 <span class="math inline">\((n_0, n_1, n_2,
+n_3)\)</span></p></li>
+</ol></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="四刚体的一般运动">四、刚体的一般运动</h3>
 <ul>
 <li><p>齐次变换矩阵：又称<strong>刚体运动群</strong>，是所有 <span class="math inline">\(4 \times 4\)</span> 的实矩阵 <span class="math inline">\(T\)</span> 的集合： <span class="math display">\[T
 = \begin{bmatrix} R &amp; p \\ 0 &amp; 1 \end{bmatrix} = \begin{bmatrix}
