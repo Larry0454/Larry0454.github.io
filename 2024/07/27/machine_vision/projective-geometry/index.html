@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E4%BD%9C%E5%9B%BE%E6%B3%95%E7%A1%AE%E5%AE%9A%E6%B6%88%E5%BD%B1%E7%82%B9.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E5%BA%A6%E9%87%8F%E7%9F%AB%E6%AD%A3.jpg">
 <meta property="article:published_time" content="2024-07-27T07:00:18.000Z">
-<meta property="article:modified_time" content="2024-08-03T15:28:01.770Z">
+<meta property="article:modified_time" content="2024-08-04T08:01:26.696Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          21k words
+          23k words
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          176 mins
+          189 mins
         
       </span>
     
@@ -985,9 +985,6 @@ y_i&#39;\textbf{x}_i^T \\ \omega_i&#39; \textbf{x}_i^T &amp; 0^T &amp;
 &amp;\text{转移误差}=\sum_{i}d(\textbf{x}_i&#39;,
 \textbf{H}\overline{\textbf{x}}_i)^2 \\
 &amp;\text{算法要估计使上式误差值最小的单应 }\hat{\textbf{H}}
-&amp;\text{转移误差}=\sum_{i}d(\textbf{x}_i&#39;,
-\textbf{H}\overline{\textbf{x}}_i)^2 \\
-&amp;\text{算法要估计使上式误差值最小的单应 }\hat{\textbf{H}}
 \end{align}
 \]</span></p></li>
 </ul></li>
@@ -1038,7 +1035,7 @@ y_i&#39;\)</span> 的二次方程，<span class="math inline">\(\textbf{X} \in
 <u><strong>重投影误差</strong></u> <br>故优化重投影误差 <span class="math inline">\(\Leftrightarrow\)</span> 找到 <span class="math inline">\(\mathcal{V}_2\)</span> 上最靠近 <span class="math inline">\(\textbf{X}_i\)</span> 的点 <span class="math inline">\(\hat{\textbf{X}}_i\)</span>；由于 <span class="math inline">\(\mathcal{V}_2\)</span> 是非线性的，故可考虑估计
 <span class="math inline">\(\hat{\textbf{X}}\)</span>
 的一阶近似</p></li>
-<li><p>对于给定单应 <span class="math inline">\(\textbf{H}\)</span>，将误差函数记作有关<span class="math inline">\(\textbf{X}\)</span>的 2 维向量 <span class="math inline">\(\mathcal{C}_\textbf{H}(\textbf{X})\)</span>，用
+<li><p>对于给定单应 <span class="math inline">\(\textbf{H}\)</span>，将误差函数记作有关 <span class="math inline">\(\textbf{X}\)</span> 的 2 维向量 <span class="math inline">\(\mathcal{C}_\textbf{H}(\textbf{X})\)</span>，用
 Taylor 展开对其一阶逼近： <span class="math display">\[
 \begin{align}
   \mathcal{C}_{\textbf{H}}(\textbf{X} + \delta_\textbf{X}) =
@@ -1053,7 +1050,7 @@ Taylor 展开对其一阶逼近： <span class="math display">\[
 0\)</span>，其中 <span class="math inline">\(\textbf{J} =
 \dfrac{\partial \mathcal{C}_\textbf{H}}{\partial \textbf{X}}\)</span>
 为偏导数矩阵，<span class="math inline">\(\epsilon =
-\mathcal{C}_\textbf{H}(\textbf{X})\)</span> 为关于 <span class="math inline">\(\textbf{X}\)</span> 的代价函数</p></li>
+\mathcal{C}_\textbf{H}(\textbf{X}) = A_ih\)</span> 为关于 <span class="math inline">\(\textbf{X}\)</span> 的代价函数</p></li>
 <li><p>要求解 <span class="math inline">\(\hat{\textbf{X}}\)</span>，只要求解满足 <span class="math inline">\(\textbf{J}\delta_\textbf{X} = -\epsilon\)</span>
 的约束下使 <span class="math inline">\(||\delta_\textbf{X}||\)</span>
 取最小值的向量 <span class="math inline">\(\delta_\textbf{X}\)</span>（可使用 Lagrange
@@ -1061,7 +1058,7 @@ Taylor 展开对其一阶逼近： <span class="math display">\[
 <li><p>解得 <span class="math inline">\(\delta_\textbf{X} =
 -\textbf{J}^T (\textbf{J}\textbf{J}^T)^{-1}\epsilon\)</span>，<span class="math inline">\(\hat{\textbf{X}} = \textbf{X} +
 \delta_\textbf{X}\)</span>，其中范数 <span class="math inline">\(||\delta_\textbf{X}||^2 =
-\delta_\textbf{X}^T\delta_\textbf{X}\)</span> 就是
+\delta_\textbf{X}^T\delta_\textbf{X}\)</span> 即是
 <u><strong>Sampson误差</strong></u></p></li>
 </ol></li>
 </ul></li>
@@ -1115,12 +1112,12 @@ d(\textbf{x}_i&#39;, \textbf{H}\overline{\textbf{x}}_i)^2}{2\sigma^2}}
 <span class="math inline">\(\{\hat{\textbf{X}}_i\}\)</span></p>
 <ol type="1">
 <li>借助图像上四组点使用 DLT 算法计算一个初始估计 <span class="math inline">\(\hat{\textbf{H}}\)</span></li>
-<li>选取恰当的误差函数，使用 <strong>Sampson误差式</strong> 确定附属变量
+<li>选取恰当的误差函数，借助 <strong>Sampson误差式</strong> 确定附属变量
 <span class="math inline">\(\{\hat{\textbf{x}}_i\}\)</span>
 的初始估计</li>
 <li>在 <span class="math inline">\(\hat{\textbf{H}}\)</span> 和 <span class="math inline">\(\hat{\textbf{x}}_i\)</span> (<span class="math inline">\(i = 1 \dots n\)</span>) 上最小化
 <strong>重投影误差函数</strong> <span class="math inline">\(\sum_{i}d(\textbf{x}_i, \hat{\textbf{x}}_i)^2 +
-d(\textbf{x}&#39;, \hat{\textbf{x}}_i&#39;)^2\)</span></li>
+d(\textbf{x}&#39;, \hat{\textbf{x}}_i&#39;)^2\)</span><br></li>
 </ol>
 <blockquote>
 <p><strong>注意</strong>：待优化参数共有 <span class="math inline">\(2n
@@ -1128,6 +1125,78 @@ d(\textbf{x}&#39;, \hat{\textbf{x}}_i&#39;)^2\)</span></li>
 个估计点对和 9 个 <span class="math inline">\(\textbf{H}\)</span>
 的元素</p>
 </blockquote></li>
+</ul>
+<hr>
+<h3 id="四鲁棒估计">四、鲁棒估计</h3>
+<ul>
+<li><p>RANSAC：对含有野值的数据集 <span class="math inline">\(S\)</span>
+进行鲁棒拟合；"野值"指<u>测量误差之外</u>的点（不服从正态分布），严重干扰单应的估计</p>
+<ul>
+<li><p>核心思想：记处在模型容忍阈值 <span class="math inline">\(t\)</span>
+的样本点为模型<strong>内点</strong>，迭代选出使<u><strong>内点数量最多</strong></u>的模型</p>
+<ul>
+<li><p>距离阈值 <span class="math inline">\(t\)</span>：设阈值 <span class="math inline">\(t\)</span> 能使样本点为内点的概率是 <span class="math inline">\(\alpha\)</span>，一般取 <span class="math inline">\(\alpha = 95\%\)</span></p></li>
+<li><p>迭代次数 <span class="math inline">\(N\)</span>：<span class="math inline">\(N\)</span> 需保证 <span class="math inline">\(s\)</span>
+个点组成的随机样本中<strong>至少有一次没有野值</strong>的概率为 <span class="math inline">\(p\)</span>，一般取 <span class="math inline">\(p =
+99\%\)</span> <span class="math display">\[
+\begin{align}
+&amp;N = \dfrac{\log{(1 - p)}}{\log{(1 - (1-\epsilon)^s)}} \\
+\end{align}
+\]</span> 其中 <span class="math inline">\(\epsilon\)</span>
+为样本中野值的比例；由于 <span class="math inline">\(\epsilon\)</span>
+一般未知，故可考虑用下面的<u>自适应算法</u>迭代求解： <span class="math display">\[
+\begin{align}
+&amp;\text{init: }\text{N} = +\infty, \text{sample}\_\text{count} = 0 \\
+&amp;\textbf{while } \text{N} &gt; \text{sample}\_\text{count}: \\
+&amp;\qquad \quad \text{draw a sample and count inner points} \\
+&amp;\qquad \quad \text{let }\epsilon = 1 - \dfrac{|\text{inner
+points|}}{\text{|total samples|}} \\
+&amp;\qquad \quad \text{let }p = 99\% \text{ and calculate } \text{N} \\
+&amp;\qquad \quad \text{sample}\_\text{count} \leftarrow
+\text{sample}\_\text{count} + 1
+\end{align}
+\]</span></p></li>
+<li><p>一致集大小 <span class="math inline">\(T\)</span>：只要取 <span class="math inline">\(T\)</span> 接近期望内点数量即可；对于 <span class="math inline">\(n\)</span> 个样本，有 <span class="math inline">\(T = (1-\epsilon) n\)</span></p></li>
+</ul></li>
+<li><p>算法流程：获得一个能够鲁棒拟合的模型</p>
+<ol type="1">
+<li>随机从 <span class="math inline">\(S\)</span> 中选择 <span class="math inline">\(s\)</span>
+个数据点组成的样本作为模型的一个<strong>初始示例</strong></li>
+<li>确定在模型<strong>距离阈值</strong> <span class="math inline">\(t\)</span> 内的一个数据点集 <span class="math inline">\(S_i\)</span>，<span class="math inline">\(S_i\)</span> 包含了模型的内点，称作采样的一致集
+<ul>
+<li>若 <span class="math inline">\(|S_i| &gt;
+T\)</span>，说明该模型合理，用 <span class="math inline">\(S_i\)</span>
+内的所有点重估计模型（如最小二乘法）并结束</li>
+<li>若 <span class="math inline">\(|S_i| \lt
+T\)</span>，说明该模型不合理，重抽一个新的子集 <span class="math inline">\(S_i&#39;\)</span> 并重复 1、2 步骤</li>
+</ul></li>
+<li>若经过 <span class="math inline">\(N\)</span>
+次试验仍未终止，选择一个<strong>最大一致集</strong> <span class="math inline">\(S_i\)</span>，并用 <span class="math inline">\(S_i\)</span>
+的所有点重估计模型（如最小二乘法）</li>
+</ol>
+<blockquote>
+<p><strong>注意</strong>：相较于
+RANSAC，最小二乘法<strong>对离群点太敏感</strong>，难以在含野值的数据集上取得好的拟合效果</p>
+</blockquote></li>
+<li><p>单应 <span class="math inline">\(\textbf{H}\)</span>
+的<u>自动</u>计算：输入两幅图像，输出单应的估计</p>
+<ol type="1">
+<li><p>在两幅图上分别计算兴趣点：兴趣点 =
+<strong>图像自相关函数</strong>的极值点（纹理变化最显著的点）</p></li>
+<li><p>根据兴趣点<strong>灰度领域接近程度</strong>，计算初始点对匹配集</p></li>
+<li><p><strong>用 RANSAC 求单应</strong>：重复 <span class="math inline">\(N\)</span> 次采样，其中 <span class="math inline">\(N\)</span> 可用上面的"自适应"算法迭代求解</p>
+<ol type="1">
+<li>任选 4 个样本（4 个点对），计算单应 <span class="math inline">\(\textbf{H}\)</span></li>
+<li>对假设的每一组点对，计算距离 <span class="math inline">\(d\)</span>；其中 <span class="math inline">\(d^2 =
+d(\textbf{x}, \textbf{H}^{-1}\textbf{x}&#39;)^2 + d(\textbf{x}&#39;,
+\textbf{H}^{-1}\textbf{x})^2\)</span>，即<strong>对称转移误差</strong></li>
+<li>根据 <span class="math inline">\(d &lt; t =
+\sqrt{5.99}\sigma\)</span> 像素确定对应数量，也就是在 <span class="math inline">\(\textbf{H}\)</span> 一致集内的内点数量</li>
+</ol>
+<p>选择具有<u>最大内点数量</u>的 <span class="math inline">\(\textbf{H}\)</span>，作为迭代终止得到的单应</p></li>
+<li><p>最优估计：对划定为"内点"的所有点对重新估计 <span class="math inline">\(\textbf{H}\)</span>（最小化<strong>重投影误差</strong>）</p></li>
+</ol></li>
+</ul></li>
 </ul>
 
                 

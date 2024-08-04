@@ -16,16 +16,16 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="C语言系统级编程  一、内存的基本概念  字节：内存的基本单位，由8个0&#x2F;1比特位组成 机器位宽：表示内存中byte的编号，如32位机表示共可以访问\(2^{32}\)个字节（0 ~ \(2^{32} - 1\)）   二、非数组与数组变量的声明  内存的相关操作：分配内存、内存赋值、读取内存、释放内存 分配内存：C语言中主要有两种方式，即“变量声明”（无需手动free）与“">
+    <meta name="description" content="C语言系统级编程  本篇内容全部总结自北航荣文戈教授在bilibli网站分享的《C语言系统级编程》课程  一、内存的基本概念  字节：内存的基本单位，由8个0&#x2F;1比特位组成 机器位宽：表示内存中byte的编号，如32位机表示共可以访问\(2^{32}\)个字节（0 ~ \(2^{32} - 1\)）   二、非数组与数组变量的声明  内存的相关操作：分配内存、内存赋值、读取">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『system programming-1』C system programming">
 <meta property="og:url" content="http://larry0454.github.io/2023/09/04/system_programming/C-system-programming/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="C语言系统级编程  一、内存的基本概念  字节：内存的基本单位，由8个0&#x2F;1比特位组成 机器位宽：表示内存中byte的编号，如32位机表示共可以访问\(2^{32}\)个字节（0 ~ \(2^{32} - 1\)）   二、非数组与数组变量的声明  内存的相关操作：分配内存、内存赋值、读取内存、释放内存 分配内存：C语言中主要有两种方式，即“变量声明”（无需手动free）与“">
+<meta property="og:description" content="C语言系统级编程  本篇内容全部总结自北航荣文戈教授在bilibli网站分享的《C语言系统级编程》课程  一、内存的基本概念  字节：内存的基本单位，由8个0&#x2F;1比特位组成 机器位宽：表示内存中byte的编号，如32位机表示共可以访问\(2^{32}\)个字节（0 ~ \(2^{32} - 1\)）   二、非数组与数组变量的声明  内存的相关操作：分配内存、内存赋值、读取">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://larry0454.github.io/2023/09/04/system_programming/C-system-programming/%E5%86%85%E5%AD%98%E5%85%AD%E5%85%83%E7%BB%84.png">
 <meta property="article:published_time" content="2023-09-04T14:39:38.000Z">
-<meta property="article:modified_time" content="2024-07-22T05:26:58.771Z">
+<meta property="article:modified_time" content="2024-08-04T08:07:40.396Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="system programming">
 <meta name="twitter:card" content="summary_large_image">
@@ -235,7 +235,7 @@
         
         
         
-          99 mins
+          100 mins
         
       </span>
     
@@ -287,7 +287,9 @@
               <div class="markdown-body">
                 
                 <h2 id="c语言系统级编程">C语言系统级编程</h2>
-<hr>
+<p class="note note-info">
+本篇内容全部总结自北航荣文戈教授在bilibli网站分享的<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV14r4y1D7YH/?share_source=copy_web&vd_source=7e9c35c4fb173269415ab6df9662e1f2">《C语言系统级编程》</a>课程
+</p>
 <h3 id="一内存的基本概念">一、内存的基本概念</h3>
 <ul>
 <li>字节：内存的基本单位，由8个0/1比特位组成</li>
