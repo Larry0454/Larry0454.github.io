@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E4%BD%9C%E5%9B%BE%E6%B3%95%E7%A1%AE%E5%AE%9A%E6%B6%88%E5%BD%B1%E7%82%B9.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/07/27/machine_vision/projective-geometry/%E5%BA%A6%E9%87%8F%E7%9F%AB%E6%AD%A3.jpg">
 <meta property="article:published_time" content="2024-07-27T07:00:18.000Z">
-<meta property="article:modified_time" content="2024-08-06T10:33:58.451Z">
+<meta property="article:modified_time" content="2024-08-07T08:14:46.303Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          23k words
+          24k words
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          189 mins
+          197 mins
         
       </span>
     
@@ -915,25 +915,24 @@ x_i&#39;h^{2T} \textbf{x}_i - y_i&#39;h^{1T}\textbf{x}_i \end{bmatrix} =
 0 \\ \\
 &amp;\text{由于 } h^{jT}\textbf{x}_i = \textbf{x}_i^Th^j \text{
 ，故上式可改写为矩阵方程：} \\
-&amp;A_ih = \begin{bmatrix} 0^T &amp; -\omega_i&#39;\textbf{x}_i^T &amp;
-y_i&#39;\textbf{x}_i^T \\ \omega_i&#39;\textbf{x}_i^T &amp; 0^T &amp;
--x_i&#39;\textbf{x}_i^T \\ -y_i&#39;\textbf{x}_i^T &amp;
-x_i&#39;\textbf{x}_i^T &amp; 0^T \end{bmatrix} \begin{bmatrix} h^1 \\
-h^2 \\ h^3  \end{bmatrix} = 0
+&amp;\text{A}_ih = \begin{bmatrix} 0^T &amp;
+-\omega_i&#39;\textbf{x}_i^T &amp; y_i&#39;\textbf{x}_i^T \\
+\omega_i&#39;\textbf{x}_i^T &amp; 0^T &amp; -x_i&#39;\textbf{x}_i^T \\
+-y_i&#39;\textbf{x}_i^T &amp; x_i&#39;\textbf{x}_i^T &amp; 0^T
+\end{bmatrix} \begin{bmatrix} h^1 \\ h^2 \\ h^3  \end{bmatrix} = 0
 \end{align}
 \]</span></p></li>
 <li><p>对于每个点 <span class="math inline">\(\textbf{x}_i\)</span> 都有
-<span class="math inline">\(A_ih = 0\)</span> 的形式，其中 <span class="math inline">\(A_i\)</span> 形状为 <span class="math inline">\(3
-\times 9\)</span>，<span class="math inline">\(h\)</span> 形状为 <span class="math inline">\(9 \times 1\)</span></p>
+<span class="math inline">\(\text{A}_ih = 0\)</span> 的形式，其中 <span class="math inline">\(\text{A}_i\)</span> 形状为 <span class="math inline">\(3 \times 9\)</span>，<span class="math inline">\(h\)</span> 形状为 <span class="math inline">\(9
+\times 1\)</span></p>
 <ul>
-<li>由于 <span class="math inline">\(A_i\)</span>
-的第三行可由第一二行线性表出，故在解 <span class="math inline">\(\textbf{H}\)</span> 时可将第三行忽略，即 <span class="math inline">\(A_i\)</span> 形状为 <span class="math inline">\(2
-\times 9\)</span></li>
+<li>由于 <span class="math inline">\(\text{A}_i\)</span>
+的第三行可由第一二行线性表出，故在解 <span class="math inline">\(\textbf{H}\)</span> 时可将第三行忽略，即 <span class="math inline">\(\text{A}_i\)</span> 形状为 <span class="math inline">\(2 \times 9\)</span></li>
 <li>解 <span class="math inline">\(H\)</span> 时可取 <span class="math inline">\(\omega_i = 1\)</span>，此时 <span class="math inline">\((x_i&#39;, y_i&#39;)^T\)</span>
 是图像中测量得到的坐标</li>
 </ul></li>
-<li><p>把 <span class="math inline">\(n\)</span> 个 <span class="math inline">\(2\times 9\)</span> 的矩阵 <span class="math inline">\(A_i\)</span> 合并成一个 <span class="math inline">\(2n \times 9\)</span> 的大矩阵 <span class="math inline">\(A\)</span></p></li>
-<li><p>求解 <span class="math inline">\(A\)</span> 的
+<li><p>把 <span class="math inline">\(n\)</span> 个 <span class="math inline">\(2\times 9\)</span> 的矩阵 <span class="math inline">\(\text{A}_i\)</span> 合并成一个 <span class="math inline">\(2n \times 9\)</span> 的大矩阵 <span class="math inline">\(\text{A}\)</span></p></li>
+<li><p>求解 <span class="math inline">\(\text{A}\)</span> 的
 SVD，对应于<u><strong>最小奇异值</strong></u>的单位奇异向量就是解<span class="math inline">\(h\)</span>： <span class="math display">\[
 \begin{align}
 &amp;\text{若 } \textbf{H} = \begin{bmatrix} h_1 &amp; h_2 &amp; h_3 \\
@@ -943,16 +942,20 @@ h_4 &amp; h_5 &amp; h_6 \\ h_7 &amp; h_8 &amp; h_9 \\ \end{bmatrix} \\
 \end{align}
 \]</span> 为什么要求最小特征值的单位向量？
 <br>图像上坐标的测量通常是不准确的（又称<u><strong>噪声</strong></u>），这导致方程
-<span class="math inline">\(Ah = 0\)</span>
+<span class="math inline">\(\text{A}h = 0\)</span>
 不存在精确解，只能找<strong>近似解</strong> <br>因此可考虑最小化范数
-<span class="math inline">\(||Ah||\)</span>；为避免出现平凡解 <span class="math inline">\(h = 0\)</span>，可在最小化过程中添加一个约束 <span class="math inline">\(||h || = 1\)</span> <br>以上表述等价于求商 <span class="math inline">\(\dfrac{||Ah||}{||h||}\)</span>
+<span class="math inline">\(||\text{A}h||\)</span>；为避免出现平凡解
+<span class="math inline">\(h = 0\)</span>，可在最小化过程中添加一个约束
+<span class="math inline">\(||h || = 1\)</span> <br>以上表述等价于求商
+<span class="math inline">\(\dfrac{||\text{A}h||}{||h||}\)</span>
 的<strong>最小值</strong>问题，该问题的解法如下： <span class="math display">\[
 \begin{align}
-&amp;\text{目标：给定一个行数不少于列数的矩阵} A\text{，最小化}
-||Ah||\text{ 满足 }||h|| = 1\text{ 的解 } x \\
-&amp;\text{算法：求解 }A\text{ 的 }\textbf{SVD}\text{ ，即 }A =
-\textbf{UDV}^T\text{，解出 }h\text{ 是 }\textbf{V}\text{ 的最后一列} \\
-&amp;\qquad \text{ }\text{ 同时也是 }A^TA\text{
+&amp;\text{目标：给定一个行数不少于列数的矩阵} \text{A}\text{，最小化}
+||\text{A}h||\text{ 满足 }||h|| = 1\text{ 的解 } x \\
+&amp;\text{算法：求解 }\text{A}\text{ 的 }\textbf{SVD}\text{ ，即
+}\text{A} = \textbf{UDV}^T\text{，解出 }h\text{ 是 }\textbf{V}\text{
+的最后一列} \\
+&amp;\qquad \text{ }\text{ 同时也是 }\text{A}^T\text{A}\text{
 的}\textbf{最小特征值}\text{对应的单位特征向量}
 \end{align}
 \]</span></p>
@@ -972,8 +975,8 @@ d_{alg}(\textbf{x}_i&#39;, \textbf{H}\textbf{x}_i)^2 &amp;=
 y_i&#39;\textbf{x}_i^T \\ \omega_i&#39; \textbf{x}_i^T &amp; 0^T &amp;
 -x_i&#39;\textbf{x}_i^T \end{bmatrix}||^2 \\
 \end{align}
-\]</span> 在 DLT 算法中，给定点对集合，<span class="math inline">\(\epsilon = Ah\)</span> 是整个代数误差向量，即
-<span class="math inline">\(\sum_{i}||\epsilon_i|| = ||Ah||^2 =
+\]</span> 在 DLT 算法中，给定点对集合，<span class="math inline">\(\epsilon = \text{A}h\)</span>
+是整个代数误差向量，即 <span class="math inline">\(\sum_{i}||\epsilon_i|| = ||\text{A}h||^2 =
 ||\epsilon||^2\)</span></p></li>
 <li><p>几何距离：最小化 图像坐标测量值 和 估计值 差距</p>
 <ul>
@@ -1023,11 +1026,9 @@ d(\textbf{x}_i&#39;, \hat{\textbf{x}}_i&#39;)^2 \\
 的<u><strong>非齐次坐标</strong></u>拼起来作为 <span class="math inline">\(\text{IR}^4\)</span> 的一个点 <span class="math inline">\(\textbf{X} = (x_i, y_i, x_i&#39;,
 y_i&#39;)^T\)</span></p>
 <blockquote>
-<p><strong>注意</strong>：由于矩阵方程 <span class="math inline">\(A_i h
-= 0\)</span> 中 <span class="math inline">\(A_i\)</span>
-的每一行都是关于 <span class="math inline">\(x_i, y_i, x_i&#39;,
-y_i&#39;\)</span> 的二次方程，故 <span class="math inline">\(\textbf{X}
-\in \mathcal{V}_2\)</span></p>
+<p><strong>注意</strong>：由于矩阵方程 <span class="math inline">\(\text{A}_i h = 0\)</span> 中 <span class="math inline">\(\text{A}_i\)</span> 的每一行都是关于 <span class="math inline">\(x_i, y_i, x_i&#39;, y_i&#39;\)</span>
+的二次方程，故 <span class="math inline">\(\textbf{X} \in
+\mathcal{V}_2\)</span></p>
 </blockquote></li>
 <li><p>令 <span class="math inline">\(\hat{\textbf{X}}_i = (\hat{x}_i,
 \hat{y}_i,\hat{x}_i&#39;,\hat{y}_i&#39;)^T\)</span>，<span class="math inline">\(||\textbf{X}_i - \hat{\textbf{X}}_i|| = (x_i -
@@ -1106,19 +1107,46 @@ d(\textbf{x}_i&#39;, \textbf{H}\overline{\textbf{x}}_i)^2}{2\sigma^2}}
 \hat{\textbf{x}}_i&#39;\}\)</span>，其中校正点对满足约束 <span class="math inline">\(\hat{\textbf{x}}&#39; =
 \hat{\textbf{H}}\hat{\textbf{x}}_i\)</span></p></li>
 </ul></li>
+<li><p>归一化变换：这一步预处理是<strong>很有必要的</strong>，绝对不是可有可无的</p>
+<p><span class="math inline">\(\{\textbf{x}_i \leftrightarrow
+\textbf{x}_i&#39;\}\)</span> 中 <span class="math inline">\((x, y,
+\omega)^T\)</span> 的典型数量级为 <span class="math inline">\(100:100:1\)</span>，这导致 DLT 算法的大矩阵 <span class="math inline">\(\text{A}\)</span> 中的元素量级差别过大：</p>
+<ul>
+<li><span class="math inline">\(\text{A}\)</span> 中 <span class="math inline">\(xx&#39;, xy&#39;\)</span> 等都是 <span class="math inline">\(10^4\)</span></li>
+<li><span class="math inline">\(\text{A}\)</span> 中 <span class="math inline">\(x\omega&#39;, y\omega&#39;\)</span> 等都是 <span class="math inline">\(10^2\)</span></li>
+<li><span class="math inline">\(\text{A}\)</span> 中 <span class="math inline">\(\omega\omega&#39;\)</span> 量级为 单位 <span class="math inline">\(1\)</span></li>
+</ul>
+<p>归一化提高了结果的精度，需要在实施 DLT
+算法前施行；归一化算法流程如下：</p>
+<ol type="1">
+<li>计算一个<strong><u>相似变换</u></strong> <span class="math inline">\(\textbf{T}\)</span>，将第一幅图的点集 <span class="math inline">\(\textbf{x}_i\)</span> 变换到新的点集 <span class="math inline">\(\tilde{\textbf{x}}_i\)</span>：
+<ul>
+<li>使点集 <span class="math inline">\(\tilde{\textbf{x}}_i\)</span>
+的形心归于图像原点 <span class="math inline">\((0, 0)^T\)</span></li>
+<li>使点集 <span class="math inline">\(\tilde{\textbf{x}}_i\)</span>
+到图像原点的平均距离为<span class="math inline">\(\sqrt{2}\)</span></li>
+</ul></li>
+<li>针对第二幅图的点集 <span class="math inline">\(\textbf{x}_i&#39;\)</span>，类似上面计算一个<strong><u>相似变换</u></strong>
+<span class="math inline">\(\textbf{T}&#39;\)</span>，将 <span class="math inline">\(\textbf{x}_i&#39;\)</span> 变换到 <span class="math inline">\(\tilde{\textbf{x}}_i&#39;\)</span></li>
+<li>使用 DLT 算法计算 <span class="math inline">\(\{\tilde{\textbf{x}}_i
+\leftrightarrow \tilde{\textbf{x}}_i&#39; \}\)</span> 的单应 <span class="math inline">\(\tilde{\textbf{H}}\)</span></li>
+<li>解除归一化：令 <span class="math inline">\(\text{H} =
+\text{T}&#39;^{-1}\tilde{\textbf{H}}\text{T}\)</span>，<span class="math inline">\(\text{H}\)</span> 即为所求的原点对上的单应</li>
+</ol></li>
 <li><p>黄金标准算法⭐：给定 <span class="math inline">\(n &gt;
 4\)</span> 组图像点对 <span class="math inline">\(\{\textbf{x}_i
 \leftrightarrow \textbf{x}_i&#39;\}\)</span>，确定两图像间的单应估计
 <span class="math inline">\(\hat{\textbf{H}}\)</span>，以及使重投影误差最小的附属点集
 <span class="math inline">\(\{\hat{\textbf{X}}_i\}\)</span></p>
 <ol type="1">
-<li>借助图像上四组点使用 DLT 算法计算一个初始估计 <span class="math inline">\(\hat{\textbf{H}}\)</span></li>
+<li>借助图像上四组点使用<u><strong>归一化的</strong></u> DLT
+算法计算一个初始估计 <span class="math inline">\(\hat{\textbf{H}}\)</span></li>
 <li>选取恰当的误差函数，借助 <strong>Sampson误差式</strong> 确定附属变量
 <span class="math inline">\(\{\hat{\textbf{x}}_i\}\)</span>
 的初始估计</li>
 <li>在 <span class="math inline">\(\hat{\textbf{H}}\)</span> 和 <span class="math inline">\(\hat{\textbf{x}}_i\)</span> (<span class="math inline">\(i = 1 \dots n\)</span>) 上最小化
 <strong>重投影误差函数</strong> <span class="math inline">\(\sum_{i}d(\textbf{x}_i, \hat{\textbf{x}}_i)^2 +
-d(\textbf{x}&#39;, \hat{\textbf{x}}_i&#39;)^2\)</span><br></li>
+d(\textbf{x}&#39;, \hat{\textbf{x}}_i&#39;)^2\)</span><br><br></li>
 </ol>
 <blockquote>
 <p><strong>注意</strong>：待优化参数共有 <span class="math inline">\(2n
@@ -1173,7 +1201,7 @@ T\)</span>，说明该模型不合理，重抽一个新的子集 <span class="ma
 </ul></li>
 <li>若经过 <span class="math inline">\(N\)</span>
 次试验仍未终止，选择一个<strong>最大一致集</strong> <span class="math inline">\(S_i\)</span>，并用 <span class="math inline">\(S_i\)</span>
-的所有点重估计模型（如最小二乘法）</li>
+的所有点重估计模型（如最小二乘法）<br><br></li>
 </ol>
 <blockquote>
 <p><strong>注意</strong>：相较于
@@ -1268,9 +1296,9 @@ d(\textbf{x}, \textbf{H}^{-1}\textbf{x}&#39;)^2 + d(\textbf{x}&#39;,
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/08/06/machine_vision/camera-geometry/" title="『machine vision-2』camera-geometry">
+                      <a href="/2024/08/06/machine_vision/camera-geometry/" title="『machine vision-2』camera geometry">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『machine vision-2』camera-geometry</span>
+                        <span class="hidden-mobile">『machine vision-2』camera geometry</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
