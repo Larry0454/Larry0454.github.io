@@ -25,8 +25,9 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E6%91%84%E5%83%8F%E6%9C%BA%E6%A8%A1%E5%9E%8B.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E5%9B%BE%E5%83%8F%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E6%91%84%E5%83%8F%E6%9C%BA%E5%9D%90%E6%A0%87%E7%B3%BB.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E7%82%B9%E7%9A%84%E6%B7%B1%E5%BA%A6.jpg">
 <meta property="article:published_time" content="2024-08-06T02:59:38.000Z">
-<meta property="article:modified_time" content="2024-08-07T03:20:59.762Z">
+<meta property="article:modified_time" content="2024-08-07T10:21:12.302Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -225,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6k words
+          6.6k words
         
       </span>
     
@@ -236,7 +237,7 @@
         
         
         
-          50 mins
+          56 mins
         
       </span>
     
@@ -492,9 +493,10 @@ p_{32}, p_{33}, 0)^T\)</span></li>
 </ul></li>
 <li><p>点的深度：指主平面前或后的一个空间点<strong>到<u>主平面</u>的距离</strong></p>
 <ul>
-<li>记号：设空间中某点为 <span class="math inline">\(\textbf{X} =
-(\text{X}, \text{Y},\text{Z},1)\)</span>，投影到图像中 <span class="math inline">\(\textbf{x} = \omega(x, y, 1)^T\)</span>；<span class="math inline">\(\textbf{m}^3\)</span> 表示 <span class="math inline">\(\text{M}\)</span> 的第 3 列（即主射线方向）</li>
-<li>两个结论：第一个是非归一化版本、第二个是归一化版本
+<li><p>记号：设空间中某点为 <span class="math inline">\(\textbf{X} =
+(\text{X}, \text{Y},\text{Z},1)\)</span>，投影到图像中 <span class="math inline">\(\textbf{x} = \omega(x, y, 1)^T\)</span>；<span class="math inline">\(\textbf{m}^3\)</span> 表示 <span class="math inline">\(\text{M}\)</span> 的第 3
+列（即主射线方向）</p></li>
+<li><p>两个结论：第一个是非归一化版本、第二个是归一化版本</p>
 <ul>
 <li>若 <span class="math inline">\(\text{P}(\text{X}, \text{Y},
 \text{Z}, \text{T})^T = \omega (x, y, 1)^T\)</span>，则有向深度 <span class="math inline">\(\text{depth}(\textbf{X}; \text{P}) =
@@ -505,6 +507,29 @@ p_{32}, p_{33}, 0)^T\)</span></li>
 1)^T\)</span>，并<u><strong>归一化</strong></u>使 <span class="math inline">\(||\textbf{m}^3|| = 1\)</span> 且 <span class="math inline">\(\det{\text{M}} &gt; 0\)</span>，则深度 <span class="math inline">\(\text{depth}(\textbf{X}; \text{P}) =
 \omega\)</span></li>
 </ul></li>
+<li><p>"归一化"版本推导：设摄像机矩阵 <span class="math inline">\(\text{P} = [\text{ M } | \textbf{
+p}_4]\)</span>，把三维点 <span class="math inline">\(\textbf{X} =
+(\text{X}, \text{Y}, \text{Z}, 1)^T = (\tilde{\textbf{X}}^T,
+1)^T\)</span> 投影到图像点 <span class="math inline">\(\textbf{x} =
+\omega (x, y, 1)^T\)</span></p>
+<ol type="1">
+<li>投影关系为 <span class="math inline">\(\textbf{x} =
+\text{P}\textbf{X}\)</span>；设 <span class="math inline">\(\textbf{C} =
+(\tilde{\textbf{C}}, 1)^T\)</span>，由 <span class="math inline">\(\textbf{P}^{3T}\textbf{C} = 0\)</span> 知，<span class="math inline">\(\omega = \textbf{P}^{3T}\textbf{X} =
+\textbf{P}^{3T}(\textbf{X} - \textbf{C})\)</span></li>
+<li>由 <span class="math inline">\(\textbf{P}^{3T}(\textbf{X} -
+\textbf{C}) = \textbf{m}^{3T} (\tilde{\textbf{X}} -
+\tilde{\textbf{C}})\)</span>，<span class="math inline">\(\omega =
+\textbf{X} - \textbf{C}) = \textbf{m}^{3T} (\tilde{\textbf{X}} -
+\tilde{\textbf{C}})\)</span>
+为<u>主射线</u>与<u>中心点到X的射线</u>的点乘</li>
+<li>若摄像机矩阵 <span class="math inline">\(\text{P}\)</span>
+已被归一化使得 <span class="math inline">\(\det{\text{M}} &gt;
+0\)</span> 且 <span class="math inline">\(||\textbf{m}^3|| =
+1\)</span>，则 <span class="math inline">\(\omega\)</span> 可解释为
+<span class="math inline">\(\textbf{X}\)</span> 到 <span class="math inline">\(\textbf{C}\)</span> 的深度</li>
+</ol>
+<p><img src="/2024/08/06/machine_vision/camera-geometry/点的深度.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul></li>
 </ul>
 
