@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E5%9B%BE%E5%83%8F%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E6%91%84%E5%83%8F%E6%9C%BA%E5%9D%90%E6%A0%87%E7%B3%BB.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E7%82%B9%E7%9A%84%E6%B7%B1%E5%BA%A6.jpg">
 <meta property="article:published_time" content="2024-08-06T02:59:38.000Z">
-<meta property="article:modified_time" content="2024-08-07T10:24:42.392Z">
+<meta property="article:modified_time" content="2024-08-08T01:59:16.799Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.7k words
+          7.5k words
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          56 mins
+          63 mins
         
       </span>
     
@@ -530,6 +530,41 @@ p}_4]\)</span>，把三维点 <span class="math inline">\(\textbf{X} =
 <span class="math inline">\(\textbf{X}\)</span> 到 <span class="math inline">\(\textbf{C}\)</span> 的深度</li>
 </ol>
 <p><img src="/2024/08/06/machine_vision/camera-geometry/点的深度.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+</ul></li>
+<li><p>摄像机矩阵的分解：根据射影摄像机矩阵 <span class="math inline">\(\text{P}\)</span>，求解摄像机的各个参数</p>
+<ul>
+<li>摄像机中心 <span class="math inline">\(\textbf{C}\)</span>：设 <span class="math inline">\(\textbf{C} = (\text{X}, \text{Y}, \text{Z},
+\text{T})\)</span>，可根据 <span class="math inline">\(\text{P} =
+[\textbf{p}_1, \textbf{p}_2, \textbf{p}_3, \textbf{p}_4]\)</span> 计算
+<span class="math inline">\(\textbf{C}\)</span> 的各分量
+<ul>
+<li><span class="math inline">\(\text{X} = \det{([\textbf{p}_2,
+\textbf{p}_3, \textbf{p}_4])}\)</span></li>
+<li><span class="math inline">\(\text{Y} = -\det{([\textbf{p}_1,
+\textbf{p}_3, \textbf{p}_4])}\)</span></li>
+<li><span class="math inline">\(\text{Z} = \det{([\textbf{p}_1,
+\textbf{p}_2, \textbf{p}_4])}\)</span></li>
+<li><span class="math inline">\(\text{T} = -\det{([\textbf{p}_1,
+\textbf{p}_2, \textbf{p}_3])}\)</span></li>
+</ul></li>
+<li>摄像机内外参 <span class="math inline">\(\text{KR}\)</span>：设
+<span class="math inline">\(\text{P} = [\text{ M } |
+-\text{M}\tilde{\textbf{C}}]\)</span>，利用<u>RQ分解</u>可将 <span class="math inline">\(\text{M}\)</span> 分解成 <span class="math inline">\(\text{M} = \text{KR}\)</span>，其中 <span class="math inline">\(\text{K}\)</span> 是上三角阵
+<ul>
+<li>RQ分解：将 <span class="math inline">\(3\times 3\)</span>
+矩阵分解为上三角矩阵 * 旋转矩阵
+<ul>
+<li>三维 Givens 旋转： <span class="math inline">\(\text{Q}_x,\text{Q}_y, \text{Q}_z\)</span>
+分别是绕 <span class="math inline">\(x, y, z\)</span>
+轴转的旋转矩阵</li>
+<li>用 Givens 旋转将 <span class="math inline">\(\text{A}_{3\times
+3}\)</span> 进行 RQ分解：<span class="math inline">\(\text{A} =
+\text{RQ}\)</span>，其中 <span class="math inline">\(\text{Q} =
+\text{Q}_z^T\text{Q}_y^T\text{Q}_x^T\)</span> 是旋转矩阵，<span class="math inline">\(\text{R}\)</span> 是上三角阵</li>
+</ul></li>
+<li>有关扭曲参数 <span class="math inline">\(s\)</span>：常在<u>对照片拍照</u>时发生，即"二次取像"，这将导致
+<span class="math inline">\(\text{K}\)</span> 中的 <span class="math inline">\(s \ne 0\)</span></li>
+</ul></li>
 </ul></li>
 </ul>
 
