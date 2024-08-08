@@ -25,9 +25,12 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E6%91%84%E5%83%8F%E6%9C%BA%E6%A8%A1%E5%9E%8B.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E5%9B%BE%E5%83%8F%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E6%91%84%E5%83%8F%E6%9C%BA%E5%9D%90%E6%A0%87%E7%B3%BB.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E5%88%97%E5%90%91%E9%87%8F.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E8%A1%8C%E5%90%91%E9%87%8F.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E7%82%B9%E7%9A%84%E6%B7%B1%E5%BA%A6.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E5%BC%B1%E9%80%8F%E8%A7%86.jpg">
 <meta property="article:published_time" content="2024-08-06T02:59:38.000Z">
-<meta property="article:modified_time" content="2024-08-08T01:59:16.799Z">
+<meta property="article:modified_time" content="2024-08-08T10:22:13.046Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -226,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.5k words
+          12k words
         
       </span>
     
@@ -237,7 +240,7 @@
         
         
         
-          63 mins
+          101 mins
         
       </span>
     
@@ -330,7 +333,7 @@ f\dfrac{\text{Y}}{\text{Z}})^T
 \end{align}
 \]</span> 记图像点坐标点为三维齐次向量 <span class="math inline">\(\textbf{x}\)</span>，则中心投影可简写为 <span class="math inline">\(\textbf{x} = \text{P}\textbf{X}\)</span></p>
 <hr>
-<p>进一步地，若图像平面的坐标原点不与主点重合（<u><strong>主点偏置</strong></u>），则一般的映射为：
+<p>进一步地，若主点不与图像平面的坐标原点重合（<strong>主点偏置</strong>），则一般的映射为：
 <span class="math display">\[
 \begin{align}
 &amp;\begin{bmatrix} \text{X} \\ \text{Y} \\ \text{Z} \\ 1 \end{bmatrix}
@@ -431,11 +434,12 @@ m_yp_y \\ &amp; &amp; 1 \end{bmatrix}
 <ul>
 <li><span class="math inline">\(\textbf{p}_1, \textbf{p}_2,
 \textbf{p}_3\)</span> 分别是世界坐标轴 <span class="math inline">\(\text{X}, \text{Y}, \text{Z}\)</span>
-三个轴的消影点，例如 <span class="math inline">\(\textbf{p}_1 = \text{P
-}(1, 0, 0, 0)^T\)</span></li>
+三个轴的在图上的消影点，例如 <span class="math inline">\(\textbf{p}_1 =
+\text{P }(1, 0, 0, 0)^T\)</span></li>
 <li><span class="math inline">\(\textbf{p}_4\)</span>
 是世界坐标系原点的图像点</li>
-</ul></li>
+</ul>
+<p><img src="/2024/08/06/machine_vision/camera-geometry/列向量.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 <li><p>行向量：将 <span class="math inline">\(\text{P}\)</span>
 写成行向量分块的形式，其中 <span class="math inline">\(\textbf{P}^{iT}_{1\times4}\)</span> 是 <span class="math inline">\(\text{P}\)</span> 的第 <span class="math inline">\(i\)</span> 行，表示特殊的世界平面 <span class="math display">\[
 \begin{align}
@@ -461,7 +465,8 @@ m_yp_y \\ &amp; &amp; 1 \end{bmatrix}
 <p><strong>注意</strong>：轴平面 <span class="math inline">\(\textbf{P}^1\)</span> 和 轴平面 <span class="math inline">\(\textbf{P}^2\)</span> 的交线是连接 <span class="math inline">\(\textbf{C}\)</span> 和
 图像原点的直线，一般不与相机主轴重合</p>
 </blockquote></li>
-</ul></li>
+</ul>
+<p><img src="/2024/08/06/machine_vision/camera-geometry/行向量.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 <li><p>主点：<u>主轴</u> 与 <u>图像平面</u> 相交于主点</p>
 <ul>
 <li>主点所在射线：由主平面 <span class="math inline">\(\textbf{P}^3 =
@@ -534,7 +539,7 @@ p}_4]\)</span>，把三维点 <span class="math inline">\(\textbf{X} =
 <li><p>摄像机矩阵的分解：根据射影摄像机矩阵 <span class="math inline">\(\text{P}\)</span>，求解摄像机的各个参数</p>
 <ul>
 <li>摄像机中心 <span class="math inline">\(\textbf{C}\)</span>：设 <span class="math inline">\(\textbf{C} = (\text{X}, \text{Y}, \text{Z},
-\text{T})\)</span>，可根据 <span class="math inline">\(\text{P} =
+\text{T})^T\)</span>，可根据 <span class="math inline">\(\text{P} =
 [\textbf{p}_1, \textbf{p}_2, \textbf{p}_3, \textbf{p}_4]\)</span> 计算
 <span class="math inline">\(\textbf{C}\)</span> 的各分量
 <ul>
@@ -549,7 +554,7 @@ p}_4]\)</span>，把三维点 <span class="math inline">\(\textbf{X} =
 </ul></li>
 <li>摄像机内外参 <span class="math inline">\(\text{KR}\)</span>：设
 <span class="math inline">\(\text{P} = [\text{ M } |
--\text{M}\tilde{\textbf{C}}]\)</span>，利用<u>RQ分解</u>可将 <span class="math inline">\(\text{M}\)</span> 分解成 <span class="math inline">\(\text{M} = \text{KR}\)</span>，其中 <span class="math inline">\(\text{K}\)</span> 是上三角阵
+-\text{M}\tilde{\textbf{C}} \ ]\)</span>，利用<u>RQ分解</u>可将 <span class="math inline">\(\text{M}\)</span> 分解成 <span class="math inline">\(\text{M} = \text{KR}\)</span>，其中 <span class="math inline">\(\text{K}\)</span> 是上三角阵
 <ul>
 <li>RQ分解：将 <span class="math inline">\(3\times 3\)</span>
 矩阵分解为上三角矩阵 * 旋转矩阵
@@ -566,6 +571,138 @@ p}_4]\)</span>，把三维点 <span class="math inline">\(\textbf{X} =
 <span class="math inline">\(\text{K}\)</span> 中的 <span class="math inline">\(s \ne 0\)</span></li>
 </ul></li>
 </ul></li>
+</ul>
+<hr>
+<h3 id="三无穷远摄像机">三、无穷远摄像机</h3>
+<ul>
+<li><p>仿射摄像机：<span class="math inline">\(\text{P}\)</span>
+的最后一行形如 <span class="math inline">\(\textbf{P}^{3T} = (0, 0, 0,
+1)\)</span>，主平面距离距离世界坐标系无穷远（<strong>透视效果随之消失</strong>）</p>
+<ul>
+<li><p>用有限摄像机<strong>模拟</strong>仿射摄像机：<u>不断增加焦距</u>，同时让摄像机远离物体，透视效果便会消失</p>
+<ol type="1">
+<li><p>设初始摄像机矩阵为 <span class="math inline">\(\text{P}_0\)</span>，同<strong>有限摄像机</strong>
+<span class="math display">\[
+\begin{align}
+\text{P}_0 &amp;= \text{KR}[\text{ I } | -\tilde{\textbf{C}} \ ] \\
+&amp;=\text{K}\begin{bmatrix} \textbf{r}^{1T}
+&amp;  -\textbf{r}^{1T}\tilde{\textbf{C}} \\ \textbf{r}^{2T} &amp;
+-\textbf{r}^{2T}\tilde{\textbf{C}} \\ \textbf{r}^{3T} &amp;
+-\textbf{r}^{3T}\tilde{\textbf{C}} \end{bmatrix}
+\end{align}
+\]</span> 其中 <span class="math inline">\(\textbf{r}^{iT}\)</span>
+是旋转矩阵的第 <span class="math inline">\(i\)</span>
+行，是摄像机的定向；设 <span class="math inline">\(d_0 =
+-\textbf{r}^{3T}\tilde{\textbf{C}}\)</span>
+是<u>世界原点</u>到<u>相机中心</u>在主射线方向上的距离</p></li>
+<li><p>设相机在 <span class="math inline">\(t\)</span>
+时间内以单位速度<strong>沿主射线向后移动</strong>：将 <span class="math inline">\(\tilde{\textbf{C}}\)</span> 代替为 <span class="math inline">\(\tilde{\textbf{C}} - t\textbf{r}^3\)</span> 可得到
+<span class="math inline">\(\text{P}_t\)</span> <span class="math display">\[
+\begin{align}
+\text{P}_t = \text{K}\begin{bmatrix} \textbf{r}^{1T}
+&amp;  -\textbf{r}^{1T}\tilde{\textbf{C}} \\ \textbf{r}^{2T} &amp;
+-\textbf{r}^{2T}\tilde{\textbf{C}} \\ \textbf{r}^{3T} &amp;
+-\textbf{r}^{3T}\tilde{\textbf{C}} + t \end{bmatrix}
+\end{align}
+\]</span> 设 <span class="math inline">\(d_t =
+\textbf{r}^{3T}\tilde{\textbf{C}} + t\)</span> 是 <span class="math inline">\(t\)</span>
+时刻<u>世界原点</u>到<u>相机中心</u>在主射线方向上的距离</p></li>
+<li><p>合成追踪变焦不变效果：假定使图像大小保持不变的放大因子是 <span class="math inline">\(k = \dfrac{d_t}{d_0}\)</span> <span class="math display">\[
+\begin{align}
+\text{P}_t = \text{K}\begin{bmatrix} \dfrac{d_t}{d_0} &amp; &amp; \\
+&amp; \dfrac{d_t}{d_0} &amp; \\ &amp; &amp; 1 \end{bmatrix}
+\begin{bmatrix} \textbf{r}^{1T}
+&amp;  -\textbf{r}^{1T}\tilde{\textbf{C}} \\ \textbf{r}^{2T} &amp;
+-\textbf{r}^{2T}\tilde{\textbf{C}} \\ \textbf{r}^{3T} &amp; d_t
+\end{bmatrix} = \dfrac{d_t}{d_0} \text{K} \begin{bmatrix}
+\textbf{r}^{1T} &amp; -\textbf{r}^{1T}\tilde{\textbf{C}} \\
+\textbf{r}^{2T} &amp; -\textbf{r}^{2T}\tilde{\textbf{C}} \\
+\textbf{r}^{3T} \dfrac{d_0}{d_t} &amp; d_0 \end{bmatrix}
+\end{align}
+\]</span> 忽略前面的 <span class="math inline">\(\dfrac{d_t}{d_0}\)</span> 因子，可得到最终的 <span class="math inline">\(\text{P}_t\)</span> 为： <span class="math display">\[
+\begin{align}
+\text{P}_t = \text{K} \begin{bmatrix} \textbf{r}^{1T} &amp;
+-\textbf{r}^{1T}\tilde{\textbf{C}} \\ \textbf{r}^{2T} &amp;
+-\textbf{r}^{2T}\tilde{\textbf{C}} \\ \textbf{r}^{3T} \dfrac{d_0}{d_t}
+&amp; d_0 \end{bmatrix}
+\end{align}
+\]</span> 可验证当 <span class="math inline">\(t = 0\)</span> 时，<span class="math inline">\(\text{P}_t =
+\text{P}_0\)</span>；令相机远离物体无穷远，即 <span class="math inline">\(d_t \rightarrow \infty\)</span> ，可得到 <span class="math inline">\(\text{P}_{\infty}\)</span>： <span class="math display">\[
+\begin{align}
+\text{P}_{\infty} = \lim_{t\rightarrow \infty}\text{P}_t =
+\text{K}\begin{bmatrix} \textbf{r}^{1T} &amp;
+-\textbf{r}^{1T}\tilde{\textbf{C}} \\ \textbf{r}^{2T} &amp;
+-\textbf{r}^{2T}\tilde{\textbf{C}} \\ \textbf{0}^T &amp; d_0
+\end{bmatrix}
+\end{align}
+\]</span> 可见 <span class="math inline">\(\text{P}_{\infty}\)</span>
+的最后一行的前三个元素 = 0；由仿射摄像机定义，<span class="math inline">\(\text{P}_{\infty}\)</span>
+是<u><strong>仿射摄像机</strong></u></p></li>
+</ol></li>
+</ul></li>
+<li><p>仿射摄像机误差：设 <span class="math inline">\(\alpha, \beta \in
+\mathbb{R}\)</span>；由于 <span class="math inline">\(\textbf{r}^{3}\)</span>
+表示相机主轴方向，故在<u>过世界原点</u>并<u>垂直于 <span class="math inline">\(\textbf{r}^3\)</span></u> 的平面上的任何点 <span class="math inline">\(\textbf{X}\)</span> 为 <span class="math display">\[
+\begin{align}
+&amp;\textbf{X} = \begin{bmatrix} \alpha \textbf{r}^1  + \beta
+\textbf{r}^2 \\ 1 \end{bmatrix} \\
+\end{align}
+\]</span> 由于 <span class="math inline">\(\textbf{r}^{3T}(\alpha
+\textbf{r}^1 + \beta \textbf{r}^2) = 0\)</span>，故 <span class="math inline">\(\text{P}_0 \textbf{X} = \text{P}_t\textbf{X} =
+\text{P}_t \textbf{X}\)</span> 恒成立</p>
+<p>假设某个点 <span class="math inline">\(\textbf{X}\)</span>
+距离上述平面距离 <span class="math inline">\(\Delta\)</span>，则点 <span class="math inline">\(\textbf{X}\)</span> 可表示为： <span class="math display">\[
+\begin{align}
+\textbf{X} = \begin{bmatrix} \alpha \textbf{r}^1 + \beta \textbf{r}^2 +
+\Delta \textbf{r}^3 \\ 1 \end{bmatrix}
+\end{align}
+\]</span> 同时被摄像机 <span class="math inline">\(\text{P}_0\)</span>
+和 <span class="math inline">\(\text{P}_{\infty}\)</span>
+分别投影到图像上的点 <span class="math inline">\(\textbf{x}\)</span>：
+<span class="math display">\[
+\begin{align}
+\textbf{x}_{\text{proj}} = \text{P}_0 \textbf{X} =
+\text{K}\begin{bmatrix} \alpha - \textbf{r}^{1T} \tilde{\textbf{C}} \\
+\beta - \textbf{r}^{2T} \tilde{\textbf{C}} \\ d_0 +
+\Delta  \end{bmatrix} = \text{K}\begin{bmatrix} \tilde{x} \\ \tilde{y}
+\\ d_0 + \Delta  \end{bmatrix} \quad \textbf{x}_{\text{affine}} =
+\text{P}_{\infty}\textbf{X} = \text{K}\begin{bmatrix} \alpha -
+\textbf{r}^{1T} \tilde{\textbf{C}} \\ \beta - \textbf{r}^{2T}
+\tilde{\textbf{C}} \\ d_0 \end{bmatrix} = \text{K}\begin{bmatrix}
+\tilde{x} \\ \tilde{y} \\ d_0 \end{bmatrix}
+\end{align}
+\]</span> 设图像平面上的<strong>主点</strong>的<u>非齐次</u>坐标为 <span class="math inline">\(\tilde{\textbf{x}}_0\)</span>，则新的标定矩阵
+<span class="math inline">\(\text{K}\)</span> 和 图像映射点 <span class="math inline">\(\textbf{x}\)</span> 分别为： <span class="math display">\[
+\begin{align}
+&amp;\text{内参矩阵 }\text{K} = \begin{bmatrix} \text{K}_{2\times 2}
+&amp; \tilde{\textbf{x}}_0 \\ \tilde{0}^T &amp; 1 \end{bmatrix}
+\text{（其中 }\text{K}_{2\times 2} \text{ 为上三角方阵）} \\
+&amp;\text{图上映射点 }\textbf{x}_{\text{proj}} = \begin{bmatrix}
+\text{K}_{2\times 2} \tilde{\textbf{x}} + (d_0 +
+\Delta)\tilde{\textbf{x}}_0 \\ d_0 + \Delta \end{bmatrix} =
+\begin{bmatrix} \tilde{\textbf{x}}_{\text{proj}} \\ d_0 + \Delta
+\end{bmatrix} \\ &amp; \qquad \ \ \quad \quad \
+\textbf{x}_{\text{affine}} = \begin{bmatrix} \text{K}_{2\times 2}
+\tilde{\textbf{x}} + d_0\tilde{\textbf{x}}_0 \\
+d_0
+\end{bmatrix} = \begin{bmatrix} \tilde{\textbf{x}}_{\text{affine}} \\
+d_0 \end{bmatrix}
+\end{align}
+\]</span> 消元可得到 <span class="math inline">\(\tilde{\textbf{x}}_{\text{proj}}\)</span> 和 <span class="math inline">\(\tilde{\textbf{x}}_{\text{affine}}\)</span>
+之间的关系： <span class="math display">\[
+\begin{align}
+&amp;\tilde{\textbf{x}}_{\text{affine}} - \tilde{\textbf{x}}_{0} =
+\dfrac{d_0 + \Delta}{d_0} (\tilde{\textbf{x}}_{\text{proj}} -
+\tilde{\textbf{x}}_0) \\
+\end{align}
+\]</span> 上式表明用 <span class="math inline">\(\text{P}_{\infty}\)</span> 近似 <span class="math inline">\(\text{P}_0\)</span> 的效果是：在图像平面上使 <span class="math inline">\(\tilde{\textbf{x}}\)</span> 远离（或靠近）主点
+<span class="math inline">\(\tilde{\textbf{x}}_0\)</span>，移动因子为
+<span class="math inline">\(\dfrac{d_0 + \Delta}{d_0}\)</span></p>
+<blockquote>
+<p><strong>注意</strong>：由上述关系知，若深度起伏 <span class="math inline">\(\Delta\)</span> 相对 初始深度 <span class="math inline">\(d_0\)</span>
+较小，则用仿射摄像机可以较好地逼近真实透视图像</p>
+</blockquote>
+<p><img src="/2024/08/06/machine_vision/camera-geometry/弱透视.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul>
 
                 
