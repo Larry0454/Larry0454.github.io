@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E7%82%B9%E7%9A%84%E6%B7%B1%E5%BA%A6.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E5%BC%B1%E9%80%8F%E8%A7%86.jpg">
 <meta property="article:published_time" content="2024-08-06T02:59:38.000Z">
-<meta property="article:modified_time" content="2024-08-09T10:13:09.209Z">
+<meta property="article:modified_time" content="2024-08-09T14:59:41.330Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          13k words
+          15k words
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          107 mins
+          129 mins
         
       </span>
     
@@ -700,31 +700,115 @@ d_0 \end{bmatrix}
 <span class="math inline">\(\dfrac{d_0 + \Delta}{d_0}\)</span></p>
 <blockquote>
 <p><strong>注意</strong>：由上述关系知，若深度起伏 <span class="math inline">\(\Delta\)</span> 相对 初始深度 <span class="math inline">\(d_0\)</span>
-较小，则用仿射摄像机可以较好地逼近真实的透视图像</p>
+较小，则用仿射摄像机可较好地逼近真实的透视图像</p>
 </blockquote>
 <p><img src="/2024/08/06/machine_vision/camera-geometry/弱透视.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 <li><p>仿射摄像机的分解：仿射摄像机的摄像机矩阵 <span class="math inline">\(\text{P}\)</span> 可表示为： <span class="math display">\[
 \begin{align}
 \text{P}_{\infty} = \begin{bmatrix} \text{K}_{2\times 2} &amp;
-\tilde{\textbf{x}}_0 \\ \hat{\textbf{0}}^t &amp; 1 \end{bmatrix}
+\tilde{\textbf{x}}_0 \\ \hat{\textbf{0}}^T &amp; 1 \end{bmatrix}
 \begin{bmatrix} \hat{\text{R}} &amp; \hat{\textbf{t}} \\ \textbf{0}^T
 &amp; d_0 \end{bmatrix}
 \end{align}
 \]</span> 其中 <span class="math inline">\(\hat{\text{R}}_{2\times
 3}\)</span> 由旋转矩阵的前两行组成，<span class="math inline">\(\hat{\textbf{t}} =
 (-\textbf{r}^{1T}\tilde{\textbf{C}},
--\textbf{r}^{2T}\tilde{\textbf{C}})^T\)</span>；一般令 <span class="math inline">\(\tilde{\textbf{x}}_0 = \textbf{0}\)</span>，并设
+-\textbf{r}^{2T}\tilde{\textbf{C}})^T\)</span>，$ = (0, 0)^T $；令 <span class="math inline">\(\tilde{\textbf{x}}_0 = \textbf{0}\)</span>，并设
 <span class="math inline">\(d_0 = 1\)</span>： <span class="math display">\[
 \text{P}_{\infty} = \begin{bmatrix} \text{K}_{2\times 2} &amp;
-\hat{\textbf{0}} \\ \hat{\textbf{0}}^t &amp; 1 \end{bmatrix}
+\hat{\textbf{0}} \\ \hat{\textbf{0}}^T &amp; 1 \end{bmatrix}
 \begin{bmatrix} \hat{\text{R}} &amp; \hat{\textbf{t}} \\ \textbf{0}^T
 &amp; 1 \end{bmatrix}
-\]</span></p></li>
+\]</span></p>
+<blockquote>
+<p><strong>注意</strong>：</p>
+</blockquote></li>
 <li><p>仿射摄像机的性质：</p>
 <ul>
-<li><u>主平面是无穷远平面</u>的任何射影摄像机都是仿射摄像机</li>
+<li>仿射摄像机的主平面都是无穷远平面，反之同样成立</li>
 <li>世界的平行直线 被投影到 图像中的平行直线（透视性质消失）</li>
 </ul></li>
+</ul>
+<hr>
+<h3 id="四求解摄像机矩阵">四、求解摄像机矩阵</h3>
+<ul>
+<li><p>基于"几何误差"的相机估计：设世界到图像的<strong>测量点对</strong>为
+<span class="math inline">\(\{\textbf{X}_i \leftrightarrow
+\textbf{x}_i\}\)</span>，求解最小化 <span class="math inline">\(\sum_{i}d(\textbf{x}_i,
+\text{P}\textbf{X}_i)^2\)</span> 的 <span class="math inline">\(\text{P}\)</span></p>
+<ul>
+<li><p>所有测量点 <span class="math inline">\(\textbf{X}_i\)</span> 和
+<span class="math inline">\(\textbf{x}_i\)</span> 都没有误差：</p>
+<ol type="1">
+<li><p>找出 <span class="math inline">\(n \ge 6\)</span>
+组由世界到图像的点对 <span class="math inline">\(\textbf{X}_i
+\leftrightarrow \textbf{x}_i\)</span></p>
+<blockquote>
+<p><strong>注意</strong>：之所以要找至少 6 个点对，是因为 <span class="math inline">\(\text{P}\)</span> 共有 12 个元素，抛开缩放因子共有
+11dof，故需要至少 6 个点对解出 <span class="math inline">\(\text{P}\)</span></p>
+</blockquote></li>
+<li><p>使用<strong><u>归一化的DLT算法</u></strong>求解一个 <span class="math inline">\(\text{P}\)</span> 的初始估计 <span class="math inline">\(\tilde{\textbf{P}}\)</span></p>
+<ul>
+<li><p>归一化：用某个<strong>相似变换</strong> <span class="math inline">\(\text{T}\)</span> 归一化图像点，记 <span class="math inline">\(\tilde{\textbf{x}}_i =
+\text{T}\textbf{x}_i\)</span>；用另一个<strong>相似变换</strong> <span class="math inline">\(\text{U}\)</span> 归一化空间点，记 <span class="math inline">\(\tilde{\textbf{X}}_i =
+\text{U}\textbf{X}_i\)</span></p></li>
+<li><p>DLT：将每组 <span class="math inline">\(\tilde{\textbf{X}}_i
+\leftrightarrow \tilde{\textbf{x}}_i\)</span> 对应的方程矩阵 <span class="math inline">\(\text{A}_i\)</span> 拼接成一个大矩阵 <span class="math inline">\(\text{A}_{2n \times 12}\)</span>， <br>记 <span class="math inline">\(\textbf{p}\)</span> 为 <span class="math inline">\(\tilde{\textbf{P}}\)</span> 中元素构成的向量，则
+<span class="math inline">\(\text{A}\textbf{p} = 0\)</span> 的满足 <span class="math inline">\(||\textbf{p}|| = 1\)</span> 的解是 <span class="math inline">\(\text{A}\)</span>
+对应于<u>最小奇异值的单位奇异向量</u> <span class="math display">\[
+\begin{align}
+\text{A}_i\textbf{p} = \begin{bmatrix} \textbf{0}^T &amp; -\omega_i
+\textbf{X}_i^T &amp; y_i\textbf{X}_i^T \\ \omega_i \textbf{X}_i^T &amp;
+\textbf{0}^T &amp; -x_i\textbf{X}_i^T  \end{bmatrix} \begin{bmatrix}
+\textbf{P}_1 \\ \textbf{P}_2 \\ \textbf{P}_3 \end{bmatrix} = 0
+\end{align}
+\]</span></p></li>
+</ul></li>
+<li><p>最小化几何误差：以 <span class="math inline">\(\tilde{\text{P}}\)</span>
+为初始点，用迭代算法最小化几何误差 <span class="math inline">\(\sum_{i}d(\tilde{\textbf{x}}_i,
+\tilde{\text{P}}\tilde{\textbf{X}}_i)^2\)</span></p></li>
+<li><p>解除归一化：把 <span class="math inline">\(\tilde{\text{P}}\)</span> 还原回 <span class="math inline">\(\text{P} = \text{T}^{-1}
+\tilde{\textbf{P}}\text{U}\)</span></p></li>
+</ol></li>
+<li><p>仅三维点 <span class="math inline">\(\textbf{X}_i\)</span>
+有测量误差：几何误差重定义为 <span class="math inline">\(\sum_{i}d(\textbf{X}_i,
+\hat{\textbf{X}}_i)^2\)</span>，其中 <span class="math inline">\(\hat{\textbf{X}}_i\)</span> 是通过 <span class="math inline">\(\text{P}\textbf{X}_i\)</span>
+<strong>准确映射</strong>到 <span class="math inline">\(\textbf{x}_i\)</span> 的最靠近 <span class="math inline">\(\textbf{X}_i\)</span> 的点</p></li>
+<li><p><span class="math inline">\(\textbf{X}_i\)</span> 和 <span class="math inline">\(\textbf{x}_i\)</span>
+都有测量误差：几何误差重定义为 <span class="math inline">\(\sum_{i}d(\textbf{x}_i,
+\text{P}\hat{\textbf{X}}_i)^2 + d(\textbf{X}_i,
+\hat{\textbf{X}}_i)^2\)</span>，需要将所有 <span class="math inline">\(\hat{\textbf{X}}_i\)</span> 添加到参数中</p></li>
+</ul></li>
+<li><p>仿射摄像机的估计：设世界和图像的测量点对为 <span class="math inline">\(\{\textbf{X}_i \leftrightarrow
+\textbf{x}_i\}\)</span>，在 <span class="math inline">\(\textbf{P}^{3T}
+= (0, 0, 0, 1)\)</span> 的条件下最小化 <span class="math inline">\(\sum_{i} d(\textbf{x}_i,
+\text{P}\textbf{X}_i)^2\)</span></p>
+<ol type="1">
+<li><p>找出 <span class="math inline">\(n \ge 4\)</span>
+组由世界到图像的点对 <span class="math inline">\(\textbf{X}_i
+\leftrightarrow \textbf{x}_i\)</span></p></li>
+<li><p>使用归一化的DLT算法求解一个 <span class="math inline">\(\text{P}\)</span> 的初始估计 <span class="math inline">\(\tilde{\textbf{P}}\)</span></p>
+<ul>
+<li><p>归一化：分别用相似变换 <span class="math inline">\(\text{T}\)</span> 和 <span class="math inline">\(\text{U}\)</span> 归一化得到 <span class="math inline">\(\tilde{\textbf{x}}_i\)</span> 和 <span class="math inline">\(\tilde{\textbf{X}}_i\)</span>，最后一个元素都是
+1</p></li>
+<li><p>DLT：简化上面一般形式的方程，将每组对应 <span class="math inline">\(\tilde{\textbf{X}}_i \leftrightarrow
+\tilde{\textbf{x}}_i\)</span> 产生的方程矩阵 <span class="math inline">\(\text{A}_i\)</span> 拼成大矩阵 <span class="math inline">\(\text{A}_{2n\times 8}\)</span> <span class="math display">\[
+\begin{align}
+\text{A}_i \textbf{p} = \begin{bmatrix} \tilde{\textbf{X}}_i^T &amp;
+\textbf{0}^T \\ \textbf{0}^T &amp; \tilde{\textbf{X}}_i^T
+\end{bmatrix}\begin{bmatrix} \tilde{\textbf{P}}^1 \\
+\tilde{\textbf{P}}^2  \end{bmatrix} = \begin{bmatrix} \tilde{x}_i \\
+\tilde{y}_i \end{bmatrix}
+\end{align}
+\]</span></p></li>
+</ul></li>
+<li><p>求解 <span class="math inline">\(\textbf{p} = \text{A}^+
+\textbf{b}\)</span>（"+"指"伪逆"，定义见"射影摄像机"），剩下的第三行
+<span class="math inline">\(\tilde{\textbf{P}}^{3T} = (0, 0, 0,
+1)^T\)</span></p></li>
+<li><p>解除归一化：把 <span class="math inline">\(\tilde{\textbf{P}}\)</span> 还原回 <span class="math inline">\(\textbf{P} =
+\text{T}^{-1}\tilde{\textbf{P}}\text{U}\)</span></p></li>
+</ol></li>
 </ul>
 
                 
