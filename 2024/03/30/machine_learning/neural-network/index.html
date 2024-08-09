@@ -24,9 +24,8 @@
 <meta property="og:description" content="神经网络 一、感知器  感知器的定义：以一个实值向量为输入，计算输入中各分量的线性组合，最后通过激活函数计算输出 感知器的输出计算公式： \[ o(x_1, ..., x_n) &#x3D; \begin{cases} 1 &amp; \omega_0 + \omega_1 x_1 + ... + \omega_n x_n \gt 0 \\ -1 &amp; otherwise \end{">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://larry0454.github.io/2024/03/30/machine_learning/neural-network/BP%E7%AE%97%E6%B3%95.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/03/30/machine_learning/neural-network/Elman%E7%BD%91%E7%BB%9C.png">
 <meta property="article:published_time" content="2024-03-30T00:29:00.000Z">
-<meta property="article:modified_time" content="2024-08-04T08:20:02.015Z">
+<meta property="article:modified_time" content="2024-08-09T09:56:39.944Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary_large_image">
@@ -225,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.8k words
+          5.2k words
         
       </span>
     
@@ -236,7 +235,7 @@
         
         
         
-          57 mins
+          44 mins
         
       </span>
     
@@ -463,94 +462,10 @@ t_{kd}}{\partial x_d^j} - \frac{\partial o_{kd}}{\partial x_d^j})^2]
 <li><p>设置目标值为<strong>交叉熵</strong>：将<strong>离散的分类输出</strong>转化为<strong>连续的概率输出</strong>，交叉熵定义：
 <span class="math display">\[
 -\sum_{d \in D} t_d\log o_d + (1 - t_d)\log(1 - o_d)
-\]</span> 其中<span class="math inline">\(o_d\)</span>表示对样例d输出的<strong>概率估计</strong>，<span class="math inline">\(t_d\)</span>表示训练样例的<strong>目标值</strong></p></li>
-</ul>
-<hr></li>
-<li><p>其它常见神经网络：</p>
-<ul>
-<li><p>RBF网络：单隐层前馈神经网络</p>
-<p>其激活函数：径向基函数，表示样本到数据中心的欧氏距离 <span class="math display">\[
-\rho(x, c_i) = e^{-\beta_i |{|{x - c_i}}|| ^2}
-\]</span> 输出层是隐层神经元输出的线性组合：其中q表示q个输出神经元 <span class="math display">\[
-\Phi(x) = \sum_{i=1}^q \omega_i \rho(x, c_i)
-\]</span></p>
-<hr></li>
-<li><p>ART网络：自适应谐振理论网络，<strong>竞争型学习</strong>的代表</p>
-<ul>
-<li><p>网络组成：比较层、识别层、<strong>识别阈值</strong>、重置模块</p>
-<ul>
-<li><p>比较层：<strong>接收</strong>输入样本，并将其<strong>传递</strong>给识别层神经元</p></li>
-<li><p>识别层：该层的各神经元都拥有其对应模式的<strong>代表向量</strong>，与输入向量距离最近的神经元<strong>获胜</strong>，并抑制其它神经元的激活</p>
-<ul>
-<li>输入向量和获胜单元间距<strong>大于识别阈值</strong>：该输入样本被<strong>归为</strong>代表向量所属类，并<strong>更新连接权</strong>，使得下次接收到<u>类似向量</u>后会计算出<strong>更大的相似度</strong></li>
-<li>输入向量和获胜单元间距<strong>不大于识别阈值</strong>：重置模块在识别层设置<strong>新的神经元</strong>，<u>其代表向量即为当前输入向量</u></li>
-</ul>
-<p><strong>注意</strong>：如果识别阈值较高，就会划分出<strong>更多更精细</strong>的代表向量</p></li>
+\]</span> 其中 <span class="math inline">\(o_d\)</span>
+表示对样例d输出的<strong>概率估计</strong>，<span class="math inline">\(t_d\)</span>
+表示训练样例的<strong>目标值</strong></p></li>
 </ul></li>
-<li><p>“可塑性”和“稳定性”：</p>
-<ul>
-<li><p>“可塑性”指神经网络要拥有<u>学习新知识</u>的能力</p></li>
-<li><p>“稳定性”指神经网络在学习新知识的<u>同时要保持对旧知识的记忆</u></p></li>
-</ul></li>
-</ul>
-<hr></li>
-<li><p>SOM网络：自组织映射网络，竞争型学习的代表</p>
-<ul>
-<li><p>特点：可将高维输入映射到低维（如二维）空间</p>
-<p>同时保证高维空间中<u>相似的样本点</u>映射到输出层中的<u>邻近神经元</u></p></li>
-<li><p>输出层神经元：每个神经元都有一个<strong>权向量</strong>，<u>与输入向量间距最近</u>的神经元称为<strong>最佳匹配单元</strong></p>
-<p>最佳单元邻近的权向量会被调整，使其<strong>周围权向量与输入向量的间距缩小</strong></p></li>
-</ul>
-<hr></li>
-<li><p>级联相关网络：结构自适应网络的重要代表</p>
-<ul>
-<li><p>特点：在训练过程中寻找最符合数据特点的<strong>网络结构</strong></p></li>
-<li><p>级联：网络层次连接的层次结构，在训练的过程中可能会有<strong>新的隐层神经元加入</strong></p></li>
-<li><p>相关：<strong>最大化</strong><u>新神经元的输出</u>与<u>网络误差</u>间的相关性</p>
-<p><strong>注意</strong>：新神经元的<u>输入端权值是固定的</u>，其输出端权重是训练可变的对象</p></li>
-</ul>
-<hr></li>
-<li><p>Elman网络：递归神经网络的代表</p>
-<ul>
-<li><p>递归神经网络：包含<strong>有向环</strong>结构，神经元的输出可反馈作为输入信号，可处理<strong>时序相关</strong>的变化</p>
-<figure style="text-align:center;">
-<p><img src="/2024/03/30/machine_learning/neural-network/Elman网络.png" srcset="/img/loading.gif" lazyload width="30%"></p>
-<figcaption>
-<p>Elman递归网络结构</p>
-</figcaption>
-</figure></li>
-</ul>
-<hr></li>
-<li><p>Boltzmann机：基于能量的模型</p>
-<ul>
-<li><p>结构：由布尔型神经元组成（抑制“0”或激活“1”）；包含“显层”和“隐层”神经元，两层神经元间形成<u>全连接</u></p></li>
-<li><p>状态向量<span class="math inline">\(\vec{s}\)</span>：<span class="math inline">\(\vec{s} \in \{0, 1\}^n\)</span>
-表示n个神经元的状态</p></li>
-<li><p>Boltzmann机能量：设<span class="math inline">\(\omega_{ij}\)</span>表示神经元i和j之间权连接，<span class="math inline">\(\theta_i\)</span>表示神经元i的阈值，n神经元能量：
-<span class="math display">\[
-E(\vec{s}) = -\sum_{i=1}^{n-1} \sum_{j=i+1}^n \omega_{ij} s_i s_j -
-\sum_{i=1}^n \theta_i s_i
-\]</span> 即<u>总能量 = 边权能量 + 节点能量</u></p>
-<p>状态向量<span class="math inline">\(\vec{s}\)</span><strong>出现的概率</strong>仅有其能量和所有可能的状态向量的能量决定：
-<span class="math display">\[
-P(\vec{s}) = \frac{e^{-E(\vec{s})}}{\sum_{\vec{t}}e^{-E(\vec{t})}}
-\]</span></p></li>
-<li><p>训练过程：将每个<u>样本</u>视为一个<u>状态向量</u>，<strong>最大化其出现的概率</strong></p></li>
-<li><p>CD算法：设网络中有d个<u>显层</u>神经元和q个<u>隐层</u>神经元</p>
-<p>令<span class="math inline">\(\vec{v}\)</span>和<span class="math inline">\(\vec{h}\)</span>分别表示显层与隐层的<strong>状态向量</strong>，现根据样本<span class="math inline">\(\vec{v}\)</span>计算隐层概率分布： <span class="math display">\[
-P(\vec{h}|\vec{v}) = \Pi_{i=1}^q P(h_i | \vec{v})
-\]</span> 再根据上述概率分布<strong>采样</strong>得到隐层向量<span class="math inline">\(\vec{h}\)</span>，并<strong>计算</strong>显层概率分布：
-<span class="math display">\[
-P(\vec{v}|\vec{h}) = \Pi_{i=1}^d P(v_i | \vec{h})
-\]</span> 由上述概率分布<strong>采样</strong>得到<span class="math inline">\(\vec{v}&#39;\)</span>，类似地由<span class="math inline">\(\vec{v}&#39;\)</span><strong>计算</strong>获得<span class="math inline">\(\vec{h}&#39;\)</span>，最后<strong>更新连接权重</strong>：
-<span class="math display">\[
-\Delta \omega = \eta (\vec{v} \vec{h}^T - \vec{v}&#39; \vec{h}&#39;^T)
-\]</span></p></li>
-</ul></li>
-</ul></li>
-</ul>
-<hr>
-<ul>
 <li><p>深度学习：一般指<strong>很深层</strong>的神经网络</p>
 <ul>
 <li><p>无监督逐层训练：“预训练 + 微调”：</p>
@@ -562,8 +477,7 @@ P(\vec{v}|\vec{h}) = \Pi_{i=1}^d P(v_i | \vec{h})
 </ol></li>
 <li>微调：预训练全部完成后，对整个网络进行微调</li>
 </ul>
-<p>这种训练方式实际上是从各层<strong>局部最优</strong>出发寻找<strong>全局最优</strong></p>
-<hr></li>
+<p>这种训练方式实际上是从各层<strong>局部最优</strong>出发寻找<strong>全局最优</strong></p></li>
 <li><p>“权共享”策略：让一组神经元共享<u>相同的连接权</u>，在<strong>卷积神经网络</strong>中应用较多</p>
 <ul>
 <li><p>卷积层：包含多个<strong>特征映射</strong>，即神经元组成的平面</p></li>

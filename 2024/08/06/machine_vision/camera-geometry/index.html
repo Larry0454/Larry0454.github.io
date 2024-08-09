@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E7%82%B9%E7%9A%84%E6%B7%B1%E5%BA%A6.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E5%BC%B1%E9%80%8F%E8%A7%86.jpg">
 <meta property="article:published_time" content="2024-08-06T02:59:38.000Z">
-<meta property="article:modified_time" content="2024-08-08T10:22:13.046Z">
+<meta property="article:modified_time" content="2024-08-09T10:13:09.209Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          12k words
+          13k words
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          101 mins
+          107 mins
         
       </span>
     
@@ -434,7 +434,7 @@ m_yp_y \\ &amp; &amp; 1 \end{bmatrix}
 <ul>
 <li><span class="math inline">\(\textbf{p}_1, \textbf{p}_2,
 \textbf{p}_3\)</span> 分别是世界坐标轴 <span class="math inline">\(\text{X}, \text{Y}, \text{Z}\)</span>
-三个轴的在图上的消影点，例如 <span class="math inline">\(\textbf{p}_1 =
+三个轴在图上的消影点，例如 <span class="math inline">\(\textbf{p}_1 =
 \text{P }(1, 0, 0, 0)^T\)</span></li>
 <li><span class="math inline">\(\textbf{p}_4\)</span>
 是世界坐标系原点的图像点</li>
@@ -688,7 +688,7 @@ d_0
 \end{bmatrix} = \begin{bmatrix} \tilde{\textbf{x}}_{\text{affine}} \\
 d_0 \end{bmatrix}
 \end{align}
-\]</span> 消元可得到 <span class="math inline">\(\tilde{\textbf{x}}_{\text{proj}}\)</span> 和 <span class="math inline">\(\tilde{\textbf{x}}_{\text{affine}}\)</span>
+\]</span> 通过消元可得到 <span class="math inline">\(\tilde{\textbf{x}}_{\text{proj}}\)</span> 和 <span class="math inline">\(\tilde{\textbf{x}}_{\text{affine}}\)</span>
 之间的关系： <span class="math display">\[
 \begin{align}
 &amp;\tilde{\textbf{x}}_{\text{affine}} - \tilde{\textbf{x}}_{0} =
@@ -700,9 +700,31 @@ d_0 \end{bmatrix}
 <span class="math inline">\(\dfrac{d_0 + \Delta}{d_0}\)</span></p>
 <blockquote>
 <p><strong>注意</strong>：由上述关系知，若深度起伏 <span class="math inline">\(\Delta\)</span> 相对 初始深度 <span class="math inline">\(d_0\)</span>
-较小，则用仿射摄像机可以较好地逼近真实透视图像</p>
+较小，则用仿射摄像机可以较好地逼近真实的透视图像</p>
 </blockquote>
 <p><img src="/2024/08/06/machine_vision/camera-geometry/弱透视.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>仿射摄像机的分解：仿射摄像机的摄像机矩阵 <span class="math inline">\(\text{P}\)</span> 可表示为： <span class="math display">\[
+\begin{align}
+\text{P}_{\infty} = \begin{bmatrix} \text{K}_{2\times 2} &amp;
+\tilde{\textbf{x}}_0 \\ \hat{\textbf{0}}^t &amp; 1 \end{bmatrix}
+\begin{bmatrix} \hat{\text{R}} &amp; \hat{\textbf{t}} \\ \textbf{0}^T
+&amp; d_0 \end{bmatrix}
+\end{align}
+\]</span> 其中 <span class="math inline">\(\hat{\text{R}}_{2\times
+3}\)</span> 由旋转矩阵的前两行组成，<span class="math inline">\(\hat{\textbf{t}} =
+(-\textbf{r}^{1T}\tilde{\textbf{C}},
+-\textbf{r}^{2T}\tilde{\textbf{C}})^T\)</span>；一般令 <span class="math inline">\(\tilde{\textbf{x}}_0 = \textbf{0}\)</span>，并设
+<span class="math inline">\(d_0 = 1\)</span>： <span class="math display">\[
+\text{P}_{\infty} = \begin{bmatrix} \text{K}_{2\times 2} &amp;
+\hat{\textbf{0}} \\ \hat{\textbf{0}}^t &amp; 1 \end{bmatrix}
+\begin{bmatrix} \hat{\text{R}} &amp; \hat{\textbf{t}} \\ \textbf{0}^T
+&amp; 1 \end{bmatrix}
+\]</span></p></li>
+<li><p>仿射摄像机的性质：</p>
+<ul>
+<li><u>主平面是无穷远平面</u>的任何射影摄像机都是仿射摄像机</li>
+<li>世界的平行直线 被投影到 图像中的平行直线（透视性质消失）</li>
+</ul></li>
 </ul>
 
                 

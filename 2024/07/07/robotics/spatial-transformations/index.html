@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/Delta%E6%9C%BA%E5%99%A8%E4%BA%BA.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/07/07/robotics/spatial-transformations/%E6%97%8B%E8%BD%AC%E7%AE%97%E5%AD%90.png">
 <meta property="article:published_time" content="2024-07-07T14:55:44.000Z">
-<meta property="article:modified_time" content="2024-08-04T13:19:03.921Z">
+<meta property="article:modified_time" content="2024-08-09T10:18:07.632Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="robotics">
 <meta name="twitter:card" content="summary_large_image">
@@ -234,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.2k words
+          8.6k words
         
       </span>
     
@@ -245,7 +245,7 @@
         
         
         
-          69 mins
+          72 mins
         
       </span>
     
@@ -558,13 +558,13 @@ v\)</span>，其中 <span class="math inline">\(\textbf{R}\)</span>
 </ol>
 <p>连续的欧拉角旋转运动可由以下算子描述： <span class="math display">\[
 \begin{align}
-&amp;R(\alpha, \beta, \gamma) = I \text{ Rot}(\hat{z}, \alpha)\text{
-Rot}(\hat{y}, \beta)\text{ Rot}(\hat{x}, \gamma) \\
+&amp;\text{R}(\alpha, \beta, \gamma) = \text{I} \text{ Rot}(\hat{z},
+\alpha)\text{ Rot}(\hat{y}, \beta)\text{ Rot}(\hat{x}, \gamma) \\
 &amp;\text{由于始终是绕刚体附着坐标系旋转，故旋转算子都是}\textbf{右乘}
 \end{align}
 \]</span></p>
 <blockquote>
-<p><strong>注意</strong>：给定任意旋转矩阵 <span class="math inline">\(R\)</span>，总存在一组参数 <span class="math inline">\((\alpha, \beta, \gamma)\)</span> 满足上式；"ZYX"
+<p><strong>注意</strong>：给定任意旋转矩阵 <span class="math inline">\(\text{R}\)</span>，总存在一组参数 <span class="math inline">\((\alpha, \beta, \gamma)\)</span> 满足上式；"ZYX"
 表示旋转轴顺序</p>
 </blockquote></li>
 <li><p>RPY角：相较于欧拉角，RPY角总是围绕<u><strong>固定坐标系转动</strong></u>；令刚体
@@ -579,16 +579,16 @@ Rot}(\hat{y}, \beta)\text{ Rot}(\hat{x}, \gamma) \\
 </ol>
 <p>连续的RPY角旋转运动可由以下算子描述： <span class="math display">\[
 \begin{align}
-&amp;R(\alpha, \beta, \gamma) = \text{Rot}(\hat{z}, \alpha)\text{
-Rot}(\hat{y}, \beta)\text{ Rot}(\hat{x}, \gamma) \text{ }I \\
+&amp;\text{R}(\alpha, \beta, \gamma) = \text{Rot}(\hat{z}, \alpha)\text{
+Rot}(\hat{y}, \beta)\text{ Rot}(\hat{x}, \gamma) \text{ }\text{I} \\
 &amp;\text{由于始终是围绕固定坐标系旋转，故旋转算子都是}\textbf{左乘}
 \end{align}
 \]</span></p>
 <blockquote>
 <p><strong>注意</strong>：RPY角通常用来描述飞机（或船）的转动，<span class="math inline">\(\hat{x}\)</span> 沿飞行方向、<span class="math inline">\(\hat{y}\)</span> 沿翼展方向、<span class="math inline">\(\hat{z}\)</span> 沿垂直指向地面方向</p>
 </blockquote></li>
-<li><p>单位四元数：设 <span class="math inline">\(R(\hat{\omega},
-\theta) \in SO(3)\)</span> 是旋转矩阵，则与 <span class="math inline">\(R\)</span> 对应的单位四元数 <span class="math inline">\(q \in \mathbb{R}^4\)</span> 定义为： <span class="math display">\[
+<li><p>单位四元数：设 <span class="math inline">\(\text{R}(\hat{\omega},
+\theta) \in SO(3)\)</span> 是旋转矩阵，则与 <span class="math inline">\(\text{R}\)</span> 对应的单位四元数 <span class="math inline">\(q \in \mathbb{R}^4\)</span> 定义为： <span class="math display">\[
 \begin{align}
 q = \begin{bmatrix} q_0 \\ q_1 \\ q_2 \\ q_3 \end{bmatrix} =
 \begin{bmatrix} \cos{(\dfrac{\theta}{2})} \\
@@ -613,57 +613,61 @@ q = \begin{bmatrix} q_0 \\ q_1 \\ q_2 \\ q_3 \end{bmatrix} =
 旋转矩阵：设 <span class="math inline">\(q = (q_0, q_1, q_2,
 q_3)\)</span>，<span class="math inline">\(R\)</span> 表示绕朝 <span class="math inline">\((q_1, q_2, q_3)\)</span> 的单位轴旋转 <span class="math inline">\(2\cos^{-1} q_0\)</span> 角度</li>
 </ul></li>
-<li><p>单位四元数 和 旋转矩阵乘积：设 <span class="math inline">\(R_q,
-R_p\)</span> 分别表示两个旋转矩阵，对应四元数分别为 <span class="math inline">\(q, p\)</span></p>
+<li><p>单位四元数 和 旋转矩阵乘积：设 <span class="math inline">\(\text{R}_q, \text{R}_p\)</span>
+分别表示两个旋转矩阵，对应四元数分别为 <span class="math inline">\(q,
+p\)</span></p>
 <ol type="1">
 <li><p>将 <span class="math inline">\(q, p\)</span>
 分别写成<strong>复数矩阵</strong>形式： <span class="math display">\[
   Q = \begin{bmatrix} q_0 + iq_1 &amp; q_2 + iq_3 \\ -q_2 + iq_3 &amp;
 q_0 - iq_1 \end{bmatrix} \quad P = \begin{bmatrix} p_0 + ip_1 &amp; p_2
 + ip_3 \\ -p_2 + ip_3 &amp; p_0 - ip_1 \end{bmatrix}
-  \]</span></p></li>
+\]</span></p></li>
 <li><p>令 <span class="math inline">\(N = QP\)</span>，记 <span class="math inline">\(N\)</span> 为： <span class="math display">\[
   N = \begin{bmatrix} n_0 + in_1 &amp; n_2 + in_3 \\ -n_2 + in_3 &amp;
 n_0 - in_1 \end{bmatrix}
-  \]</span></p></li>
-<li><p>矩阵乘积 <span class="math inline">\(R_qR_p\)</span>
-对应的单位四元数即为 <span class="math inline">\((n_0, n_1, n_2,
-n_3)\)</span></p></li>
+\]</span></p></li>
+<li><p>矩阵乘积 <span class="math inline">\(\text{R}_q\text{R}_p\)</span> 对应的单位四元数即为
+<span class="math inline">\((n_0, n_1, n_2, n_3)\)</span></p></li>
 </ol></li>
 </ul></li>
 </ul>
 <hr>
 <h3 id="四刚体的一般运动">四、刚体的一般运动</h3>
 <ul>
-<li><p>齐次变换矩阵：又称<strong>刚体运动群</strong>，是所有 <span class="math inline">\(4 \times 4\)</span> 的实矩阵 <span class="math inline">\(T\)</span> 的集合： <span class="math display">\[T
-= \begin{bmatrix} R &amp; p \\ 0 &amp; 1 \end{bmatrix} = \begin{bmatrix}
-r_{11} &amp; r_{12} &amp; r_{13} &amp; p_1 \\ r_{21} &amp; r_{22} &amp;
-r_{23} &amp; p_2 \\ r_{13} &amp; r_{23} &amp; r_{33} &amp; p_3 \\ 0
-&amp;  0 &amp;0 &amp; 1 \end{bmatrix}\]</span></p>
+<li><p>齐次变换矩阵：又称<strong>刚体运动群</strong>，是所有 <span class="math inline">\(4 \times 4\)</span> 的实矩阵 <span class="math inline">\(\text{T}\)</span> 的集合： <span class="math display">\[\text{T} = \begin{bmatrix} \text{R} &amp; p \\ 0
+&amp; 1 \end{bmatrix} = \begin{bmatrix} r_{11} &amp; r_{12} &amp; r_{13}
+&amp; p_1 \\ r_{21} &amp; r_{22} &amp; r_{23} &amp; p_2 \\ r_{13} &amp;
+r_{23} &amp; r_{33} &amp; p_3 \\ 0 &amp;  0 &amp;0 &amp; 1
+\end{bmatrix}\]</span></p>
 <blockquote>
-<p><strong>注意</strong>：<span class="math inline">\(R\)</span>
+<p><strong>注意</strong>：<span class="math inline">\(\text{R}\)</span>
 是旋转矩阵，描述 {b} 相对 {s} 的姿态；<span class="math inline">\(p \in
 \mathbb{R}^3\)</span> 是 {b}原点 在 {s} 中的坐标</p>
 </blockquote>
 <ul>
 <li><p>齐次变换矩阵的性质：</p>
 <ul>
-<li><span class="math inline">\(T^{-1}\)</span> 也是齐次变换矩阵，<span class="math display">\[T^{-1} = \begin{bmatrix} R^T &amp; -R^Tp \\ 0
-&amp; 1 \\ \end{bmatrix}\]</span></li>
+<li><span class="math inline">\(\text{T}^{-1}\)</span>
+也是齐次变换矩阵，<span class="math display">\[\text{T}^{-1} =
+\begin{bmatrix} \text{R}^T &amp; -\text{R}^Tp \\ 0 &amp; 1 \\
+\end{bmatrix}\]</span></li>
 <li>两个齐次变换矩阵的乘积也是齐次变换矩阵</li>
-<li>满足乘法结合律 <span class="math inline">\((T_1T_2)T_3 =
-T_1(T_2T_3)\)</span>，但一般不满足交换律 <span class="math inline">\(T_1T_2 \ne T_2T_1\)</span></li>
+<li>满足乘法结合律 <span class="math inline">\((\text{T}_1\text{T}_2)\text{T}_3 =
+\text{T}_1(\text{T}_2\text{T}_3)\)</span>，但一般不满足交换律 <span class="math inline">\(\text{T}_1\text{T}_2 \ne
+\text{T}_2\text{T}_1\)</span></li>
 </ul></li>
 <li><p>齐次变换的性质：设 <span class="math inline">\(x, y \in
-\mathbb{R}^3\)</span>，用 <span class="math inline">\((R, p)\)</span>
-表示 <span class="math inline">\(T\)</span>，用 <span class="math inline">\(Rx + p\)</span> 表示 <span class="math inline">\(Tx\)</span></p>
+\mathbb{R}^3\)</span>，用 <span class="math inline">\((\text{R},
+p)\)</span> 表示 <span class="math inline">\(\text{T}\)</span>，用 <span class="math inline">\(\text{R}x + p\)</span> 表示 <span class="math inline">\(\text{T}x\)</span></p>
 <ul>
-<li>保等距性：<span class="math inline">\(||Tx - Ty|| = ||x -
-y||\)</span>，其中 <span class="math inline">\(||\cdot||\)</span> 表示
-<span class="math inline">\(\mathbb{R}^3\)</span> 中的标准范数</li>
+<li>保等距性：<span class="math inline">\(||\text{T}x - \text{T}y|| =
+||x - y||\)</span>，其中 <span class="math inline">\(||\cdot||\)</span>
+表示 <span class="math inline">\(\mathbb{R}^3\)</span> 中的标准范数</li>
 <li>保角性：对 <span class="math inline">\(\forall z \in
-\mathbb{R}^3\)</span>，都有 <span class="math inline">\(&lt;Tx-Tz,
-Ty-Tz&gt; = &lt;x-z, y-z&gt;\)</span>，<span class="math inline">\(&lt;\cdot, \cdot&gt;\)</span> 表示 <span class="math inline">\(\mathbb{R}^3\)</span> 中的标准内积</li>
+\mathbb{R}^3\)</span>，都有 <span class="math inline">\(&lt;\text{T}x-\text{T}z, Ty-Tz&gt; = &lt;x-z,
+y-z&gt;\)</span>，<span class="math inline">\(&lt;\cdot,
+\cdot&gt;\)</span> 表示 <span class="math inline">\(\mathbb{R}^3\)</span> 中的标准内积</li>
 </ul>
 <blockquote>
 <p><strong>注意</strong>：三角形(x, y, z)和变换后的新三角形(Tx, Ty,
@@ -672,18 +676,18 @@ Tz)是<strong><u>全等</u></strong>的，即刚体运动</p>
 </ul></li>
 <li><p>齐次变换矩阵的用途：</p>
 <ul>
-<li><p>表示位形：<span class="math inline">\(T_{ab} \leftarrow (R_{ab},
-p_{ab})\)</span>，其中 <span class="math inline">\(R_{ab}\)</span> 表示
-{b} 相对 {a} 的位姿，<span class="math inline">\(p_{ab}\)</span> 表示
-{b}原点 在 {a} 中的坐标<br></p>
+<li><p>表示位形：<span class="math inline">\(\text{T}_{ab} \leftarrow
+(\text{R}_{ab}, p_{ab})\)</span>，其中 <span class="math inline">\(\text{R}_{ab}\)</span> 表示 {b} 相对 {a}
+的位姿，<span class="math inline">\(p_{ab}\)</span> 表示 {b}原点 在 {a}
+中的坐标<br></p>
 <blockquote>
-<p><strong>注意</strong>：对于任意两个坐标系 {a} 和 {b}，总有 <span class="math inline">\(T_{ab} = T_{ba}^{-1}\)</span></p>
+<p><strong>注意</strong>：对于任意两个坐标系 {a} 和 {b}，总有 <span class="math inline">\(\text{T}_{ab} = \text{T}_{ba}^{-1}\)</span></p>
 </blockquote></li>
 <li><p>改变参考坐标系：类似于旋转运动中的<u>下角标相消</u>原则</p>
 <ul>
-<li><span class="math inline">\(T_{a\mathbf{b}}T_{\mathbf{b}c} =
-T_{ac}\)</span>，相当于把 {c} 在 {b} 中的位形转移到 {a}</li>
-<li><span class="math inline">\(T_{a\mathbf{b}} v_{\mathbf{b}} =
+<li><span class="math inline">\(\text{T}_{a\mathbf{b}}\text{T}_{\mathbf{b}c} =
+\text{T}_{ac}\)</span>，相当于把 {c} 在 {b} 中的位形转移到 {a}</li>
+<li><span class="math inline">\(\text{T}_{a\mathbf{b}} v_{\mathbf{b}} =
 v_{a}\)</span>，其中 <span class="math inline">\(v_b\)</span>
 指向量<span class="math inline">\(v\)</span>在{b}中的表达，<span class="math inline">\(v_a\)</span> 指向量<span class="math inline">\(v\)</span>在{a}中的表达</li>
 </ul></li>
@@ -697,14 +701,15 @@ v_{a}\)</span>，其中 <span class="math inline">\(v_b\)</span>
 p_y \\ 0 &amp; 0 &amp; 1 &amp; p_z \\ 0 &amp; 0 &amp; 0 &amp;  1
 \end{bmatrix}\]</span></p></li>
 <li><p>{b} 先相对 {s} 的 轴 <span class="math inline">\(\hat{\omega}\)</span> 旋转 <span class="math inline">\(\theta\)</span>，再相对 {s} 移动 <span class="math inline">\(p\)</span>：（"先转再移"左乘）</p>
-<p><span class="math display">\[T_{sb&#39;} = TT_{sb} =
-\textbf{Trans}(p) \textbf{Rot}(\hat{\omega}, \theta)T_{sb} \\ =
-\begin{bmatrix} RR_{sb} &amp; R p_{sb} + p \\ 0 &amp; 1
-\end{bmatrix}\]</span></p></li>
+<p><span class="math display">\[\text{T}_{sb&#39;} =
+\text{T}\text{T}_{sb} = \textbf{Trans}(p) \textbf{Rot}(\hat{\omega},
+\theta)\text{T}_{sb} \\ = \begin{bmatrix} \text{R}\text{R}_{sb} &amp;
+\text{R} p_{sb} + p \\ 0 &amp; 1 \end{bmatrix}\]</span></p></li>
 <li><p>{b} 先相对自身移动 <span class="math inline">\(p\)</span>，再相对移动后坐标系的轴 <span class="math inline">\(\hat{\omega}\)</span> 转动：（"先移再转"右乘）</p>
-<p><span class="math display">\[T_{sb&#39;} = T_{sb}T =
-T_{sb}\textbf{Trans}(p) \textbf{Rot}(\hat{\omega}, \theta) \\ =
-\begin{bmatrix} R_{sb}R &amp; R_{sb}p + p_{sb} \\ 0 &amp;
+<p><span class="math display">\[\text{T}_{sb&#39;} =
+\text{T}_{sb}\text{T} = \text{T}_{sb}\textbf{Trans}(p)
+\textbf{Rot}(\hat{\omega}, \theta) \\ = \begin{bmatrix}
+\text{R}_{sb}\text{R} &amp; \text{R}_{sb}p + p_{sb} \\ 0 &amp;
 1  \end{bmatrix}\]</span></p></li>
 </ul></li>
 <li><p>移动向量：<span class="math inline">\(v&#39; = \textbf{R}v +
