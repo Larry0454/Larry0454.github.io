@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://larry0454.github.io/2024/03/30/machine_learning/neural-network/BP%E7%AE%97%E6%B3%95.png">
 <meta property="article:published_time" content="2024-03-30T00:29:00.000Z">
-<meta property="article:modified_time" content="2024-08-09T09:56:39.944Z">
+<meta property="article:modified_time" content="2024-08-10T03:14:12.631Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary_large_image">
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.2k words
+          4.9k words
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          44 mins
+          42 mins
         
       </span>
     
@@ -433,15 +433,6 @@ net_k}{\partial o_j} \frac{\partial o_j}{\partial net_j}) \\
 <li><p>以<strong>多组不同初始权重</strong>训练神经网络，取其中误差E最小的参数训练结果作为最终参数（相当于从<u>多个初始点</u>开始搜索）</p></li>
 <li><p>使用“模拟退火”技术：模拟退火的每一步迭代都以<strong>一定概率</strong>接受比当前解更差的结果，从而有概率跳出局部极小值</p></li>
 </ul></li>
-</ul>
-<hr></li>
-<li><p>前馈网络的表征能力：</p>
-<ul>
-<li><p>布尔函数：任何布尔函数都可由<strong>两层网络</strong>准确表示</p>
-<p>对<u>每种可能的输入向量</u>，创建不同的隐藏神经元，设置其权值使得<strong>仅当对应的向量输入才能激活它</strong></p>
-<p>再将输出单元设置为一个<strong>仅可由期待的输入向量</strong>激活的<strong>或门</strong></p></li>
-<li><p>连续函数：每个有界的连续函数可由<strong>两层网络</strong>以<u>任意小的误差</u>逼近；隐藏层使用sigmoid函数，输出层使用（非阈值）线性单元</p></li>
-<li><p>任意函数：任意函数可被<strong>三层网络</strong>以<u>任意精度</u>逼近；两个隐藏层使用sigmoid函数，输出层使用（非阈值）线性单元</p></li>
 </ul></li>
 </ul>
 <hr>

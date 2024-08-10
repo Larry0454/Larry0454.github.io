@@ -29,8 +29,10 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E8%A1%8C%E5%90%91%E9%87%8F.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E7%82%B9%E7%9A%84%E6%B7%B1%E5%BA%A6.jpg">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E5%BC%B1%E9%80%8F%E8%A7%86.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E5%AF%B9%E5%B9%B3%E9%9D%A2%E7%9A%84%E4%BD%9C%E7%94%A8.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/06/machine_vision/camera-geometry/%E5%AF%B9%E7%9B%B4%E7%BA%BF%E7%9A%84%E4%BD%9C%E7%94%A8.jpg">
 <meta property="article:published_time" content="2024-08-06T02:59:38.000Z">
-<meta property="article:modified_time" content="2024-08-09T15:09:03.201Z">
+<meta property="article:modified_time" content="2024-08-10T03:15:04.726Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine vision">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          15k words
+          17k words
         
       </span>
     
@@ -240,7 +242,7 @@
         
         
         
-          129 mins
+          143 mins
         
       </span>
     
@@ -809,6 +811,73 @@ d_0 \end{bmatrix}
 <li><p>解除归一化：把 <span class="math inline">\(\tilde{\textbf{P}}\)</span> 还原回 <span class="math inline">\(\textbf{P} =
 \text{T}^{-1}\tilde{\textbf{P}}\text{U}\)</span></p></li>
 </ol></li>
+<li><p>径向失真：随着焦距减小，图像线条出现<strong>弯曲</strong>失真</p>
+<ul>
+<li><p>径向失真模型：设 <span class="math inline">\((\tilde{\textbf{x}},
+\tilde{\textbf{y}})\)</span> 是理想图像的位置（遵循线性投影），<span class="math inline">\((x_d, y_d)\)</span> 是径向失真后的实际图像位置
+<span class="math display">\[
+\begin{align}
+\begin{bmatrix} x_d \\ y_d \end{bmatrix} = L(\tilde{r})\begin{bmatrix}
+\tilde{x} \\ \tilde{y}  \end{bmatrix}
+\end{align}
+\]</span> 其中半径 <span class="math inline">\(\tilde{r}\)</span>
+表示到径向失真中心的距离，<span class="math inline">\(L(\tilde{r})\)</span> 是仅关于 <span class="math inline">\(\tilde{r}\)</span> 的函数</p></li>
+<li><p>失真矫正：在<strong><u>像素</u>坐标系</strong>中，设 <span class="math inline">\((x, y)\)</span> 是测量坐标，<span class="math inline">\((\hat{x}, \hat{y})\)</span> 是矫正后的坐标，<span class="math inline">\((x_c, y_c)\)</span> 是径向失真中心，则矫正方程为：
+<span class="math display">\[
+\begin{align}
+&amp;\hat{x} = x_c + L(r)(x - x_c) \\
+&amp;\hat{y} = y_c + L(r)(y - y_c) \\
+\end{align}
+\]</span></p>
+<ul>
+<li><p>失真中心：一般设置为相机<u><strong>主点</strong></u></p></li>
+<li><p>失真函数：一般通过迭代优化的方式确定</p>
+<ul>
+<li>待优化参数：失真参数 <span class="math inline">\(\mathcal{K}_i\)</span> 和 失真中心 <span class="math inline">\((x_c, y_c)\)</span></li>
+<li>优化目标：世界场景<strong>直线</strong>的图像尽量是<strong>直线</strong>，比如最小化
+<u>两像点直连线</u> 和 <u>两像中心</u> 之间的距离</li>
+</ul>
+<p>这样可得到 Taylor 展开形式的失真函数 <span class="math inline">\(L(r)
+= 1 + \sum_{i}^N \mathcal{K}_i r^i\)</span>，且仅当 <span class="math inline">\(r &gt; 0\)</span> 时 <span class="math inline">\(L(r)\)</span> 有定义</p></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="五单视图几何">五、单视图几何</h3>
+<ul>
+<li><p>射影摄像机对几何体的作用：</p>
+<ul>
+<li><p>对平面的作用：若选择世界坐标系下的<strong>XY平面</strong>为世界平面<span class="math inline">\(\pi\)</span>，则<span class="math inline">\(\pi\)</span>上点的图像为： <span class="math display">\[
+\textbf{x} = \text{P}\textbf{X} = [\textbf{p}_1, \textbf{p}_2,
+\textbf{p}_3, \textbf{p}_4]\begin{bmatrix} \text{X} \\ \text{Y} \\ 0 \\
+1 \end{bmatrix} = [\textbf{p}_1, \textbf{p}_2, \textbf{p}_4]
+\begin{bmatrix}\text{X} \\ \text{Y} \\ 1  \end{bmatrix}
+\]</span> 故映射 <span class="math inline">\(\textbf{X}_{\pi}
+\rightarrow \textbf{x}\)</span> 是一个平面<strong>射影变换</strong>
+<span class="math inline">\(\textbf{x} =
+\text{H}_{3\times3}\textbf{X}_{\pi}\)</span>，其中 <span class="math inline">\(\text{H}\)</span> 是满秩的</p>
+<p>对标定摄像机 <span class="math inline">\(\text{P} = \text{K}[\text{ R
+}|\textbf{ t }]\)</span>，世界平面 <span class="math inline">\(\text{Z}
+= 0\)</span> 到图像之间的单应是 <span class="math inline">\(\text{H} =
+\text{K}[\textbf{r}_1, \textbf{r}_2, \textbf{t}]\)</span></p>
+<blockquote>
+<p><strong>注意</strong>：由于能<u>任选世界坐标系</u>，故总是可以把世界场景中的任意平面设在
+<span class="math inline">\(\text{Z} = 0\)</span> 处</p>
+</blockquote>
+<p><img src="/2024/08/06/machine_vision/camera-geometry/对平面的作用.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>对直线的作用：</p>
+<ul>
+<li><p>正向投影：设世界直线为 <span class="math inline">\(\textbf{AB}\)</span>，其对应图像为 <span class="math inline">\(\textbf{ab}\)</span>，则投影到直线 <span class="math inline">\(\textbf{ab}\)</span> 上的点 <span class="math inline">\(\textbf{x}(\mu)\)</span> 满足 <span class="math display">\[
+\begin{align}
+\textbf{x}(\mu) &amp;= \text{P}(\textbf{A} + \mu \textbf{B}) =
+\text{P}\textbf{A} + \mu\text{P}\textbf{B} \\
+&amp;= \textbf{a} + \mu \textbf{b}
+\end{align}
+\]</span></p></li>
+<li><p>反向投影：经过摄像机 <span class="math inline">\(\text{P}\)</span> 映射成一条图像直线 <span class="math inline">\(\textbf{I}\)</span> 的世界空间点集合为平面 <span class="math inline">\(\text{P}^T \textbf{I}\)</span></p></li>
+</ul>
+<p><img src="/2024/08/06/machine_vision/camera-geometry/对直线的作用.jpg" srcset="/img/loading.gif" lazyload width="40%"></p></li>
+</ul></li>
 </ul>
 
                 
