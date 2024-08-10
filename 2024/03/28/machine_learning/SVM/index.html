@@ -24,7 +24,7 @@
 <meta property="og:description" content="支持向量机 一、支持向量  超平面：设训练样本集\(D &#x3D; \{(x_1, y_1), ..., (x_m, y_m\}\)，其中\(y_i \in \{-1, +1\}\) 超平面可将二分类样本集D划分为两部分，实现正确分类 支持向量与二分类：设超平面为\(\omega^T x + b &#x3D; 0\)，其中\(\omega &#x3D; (\omega_1; \omega_2; ...; \">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-03-28T00:30:05.000Z">
-<meta property="article:modified_time" content="2024-07-22T05:26:11.270Z">
+<meta property="article:modified_time" content="2024-08-10T09:34:52.319Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary_large_image">
@@ -322,28 +322,25 @@ D\)</span>，通过以下方式实现分类： <span class="math display">\[
 \omega^T x + b\)</span>，SVM基本型的拉格朗日函数可以写成： <span class="math display">\[
 L(\omega, b,  \alpha) = \frac{1}{2} |{|{\omega}||}^2 + \sum_{i=1}^m
 \alpha_i(1 - y_i(\omega^Tx_i + b))
-\]</span> 其中每个约束的拉格朗日乘子<span class="math inline">\(\alpha_i
-\ge 0\)</span>，<u>令L对<span class="math inline">\(\omega\)</span>和b的偏导为0</u>： <span class="math display">\[
+\]</span> 其中每个约束的拉格朗日乘子 <span class="math inline">\(\alpha_i \ge 0\)</span>，<strong>令L对<span class="math inline">\(\omega\)</span>和b的偏导为0</strong>： <span class="math display">\[
 \begin{align}
 \omega &amp;= \sum_{i=1}^m \alpha_i y_i x_i \\
 0 &amp;= \sum_{i=1}^m \alpha_i y_i
 \end{align}
 \]</span> 将上式代入拉格朗日函数得到<strong>对偶函数</strong>： <span class="math display">\[
-  \underset{\omega, b}{inf} L(\omega, b, \alpha) = \sum_{i=1}^m \alpha_i
-- \frac{1}{2} \sum_{i=1}^m \sum_{j=1}^m \alpha_i \alpha_j y_i y_j x_i^T
-x_j \\ \\
+  \underset{\omega, b}{\text{inf }} L(\omega, b, \alpha) = \sum_{i=1}^m
+\alpha_i - \frac{1}{2} \sum_{i=1}^m \sum_{j=1}^m \alpha_i \alpha_j y_i
+y_j x_i^T x_j \\ \\
   \]</span></p>
 <p>SVM基本型的<strong>对偶问题</strong>（即求解SVM基本型的<strong>最优下界</strong>）：
 <span class="math display">\[
   \begin{align}
-  &amp; \underset{\alpha}{max} \quad \underset{\omega, b}{\text{inf}}
+  &amp; \underset{\alpha}{\max} \quad \underset{\omega, b}{\text{inf}}
 \quad L(\omega, b, \alpha) \\
-  &amp; s.t. \quad \sum_{i=1}^m \alpha_i y_i = 0 \\
+  &amp; \text{s.t.} \quad \sum_{i=1}^m \alpha_i y_i = 0 \\
   &amp; \quad \quad \quad \alpha_i \ge 0
   \end{align}
-  \]</span> <strong>注意</strong>：由约束条件，总有$inf L(, b, ) L(, b,
-) ^2 $</p>
-<p>求解对偶问题得到<span class="math inline">\(\alpha\)</span>，再根据<span class="math inline">\(\alpha\)</span>解出<span class="math inline">\(\omega\)</span>与b，最终获得划分超平面 <span class="math inline">\(f(x) = \sum_{i=1}^m \alpha_i y_i x_i^Tx +
+  \]</span> 求解对偶问题得到<span class="math inline">\(\alpha\)</span>，再根据<span class="math inline">\(\alpha\)</span>解出<span class="math inline">\(\omega\)</span>与b，最终获得划分超平面 <span class="math inline">\(f(x) = \sum_{i=1}^m \alpha_i y_i x_i^Tx +
 b\)</span></p></li>
 </ul>
 <hr>
@@ -370,7 +367,7 @@ x_i^Tx_j\)</span></li>
 - x_j}||}^2}{2\sigma^2}}\)</span>，其中<span class="math inline">\(\sigma \gt 0\)</span>为高斯核<u>带宽</u></li>
 <li>拉普拉斯核：<span class="math inline">\(k(x_i, x_j) =
 e^{-|{|NaN||^2}{\sigma}}\)</span>，其中<span class="math inline">\(\sigma \gt 0\)</span></li>
-<li>Sigmoid核：<span class="math inline">\(k(x_i, x_j) = tanh(\beta
+<li>Sigmoid核：<span class="math inline">\(k(x_i, x_j) = \tanh(\beta
 x_i^Tx_j + \theta)\)</span>，其中<span class="math inline">\(\beta &gt;
 0\)</span>，<span class="math inline">\(\theta \lt 0\)</span></li>
 </ol>

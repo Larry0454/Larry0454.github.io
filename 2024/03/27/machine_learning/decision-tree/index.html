@@ -24,7 +24,7 @@
 <meta property="og:description" content="决策树 一、决策树流程  决策树结构：一个根节点、若干个内部节点、若干个叶节点  根节点：包含样本全集 内部节点：一个内部节点对应于一个属性测试，其包含的样本集根据属性测试的结果被划分到子节点中 叶子节点：一个叶子节点对应于一个决策结果  决策树学习算法：“分治思想”，每个样例有其对应的属性值（即类别）  12345678910111213141516171819202122">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-03-27T00:25:50.000Z">
-<meta property="article:modified_time" content="2024-07-22T05:25:33.422Z">
+<meta property="article:modified_time" content="2024-08-10T09:33:07.899Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary_large_image">
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.9k words
+          4.1k words
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          33 mins
+          34 mins
         
       </span>
     
@@ -302,26 +302,27 @@
 <li><p>决策树学习算法中的关键在于选择<strong>最优划分属性</strong>，以提高分支节点所包含的样本类别<strong>纯度</strong></p></li>
 <li><p>信息熵：度量样本集合<strong>纯度</strong>的常用指标，设样本集合D中<strong>第k类</strong>(<span class="math inline">\(1 \le k \le
 m\)</span>)样本所占<strong>比例</strong>为<span class="math inline">\(p_k\)</span>，则D的信息熵： <span class="math display">\[
-Ent(D) = -\sum_{k=1}^ m p_klog_{2}p_k
-\]</span> 信息熵Ent(D)的值越小，则D的纯度越高（对于二分类m=2）</p></li>
+\text{Ent}(D) = -\sum_{k=1}^ m p_k\log_{2}p_k
+\]</span> 信息熵<span class="math inline">\(\text{Ent}(D)\)</span>的值越小，则D的纯度越高（对于二分类m=2）</p></li>
 <li><p>信息增益：描述某属性的划分纯度，设离散属性a有V个可能的取值<span class="math inline">\(\{a^1, a^2, ..., a^V\}\)</span></p>
 <p><br>属性a可以将样本D划分为V个分支节点：第v个子节点包含了D在属性a上<strong>取值为<span class="math inline">\(a^v\)</span></strong>的样本集合<span class="math inline">\(D_v\)</span>，信息增益有如下式子计算： <span class="math display">\[
-Gain(D, a) = Ent(D) - \sum_{v=1}^V\frac{|{D^v}|}{|{D}|}Ent(D^v)
+\text{Gain}(D, a) = \text{Ent}(D) -
+\sum_{v=1}^V\frac{|{D^v}|}{|{D}|}\text{Ent}(D^v)
 \]</span>
 上式中第一项是划分前的熵，第二项是<strong>划分后</strong>的熵期望（各子集熵的加权和）</p></li>
 <li><p>划分流程：算出当前节点样本集的<strong>信息熵</strong>，再算出当前节点样本集在<u>各属性下</u>的<strong>信息增益</strong></p></li>
 <li><p>增益率：上面的<u>信息增益准则</u>可能对<strong>取值数目较多</strong>（V较大）的属性有所偏好，需要对信息增益准则做调整，引入<strong>增益率</strong>的概念：
 <span class="math display">\[
-Gain\_ratio(D, a) = \frac{Gain(D, a)}{IV(a)} \\
-IV(a) = -\sum_{v=1}^V\frac{|{D^v}|}{|{D}|}log_2{\frac{|{D^v}|}{|{D}|}}
-\]</span>
-其中IV(a)代表属性a的<strong>固有值</strong>：属性a的取值数目越多（V越大），则IV(a)通常越大（分的越散），能够<strong>对信息增益Gain(D,
+\text{Gain\_ratio}(D, a) = \frac{\text{Gain}(D, a)}{\text{IV}(a)} \\
+\text{IV}(a) =
+-\sum_{v=1}^V\frac{|{D^v}|}{|{D}|}\log_2{\frac{|{D^v}|}{|{D}|}}
+\]</span> 其中<span class="math inline">\(\text{IV}(a)\)</span>代表属性a的<strong>固有值</strong>：属性a的取值数目越多（V越大），则<span class="math inline">\(\text{IV}(a)\)</span>通常越大（分的越散），能够<strong>对信息增益Gain(D,
 a)做出平衡调整</strong></p></li>
 <li><p>基尼指数：反映了从数据集D中随机抽取两个样本，其<strong>类别不一致</strong>的概率
 <br><strong>基尼指数越小</strong>，数据集D中类别不一致的可能性越低，<strong>纯度也越高</strong>。设样本集合D的类别数为m：
 <span class="math display">\[
 \begin{align}
-Gini(D) &amp;= \sum_{k=1}^m \sum_{k&#39; \ne k} p_kp_k&#39; \\
+\text{Gini}(D) &amp;= \sum_{k=1}^m \sum_{k&#39; \ne k} p_kp_k&#39; \\
 &amp;= 1 - \sum_{k=1}^mp_k^2
 \end{align}
 \]</span>
@@ -383,13 +384,14 @@ a^V \}\)</span>，</p>
 \]</span></p></li>
 <li><p>公式<strong>推广</strong>：利用推广公式决定划分属性a</p>
 <p>广义信息熵如下：其中m表示样本集<span class="math inline">\(\overset{\sim}{D}\)</span>中的类别总数 <span class="math display">\[
-Ent(\overset{\sim}{D}) = -\sum_{k=1}^{m}
-\overset{\sim}{p_k}log_{2}{\overset{\sim}{p_k}}
+\text{Ent}(\overset{\sim}{D}) = -\sum_{k=1}^{m}
+\overset{\sim}{p_k}\log_{2}{\overset{\sim}{p_k}}
 \]</span> 广义信息增益如下： <span class="math display">\[
 \begin{align}
-Gain(D, a) &amp;= \rho \times Gain(\overset{\sim}{D}, a) \\
-&amp;= \rho \times (Ent(\overset{\sim}{D}) -
-\sum_{v=1}^V\overset{\sim}{r_v}Ent(\overset{\sim}{D_v}))
+\text{Gain}(D, a) &amp;= \rho \times \text{Gain}(\overset{\sim}{D}, a)
+\\
+&amp;= \rho \times (\text{Ent}(\overset{\sim}{D}) -
+\sum_{v=1}^V\overset{\sim}{r_v}\text{Ent}(\overset{\sim}{D_v}))
 \end{align}
 \]</span>
 <strong>注意</strong>：推广公式中的<u>三个调整值</u>都是<strong>无缺失情况</strong>公式的<strong>一般例</strong>（取<span class="math inline">\(\overset{\sim}{D} \ne D\)</span>）</p></li>
