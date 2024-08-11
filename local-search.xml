@@ -290,11 +290,11 @@
       
       <tag>ICMP</tag>
       
+      <tag>routing protocol</tag>
+      
       <tag>NAT</tag>
       
       <tag>VPN</tag>
-      
-      <tag>routing protocol</tag>
       
     </tags>
     
@@ -319,30 +319,11 @@
     
     <tags>
       
-      <tag>backward propagation</tag>
-      
       <tag>perceptron</tag>
       
       <tag>gradient descent</tag>
       
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>『linux-1』view from shell</title>
-    <link href="/2024/03/28/linux/view-from-shell/"/>
-    <url>/2024/03/28/linux/view-from-shell/</url>
-    
-    <content type="html"><![CDATA[<h2 id="从-shell-眼中看世界">从 shell 眼中看世界</h2><h3 id="后续补充...">后续补充...</h3>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>linux</tag>
+      <tag>backward propagation</tag>
       
     </tags>
     
@@ -419,11 +400,11 @@
     
     <tags>
       
+      <tag>PPP</tag>
+      
       <tag>Ethernet</tag>
       
       <tag>CRC</tag>
-      
-      <tag>PPP</tag>
       
       <tag>VLAN</tag>
       
@@ -452,9 +433,9 @@
       
       <tag>multiplexing</tag>
       
-      <tag>wide band</tag>
-      
       <tag>transmission medium</tag>
+      
+      <tag>wide band</tag>
       
     </tags>
     
@@ -757,9 +738,9 @@
     
     <tags>
       
-      <tag>Fisher</tag>
-      
       <tag>regression</tag>
+      
+      <tag>Fisher</tag>
       
     </tags>
     
@@ -803,9 +784,9 @@
     
     <tags>
       
-      <tag>compilation grammar</tag>
-      
       <tag>top-down parser</tag>
+      
+      <tag>compilation grammar</tag>
       
     </tags>
     
