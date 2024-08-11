@@ -28,9 +28,9 @@
 <meta property="og:image" content="http://larry0454.github.io/2023/09/14/database/relational-database/%E4%B8%89%E7%B1%BB%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97.png">
 <meta property="og:image" content="http://larry0454.github.io/2023/09/14/database/relational-database/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E8%AF%AD%E8%A8%80.png">
 <meta property="article:published_time" content="2023-09-14T13:08:36.000Z">
-<meta property="article:modified_time" content="2024-07-22T05:14:45.168Z">
+<meta property="article:modified_time" content="2024-08-11T07:05:10.870Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="database">
+<meta property="article:tag" content="relational algebra">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://larry0454.github.io/2023/09/14/database/relational-database/%E8%BF%9E%E6%8E%A5%E8%BF%90%E7%AE%97.png">
   
@@ -135,6 +135,18 @@
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
               </a>
             </li>
           
@@ -450,9 +462,14 @@ s[X]\}\)</span>，其中U为R和S的全体属性集合
 </strong>并 <strong>对列去重</strong>构成新的关系</p>
 <figure style="text-align:center">
 <p><img src="/2023/09/14/database/relational-database/连接运算.png" srcset="/img/loading.gif" lazyload> <figurecap>常见的连接运算</figurecap></p>
-</figure>
+</figure></li>
+</ul></li>
+</ul>
+<blockquote>
 <p><strong>注意</strong>：若R和S具有<strong>同名属性A</strong>，<u>笛卡尔积</u>或<u>连接</u>后应使用<strong>各自关系名修饰属性A</strong>，如R.A、S.A以做区分</p>
-<hr></li>
+</blockquote>
+<hr>
+<ul>
 <li><p>除法：设R(X, Y)和S(Y, ...)，<span class="math inline">\(R➗S =
 \{t \text{ | } t \in \Pi_X(R) \land s \in S \land (t, s) \in
 R\}\)</span>
@@ -470,7 +487,6 @@ R\}\)</span>
 <li>自然连接：根据已有的表一信息，借助连接属性 <strong><u>引入组装</u>
 表二</strong>的信息（表一信息还不够）</li>
 <li>除法：从表一中获得<strong>包含表二<u>某属性组下全部信息</u></strong>的属性信息，一般先投影后做除法</li>
-</ul></li>
 </ul></li>
 </ul>
 <hr>
@@ -561,11 +577,32 @@ R(t)\}\)</span></li>
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/database/" class="category-chain-item">database</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/database/">#database</a>
+        <a href="/tags/relational-algebra/">#relational algebra</a>
       
     </div>
   

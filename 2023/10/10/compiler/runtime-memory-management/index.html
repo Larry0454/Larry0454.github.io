@@ -18,7 +18,7 @@
   
     <meta name="description" content="运行时存储管理 一、静态存储分配  静态分配概念：在编译阶段由编译程序实现对存储空间的管理，为源程序中的变量分配存储 注意：静态分配要求能够确定变量在运行时的数据空间大小，且运行时不变 分配策略：无可变长的串or数组，且不允许递归调用  开辟数据区，其首地址在加载时确定 按编译顺序给每个模块分配存储空间 在模块内部按顺序给模块的变量分配存储（使用相对地址） 目标地址填入变量的符">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『compiler-5』runtime memory management">
+<meta property="og:title" content="『compiler-5』runtime memory">
 <meta property="og:url" content="http://larry0454.github.io/2023/10/10/compiler/runtime-memory-management/index.html">
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="运行时存储管理 一、静态存储分配  静态分配概念：在编译阶段由编译程序实现对存储空间的管理，为源程序中的变量分配存储 注意：静态分配要求能够确定变量在运行时的数据空间大小，且运行时不变 分配策略：无可变长的串or数组，且不允许递归调用  开辟数据区，其首地址在加载时确定 按编译顺序给每个模块分配存储空间 在模块内部按顺序给模块的变量分配存储（使用相对地址） 目标地址填入变量的符">
@@ -30,9 +30,8 @@
 <meta property="og:image" content="http://larry0454.github.io/2023/10/10/compiler/runtime-memory-management/%E5%A4%96%E5%B1%82%E5%9C%B0%E5%9D%80%E8%AE%A1%E7%AE%97.png">
 <meta property="og:image" content="http://larry0454.github.io/2023/10/10/compiler/runtime-memory-management/%E6%B4%BB%E5%8A%A8%E8%AE%B0%E5%BD%95.png">
 <meta property="article:published_time" content="2023-10-10T13:42:09.000Z">
-<meta property="article:modified_time" content="2024-07-22T04:48:05.205Z">
+<meta property="article:modified_time" content="2024-08-11T07:03:36.326Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="compiler">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://larry0454.github.io/2023/10/10/compiler/runtime-memory-management/%E5%8F%98%E9%87%8F%E7%9A%84%E4%BA%8C%E7%BB%B4%E7%BC%96%E5%9D%80.png">
   
@@ -40,7 +39,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『compiler-5』runtime memory management - Blog</title>
+  <title>『compiler-5』runtime memory - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -146,6 +145,18 @@
           
           
             <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>Tags</span>
@@ -206,7 +217,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『compiler-5』runtime memory management"></span>
+            <span id="subtitle" data-typed-text="『compiler-5』runtime memory"></span>
           
         </div>
 
@@ -286,7 +297,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『compiler-5』runtime memory management</h1>
+            <h1 style="display: none">『compiler-5』runtime memory</h1>
             
             
               <div class="markdown-body">
@@ -392,13 +403,27 @@ display区和隐式参数区，才能到达<strong>显式参数区</strong>和�
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/compiler/">#compiler</a>
-      
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/compiler/" class="category-chain-item">compiler</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
     </div>
+  
   
 </div>
 
@@ -408,7 +433,7 @@ display区和隐式参数区，才能到达<strong>显式参数区</strong>和�
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『compiler-5』runtime memory management</div>
+      <div>『compiler-5』runtime memory</div>
       <div>http://larry0454.github.io/2023/10/10/compiler/runtime-memory-management/</div>
     </div>
     <div class="license-meta">

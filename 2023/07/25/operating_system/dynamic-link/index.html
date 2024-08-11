@@ -1,0 +1,1348 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="装载与动态链接 一、可执行文件的装载与进程  进程虚拟地址空间：每个运行的程序拥有自己独立的虚拟地址空间 在32位平台下：  Linux：高1GB分给操作系统，低3GB分给用户程序 Windows：高2GB分给操作系统，低2GB分给用户程序  注意：硬件位数决定了寻址空间的上限：如32位的硬件平台决定了虚拟地址空间为 0 ~ \(2^{32} - 1\) PAE（Physic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『operating system-2』dynamic link">
+<meta property="og:url" content="http://larry0454.github.io/2023/07/25/operating_system/dynamic-link/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="装载与动态链接 一、可执行文件的装载与进程  进程虚拟地址空间：每个运行的程序拥有自己独立的虚拟地址空间 在32位平台下：  Linux：高1GB分给操作系统，低3GB分给用户程序 Windows：高2GB分给操作系统，低2GB分给用户程序  注意：硬件位数决定了寻址空间的上限：如32位的硬件平台决定了虚拟地址空间为 0 ~ \(2^{32} - 1\) PAE（Physic">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://larry0454.github.io/2023/07/25/operating_system/dynamic-link/%E8%B0%83%E7%94%A8%E6%A0%91.png">
+<meta property="og:image" content="http://larry0454.github.io/2023/07/25/operating_system/dynamic-link/VMA.png">
+<meta property="og:image" content="http://larry0454.github.io/2023/07/25/operating_system/dynamic-link/%E6%A0%88.png">
+<meta property="article:published_time" content="2023-07-25T12:52:37.000Z">
+<meta property="article:modified_time" content="2024-08-11T07:25:42.777Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="dynamic link">
+<meta property="article:tag" content="DLL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://larry0454.github.io/2023/07/25/operating_system/dynamic-link/%E8%B0%83%E7%94%A8%E6%A0%91.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>『operating system-2』dynamic link - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="『operating system-2』dynamic link"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-25 20:52" pubdate>
+          July 25, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          97 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">『operating system-2』dynamic link</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="装载与动态链接">装载与动态链接</h2>
+<h3 id="一可执行文件的装载与进程">一、可执行文件的装载与进程</h3>
+<ul>
+<li><p>进程虚拟地址空间：每个运行的程序拥有自己<strong>独立的虚拟地址空间</strong></p>
+<p>在32位平台下：</p>
+<ul>
+<li>Linux：高1GB分给操作系统，低3GB分给用户程序</li>
+<li>Windows：高2GB分给操作系统，低2GB分给用户程序</li>
+</ul>
+<p><strong>注意</strong>：<u>硬件位数</u>决定了<u>寻址空间的上限</u>：如32位的硬件平台决定了虚拟地址空间为
+0 ~ <span class="math inline">\(2^{32} - 1\)</span></p></li>
+<li><p>PAE（Physical Address
+Extension）：<strong>扩充硬件地址线</strong>，以扩展32位平台的物理寻址能力</p>
+<ul>
+<li>窗口映射：用某段虚拟空间作为<strong>窗口</strong>映射<strong>高于4GB</strong>的额外物理块
+<ul>
+<li>Windows ：AWE机制（Address Windowing Extensions）</li>
+<li>Linux ：采用<strong>系统调用</strong>mmap( )</li>
+</ul></li>
+</ul>
+<hr></li>
+<li><p>装载的方式：利用<strong>局部性原理</strong>，将程序<u>最常用的部分</u>驻留在物理内存中，其余的留在磁盘（动态装载）</p>
+<ul>
+<li><p>覆盖装入：通过<strong>覆盖管理器</strong>将程序切分为若干模块，使新调入的模块<strong>覆盖</strong>已在内存的模块</p>
+<ul>
+<li><p>覆盖规则：若模块A和模块B<strong>不会相互调用</strong>，两者就可能<strong>互相覆盖</strong></p></li>
+<li><p>调用树：程序员将各模块按调用关系组织成<u>树结构</u>：</p>
+<p><img src="/2023/07/25/operating_system/dynamic-link/调用树.png" srcset="/img/loading.gif" lazyload width="50%" height="50%"></p>
+<p>当一个模块被调用时，务必保证从<strong>该模块到树根</strong>的所有模块都在内存中</p></li>
+</ul>
+<p><strong>禁止跨树调用</strong>，如模块C不可调用D、B、E、F</p>
+<hr></li>
+<li><p>页映射：虚拟存储机制的一部分，通过<strong>物理页映射与页调换</strong>解决物理内存不足的问题</p>
+<ul>
+<li>页面调换算法：如FIFO、LRU等</li>
+</ul></li>
+</ul>
+<hr></li>
+<li><p>可执行文件的装载：</p>
+<ul>
+<li><p>进程的建立：每个进程拥有<strong>独立的虚拟地址空间</strong></p>
+<ol type="1">
+<li><p>创建独立的虚拟地址空间：建立<strong>页映射</strong>的数据结构（如页目录）</p>
+<p><strong>注意</strong>：此时暂时不填写页映射关系，可以等到之后<strong>缺页</strong>时再逐步设置</p></li>
+<li><p>建立<u>虚拟空间</u>与<u>可执行文件</u>的映射关系：设置<strong>VMA</strong>，即进程地址空间中的段空间
+VMA表示<u>虚拟地址</u>与<u>ELF中指定段的位置</u>间的关系（段表记录）</p>
+<p><strong>注意</strong>：可执行文件需要被映射到虚拟空间，所以又称作<strong>映像文件</strong></p></li>
+<li><p>CPU跳转到可执行文件的<strong>入口地址</strong>，启动运行</p></li>
+</ol></li>
+<li><p>页错误：进程建立完毕后，执行任务时出现<strong>缺页</strong>异常，页错误处理程序如下：</p>
+<ol type="1">
+<li>查询<u>虚拟空间</u>与<u>可执行文件</u>之间的地址映射，找到<strong>空页面对应的VMA</strong></li>
+<li>将对应的ELF文件数据<strong>调入物理内存</strong>，并建立虚拟页与新物理页之间的映射关系</li>
+</ol></li>
+</ul>
+<hr></li>
+<li><p>进程虚拟空间分布</p>
+<ul>
+<li><p>ELF文件的链接与执行视图：</p>
+<p>“链接”视图：将ELF文件划分为多个段（Section）</p>
+<p>“执行”视图：将ELF文件划分为多个程序头（Segment），每个<u>Segment</u>被映射到同一个<u>VMA</u></p></li>
+<li><p>程序头表：可执行文件中保存装载信息，本质上是 Elf32_Phdr
+结构体数组</p></li>
+<li><p>程序头（Elf32_Phdr）：将可执行文件中<strong>相同权限的Section</strong><u>合并至</u><strong>同一个Segment</strong>装载映射</p>
+<ul>
+<li>段类型（p_type）：共包含LOAD、DYNAMIC、INTERP等</li>
+<li>段偏移（p_offset）：Segment在可执行文件中的<strong>偏移</strong></li>
+<li>段虚拟地址（p_vaddr）：Segment在进程虚拟地址空间中的<strong>始址</strong></li>
+<li>段物理地址（p_paddr）：一般与p_vaddr相同</li>
+<li>段文件长度（p_filesz）：Segment<strong>在ELF文件</strong>中的长度（可能为0）</li>
+<li>段长度（p_memse）：Segment<strong>在进程虚拟地址空间</strong>中的长度（可能为0）</li>
+<li>段权限（p_flags）：Segment内共同的<strong>权限属性</strong>，如可读、可写、可执行</li>
+<li>段对齐属性（p_align）：Segment 对齐字节为 2 ^ p_align</li>
+</ul>
+<p><strong>注意</strong>：p_memse可能大于p_filesz，多余的部分留给<strong>被合并的.bss段</strong>，初始化为全0</p>
+<hr></li>
+<li><p>堆与栈：堆一般是向上扩展的，栈是向下扩展的</p>
+<ul>
+<li><p>进程地址空间中的各VMA区域：</p>
+<ol type="1">
+<li>代码 VMA：权限只读、可执行；含映像文件</li>
+<li>数据 VMA：权限可读写、可执行；含映像文件</li>
+<li>堆 VMA：权限可读写、可执行；无映像文件（匿名）</li>
+<li>栈 VMA：权限可读写、不可执行；无映像文件（匿名）</li>
+</ol>
+<p><img src="/2023/07/25/operating_system/dynamic-link/VMA.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p></li>
+</ul>
+<hr></li>
+<li><p>段地址对齐（Segment）：段长往往不是页大小的整数倍，段地址往往不是页对齐的</p>
+<ul>
+<li><p>装载：通过<strong>虚拟内存页映射机制</strong>将可执行文件加载到进程地址空间</p></li>
+<li><p>段合并：将ELF文件中各Segment间<strong>接壤</strong>的部分<strong>合并共享</strong>同一个物理页</p>
+<p>装载时，将<strong>共享物理页</strong>分别映射到<strong><u>两个</u>虚拟页</strong>，其余物理页正常映射</p>
+<p><strong>注意</strong>：段合并在逻辑上将可执行文件划分为<strong>以页为单位</strong>的若干个物理块，可以消去物理页碎片</p>
+<p>一个物理页可能包含多个Segment的信息</p></li>
+</ul>
+<hr></li>
+<li><p>进程栈的初始化</p>
+<ul>
+<li><p>栈空间布局：由esp指针指向栈顶</p>
+<figure style="text-align:center;">
+<p><img src="/2023/07/25/operating_system/dynamic-link/栈.png" srcset="/img/loading.gif" lazyload width="80%" height="80%"></p>
+<figcaption>
+<p>栈空间图示</p>
+</figcaption>
+</figure>
+<p>其中环境变量指PATH或HOME等</p></li>
+<li><p>进程启动后，堆栈中的信息会传递给 main( )
+函数（即argc和argv）</p></li>
+</ul>
+<hr></li>
+<li><p>Linux内核装载ELF文件：</p>
+<ul>
+<li><p>装载系统调用：int <strong>execve</strong>(const char* filename,
+char <em>const argv[ ], char </em>const envp[ ]);</p></li>
+<li><p>装载流程：在进入execve( )系统调用后：</p>
+<ol type="1">
+<li><p>execve( )调用sys_execve( )，sys_execve( )接着调用do_execve(
+)</p></li>
+<li><p>do_execve(
+)读取ELF文件的前128字节，通过ELF文件头的<strong>魔数</strong>判断<strong>文件类型</strong></p>
+<p>如ELF魔数为 <u>0x7F、e、l、f</u>；Java魔数为
+<u>c、a、f、e</u>；shell脚本魔数为 <u>#!</u></p></li>
+<li><p>do_execve( )调用search_binary_handle(
+)匹配合适的<strong>装载处理函数</strong></p>
+<p>如ELF对应load_elf_binary( )；脚本文件对应load_script( )</p></li>
+<li><p>对于load_elf_binary( )，依次执行以下步骤：</p></li>
+<li><p>检查ELF格式<strong>有效性</strong>（如魔数）</p></li>
+<li><p>寻找 .interp 段，设置<strong>动态链接路径</strong></p></li>
+<li><p>根据ELF程序头表，对ELF的代码和数据进行<strong>映射</strong></p></li>
+<li><p>初始化ELF进程环境，将<strong>系统调用的返回地址</strong>设置为ELF的<strong>e_entry</strong></p></li>
+<li><p>系统调用返回至sys_execve(
+)后，直接跳转到<strong>e_entry</strong></p></li>
+</ol></li>
+</ul>
+<hr></li>
+<li><p>Windows装载PE文件</p>
+<ul>
+<li><p>PE文件在内存中是<strong>页对齐</strong>的，各段的长度都是页大小的整数倍</p></li>
+<li><p>目标地址（target
+address）与相对虚拟地址（RVA）：分别指文件在虚存中的<strong>基地址</strong>，以及<strong>文件内偏移量</strong></p>
+<p><strong>注意</strong>：由于PE文件<u>装载的<strong>基地址</strong>可能发生变化</u>，所以引入了RVA</p></li>
+<li><p>装载流程：</p>
+<ol type="1">
+<li>读取文件的<strong>第一页</strong>，即DOS头、PE头与段表</li>
+<li>若进程地址空间中目标地址被占用，则要<strong>另选一个装载地址</strong></li>
+<li>根据段表信息，将PE文件中的各段<strong>映射</strong>到虚存地址空间中</li>
+<li>若装载地址不是目标地址，则进行<strong>Rebasing</strong></li>
+<li>装载所有PE文件所需的<strong>DLL文件</strong></li>
+<li>对PE文件中所有导入符号进行<strong>解析</strong></li>
+<li>根据PE头中指定的参数，<strong>初始化栈和堆</strong>，最后<strong>启动进程</strong></li>
+</ol></li>
+<li><p>PE扩展头（PE Optional
+Header）：含有与<strong>装载</strong>相关的信息</p>
+<ul>
+<li>Image Base ：若该地址未被占用，则优先尝试将PE装载到该处</li>
+<li>AddressOfEntryPoint
+：PE文件第一条运行指令的<strong>RVA</strong></li>
+<li>SectionAlignment
+：段对齐粒度，一般即系统<strong>页大小</strong></li>
+<li>SizeOfImage ：内存中经过节对齐的<strong>映像体大小</strong></li>
+<li>SizeOfCode与SizeOfInitializedData：<strong>代码段长度</strong>与<strong>初始化的数据段长度</strong></li>
+<li>BaseOfCode ：代码段始址的<strong>RVA</strong></li>
+<li>BaseOfData ：数据段始址的<strong>RVA</strong></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="二动态链接">二、动态链接</h3>
+<ul>
+<li><p>动态链接的概念：与静态链接不同，动态链接等到<strong>程序开始运行时</strong>才将各目标文件进行链接</p></li>
+<li><p>动态链接的应用：</p>
+<ul>
+<li>节省磁盘与内存空间：被多个程序共享的目标文件<strong>仅保留一个副本</strong>，通过复用共享节省空间</li>
+<li>程序开发与发布：程序更新<u>不必发布完整的文件</u>，只需要发布已更新的目标文件即可</li>
+<li>程序可扩展性和兼容性：
+<ol type="1">
+<li>扩展性：将程序模块做成<strong>插件</strong>，动态载入程序</li>
+<li>兼容性：不同的平台提供<strong>相同的动态链接库</strong>，使程序可以运行在不同的平台上</li>
+</ol></li>
+</ul></li>
+<li><p>动态链接文件：</p>
+<ul>
+<li>Linux ：动态共享对象（DSO），以“.so”为扩展名</li>
+<li>Windows ：动态链接库（DLL），以“.dll”为扩展名</li>
+</ul>
+<p><strong>注意</strong>：在使用动态链接库时，程序被分成了<u>可执行模块</u>和<u>共享对象</u>两类<strong>模块</strong>；静态链接下可执行文件是一个<strong>整体</strong></p>
+<p><u>与可执行文件不同，共享对象的最终装载地址在编译阶段是<strong>不确定</strong>的</u></p>
+<p>C语言库的运行库glibc的<strong>动态链接形式</strong>为libc.so（整个系统唯一的副本）</p></li>
+<li><p>动态链接器：</p>
+<ul>
+<li><p>链接规则：若引用符号来自<strong>静态目标文件</strong>，链接器会在链接时重定位</p>
+<p>若引用符号来自<strong>动态共享对象</strong>，链接器会在<strong>装载时重定位</strong></p></li>
+</ul>
+<p><strong>注意</strong>：动态链接器也会被映射入进程地址空间，在程序运行前完成动态链接工作</p>
+<hr></li>
+<li><p>装载时重定位：链接时将所有对<strong>绝对地址的重定位</strong>延后到装载时完成</p>
+<p>待装载的目标地址确定后，再根据文件中各符号的<strong>相对偏移量</strong>进行重定位</p>
+<p><strong>注意</strong>：<u>装载时重定位比地址无关速度更快</u>（省去了计算间接跳转），但无法实现代码共享</p></li>
+<li><p>地址无关代码（PIC）：共享对象中，将指令中<strong>需要修改的部分</strong>分离出来，与数据放在一起</p>
+<ul>
+<li><p>模块内部的函数调用：调用者与被调用者<strong>相对偏移</strong>保持不变，可以直接<strong>相对寻址</strong>，<u><strong>无需重定位</strong></u></p>
+<p><strong>注意</strong>：其它模块可能<u>覆盖本模块的函数</u>，故实际上只能把同模块符号当作<strong>外部符号</strong>处理</p>
+<p>可以考虑将同模块下的被调用函数设置为<strong>static</strong>的，保证其不被覆盖，无需重定位，可提高效率</p></li>
+<li><p>模块内部的数据访问：访问指令（.text）和被访问数据（.data）的<strong>相对偏移</strong>保持不变：</p>
+<ol type="1">
+<li>调用 __i686.get_pc_thunk.cx
+函数，获取<strong>当前访问指令的PC</strong>于 %ecx 寄存器</li>
+<li>当前访问指令的地址 + <strong>相对偏移</strong> =
+被访问数据的地址</li>
+</ol>
+<p><strong>注意</strong>：由于共享目标的装载地址不确定，所以不能直接使用绝对地址访问时据</p></li>
+<li><p>模块间的数据访问：将<u>地址相关</u>的部分放在<strong>数据段中的全局偏移表</strong>，实现代码地址无关</p>
+<ul>
+<li>全局偏移表（GOT）：指向外部变量的<strong>指针数组</strong>，装载时填写数组各表项</li>
+<li>访问数据流程：GOT与访问代码的<strong>相对偏移</strong>保持不变
+<ol type="1">
+<li>根据当前访问指令PC和相对偏移求出<u>变量地址在GOT中的位置</u></li>
+<li>根据<strong>对应表项中存放的变量地址</strong>访问数据（间接访问）</li>
+</ol></li>
+</ul></li>
+<li><p>模块间的函数调用：与跨模块访问数据类似，同样使用GOT间接查找地址：</p>
+<ol type="1">
+<li>根据当前访问指令PC和相对偏移求出<u>函数地址在GOT中的位置</u></li>
+<li>根据<strong>对应表项中存放的函数地址</strong>跳转访问（间接跳转）</li>
+</ol>
+<p><strong>注意</strong>：共享对象中<strong>地址无关的代码段</strong>可由多个进程共享；共享对象中的<strong>数据段</strong>在多个进程中有独立副本</p>
+<hr></li>
+<li><p>-shared和-fPIC ：gcc的两个与动态链接有关的参数</p>
+<ul>
+<li>-shared：产生共享对象（如 .so）</li>
+<li>-fPIC：指示GCC产生地址无关代码</li>
+</ul></li>
+</ul>
+<hr></li>
+<li><p>数据段的地址无关性</p>
+<ul>
+<li>方案：<strong>装载时重定位</strong>，即在共享对象装载时填补重定位入口</li>
+<li>重定位表：记录共享对象的重定位入口信息</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="三延迟绑定">三、延迟绑定</h3>
+<ul>
+<li><p>延迟绑定的实现：将函数引用的链接延后，直到函数<strong>第一次被调用</strong>时才进行绑定（重定位）</p>
+<p><strong>注意</strong>：延迟绑定可以防止<u>因函数引用过多</u>导致程序运行前<u>链接开销过大</u>，减缓性能</p></li>
+<li><p>PLT （Procedure Linkage
+Table）：ELF中的GOT被拆分成两个独立的段，分别为.got和.got.plt</p>
+<ul>
+<li><p>.got保存<strong>外部变量引用</strong>的地址；.got.plt保存<strong>外部函数引用</strong>的地址</p></li>
+<li><p>.got.plt的结构：</p>
+<ol type="1">
+<li><p>Address of .dynamic：存放.dynamic段的地址</p></li>
+<li><p>Module ID：本模块的ID，其地址位于 (GOT + 4)</p></li>
+<li><p>_dl_runtime_resolve( )的地址：其地址位于 (GOT + 8)</p>
+<p>_dl_runtime_resolve( )负责将函数地址填入.got.plt中的表项</p></li>
+<li><p>其它外部函数引用的地址</p></li>
+</ol></li>
+<li><p>实现延迟绑定的流程，通过地址 bar@plt 实现间接跳转</p></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c">PTL0:<br><span class="hljs-comment">/* 将本模块的ID压入 _dl_runtime_resolve() 的栈帧 */</span><br>push *(GOT + <span class="hljs-number">4</span>)<br><span class="hljs-comment">/* 跳转至 _dl_runtime_resolve() */</span><br>jmp *(GOT + <span class="hljs-number">8</span>)<br>...<br>    <br>bar@plt:<br><span class="hljs-comment">/* 目标模块第二次调用 bar@plt，会直接跳转到.got.plt中的正确地址 */</span><br>jmp *(bar@GOT)<br><span class="hljs-comment">/* 将外部函数引用在重定位表.rel.plt中的下标 n 压入 _dl_runtime_resolve() 的栈帧 */</span><br>push n<br><span class="hljs-comment">/* 目标模块第一次调用 bar@plt，会先跳转到 PLT0 进行延迟绑定 */</span><br>jmp PLT0<br>...<br></code></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h3 id="四动态链接的相关结构">四、动态链接的相关结构</h3>
+<ul>
+<li><p>“.interp”段：即解释器（interpreter），保存可执行文件的<strong>动态链接器的路径</strong></p></li>
+<li><p>“.dynamic”段：保存动态链接器所需的信息，本质上是Elf32_Dyn结构的数组</p></li>
+<li><p>Elf32_Dyn：属性值（d_tag） + 数值（d_val）或指针变量（d_ptr）</p>
+<ul>
+<li>属性值（d_tag）：
+<ul>
+<li>DT_REL：动态链接<u><strong>重定位表</strong></u>的地址</li>
+<li>DT_SYMTAB：动态链接<u><strong>符号表</strong></u>的地址，对应的d_ptr表示<strong>.dynsym的地址</strong></li>
+<li>DT_STRTAB：动态链接<u><strong>字符串表</strong></u>的地址，对应的d_ptr表示<strong>.dynstr的地址</strong></li>
+<li>DT_STRSZ：动态链接字符串表的大小，对应的d_val表示<strong>表大小</strong></li>
+<li>DT_INIT：初始化代码地址</li>
+<li>DT_NEED：依赖的共享对象文件，对应的d_ptr表示<strong>依赖文件名</strong></li>
+</ul></li>
+</ul></li>
+<li><p>动态符号表（.dynsym）：仅保存与<strong>动态链接相关</strong>的符号，不包含内部私有符号</p></li>
+<li><p>动态符号字符串表（.dynstr）：用于查找动态链接符号</p>
+<p><strong>注意</strong>：<u>静态链接</u>下的符号表（.symtab）与字符串表（.strtab）包含了<strong>所有</strong>的符号信息（包括动态链接符号）</p></li>
+<li><p>动态链接重定位表：确定<strong>动态导入符号</strong>的运行地址，包括符号名、重定位地址修正方式等信息</p>
+<p><strong>注意</strong>：对于使用<u>地址无关技术</u>的ELF，由于<strong>数据段</strong>（含绝对地址）的存在，仍需要<strong>装载时重定位</strong></p>
+<ul>
+<li><p>.rel.dyn：对<strong>外部数据引用</strong>修正的重定位表，修正的位置位于<strong>.got及数据段</strong></p></li>
+<li><p>.rel.plt：对<strong>外部函数引用</strong>修正的重定位表，修正的位置位于<strong>.got.plt</strong></p>
+<hr></li>
+<li><p>重定位地址修正方式：新增R_386_RELATIVE、R_386_GLOB_DAT、R_386_JUMP_SLOT重定位入口类型</p>
+<ol type="1">
+<li>R_386_RELATIVE：装载目标基地址 +
+内部变量的偏移量，即<strong>基址重置</strong>（Rebasing）</li>
+<li>R_386_GLOB_DAT：将<strong>变量</strong>绝对地址填入<strong>.got</strong>中的对应表项</li>
+<li>R_386_JUMP_SLOT：将<strong>函数</strong>绝对地址填入<strong>.got.plt</strong>中的对应表项</li>
+</ol></li>
+</ul>
+<hr></li>
+<li><p>动态链接时进程堆栈初始化：保存<strong>动态链接器</strong>所需的辅助信息</p>
+<ul>
+<li><p>辅助信息数组（Auxiliary
+Vector）：<strong>存于栈中</strong>，本质上是一个Elf32_auxv_t结构体数组</p></li>
+<li><p>Elf32_auxv_t：类型值（a_type）+ 属性值（a_val）</p>
+<ul>
+<li>类型值（a_type）：
+<ul>
+<li>AT_NULL（0）：对应属性值为辅助信息数组的结束</li>
+<li>AT_EXEFD（2）：可执行文件的<strong>文件句柄</strong>；动态链接器使用文件句柄访问文件</li>
+<li>AT_PHDR（3）：可执行文件的<strong>程序头表</strong>；动态链接器也可通过内存映像访问文件</li>
+<li>AT_PHENT（4）：对应属性值为程序头表中每个<strong>表项的大小</strong></li>
+<li>AT_PHNUM（5）：对应属性值为程序头表中<strong>表项的数量</strong></li>
+<li>AT_BASE（7）：对应属性值为<u>动态链接器的<strong>装载地址</strong></u></li>
+<li>AT_ENTRY（9）：对应属性值为可执行文件的<strong>启动入口地址</strong></li>
+</ul></li>
+</ul>
+<p><strong>注意</strong>：辅助信息存储在<u>栈中环境变量指针的上方，命令行信息的下方</u></p></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="五动态链接的步骤与实现三步走">五、动态链接的步骤与实现：“三步走”</h3>
+<ul>
+<li><p>动态链接器的自举（bootstrap）：</p>
+<ul>
+<li>自举：动态链接器的装载重定位工作不依赖于其它任何共享对象</li>
+<li>自举流程：动态链接器<strong>独立完成</strong>其自身全局变量与静态变量的<strong>重定位</strong>
+<ol type="1">
+<li>自举代码找到<strong>自己的GOT</strong>，再通过.got.plt的第一个表项找到.dynamic段的地址</li>
+<li>通过.dynamic段可以找到动态链接器<u>自身的<strong>重定位表</strong>和<strong>符号表</strong></u>，并对自身执行重定位</li>
+</ol></li>
+</ul></li>
+<li><p>装载共享对象：将共享对象的代码与数据映射到进程地址空间中</p>
+<ul>
+<li><p>符号的装填：将<strong>所有</strong>模块以及动态链接器的符号合并入<strong>全局符号表</strong></p>
+<ol type="1">
+<li>动态链接器将<u>可执行文件和自身的符号表</u>合并入全局符号表</li>
+<li>动态链接器根据.dynamic段中的DT_NEED项获得所有需要的共享对象</li>
+<li>每装载一个新的共享对象，就会将其符号表合并入<strong>全局符号表</strong></li>
+</ol>
+<p><strong>注意</strong>：由于共享对象也可能依赖于共享对象，所以装载的过程实际可看作<strong>遍历图</strong>的过程</p></li>
+<li><p>全局符号介入：对于多模块定义的<strong>同名符号</strong></p>
+<p>若同名符号在<u>先前装载中已经加入全局符号表</u>，则后加入的符号<strong>被覆盖忽略</strong></p>
+<p><strong>注意</strong>：“覆盖优先级”问题会引发<u>全局的同名函数</u>因被覆盖而失效</p></li>
+</ul></li>
+<li><p>重定位与初始化：自举、装载完毕后，动态链接器开始执行重定位操作</p>
+<ul>
+<li>重定位：动态链接器遍历所有可执行文件和共享对象的<strong>重定位表</strong>，修正它们的<strong>GOT</strong>表项</li>
+<li>初始化：重定位完成后，执行每个共享对象的 <strong>.init</strong>
+段代码，进行初始化操作</li>
+</ul>
+<hr></li>
+<li><p>Linux 动态链接器</p>
+<ul>
+<li><p>软链接：Linux
+动态链接器的路径/lib/ld-linux.so.2是软链接，指向了真正的链接/lib/ld-x.y.z.so</p></li>
+<li><p>ld.so的运作流程：动态链接器本身是一种特殊的<strong>可执行文件</strong>，内核会为其安排一个合适的装载地址</p>
+<ol type="1">
+<li>入口 _start 调用 _do_start( )
+函数独立进行重定位（即<strong>自举</strong>）</li>
+<li>进入 _dl_main(
+)，进行<strong>共享对象的装载</strong>、<strong>符号解析</strong>与<strong>重定位</strong>等多个任务</li>
+</ol>
+<p><strong>注意</strong>：动态链接器本身必须是<strong>静态链接</strong>（statically
+linked）的，不依赖于其它共享对象</p></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="六显式运行时链接">六、显式运行时链接</h3>
+<ul>
+<li><p>动态链接库：在程序<strong>运行时</strong>可以控制加载（或卸载）的共享对象</p>
+<ul>
+<li>动态库的装载：由<u>动态链接器</u>提供的API实现（以下四种）</li>
+</ul>
+<hr></li>
+<li><p>dlopen(
+)：<strong>打开并加载</strong>一个动态库到进程地址空间</p>
+<ul>
+<li><p>C函数原型：void* dlopen(const char* filename, int flag);</p></li>
+<li><p>filename：动态库的路径（绝对路径 or 相对路径）</p>
+<p><strong>注意</strong>：若该参数传入NULL，则会返回<strong>全局符号表</strong>的句柄</p></li>
+<li><p>函数符号解析方式（flag）：延迟绑定（第一次调用才绑定）or
+加载时立即绑定</p></li>
+<li><p>返回值：被加载模块的句柄，如加载失败则返回NULL</p></li>
+</ul></li>
+<li><p>dlsym( )：寻找所需要的符号</p>
+<ul>
+<li>C函数原型：void* dlsym(void* handle, char* symbol);</li>
+<li>handle：由dlopen(
+)打开的文件的句柄，若为NULL则在全局符号表中查找</li>
+<li>symbol：被查找的字符串</li>
+<li>返回值：若查找<strong>函数</strong>符号。则返回函数地址；若查找<strong>变量</strong>符号，则返回变量地址</li>
+</ul></li>
+<li><p>dlclose(
+)：将已加载的模块卸载，取消进程地址空间于该模块间的映射关系</p>
+<ul>
+<li><p>加载引用计数器：调用dlopen(
+)加载某模块时，计数器<u>自增</u>；调用dlclose(
+)卸载某模块时，计数器<u>自减</u>
+<br><u>计数器减至0时</u>，对应模块被真正卸载</p></li>
+<li><p>C函数原型：int dlclose(void* handle);</p></li>
+<li><p>handle：已打开模块的句柄</p></li>
+<li><p>返回值：返回 0 表示成功关闭；返回非 0
+表示关闭出现错误，可通过dlerror( )捕获错误信息</p></li>
+</ul></li>
+<li><p>dlerror( )：在调用了dlopen( )，dlsym( )或dlclose(
+)后，可通过调用dlerror( )判断是否<strong>调用成功</strong>
+<br>调用成功返回NULL，调用错误则返回对应的<strong>报错信息</strong></p></li>
+<li><p>C函数原型：char* dlerror(void);</p></li>
+</ul>
+<hr>
+<h3 id="七linux共享库">七、Linux共享库</h3>
+<ul>
+<li><p>共享库的版本兼容性：</p>
+<ul>
+<li>共享库的版本更新：兼容更新（增量开发）&amp;
+不兼容更新（改变原版本）</li>
+<li>改变C语言共享库ABI的行为
+<ol type="1">
+<li>导出函数的<strong>行为发生改变</strong>，其功能与旧版本的函数功能不一致</li>
+<li>导出函数被<strong>删除</strong></li>
+<li>导出数据的结构发生变化，如结构成员删除</li>
+<li>导出函数的接口发生变化，如函数参数或函数返回值发生变化</li>
+</ol></li>
+</ul></li>
+<li><p>共享库版本命名：libname.so<strong>.x.y.z</strong></p>
+<ul>
+<li>库名称：以“lib”为前缀开头，中间是库的名字name和后缀名.so</li>
+<li>主版本号（x）：表示库的<strong>重大升级</strong>，不同主版本号间的共享库不兼容</li>
+<li>次版本号（y）：表示库的<strong>增量升级</strong>，即在保持原有库不变的基础上增加新接口</li>
+<li>发布版本号（z）：表示库的<strong>错误修正或性能改进</strong>，即不增不改</li>
+</ul>
+<p><strong>注意</strong>：依赖于<strong>旧的次版本号</strong>的共享库可以兼容<strong>新的次版本号</strong>的共享库，不同发布版本号的共享库之间都可以互相兼容</p></li>
+<li><p>SO-NAME：把完整版本名的次版本号和发布版本号去掉，作为<strong>指向最新版本库</strong>的<strong>软连接</strong></p>
+<p>ldconfig：当Linux系统安装或更新一个共享库时，就会使所有软连接指向最新版的共享库</p></li>
+<li><p>次版本号交会问题：程序使用了高次版本号中的接口，而系统中只有低次版本号的共享库</p>
+<hr></li>
+<li><p>基于符号的版本机制：解决<u>次版本号交会问题</u></p>
+<ul>
+<li><p>Solaris中的符号版本机制</p>
+<ul>
+<li>符号版本脚本：实现了<strong>版本内部符号的定义</strong>与<strong>版本间符号的继承</strong></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">/* 定义符号SUNW_1.1 */</span><br>SUMW_1<span class="hljs-number">.1</span> &#123;<br>    global:<br>    global_symbol1;<br>    ...<br>    local:<br>    local_symbol1;<br>    ...<br>&#125;<br><span class="hljs-comment">/* SUNW_1.2 继承了 SUNW_1.1的所有符号 */</span><br>SUNW_1<span class="hljs-number">.2</span> &#123;<br>    global:<br>    global_symbol2;<br>    ...<br>    local:<br>    local_symbol2:<br>    ...<br>&#125; SUNW_1<span class="hljs-number">.1</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>范围机制：将共享库中的部分符号设置为<strong>local</strong>的，防止共享库的调用者使用这些局部函数</li>
+<li>构建时，链接器可以记录最终输出文件中<strong>依赖的最低版本号</strong>对应的共享库
+<br>运行时，链接器会根据记录的最低版本号，检查当前共享库中的符号集合是否包含所需的版本</li>
+</ul>
+<hr></li>
+<li><p>Linux中的符号版本机制</p>
+<ul>
+<li><p>GCC对Solaris符号版本机制的<u>两个扩展</u></p>
+<ol type="1">
+<li><p>.symver汇编宏：对符号sym设置符号标签，如
+<code>.symver sym, sym@VERS_1.1</code></p></li>
+<li><p>允许多个版本的同一符号处于<strong>同一个共享库</strong>中，如：</p></li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 将sym的1.1版本导出为old_sym */</span><br><span class="hljs-keyword">asm</span>(<span class="hljs-string">&quot;.symver old_sym, sym@VERS_1.1&quot;</span>);<br><span class="hljs-comment">/* 将sym的1.2版本导出为new_sym */</span><br><span class="hljs-keyword">asm</span>(<span class="hljs-string">&quot;.symver new_sym, sym@VERS_1.2&quot;</span>);<br>...<br><span class="hljs-type">void</span> <span class="hljs-title function_">old_sym</span><span class="hljs-params">()</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">new_sym</span><span class="hljs-params">()</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>符号重载：同一个符号可拥有不同的版本号，将共享库的更新粒度缩减为<strong>接口层面</strong>
+<br>如使用1.1版本的sym就会链接old_sym(
+)，使用1.2版本的sym就会链接new_sym( )</li>
+</ul></li>
+</ul></li>
+</ul>
+<hr></li>
+<li><p>共享库系统路径</p>
+<ul>
+<li><p>File Hierarchy
+Standard：规定了系统中系统文件应如何存放，促进了各开源系统间的<strong>兼容性</strong>
+FHS做出以下规定：</p>
+<ol type="1">
+<li>/lib：存放最关键的<strong>基础共享库</strong>，如动态链接器、C语言运行库等</li>
+<li>/usr/lib：存放非系统运行所需的关键性<strong>共享库</strong></li>
+<li>/usr/local/lib：存放<strong>第三方应用程序</strong>的库，如python解释器</li>
+</ol>
+<p><strong>注意</strong>：共享库对应的可执行文件一般放在lib对应的<strong>bin目录</strong>下</p></li>
+</ul></li>
+<li><p>共享库的查找</p>
+<ul>
+<li><p>查找方式：根据.dynamic段中的<strong>DT_NEED项保存的路径</strong>搜索对应的共享库</p>
+<ul>
+<li>绝对路径：动态链接器直接按照该绝对路径查找</li>
+<li>相对路径：动态链接器在/lib、/usr/lib、以及<u>/ld.so.conf
+配置文件指定的路径</u>中查找</li>
+</ul></li>
+<li><p>ldconfig ：该程序主要有两个用途</p>
+<ul>
+<li>调整SO_NAME：负责各共享库 SO_NAME 的创建、删除或更新</li>
+<li>调整/etc/ld.so.cache：将各共享库的 SO_NAME
+收集起来，存放在<strong>缓存目录</strong> /ld.so.cache 中</li>
+</ul>
+<p><strong>注意</strong>：动态链接器的查找顺序为
+<strong>/etc/ld.so.cache</strong> <span class="math inline">\(\rightarrow\)</span> /usr/lib or /lib
+<br>/etc/ld.so.cache 缓存加快了动态链接器搜索共享库的速度</p></li>
+</ul></li>
+<li><p>环境变量：主要有以下三种</p>
+<ul>
+<li><p>LD_LIBRARY_PATH：存放<strong>若干个路径</strong>构成的环境变量，每个路径之间由冒号分割
+动态链接器会优先在该环境变量保存到路径中查找共享库（比/etc/ld.so.cache优先级更高）</p></li>
+<li><p>LD_PRELOAD：在动态链接器开始装载共享库之前，会提前预装该环境变量中保存的共享库
+根据<strong>全局符号介入</strong>机制，预装共享库包含的符号可以覆盖所有后装载的符号</p>
+<p><strong>注意</strong>：正常情况下不应使用LD_LIBRARY_PATH和LD_PRELOAD</p></li>
+<li><p>LD_DEBUG：打开动态链接器的调试功能，根据<strong>不同参数</strong>打印链接信息：</p>
+<ul>
+<li><p>bindings：显示动态链接器的<strong>符号绑定</strong>过程</p></li>
+<li><p>libs：显示<strong>共享库的查找</strong>过程</p></li>
+<li><p>versions：显示各符号的<strong>版本依赖关系</strong></p></li>
+<li><p>reloc：显示<strong>重定位</strong>过程</p></li>
+<li><p>symbols：显示<strong>符号表查找</strong>过程</p>
+<p><strong>...</strong></p></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="八windows下的动态链接">八、Windows下的动态链接</h3>
+<ul>
+<li><p>基地址与RVA：对于可执行exe文件，ImageBase =
+0x400000；对于共享库dll文件，ImageBase = 0x10000000</p>
+<p>RVA：相对基地址的偏移量</p>
+<p><strong>注意</strong>：对于dll文件，如果其优先基地址已被占据，则PE装载器会选用其它空闲地址</p></li>
+<li><p>导入与导出：DLL中需要<strong>显示</strong>地告诉编译器导出哪些符号；ELF中默认导出所有全局符号</p>
+<ul>
+<li>__declspec：用于指定变量或函数符号的<strong>导入或导出</strong>
+<ol type="1">
+<li>__declspec(dllexport)：表示从本DLL导出的符号</li>
+<li>__declspec(dllimport)：表示从其它DLL导入的符号</li>
+</ol></li>
+</ul></li>
+<li><p>DLL显示<strong>运行时</strong>链接：Windows提供了3个支持运行时链接的API：</p>
+<ul>
+<li>LoadLibrary( )：装载一个DLL到进程的地址空间，与dlopen( )类似</li>
+<li>GetProcAddress( )：在DLL中查找一个符号，与dlsym( )类似</li>
+<li>FreeLibrary( )：卸载某个已经加载的模块，与dlclose( )类似</li>
+</ul>
+<hr></li>
+<li><p>导出表（IMAGE_EXPORT_DIRECTORY）：PE文件头中DataDirectory数组的<strong>第一项</strong></p>
+<ul>
+<li>导出地址表（EAT）：存放各导出函数的<strong>RVA</strong></li>
+<li>函数名表（Name Table）：存放各导出函数的<strong>名称</strong></li>
+<li>序号表（Name-Ordered
+Table）：存放各导出函数<strong>名称对应的序号</strong></li>
+</ul></li>
+<li><p>序号：导出函数的序号 = 函数<strong>在EAT中的下标</strong> +
+1</p></li>
+<li><p>导入符号流程：动态链接器需要查找导入符号的RVA</p>
+<ol type="1">
+<li>模块A导入b.dll中的foo函数，并在A的导入表中记录函数名“foo”</li>
+<li>动态链接时，动态链接器在b.dll的函数名表中查找“foo”，再根据<strong>序号表</strong>找到对应的序号</li>
+<li>根据序号算出函数<strong>在EAT中的下标</strong>，从而获得其RVA</li>
+</ol></li>
+<li><p>EXP文件：链接器创建DLL的同时得到的<strong>临时文件</strong>，其中经过两遍扫描：</p>
+<ol type="1">
+<li>第一遍：扫描并收集所有目标文件的<u>导出符号信息</u>，创建DLL导出表，并将导出表放入<strong>EXP文件</strong></li>
+<li>第二遍：将EXP文件与其它目标文件链接在一起，输出为<strong>DLL文件的导出表</strong></li>
+</ol></li>
+<li><p>导出重定向：EAT中存的并不是函数的RVA，而是指向<strong>导出表</strong>中的某个字符串</p>
+<p>该字符串是<u>符号重定向后</u>指向的“<strong>模块名 +
+函数名</strong>”</p></li>
+<li><p>导入表：保存了模块使用的<u>来自DLL</u>的变量或函数信息，本质上是IMAGE_IMPORT_DESCRIPTOR结构数组
+<br1>数组元素结构如下：</br1></p>
+<ul>
+<li>FirstThunk：指向导入地址数组（IAT）</li>
+<li>OriginalFirstThunk：指向导入名称表（INT）；INT是与IAT完全相同的副本</li>
+</ul></li>
+<li><p>导入地址数组（IAT）：每个表项对应一个<strong>被导入的符号</strong></p>
+<ol type="1">
+<li>装载但未重定位时：表项元素值为对应<u>导入符号的序号或符号名</u></li>
+<li>链接完成后：表项元素值改写为对应<u>导入符号的真正地址</u></li>
+</ol>
+<hr></li>
+<li><p>重定基地址（Rebasing）：</p>
+<ul>
+<li>PE中的DLL代码段<strong>不是地址无关</strong>的，拥有<strong>固定的装载基地址</strong>0x10000000</li>
+<li>装载时重定位：若DLL模块的目标地址被占用，系统会为其选择<strong>新的装载地址</strong>，对所有绝对地址重定位</li>
+<li>改变默认基址：在装载前直接改变DLL的装载基地址</li>
+<li>系统DLL：系统在进程中划出 0x70000000 ~ 0x80000000
+的区域映射常用的系统DLL，如kernel32.dll</li>
+</ul>
+<hr></li>
+<li><p>导入函数绑定：在<u>符号解析与重定位之前</u>直接将外部函数的地址存入<strong>导入表</strong>中</p>
+<ul>
+<li>DLL绑定：遍历被绑定程序的导入表，将符号的<strong>目标地址</strong>写入被绑定程序的导入表（<strong>INT</strong>）内</li>
+<li>绑定失效：符号绑定存在以下两种失效的可能：
+<ul>
+<li>DLL更新：被依赖的DLL更新导致DLL的<strong>导出函数地址改变</strong></li>
+<li>DLL装载时重定位：被依赖的DLL的<strong>装载地址与被绑定时不一致</strong></li>
+</ul></li>
+<li>绑定失效的解决方案：
+<ol type="1">
+<li>绑定时：将导入DLL的<u>时间戳（Timestamp）与校验和(Checksum)</u>存入被绑定文件的导入表中</li>
+<li>装载时：确认被装载的DLL<strong>未被更新</strong>，且<strong>未发生装载时重定位</strong></li>
+</ol></li>
+</ul>
+<hr></li>
+<li><p>DLL HELL ：DLL版本不兼容问题</p>
+<ul>
+<li><p>DLL HELL发生的主要原因：</p>
+<ul>
+<li>应用程序安装时<u>新版本的DLL覆盖了旧版本的DLL</u>，导致只能依赖旧版本DLL的程序崩溃</li>
+<li>新版本的DLL的安装引入了一个<u>新的BUG</u></li>
+<li>DLL缺失或误删、操作系统更新<strong>...</strong></li>
+</ul></li>
+<li><p>DLL HELL解决方法：</p>
+<ul>
+<li>静态链接：通过<strong>静态链接</strong>的方法链接其所需要的所有库，避免使用DLL</li>
+<li>防止DLL覆盖：Windows文件保护技术（WFP）可以阻止未授权的第三方应用覆盖系统DLL</li>
+<li>解决DLL冲突：让每个程序拥有自己专门依赖的DLL，隔离不同版本的DLL</li>
+</ul></li>
+<li><p>.NET框架下DLL HELL解决方案：</p>
+<ul>
+<li><p>程序集：可执行文件集（.exe） or 库程序集（DLL
+动态链接库）</p></li>
+<li><p>Manifest文件：描述程序集的<strong>清单文件</strong></p>
+<ul>
+<li><p>文件内容：程序集名称、版本号、成员列表、依赖资源等；&lt;XML&gt;格式</p></li>
+<li><p>强文件名：系统类型 + 文件名 + 版本号 + 平台环境 + 公钥</p>
+<p><strong>注意</strong>：强文件名允许<strong>不同版本的相同库共存</strong>而不发生冲突
+如
+目录下每个DLL都拥有以其强文件名命名的<strong>独立目录</strong></p></li>
+</ul></li>
+<li><p>SxS
+Manager：并行（Side-By-Side）管理器，根据应用程序的<strong>manifest</strong>加载版本正确的DLL</p></li>
+</ul>
+<p><strong>注意</strong>：Manifest机制要求应用程序在系统中必须拥有与manifest中指定的<strong>完全相同的DLL</strong>包括版本一致、编译平台一致等</p></li>
+</ul></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/operating-system/" class="category-chain-item">operating system</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/dynamic-link/">#dynamic link</a>
+      
+        <a href="/tags/DLL/">#DLL</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>『operating system-2』dynamic link</div>
+      <div>http://larry0454.github.io/2023/07/25/operating_system/dynamic-link/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 25, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/08/01/operating_system/runtime-library/" title="『operating system-3』runtime library">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">『operating system-3』runtime library</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/20/operating_system/static-link/" title="『operating system-1』static link">
+                        <span class="hidden-mobile">『operating system-1』static link</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
