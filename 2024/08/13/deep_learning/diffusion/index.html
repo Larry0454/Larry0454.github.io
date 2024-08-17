@@ -16,29 +16,24 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="正向运动学 一、D-H 参数法  什么是&quot;正向运动学&quot;：已知开链机构各关节转角，求末端的位置和姿态 设置坐标系位置：  确定 轴\(i\) 的 \(\hat{z_i}\)轴：\(\hat{z}_i\) 的正方向与 关节轴\(i\) 的轴线重合，正方向由轴旋转下的右手螺旋定则确定 确定连杆坐标系的原点：设 \(\hat{z}_{i-1}\) 和 \(\hat{z}_{i}\) 有唯">
+    <meta name="description" content="《Denoising Diffusion Probabilistic Models》 一、架构总览 待补充 ...">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『robotics-2』forward kinematics">
-<meta property="og:url" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/index.html">
+<meta property="og:title" content="『deep learning-2』《Denoising Diffusion Probabilistic Models》">
+<meta property="og:url" content="http://larry0454.github.io/2024/08/13/deep_learning/diffusion/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="正向运动学 一、D-H 参数法  什么是&quot;正向运动学&quot;：已知开链机构各关节转角，求末端的位置和姿态 设置坐标系位置：  确定 轴\(i\) 的 \(\hat{z_i}\)轴：\(\hat{z}_i\) 的正方向与 关节轴\(i\) 的轴线重合，正方向由轴旋转下的右手螺旋定则确定 确定连杆坐标系的原点：设 \(\hat{z}_{i-1}\) 和 \(\hat{z}_{i}\) 有唯">
+<meta property="og:description" content="《Denoising Diffusion Probabilistic Models》 一、架构总览 待补充 ...">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/%E5%9B%9B%E4%B8%AA%E5%8F%82%E6%95%B0.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/RRRP.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/%E8%A1%A8%E6%A0%BC%E6%B3%95.jpg">
-<meta property="article:published_time" content="2024-07-22T04:31:17.000Z">
-<meta property="article:modified_time" content="2024-08-11T10:59:33.675Z">
+<meta property="article:published_time" content="2024-08-13T09:41:02.000Z">
+<meta property="article:modified_time" content="2024-08-17T08:25:00.457Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="geometry transform">
-<meta property="article:tag" content="D-H parametric method">
+<meta property="article:tag" content="diffusion">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/%E5%9B%9B%E4%B8%AA%E5%8F%82%E6%95%B0.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『robotics-2』forward kinematics - Blog</title>
+  <title>『deep learning-2』《Denoising Diffusion Probabilistic Models》 - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -216,7 +211,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『robotics-2』forward kinematics"></span>
+            <span id="subtitle" data-typed-text="『deep learning-2』《Denoising Diffusion Probabilistic Models》"></span>
           
         </div>
 
@@ -227,8 +222,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-22 12:31" pubdate>
-          July 22, 2024 pm
+        <time datetime="2024-08-13 17:41" pubdate>
+          August 13, 2024 pm
         </time>
       </span>
     
@@ -239,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.9k words
+          51 words
         
       </span>
     
@@ -250,7 +245,7 @@
         
         
         
-          25 mins
+          1 mins
         
       </span>
     
@@ -296,133 +291,15 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『robotics-2』forward kinematics</h1>
+            <h1 style="display: none">『deep learning-2』《Denoising Diffusion Probabilistic Models》</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="正向运动学">正向运动学</h2>
-<h3 id="一d-h-参数法">一、D-H 参数法</h3>
-<ul>
-<li><p>什么是"正向运动学"：已知开链机构各<strong><u>关节</u></strong>转角，求<strong><u>末端</u></strong>的位置和姿态</p></li>
-<li><p>设置坐标系位置：</p>
-<ul>
-<li><p>确定 轴<span class="math inline">\(i\)</span> 的 <span class="math inline">\(\hat{z_i}\)</span>轴：<span class="math inline">\(\hat{z}_i\)</span> 的正方向与 关节轴<span class="math inline">\(i\)</span>
-的轴线重合，正方向由轴旋转下的<strong>右手螺旋定则</strong>确定</p></li>
-<li><p>确定连杆坐标系的<strong>原点</strong>：设 <span class="math inline">\(\hat{z}_{i-1}\)</span> 和 <span class="math inline">\(\hat{z}_{i}\)</span>
-有唯一的<strong><u>公法线</u></strong>，令该公法线连接轴 <span class="math inline">\(\hat{z}_{i-1}\)</span> 和 轴 <span class="math inline">\(\hat{z}_i\)</span><br>系 {i-1} 的坐标原点就放在
-<u>轴i-1</u> 和 <u>公法线</u> 的交点处（系 {i}
-的原点暂时不确定）</p></li>
-<li><p>确定 <span class="math inline">\(\hat{x}\)</span> 和 <span class="math inline">\(\hat{y}\)</span> 的正方向：{i-1} 的 <span class="math inline">\(\hat{x}\)</span>
-常选在对应的<strong>公法线</strong>上，指向 轴i；{i-1} 的 <span class="math inline">\(\hat{y}\)</span> 方向由右手系规范确定，即 <span class="math inline">\(\hat{x} \times \hat{y} = \hat{z}\)</span></p>
-<blockquote>
-<p><strong>注意</strong>：如果两个旋转轴相交导致<strong>公法线长度=0</strong>，任选一条平面<span class="math inline">\((\hat{z}_{i-1},
-\hat{z_i})\)</span>的法线即可；如果两个旋转轴平行，从<strong>无数条</strong>公法线中任选一条即可</p>
-</blockquote></li>
-</ul></li>
-<li><p>定义 4 个参数：</p>
-<ul>
-<li><p>连杆长度 <span class="math inline">\(a_{i-1}\)</span>：公法线的长度，即 <span class="math inline">\(\hat{z}_{i-1}
-\xrightarrow{\text{沿}\hat{x}_{i-1}\text{平移}}\hat{z}_i\)</span>
-的距离</p>
-<blockquote>
-<p><strong>注意</strong>：这里不应该望文生义，<u>不是真实连杆的物理长度</u></p>
-</blockquote></li>
-<li><p>连杆扭转角度 <span class="math inline">\(\alpha_{i-1}\)</span>：
-<span class="math inline">\(\hat{z}_{i-1} \xrightarrow{\text{绕}
-\hat{x}_{i-1}\text{旋转}} \hat{z}_i\)</span> 的角度</p></li>
-<li><p>连杆偏距 <span class="math inline">\(d_i\)</span>：从 <span class="math inline">\(\hat{x}_{i-1}\)</span> 与 <span class="math inline">\(\hat{z}_i\)</span> 的交点到连杆坐标系 {i}
-原点的<strong><u>有向</u>距离</strong>，即 <span class="math inline">\(\hat{x}_{i-1}  \xrightarrow{\text{沿}\hat{z}_i\text{平移}}
-\hat{x}_i\)</span> 的距离</p></li>
-<li><p>关节转角 <span class="math inline">\(\phi_i\)</span>：<span class="math inline">\(\hat{x}_{i-1} \xrightarrow{\text{绕}\hat{z}_i旋转}
-\hat{x}_i\)</span> 的角度</p></li>
-</ul>
-<p><img src="/2024/07/22/robotics/forward-kinematics/四个参数.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
-</ul>
-<hr>
-<h3 id="二机器人正向运动学">二、机器人正向运动学</h3>
-<ul>
-<li><p>齐次变换矩阵：由 <strong><u>D-H 参数</u></strong>决定变换矩阵
-<span class="math inline">\(T_{i-1,i}\)</span>，每个连杆坐标系对应的齐次变换矩阵都有如下形式
-<span class="math display">\[
-\begin{align}
-T_{i-1,i} &amp;= \mathbf{Rot}(\hat{x}, \alpha_{i-1})
-\mathbf{Trans}(\hat{x}, a_{i-1}) \mathbf{Trans}(\hat{z},
-d_i)\mathbf{Rot}(\hat{z}, \phi_i) \\ &amp;= \begin{bmatrix} \cos \phi_i
-&amp; -\sin \phi_i &amp; 0 &amp; a_{i-1} \\ \sin \phi_i \cos
-\alpha_{i-1} &amp;\cos phi_i \cos \alpha_{i-1} &amp; -\sin \alpha_{i-1}
-&amp; -d_i \sin \alpha_{i-1} \\ \sin \phi_i \sin \alpha_{i-1} &amp; \cos
-\phi_i \sin \alpha_{i-1} &amp; \cos \alpha_{i-1} &amp; d_i \cos
-\alpha_{i-1} \\ 0 &amp; 0 &amp; 0 &amp; 1 \\ \end{bmatrix}
-\end{align}
-\]</span></p>
-<ul>
-<li><p>旋转算子 1： <span class="math display">\[\mathbf{Rot}(\hat{x},
-\alpha_{i-1}) = \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp;
-\cos \alpha_{i-1} &amp; -\sin \alpha_{i-1} &amp; 0 \\0 &amp; \sin
-\alpha_{i-1} &amp; \cos \alpha_{i-1} &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;
-1 \\ \end{bmatrix}\]</span></p></li>
-<li><p>平移算子 1： <span class="math display">\[\mathbf{Trans}(\hat{x},
-a_{i-1}) = \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; a_{i-1} \\ 0 &amp; 1
-&amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;
-1 \end{bmatrix}\]</span></p></li>
-<li><p>平移算子 2： <span class="math display">\[\mathbf{Trans}(\hat{z},
-d_i) = \begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0
-&amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; d_i \\ 0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}\]</span></p></li>
-<li><p>旋转算子 2： <span class="math display">\[\mathbf{Rot}(\hat{z},
-\phi_i) = \begin{bmatrix} \cos \phi_{i-1} &amp; -\sin \phi_{i-1} &amp; 0
-&amp; 0 \\ \sin \phi_{i-1} &amp; \cos \phi_{i-1} &amp; 0 &amp; 0 \\ 0
-&amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;
-1  \end{bmatrix}\]</span></p></li>
-</ul>
-<p>则该开链机构的正向运动学方程为 <span class="math inline">\(T_{0n}(\theta_1, \dots ,\theta_n) =
-T_{01}(\theta_1)T_{12}(\theta_2)\dots T_{n-1,n}(\theta_n)\)</span><br>
-<span class="math inline">\(T_{i-1,i}\)</span>
-表示<strong>相邻两个连杆</strong> {i-1} 和 {i} 的相对位移</p></li>
-<li><p>齐次变换过程：从连杆坐标系{i-1} 变换到 连杆坐标系{i}</p>
-<ol type="1">
-<li>绕 {i-1} 的 <span class="math inline">\(\hat{x}\)</span> 旋转 <span class="math inline">\(\alpha_{i-1}\)</span></li>
-<li>沿 {i-1} 的 <span class="math inline">\(\hat{x}\)</span> 平移 <span class="math inline">\(a_{i-1}\)</span></li>
-<li>沿 {i} 的 <span class="math inline">\(\hat{z}\)</span> 平移 <span class="math inline">\(d_{i}\)</span></li>
-<li>绕 {i} 的 <span class="math inline">\(\hat{z}\)</span> 旋转 <span class="math inline">\(\phi_i\)</span></li>
-</ol></li>
-</ul>
-<hr>
-<h3 id="三实际算例">三、实际算例</h3>
-<ul>
-<li><p>求解时额外需要注意的：</p>
-<ul>
-<li>选取基坐标系：一般令 {0} 与 <strong>{1}</strong>
-重合，保证当关节为转动副时 <span class="math inline">\(a_0 = \alpha_0 =
-d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
-= \phi_1 = 0\)</span></li>
-<li>选取末端坐标系：一般把 {n}
-放在<strong>末端执行器</strong>上的某个参考点</li>
-<li>关节是移动副：坐标系设置方式与 转动副 不同
-<ul>
-<li><span class="math inline">\(\hat{z}\)</span>
-轴与移动副作用线方向相同（转动副的 <span class="math inline">\(\hat{z}\)</span> 满足右手螺旋）</li>
-<li>连杆偏距 <span class="math inline">\({d}\)</span> 成为变量，关节转角
-<span class="math inline">\({\phi}\)</span>
-成为常量（转动副则相反）</li>
-</ul></li>
-<li>齐次变换的求解顺序：1 和 2 可颠倒，3 和 4 可颠倒</li>
-<li><span class="math inline">\(\phi\)</span>
-转动的正方向：满足右手定则，大拇指沿轴方向，四指指向的方向是旋转正方向</li>
-</ul></li>
-<li><p>例题：下面以空间开链RRRP机器人为例，同时包含移动副和转动副</p>
-<p><img src="/2024/07/22/robotics/forward-kinematics/RRRP.png" srcset="/img/loading.gif" lazyload width="70%"></p>
-<p><img src="/2024/07/22/robotics/forward-kinematics/表格法.jpg" srcset="/img/loading.gif" lazyload width="70%"></p>
-<ul>
-<li>上表格中的 <span class="math inline">\((i, j)\)</span> 表示从 {i-1}
-到 {i} 需要经过 变换j</li>
-<li>变换j 的值是在经过 变换j-1 后才求出的（不是开始时一次性量出的）</li>
-<li>对于填充最后一个变量 <span class="math inline">\(\phi\)</span>，保持
-{i-1} 不动、先把 {i} 旋转 <span class="math inline">\(\phi_i\)</span>
-度，再看把 {i-1} 绕<span class="math inline">\(\hat{z}_i\)</span>旋转多少度可得到 {i}</li>
-</ul></li>
-</ul>
+                <h2 id="denoising-diffusion-probabilistic-models">《Denoising Diffusion
+Probabilistic Models》</h2>
+<h3 id="一架构总览">一、架构总览</h3>
+<p>待补充 ...</p>
 
                 
               </div>
@@ -441,7 +318,7 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
     
       <span class="category-chain">
         
-  <a href="/categories/robotics/" class="category-chain-item">robotics</a>
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
   
   
 
@@ -456,9 +333,7 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/geometry-transform/">#geometry transform</a>
-      
-        <a href="/tags/D-H-parametric-method/">#D-H parametric method</a>
+        <a href="/tags/diffusion/">#diffusion</a>
       
     </div>
   
@@ -470,8 +345,8 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『robotics-2』forward kinematics</div>
-      <div>http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/</div>
+      <div>『deep learning-2』《Denoising Diffusion Probabilistic Models》</div>
+      <div>http://larry0454.github.io/2024/08/13/deep_learning/diffusion/</div>
     </div>
     <div class="license-meta">
       
@@ -483,7 +358,7 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>July 22, 2024</div>
+          <div>August 13, 2024</div>
         </div>
       
       
@@ -515,18 +390,12 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/22/cyber_security/asymmetric-encryption/" title="『cyber security-2』asymmetric encryption">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『cyber security-2』asymmetric encryption</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/12/signal_and_system/Fourier-transform/" title="『signal and system-3』Fourier transform">
-                        <span class="hidden-mobile">『signal and system-3』Fourier transform</span>
+                      <a href="/2024/08/11/deep_learning/transformer/" title="『deep learning-1』《Attention is all you need》">
+                        <span class="hidden-mobile">『deep learning-1』《Attention is all you need》</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

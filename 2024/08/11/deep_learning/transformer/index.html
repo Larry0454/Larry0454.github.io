@@ -16,29 +16,35 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="正向运动学 一、D-H 参数法  什么是&quot;正向运动学&quot;：已知开链机构各关节转角，求末端的位置和姿态 设置坐标系位置：  确定 轴\(i\) 的 \(\hat{z_i}\)轴：\(\hat{z}_i\) 的正方向与 关节轴\(i\) 的轴线重合，正方向由轴旋转下的右手螺旋定则确定 确定连杆坐标系的原点：设 \(\hat{z}_{i-1}\) 和 \(\hat{z}_{i}\) 有唯">
+    <meta name="description" content="《Attention is all you need》 一、架构总览  模型结构：由左边的 encoder 和 右边的 decoder 组成，架构总览图如下：  推理流程：这里以&quot;机器翻译&quot;为例子，输入中文&quot;我爱你&quot;、输出英文&quot;i love you &lt;EOS&gt;&quot;  encoder 词嵌入：中文输入左侧的&quot;encoder&quot;模块，将中文单词&quot;我&quot;、&quot;爱&quot;、&quot;你&quot;分别转换">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『robotics-2』forward kinematics">
-<meta property="og:url" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/index.html">
+<meta property="og:title" content="『deep learning-1』《Attention is all you need》">
+<meta property="og:url" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="正向运动学 一、D-H 参数法  什么是&quot;正向运动学&quot;：已知开链机构各关节转角，求末端的位置和姿态 设置坐标系位置：  确定 轴\(i\) 的 \(\hat{z_i}\)轴：\(\hat{z}_i\) 的正方向与 关节轴\(i\) 的轴线重合，正方向由轴旋转下的右手螺旋定则确定 确定连杆坐标系的原点：设 \(\hat{z}_{i-1}\) 和 \(\hat{z}_{i}\) 有唯">
+<meta property="og:description" content="《Attention is all you need》 一、架构总览  模型结构：由左边的 encoder 和 右边的 decoder 组成，架构总览图如下：  推理流程：这里以&quot;机器翻译&quot;为例子，输入中文&quot;我爱你&quot;、输出英文&quot;i love you &lt;EOS&gt;&quot;  encoder 词嵌入：中文输入左侧的&quot;encoder&quot;模块，将中文单词&quot;我&quot;、&quot;爱&quot;、&quot;你&quot;分别转换">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/%E5%9B%9B%E4%B8%AA%E5%8F%82%E6%95%B0.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/RRRP.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/%E8%A1%A8%E6%A0%BC%E6%B3%95.jpg">
-<meta property="article:published_time" content="2024-07-22T04:31:17.000Z">
-<meta property="article:modified_time" content="2024-08-11T10:59:33.675Z">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/QKV.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/qkvector.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/QKVZ.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/multi.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/MaskQKVZ.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/cross.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/auto.png">
+<meta property="article:published_time" content="2024-08-11T11:25:57.000Z">
+<meta property="article:modified_time" content="2024-08-17T08:50:41.224Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="geometry transform">
-<meta property="article:tag" content="D-H parametric method">
+<meta property="article:tag" content="attention">
+<meta property="article:tag" content="transformer">
+<meta property="article:tag" content="embedding">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/%E5%9B%9B%E4%B8%AA%E5%8F%82%E6%95%B0.jpg">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『robotics-2』forward kinematics - Blog</title>
+  <title>『deep learning-1』《Attention is all you need》 - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -216,7 +222,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『robotics-2』forward kinematics"></span>
+            <span id="subtitle" data-typed-text="『deep learning-1』《Attention is all you need》"></span>
           
         </div>
 
@@ -227,8 +233,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-22 12:31" pubdate>
-          July 22, 2024 pm
+        <time datetime="2024-08-11 19:25" pubdate>
+          August 11, 2024 pm
         </time>
       </span>
     
@@ -239,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.9k words
+          4k words
         
       </span>
     
@@ -250,7 +256,7 @@
         
         
         
-          25 mins
+          34 mins
         
       </span>
     
@@ -296,131 +302,209 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『robotics-2』forward kinematics</h1>
+            <h1 style="display: none">『deep learning-1』《Attention is all you need》</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="正向运动学">正向运动学</h2>
-<h3 id="一d-h-参数法">一、D-H 参数法</h3>
+                <h2 id="attention-is-all-you-need">《Attention is all you need》</h2>
+<h3 id="一架构总览">一、架构总览</h3>
 <ul>
-<li><p>什么是"正向运动学"：已知开链机构各<strong><u>关节</u></strong>转角，求<strong><u>末端</u></strong>的位置和姿态</p></li>
-<li><p>设置坐标系位置：</p>
-<ul>
-<li><p>确定 轴<span class="math inline">\(i\)</span> 的 <span class="math inline">\(\hat{z_i}\)</span>轴：<span class="math inline">\(\hat{z}_i\)</span> 的正方向与 关节轴<span class="math inline">\(i\)</span>
-的轴线重合，正方向由轴旋转下的<strong>右手螺旋定则</strong>确定</p></li>
-<li><p>确定连杆坐标系的<strong>原点</strong>：设 <span class="math inline">\(\hat{z}_{i-1}\)</span> 和 <span class="math inline">\(\hat{z}_{i}\)</span>
-有唯一的<strong><u>公法线</u></strong>，令该公法线连接轴 <span class="math inline">\(\hat{z}_{i-1}\)</span> 和 轴 <span class="math inline">\(\hat{z}_i\)</span><br>系 {i-1} 的坐标原点就放在
-<u>轴i-1</u> 和 <u>公法线</u> 的交点处（系 {i}
-的原点暂时不确定）</p></li>
-<li><p>确定 <span class="math inline">\(\hat{x}\)</span> 和 <span class="math inline">\(\hat{y}\)</span> 的正方向：{i-1} 的 <span class="math inline">\(\hat{x}\)</span>
-常选在对应的<strong>公法线</strong>上，指向 轴i；{i-1} 的 <span class="math inline">\(\hat{y}\)</span> 方向由右手系规范确定，即 <span class="math inline">\(\hat{x} \times \hat{y} = \hat{z}\)</span></p>
+<li><p>模型结构：由左边的 <strong>encoder</strong> 和 右边的
+<strong>decoder</strong> 组成，架构总览图如下：</p>
+<p><img src="/2024/08/11/deep_learning/transformer/架构图.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>推理流程：这里以"机器翻译"为例子，输入中文"我爱你"、输出英文"i
+love you &lt;EOS&gt;"</p>
+<ol type="1">
+<li><p>encoder
+词嵌入：<strong>中文</strong>输入左侧的"encoder"模块，将中文单词"我"、"爱"、"你"分别转换成对应的<u><strong>词向量</strong></u></p></li>
+<li><p>encoder
+位置嵌入：将三个中文单词对应的词向量分别进行<u><strong>位置编码</strong></u>，再执行
+词向量 + 位置向量 操作</p></li>
+</ol>
 <blockquote>
-<p><strong>注意</strong>：如果两个旋转轴相交导致<strong>公法线长度=0</strong>，任选一条平面<span class="math inline">\((\hat{z}_{i-1},
-\hat{z_i})\)</span>的法线即可；如果两个旋转轴平行，从<strong>无数条</strong>公法线中任选一条即可</p>
-</blockquote></li>
+<p><strong>注意</strong>：每个单词的<u>词向量</u>和<u>位置向量</u>是等长度的，保证两个向量可以逐元相加</p>
+</blockquote>
+<ol start="3" type="1">
+<li><p>encoder 注意力：根据输入的每个词向量（经过位置编码）计算 Q、K、V
+矩阵</p></li>
+<li><p>利用 Q、V 矩阵计算两两词向量之间的 <u><strong>注意力分数<span class="math inline">\(\alpha_{ij}\)</span></strong></u>，获得序列内部相关性信息</p></li>
+<li><p>将 <u>注意力分数</u> 结合 <u>V</u>
+矩阵进行<u><strong>加权求和</strong></u>计算每个词向量的重构词向量</p></li>
+<li><p>encoder
+输出：将重构词向量输入前馈网络（两个全连接层），产生编码器输出</p></li>
+</ol>
+<hr>
+<ol start="5" type="1">
+<li><p>decoder
+词嵌入：由于使用了"掩码"机制，所以将整个序列向后平移一位，开头插入"<u><strong>&lt;SOS&gt;</strong></u>"，并将其转成词向量输入</p></li>
+<li><p>decoder 位置嵌入：同 encoder 位置嵌入</p></li>
+<li><p>decoder 掩码注意力：类似
+encoder，生成下一个单词对应的query，作为交叉注意力机制的输入矩阵Q</p></li>
+</ol>
+<blockquote>
+<p><strong>注意</strong>：decoder掩码机制是"<strong><u>auto-regressive</u></strong>"的，如果当前已经输出了"i
+love"、下一个时间步将以"&lt;SOS&gt; i
+love"为已知信息（而无法看到后续的单词）输出下一个单词"you"</p>
+</blockquote>
+<ol start="8" type="1">
+<li><p>decoder 交叉注意力：以 <u>encoder</u> 的输出作为矩阵 K、V，以
+<u>decoder</u> 的当前输入作为
+Q，生成<u><strong>下一个单词</strong></u>的重构词向量</p></li>
+<li><p>decoder 输出：同 encoder 输出</p></li>
+<li><p>transformer 输出：经过全连接 + <u><strong>softmax</strong></u>
+层，输出当前时间步下词表中每个单词的概率，输出预测的单词（应当是"i"）</p></li>
+</ol>
+<p>下一时间步转回"decoder词嵌入"步骤，以"&lt;SOS&gt;"和"i"为已知信息，尝试预测下一个单词"love"</p></li>
+<li><p>训练流程：encoder 部分与推理阶段基本无差异，但 decoder
+部分采用的是 "teaching-forcing" 方案</p>
+<ul>
+<li><p>decoder
+每生成一个新的单词，计算其与Ground-Truth单词之间的<strong>交叉熵损失</strong>（看作是"多分类"问题）</p></li>
+<li><p>decoder
+不像推理阶段将<u>当前输出的单词</u>拼接回下一时间步的输入，而是输入下一预期的单词（<strong><u>无掩码</u></strong>）</p>
+<p>保证训练阶段 decoder 生成的单词不会出现"一步错步步错"的问题</p></li>
 </ul></li>
-<li><p>定义 4 个参数：</p>
-<ul>
-<li><p>连杆长度 <span class="math inline">\(a_{i-1}\)</span>：公法线的长度，即 <span class="math inline">\(\hat{z}_{i-1}
-\xrightarrow{\text{沿}\hat{x}_{i-1}\text{平移}}\hat{z}_i\)</span>
-的距离</p>
-<blockquote>
-<p><strong>注意</strong>：这里不应该望文生义，<u>不是真实连杆的物理长度</u></p>
-</blockquote></li>
-<li><p>连杆扭转角度 <span class="math inline">\(\alpha_{i-1}\)</span>：
-<span class="math inline">\(\hat{z}_{i-1} \xrightarrow{\text{绕}
-\hat{x}_{i-1}\text{旋转}} \hat{z}_i\)</span> 的角度</p></li>
-<li><p>连杆偏距 <span class="math inline">\(d_i\)</span>：从 <span class="math inline">\(\hat{x}_{i-1}\)</span> 与 <span class="math inline">\(\hat{z}_i\)</span> 的交点到连杆坐标系 {i}
-原点的<strong><u>有向</u>距离</strong>，即 <span class="math inline">\(\hat{x}_{i-1}  \xrightarrow{\text{沿}\hat{z}_i\text{平移}}
-\hat{x}_i\)</span> 的距离</p></li>
-<li><p>关节转角 <span class="math inline">\(\phi_i\)</span>：<span class="math inline">\(\hat{x}_{i-1} \xrightarrow{\text{绕}\hat{z}_i旋转}
-\hat{x}_i\)</span> 的角度</p></li>
-</ul>
-<p><img src="/2024/07/22/robotics/forward-kinematics/四个参数.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul>
 <hr>
-<h3 id="二机器人正向运动学">二、机器人正向运动学</h3>
+<h3 id="二词嵌入">二、词嵌入</h3>
 <ul>
-<li><p>齐次变换矩阵：由 <strong><u>D-H 参数</u></strong>决定变换矩阵
-<span class="math inline">\(T_{i-1,i}\)</span>，每个连杆坐标系对应的齐次变换矩阵都有如下形式
+<li>单词的表示：一个单词 <span class="math inline">\(\Rightarrow\)</span>
+一个<strong>数值</strong>表示的词嵌入向量</li>
+<li>词嵌入向量：单词在词表中的<strong>序号</strong> <span class="math inline">\(\Rightarrow\)</span>
+嵌入词典中某行向量的<strong>索引</strong>，从而建立<u>单词</u>到<u>数值向量</u>的映射</li>
+<li>常见的词嵌入方法：包括 Word2Vec、GloVe 等预训练嵌入模型</li>
+</ul>
+<hr>
+<h3 id="三位置嵌入">三、位置嵌入</h3>
+<ul>
+<li><p>位置的表示：一个单词 <span class="math inline">\(\Rightarrow\)</span>
+一个<strong>数值</strong>表示的位置编码向量</p>
+<blockquote>
+<p><strong>注意</strong>：由于 Transformer
+本身无法捕捉序列内部单词间的顺序关系，所以需要对单词的位置进行编码</p>
+</blockquote></li>
+<li><p>位置嵌入向量：单词在句子中的<strong>位置</strong> <span class="math inline">\(\Rightarrow\)</span>
+一个位置<strong>编码向量</strong>；设单词在句子中的位置是 <span class="math inline">\(pos\)</span>，<span class="math inline">\(d\)</span> 表示位置嵌入维度（= 词嵌入维度） <span class="math display">\[
+\text{位置嵌入矩阵 PE} =
+\begin{cases}
+\text{PE}_{(pos, 2i)} = \sin(\dfrac{pos}{10000^{2i / d}}) \\
+\text{PE}_{(pos, 2i+1)} = \cos(\dfrac{pos}{10000^{(2i+1) / d}})
+\end{cases}
+\]</span> 上式分别定义了奇数维度（<span class="math inline">\(2i +
+1\)</span>）的 <span class="math inline">\(\text{PE}\)</span>
+和偶数维度（<span class="math inline">\(2i\)</span>）的位置矩阵 <span class="math inline">\(\text{PE}\)</span>；该编码方式有以下优点：</p>
+<ul>
+<li>每个位置都有唯一的编码，且编码是有界的（[-1, 1]）</li>
+<li>由三角函数的<strong>和角公式</strong>可知，<span class="math inline">\(\text{PE}_{(pos+\textbf{k}, i)}\)</span> 可由
+<span class="math inline">\(\text{PE}_{pos, i}\)</span>
+线性表示，故该编码方式可以表示任意<strong><u>比训练集句长更大的位置</u></strong></li>
+<li>位置编码的点积结果（<span class="math inline">\(\text{PE}_{(pos,
+2i)} \text{PE}_{(pos,
+2i+1)}\)</span>）仅与<u><strong>相对位置差</strong></u>有关，故可以建模相对位置关系</li>
+</ul>
+<p>将 <u>词嵌入向量</u> 和 <u>位置嵌入向量</u>
+<u><strong>逐元素相加</strong></u>，就得到了 encoder 和 decoder
+的输入</p></li>
+</ul>
+<hr>
+<h3 id="四自注意力机制">四、自注意力机制⭐</h3>
+<ul>
+<li><p>什么是"注意力机制"：建立同一句子中不同位置单词之间的内部联系（<span class="math inline">\(\text{QK}^T\)</span>），再用 <span class="math inline">\(\text{V}\)</span> 重建原句单词</p></li>
+<li><p><span class="math inline">\(\text{Q}\)</span>、<span class="math inline">\(\text{K}\)</span>、<span class="math inline">\(\text{V}\)</span> 矩阵的计算：让词嵌入矩阵 <span class="math inline">\(\text{X}\)</span> 分别乘以矩阵 <span class="math inline">\(\text{W}_\text{Q}\)</span>、<span class="math inline">\(\text{W}_{\text{K}}\)</span>、<span class="math inline">\(\text{W}_{\text{V}}\)</span>，得到每个词向量对应的
+latent representation</p>
+<blockquote>
+<p><strong>注意</strong>：本例以及下面的例子中，"嵌入向量"都是<strong>行向量</strong>，列方向指向句子长度延伸方向</p>
+</blockquote>
+<p><img src="/2024/08/11/deep_learning/transformer/QKV.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<li><p>Multi-Head Attention：多头注意力机制，由多个 self-attention
+模块堆叠组成</p>
+<ul>
+<li><p>self-attention 计算公式：设 <span class="math inline">\(d_k\)</span> 是每个 <span class="math inline">\(\text{k}\)</span> 的维度，则有 <span class="math display">\[
+\text{attention}(\text{Q}, \text{K}, \text{V}) =
+\text{softmax}(\dfrac{\text{QK}^T}{\sqrt{d_k}})\text{V}
+\]</span></p>
+<blockquote>
+<p><strong>注意</strong>：对 <span class="math inline">\(\text{QK}^T\)</span> 除以 <span class="math inline">\(\sqrt{d_k}\)</span> 是为了缩小方差，从而让 softmax
+矩阵元素间<strong>差距过大</strong></p>
+</blockquote></li>
+<li><p>注意力分数：设单词 1 发起的"查询"为 <span class="math inline">\(q_1\)</span>，单词 2 的"回应"为 <span class="math inline">\(k_2\)</span>，则注意力分数 <span class="math inline">\(\alpha_{1,2} = q_1 \cdot k_2^T\)</span></p>
+<p><img src="/2024/08/11/deep_learning/transformer/qkvector.png" srcset="/img/loading.gif" lazyload width="70%"></p>
+<p>写成矩阵形式，则有 <span class="math inline">\(\alpha =
+\text{QK}^T\)</span>；再经过 <span class="math inline">\(\text{softmax}\)</span> 变换（压缩归一化），使
+<span class="math inline">\(\alpha\)</span> 每一行的<strong><u>行和为
+1</u></strong></p>
+<p><img src="/2024/08/11/deep_learning/transformer/QKVZ.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<li><p>多头注意力组合：由上述注意力模块连接堆叠得到，论文中设计了 <span class="math inline">\(h = 8\)</span> 个注意力头，则有 <span class="math display">\[
+\begin{align}
+\text{MultiHead}(\text{Q}, \text{K}, \text{V}) &amp;=
+\text{Concat}(\text{head}_1, \dots ,\text{head}_h)\text{W}^O \\
+\text{其中 }\text{head}_i &amp;= \text{Attention}(\text{QW}_i^\text{Q},
+\text{KW}_i^\text{K}, \text{VW}_i^\text{V}) = \text{Z}_i
+\end{align}
+\]</span> 将所有的 <span class="math inline">\(\text{Z}_i\)</span>
+拼在一起后再乘以矩阵 <span class="math inline">\(\text{W}^O\)</span>，可以得到与 <span class="math inline">\(\text{Q,K,V}\)</span> 相同尺寸的输出矩阵 <span class="math inline">\(\text{Z}\)</span></p>
+<p>多头注意力机制可以捕捉到序列内不同单词间的<strong><u>多种相关性</u></strong>（一对
+<span class="math inline">\(\text{W}_i^\text{Q},
+\text{W}_i^{\text{K}}\)</span> （<span class="math inline">\(1 \le i \le
+h\)</span>）代表一种相关性）</p>
+<p><img src="/2024/08/11/deep_learning/transformer/multi.jpg" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+</ul></li>
+<li><p>Masked Multi-Head Attention：位于 decoder
+的第一层，基于<strong>掩码</strong>的多头注意力机制</p>
+<ul>
+<li><p>什么是"掩码"：可理解成一种 0~1 矩阵，与注意力分数 <span class="math inline">\(\text{QK}^T\)</span>
+同一尺寸，可屏蔽<u>未来</u>的词向量信息</p></li>
+<li><p>掩码的作用：让 decoder 在生成第 i 个单词时，<u>只能参考前 i
+个输入单词的信息</u>（"look ahead mask"）</p>
+<blockquote>
+<p><strong>注意</strong>：decoder 是 auto-regressive
+的，其输入是截至上一时间步的输出，输出下一个单词</p>
+</blockquote>
+<p><img src="/2024/08/11/deep_learning/transformer/MaskQKVZ.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+</ul></li>
+<li><p>Cross Attention：位于 decoder 的第二层，其结构与 Multi-Head
+Attention 相同，<u>但输入源不同</u></p>
+<ul>
+<li><p>输入：输入的 <span class="math inline">\(\text{Q}\)</span> 来自
+decoder 上层 Mask Attention 模块，输入的 <span class="math inline">\(\text{K, V}\)</span> 来自 encoder 的全局输出</p>
+<p><img src="/2024/08/11/deep_learning/transformer/cross.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>输出：经过 <span class="math inline">\(\text{FFN}\)</span>、<span class="math inline">\(\text{Linear}\)</span>层 和 <span class="math inline">\(\textbf{softmax}\)</span>
+后，得到词表中每个单词的预测prob</p>
+<p><img src="/2024/08/11/deep_learning/transformer/auto.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="五ffn-与-addnorm">五、FFN 与 Add&amp;Norm</h3>
+<ul>
+<li><p>前馈神经网络：encoder 和 decoder
+中的<strong>两层非线性层</strong>，分别独立作用于序列中每个单词位置
 <span class="math display">\[
 \begin{align}
-T_{i-1,i} &amp;= \mathbf{Rot}(\hat{x}, \alpha_{i-1})
-\mathbf{Trans}(\hat{x}, a_{i-1}) \mathbf{Trans}(\hat{z},
-d_i)\mathbf{Rot}(\hat{z}, \phi_i) \\ &amp;= \begin{bmatrix} \cos \phi_i
-&amp; -\sin \phi_i &amp; 0 &amp; a_{i-1} \\ \sin \phi_i \cos
-\alpha_{i-1} &amp;\cos phi_i \cos \alpha_{i-1} &amp; -\sin \alpha_{i-1}
-&amp; -d_i \sin \alpha_{i-1} \\ \sin \phi_i \sin \alpha_{i-1} &amp; \cos
-\phi_i \sin \alpha_{i-1} &amp; \cos \alpha_{i-1} &amp; d_i \cos
-\alpha_{i-1} \\ 0 &amp; 0 &amp; 0 &amp; 1 \\ \end{bmatrix}
+\text{FFN}(x) &amp;= \text{ReLU}(x\text{W}_1 + b_1)\text{W}_2 + b_2 \\
+\text{其中 ReLU}(x) &amp;= \max(0, x)
 \end{align}
-\]</span></p>
+\]</span></p></li>
+<li><p><span class="math inline">\(\text{Add}\&amp;\text{Norm}\)</span>：残差与层归一化</p>
 <ul>
-<li><p>旋转算子 1： <span class="math display">\[\mathbf{Rot}(\hat{x},
-\alpha_{i-1}) = \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp;
-\cos \alpha_{i-1} &amp; -\sin \alpha_{i-1} &amp; 0 \\0 &amp; \sin
-\alpha_{i-1} &amp; \cos \alpha_{i-1} &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;
-1 \\ \end{bmatrix}\]</span></p></li>
-<li><p>平移算子 1： <span class="math display">\[\mathbf{Trans}(\hat{x},
-a_{i-1}) = \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; a_{i-1} \\ 0 &amp; 1
-&amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;
-1 \end{bmatrix}\]</span></p></li>
-<li><p>平移算子 2： <span class="math display">\[\mathbf{Trans}(\hat{z},
-d_i) = \begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0
-&amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; d_i \\ 0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}\]</span></p></li>
-<li><p>旋转算子 2： <span class="math display">\[\mathbf{Rot}(\hat{z},
-\phi_i) = \begin{bmatrix} \cos \phi_{i-1} &amp; -\sin \phi_{i-1} &amp; 0
-&amp; 0 \\ \sin \phi_{i-1} &amp; \cos \phi_{i-1} &amp; 0 &amp; 0 \\ 0
-&amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;
-1  \end{bmatrix}\]</span></p></li>
+<li>残差连接：attention
+模块的<u>输出</u>直接与其<u>输入</u>相加，保留原始的序列信息</li>
+<li>层归一化：常用于<strong>序列</strong>任务中，对每个<strong>样本<u>内部</u>的各特征</strong>进行归一化</li>
 </ul>
-<p>则该开链机构的正向运动学方程为 <span class="math inline">\(T_{0n}(\theta_1, \dots ,\theta_n) =
-T_{01}(\theta_1)T_{12}(\theta_2)\dots T_{n-1,n}(\theta_n)\)</span><br>
-<span class="math inline">\(T_{i-1,i}\)</span>
-表示<strong>相邻两个连杆</strong> {i-1} 和 {i} 的相对位移</p></li>
-<li><p>齐次变换过程：从连杆坐标系{i-1} 变换到 连杆坐标系{i}</p>
-<ol type="1">
-<li>绕 {i-1} 的 <span class="math inline">\(\hat{x}\)</span> 旋转 <span class="math inline">\(\alpha_{i-1}\)</span></li>
-<li>沿 {i-1} 的 <span class="math inline">\(\hat{x}\)</span> 平移 <span class="math inline">\(a_{i-1}\)</span></li>
-<li>沿 {i} 的 <span class="math inline">\(\hat{z}\)</span> 平移 <span class="math inline">\(d_{i}\)</span></li>
-<li>绕 {i} 的 <span class="math inline">\(\hat{z}\)</span> 旋转 <span class="math inline">\(\phi_i\)</span></li>
-</ol></li>
+<blockquote>
+<p><strong>注意</strong>：相较于"批归一化"，层归一化仅作用于单一样本，不受批次大小影响，故适合处理<u>不定长</u>的序列任务</p>
+</blockquote></li>
 </ul>
 <hr>
-<h3 id="三实际算例">三、实际算例</h3>
+<h3 id="六复杂度分析">六、复杂度分析</h3>
 <ul>
-<li><p>求解时额外需要注意的：</p>
+<li>自注意力机制：设 <span class="math inline">\(n\)</span>
+是序列长度、<span class="math inline">\(d\)</span> 是模型表示的嵌入维度
 <ul>
-<li>选取基坐标系：一般令 {0} 与 <strong>{1}</strong>
-重合，保证当关节为转动副时 <span class="math inline">\(a_0 = \alpha_0 =
-d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
-= \phi_1 = 0\)</span></li>
-<li>选取末端坐标系：一般把 {n}
-放在<strong>末端执行器</strong>上的某个参考点</li>
-<li>关节是移动副：坐标系设置方式与 转动副 不同
-<ul>
-<li><span class="math inline">\(\hat{z}\)</span>
-轴与移动副作用线方向相同（转动副的 <span class="math inline">\(\hat{z}\)</span> 满足右手螺旋）</li>
-<li>连杆偏距 <span class="math inline">\({d}\)</span> 成为变量，关节转角
-<span class="math inline">\({\phi}\)</span>
-成为常量（转动副则相反）</li>
-</ul></li>
-<li>齐次变换的求解顺序：1 和 2 可颠倒，3 和 4 可颠倒</li>
-<li><span class="math inline">\(\phi\)</span>
-转动的正方向：满足右手定则，大拇指沿轴方向，四指指向的方向是旋转正方向</li>
-</ul></li>
-<li><p>例题：下面以空间开链RRRP机器人为例，同时包含移动副和转动副</p>
-<p><img src="/2024/07/22/robotics/forward-kinematics/RRRP.png" srcset="/img/loading.gif" lazyload width="70%"></p>
-<p><img src="/2024/07/22/robotics/forward-kinematics/表格法.jpg" srcset="/img/loading.gif" lazyload width="70%"></p>
-<ul>
-<li>上表格中的 <span class="math inline">\((i, j)\)</span> 表示从 {i-1}
-到 {i} 需要经过 变换j</li>
-<li>变换j 的值是在经过 变换j-1 后才求出的（不是开始时一次性量出的）</li>
-<li>对于填充最后一个变量 <span class="math inline">\(\phi\)</span>，保持
-{i-1} 不动、先把 {i} 旋转 <span class="math inline">\(\phi_i\)</span>
-度，再看把 {i-1} 绕<span class="math inline">\(\hat{z}_i\)</span>旋转多少度可得到 {i}</li>
+<li>每一层的复杂度：<span class="math inline">\(\mathcal{O}(n^2d)\)</span>，<span class="math inline">\(n^2\)</span>
+表示对序列内部的所有单词<u>两两求相似度</u>，<span class="math inline">\(d\)</span> 表示相似度计算</li>
+<li>顺序操作复杂度：<span class="math inline">\(\mathcal{O}(1)\)</span>，因为自主意力机制可以<strong>并行计算</strong>序列内所有元素之间的相似度</li>
+<li>最大路径长度：<span class="math inline">\(\mathcal{O}(1)\)</span>，因为任意<u>输出表示向量</u>都可以<strong>直接使用</strong><u>所有输入单词</u>计算得到，没有中间步骤</li>
 </ul></li>
 </ul>
 
@@ -441,7 +525,7 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
     
       <span class="category-chain">
         
-  <a href="/categories/robotics/" class="category-chain-item">robotics</a>
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
   
   
 
@@ -456,9 +540,11 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/geometry-transform/">#geometry transform</a>
+        <a href="/tags/attention/">#attention</a>
       
-        <a href="/tags/D-H-parametric-method/">#D-H parametric method</a>
+        <a href="/tags/transformer/">#transformer</a>
+      
+        <a href="/tags/embedding/">#embedding</a>
       
     </div>
   
@@ -470,8 +556,8 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『robotics-2』forward kinematics</div>
-      <div>http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/</div>
+      <div>『deep learning-1』《Attention is all you need》</div>
+      <div>http://larry0454.github.io/2024/08/11/deep_learning/transformer/</div>
     </div>
     <div class="license-meta">
       
@@ -483,7 +569,7 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>July 22, 2024</div>
+          <div>August 11, 2024</div>
         </div>
       
       
@@ -515,9 +601,9 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/22/cyber_security/asymmetric-encryption/" title="『cyber security-2』asymmetric encryption">
+                      <a href="/2024/08/13/deep_learning/diffusion/" title="『deep learning-2』《Denoising Diffusion Probabilistic Models》">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『cyber security-2』asymmetric encryption</span>
+                        <span class="hidden-mobile">『deep learning-2』《Denoising Diffusion Probabilistic Models》</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -525,8 +611,8 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/12/signal_and_system/Fourier-transform/" title="『signal and system-3』Fourier transform">
-                        <span class="hidden-mobile">『signal and system-3』Fourier transform</span>
+                      <a href="/2024/08/06/machine_vision/camera-geometry/" title="『machine vision-2』camera geometry">
+                        <span class="hidden-mobile">『machine vision-2』camera geometry</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
