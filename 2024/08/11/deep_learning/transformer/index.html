@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/cross.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/auto.png">
 <meta property="article:published_time" content="2024-08-11T11:25:57.000Z">
-<meta property="article:modified_time" content="2024-08-17T09:23:40.687Z">
+<meta property="article:modified_time" content="2024-08-18T01:20:12.687Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="attention">
 <meta property="article:tag" content="transformer">
@@ -362,7 +362,7 @@ Q，生成<u><strong>下一个单词</strong></u>的重构词向量</p></li>
 <li><p>decoder
 每生成一个新的单词，计算其与Ground-Truth单词之间的<strong>交叉熵损失</strong>（看作是"多分类"问题）</p></li>
 <li><p>decoder
-不像推理阶段将<u>当前输出的单词</u>拼接回下一时间步的输入，而是输入下一预期的单词（<strong><u>无掩码</u></strong>）</p>
+不像推理阶段将<u>当前输出的单词</u>拼接回下一时间步的输入，而是输入下一预期的正确单词</p>
 <p>保证训练阶段 decoder 生成的单词不会出现"一步错步步错"的问题</p></li>
 </ul></li>
 </ul>
@@ -425,8 +425,8 @@ latent representation</p>
 \text{softmax}(\dfrac{\text{QK}^T}{\sqrt{d_k}})\text{V}
 \]</span></p>
 <blockquote>
-<p><strong>注意</strong>：对 <span class="math inline">\(\text{QK}^T\)</span> 除以 <span class="math inline">\(\sqrt{d_k}\)</span> 是为了缩小方差，从而让 softmax
-矩阵元素间<strong>差距过大</strong></p>
+<p><strong>注意</strong>：对 <span class="math inline">\(\text{QK}^T\)</span> 除以 <span class="math inline">\(\sqrt{d_k}\)</span> 是为了缩小方差，从而避免让
+softmax 矩阵元素间<strong>差距过大</strong></p>
 </blockquote></li>
 <li><p>注意力分数：设单词 1 发起的"查询"为 <span class="math inline">\(q_1\)</span>，单词 2 的"回应"为 <span class="math inline">\(k_2\)</span>，则注意力分数 <span class="math inline">\(\alpha_{1,2} = q_1 \cdot k_2^T\)</span></p>
 <p><img src="/2024/08/11/deep_learning/transformer/qkvector.png" srcset="/img/loading.gif" lazyload width="70%"></p>
@@ -608,12 +608,6 @@ decoder 上层 Mask Attention 模块，输入的 <span class="math inline">\(\te
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
-                    
-                      <a href="/2024/08/13/deep_learning/diffusion/" title="『deep learning-2』《Denoising Diffusion Probabilistic Models》">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『deep learning-2』《Denoising Diffusion Probabilistic Models》</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
                     
                   </article>
                   <article class="post-next col-6">
