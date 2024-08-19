@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/cross.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/11/deep_learning/transformer/auto.png">
 <meta property="article:published_time" content="2024-08-11T11:25:57.000Z">
-<meta property="article:modified_time" content="2024-08-18T01:20:12.687Z">
+<meta property="article:modified_time" content="2024-08-19T09:15:57.382Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="attention">
 <meta property="article:tag" content="transformer">
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.1k words
+          4.2k words
         
       </span>
     
@@ -256,7 +256,7 @@
         
         
         
-          35 mins
+          36 mins
         
       </span>
     
@@ -389,7 +389,7 @@ Q，生成<u><strong>下一个单词</strong></u>的重构词向量</p></li>
 \text{位置嵌入矩阵 PE} =
 \begin{cases}
 \text{PE}_{(pos, 2i)} = \sin(\dfrac{pos}{10000^{2i / d}}) \\
-\text{PE}_{(pos, 2i+1)} = \cos(\dfrac{pos}{10000^{(2i+1) / d}})
+\text{PE}_{(pos, 2i+1)} = \cos(\dfrac{pos}{10000^{2i / d}})
 \end{cases}
 \]</span> 上式分别定义了奇数维度（<span class="math inline">\(2i +
 1\)</span>）的 <span class="math inline">\(\text{PE}\)</span>
@@ -492,11 +492,16 @@ decoder 上层 Mask Attention 模块，输入的 <span class="math inline">\(\te
 \text{FFN}(x) &amp;= \text{ReLU}(x\text{W}_1 + b_1)\text{W}_2 + b_2 \\
 \text{其中 ReLU}(x) &amp;= \max(0, x)
 \end{align}
-\]</span></p></li>
+\]</span></p>
+<blockquote>
+<p><strong>注意</strong>：FFN 是 "position-wise" 的，其输入的张量维度是
+(batch_size,
+<strong><u>d_model</u></strong>)，即独立地作用在句子中的每个位置上</p>
+</blockquote></li>
 <li><p><span class="math inline">\(\text{Add}\&amp;\text{Norm}\)</span>：残差与层归一化</p>
 <ul>
 <li>残差连接：attention
-模块的<u>输出</u>直接与其<u>输入</u>相加，保留原始的序列信息</li>
+模块的<u>输出</u><strong>直接</strong>与其<u>输入</u>相加，保留原始的序列信息</li>
 <li>层归一化：常用于<strong>序列</strong>任务中，对每个<strong>样本<u>内部</u>的各特征</strong>进行归一化</li>
 </ul>
 <blockquote>
@@ -608,6 +613,12 @@ decoder 上层 Mask Attention 模块，输入的 <span class="math inline">\(\te
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2024/08/18/linear_algebra/determinant/" title="『linear algebra-1』determinant">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">『linear algebra-1』determinant</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
