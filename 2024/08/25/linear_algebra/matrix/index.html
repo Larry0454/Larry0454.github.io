@@ -24,7 +24,7 @@
 <meta property="og:description" content="矩阵  本篇是对高等代数中&quot;矩阵&quot;的性质、定理以及计算方法的速记，不涉及严密的推导证明。  一、矩阵的运算性质  数乘性质：  数分配律：\((c + d) \cdot \text{A} &#x3D; c \cdot \text{A} + d \cdot \text{A}\) 矩阵分配律：\(c \cdot (\text{A} + \text{B}) &#x3D; c\cdot \text{A}">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-25T11:08:09.000Z">
-<meta property="article:modified_time" content="2024-08-26T02:01:21.817Z">
+<meta property="article:modified_time" content="2024-08-26T14:04:30.059Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="inversion">
 <meta property="article:tag" content="linear equation">
@@ -235,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.5k words
+          10k words
         
       </span>
     
@@ -246,7 +246,7 @@
         
         
         
-          63 mins
+          86 mins
         
       </span>
     
@@ -432,6 +432,8 @@ c^{-1}\text{A}^{-1}\)</span></p></li>
 <blockquote>
 <p><strong>注意</strong>：由上述性质可知，若 <span class="math inline">\(\text{AB} = 0\)</span>（或 <span class="math inline">\(\text{BA} = 0\)</span>） 且 <span class="math inline">\(\text{A}\)</span> 可逆，则 <span class="math inline">\(\text{B} = 0\)</span>（可逆阵可被消去）</p>
 </blockquote></li>
+<li><p>若 <span class="math inline">\(\text{A}\)</span> 可逆，则 <span class="math inline">\(|\text{A}^{-1}| =
+|\text{A}|^{-1}\)</span></p></li>
 </ul></li>
 <li><p>伴随矩阵：设 <span class="math inline">\(\text{A} =
 (a_{ij})_{n\times n}\)</span>，<span class="math inline">\(\text{A}_{ij}\)</span> 是 <span class="math inline">\(a_{ij}\)</span> 在 <span class="math inline">\(|\text{A}|\)</span>
@@ -459,6 +461,26 @@ I}_n\)</span></p></li>
 是 <span class="math inline">\(n\)</span>
 阶方阵，若其中<u>存在</u>一个是不可逆的，则乘积 <span class="math inline">\(\text{A}_1\dots\text{A}_m\)</span>
 一定是不可逆的</p></li>
+</ul></li>
+<li><p>伴随矩阵的性质：设 <span class="math inline">\(\text{A}\)</span>
+是 <span class="math inline">\(n\)</span> 阶方阵</p>
+<ul>
+<li>伴随矩阵总是存在，且满足 <span class="math inline">\(\text{AA}^{*} =
+\text{A}^{*}\text{A} = |\text{A}|\text{ I}_n\)</span></li>
+<li><span class="math inline">\((\text{A}^{*})^{*} =
+|\text{A}|^{n-2}\text{A}\)</span>（<span class="math inline">\(n \ge
+3\)</span>）；当 <span class="math inline">\(n = 2\)</span> 时 <span class="math inline">\((\text{A}^{*})^{*} = \text{A}\)</span></li>
+<li><span class="math inline">\((\text{AB})^{*} =
+\text{B}^{*}\text{A}^{*}\)</span>，即乘积拆开顺序要反转</li>
+<li><span class="math inline">\((c\text{A})^{*} =
+c^{n-1}\text{A}^{*}\)</span>（注意 <span class="math inline">\(n-1\)</span> 次方）</li>
+<li><span class="math inline">\(|\text{A}^{*}| =
+|\text{A}|^{n-1}\)</span>（注意 <span class="math inline">\(n -
+1\)</span> 次方）</li>
+<li><span class="math inline">\((\text{A}^T)^{*} =
+(\text{A}^{*})^T\)</span>，即<u>转置</u>和<u>伴随</u>运算可交换</li>
+<li><span class="math inline">\((\text{A}^{-1})^{*} =
+(\text{A}^{*})^{-1}\)</span>，即<u>求逆</u>和<u>伴随</u>运算可交换</li>
 </ul></li>
 <li><p>有关行列式性质的扩展：设 <span class="math inline">\(\text{A}\)</span> 为 <span class="math inline">\(n\)</span> 阶方阵，依矩阵运算性质有</p>
 <ul>
@@ -585,6 +607,77 @@ n}\)</span>，总存在 <span class="math inline">\(m\)</span> 阶非异阵
 阶大矩阵，再做初等列变换得到 <span class="math inline">\(\text{X} =
 \text{BA}^{-1}\)</span></p>
 </blockquote></li>
+</ul>
+<hr>
+<h3 id="四分块矩阵">四、分块矩阵</h3>
+<ul>
+<li><p>分块矩阵的定义：用横虚线将矩阵 <span class="math inline">\(\text{A}\)</span> 分成 <span class="math inline">\(r\)</span> 块，再用竖虚线将原矩阵分成 <span class="math inline">\(s\)</span> 块，从而得到一个 <span class="math inline">\(rs\)</span> 分块矩阵 <span class="math display">\[
+\text{A} = \begin{bmatrix} \text{A}_{11} &amp; \text{A}_{12} &amp;
+\cdots &amp; \text{A}_{1s} \\
+\text{A}_{21} &amp; \text{A}_{22} &amp; \cdots  &amp; \text{A}_{2s} \\
+\vdots &amp; \cdots &amp; \cdots &amp; \vdots \\
+\text{A}_{r1} &amp; \text{A}_{r2} &amp; \cdots &amp; \text{A}_{rs}
+\end{bmatrix}
+\]</span> 其中 <span class="math inline">\(\text{A}_{ij}\)</span> 称为
+<span class="math inline">\(\text{A}\)</span> 的第 <span class="math inline">\((i, j)\)</span> 分块，尺寸为 <span class="math inline">\(m_i \times n_j\)</span>；<span class="math inline">\(m_i\)</span> 是 <span class="math inline">\(\text{A}\)</span> 的行分块方式，<span class="math inline">\(n_j\)</span> 是 <span class="math inline">\(\text{A}\)</span> 的列分块方式</p>
+<blockquote>
+<p><strong>注意</strong>：一个矩阵虽然不是对角阵，其分块形式有可能是对角阵</p>
+</blockquote></li>
+<li><p>分块矩阵乘积：设 <span class="math inline">\(\text{A} =
+(\text{A}_{ij})_{r\times s}\)</span>，<span class="math inline">\(\text{B} = (\text{B}_{ij})_{s\times
+k}\)</span>，且 <span class="math inline">\(\text{A}\)</span>
+的<u><strong>列</strong>分块方式</u> 和 <span class="math inline">\(\text{B}\)</span>
+的<u><strong>行</strong>分块方式</u>相同</p>
+<p>定义分块阵 <span class="math inline">\(\text{C} = \text{AB} =
+(\text{C}_{ij})_{r\times k}\)</span>。其中 <span class="math inline">\(\text{C}_{ij} = \sum_{r=1}^k
+\text{A}_{ir}\text{B}_{rj}\)</span></p></li>
+<li><p>分块矩阵的转置：设 <span class="math inline">\(\text{A} =
+(\text{A}_{ij})_{r\times s}\)</span>，则 <span class="math inline">\(\text{A}\)</span> 的转置 <span class="math inline">\(\text{A}^T\)</span> 是一个 <span class="math inline">\(s\times r\)</span> 分块的矩阵，形式如下 <span class="math display">\[
+\text{A}^T = \begin{bmatrix} \text{A}^T_{11} &amp; \text{A}^T_{21} &amp;
+\cdots &amp; \text{A}^T_{r1} \\
+\text{A}^T_{12} &amp; \text{A}^T_{22} &amp; \cdots  &amp;
+\text{A}^T_{r2} \\
+\vdots &amp; \cdots &amp; \cdots &amp; \vdots \\
+\text{A}^T_{1s} &amp; \text{A}^T_{2s} &amp; \cdots &amp; \text{A}^T_{rs}
+\end{bmatrix}
+\]</span> 即分块大矩阵先转置，每个小分块<u>再分别转置</u></p></li>
+<li><p>分块矩阵求逆：设大分块矩阵为 <span class="math inline">\(\text{M}\)</span>，形式如下 <span class="math display">\[
+\text{M} = \begin{bmatrix} \text{A}_{m\times m} &amp; \text{B} \\
+\text{C} &amp; \text{D}_{n\times n} \end{bmatrix}
+\]</span></p>
+<ul>
+<li><p>若 <span class="math inline">\(\text{A}\)</span> 可逆，则 <span class="math inline">\(|\text{M}| = |\text{A}||\text{D} -
+\text{CA}^{-1}\text{B}|\)</span>（顺时针旋转）</p></li>
+<li><p>若 <span class="math inline">\(\text{D}\)</span> 可逆，则 <span class="math inline">\(|\text{M}| = |\text{D}||\text{A} -
+\text{BD}^{-1}\text{C}|\)</span>（顺时针旋转）</p></li>
+<li><p><strong>降阶</strong>公式：若 <span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{D}\)</span> <u>都可逆</u>，联立上两式可得
+<span class="math inline">\(|\text{A}||\text{D} -
+\text{CA}^{-1}\text{B}| = |\text{D}||\text{A} -
+\text{BD}^{-1}\text{C}|\)</span></p>
+<p>也即：分解复杂大矩阵 <span class="math inline">\(\text{M} = \text{A}
+- \text{BD}^{-1}\text{C}\)</span>，其中 <span class="math inline">\(m
+&gt; n\)</span>，这样问题就变成求解<strong><u>小</u></strong>行列式
+<span class="math inline">\(\dfrac{1}{|\text{D}|} |\text{A}||\text{D} -
+\text{CA}^{-1}\text{B}|\)</span></p></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="五cauchy-bint-公式">五、Cauchy-Bint 公式</h3>
+<ul>
+<li><p>Cauchy-Bint 定理：设 <span class="math inline">\(\text{A} =
+(a_{ij})_{m\times n}\)</span>，<span class="math inline">\(\text{B} =
+(b_{ij})_{n \times m}\)</span>，则行列式 <span class="math inline">\(|\text{AB}|\)</span> 的值按以下方式确定：</p>
+<ul>
+<li><p>若 <span class="math inline">\(m &gt; n\)</span>，则 <span class="math inline">\(|\text{AB}| = 0\)</span>（"高" 乘 "长" 必为
+0）</p></li>
+<li><p>若 <span class="math inline">\(m \le n\)</span>，则 <span class="math inline">\(|\text{AB}|\)</span> 是一个 <span class="math inline">\(m\)</span> 阶行列式，其中 <span class="math inline">\(\text{A}(\dots)\)</span> 和 <span class="math inline">\(\text{B}(\dots)\)</span> 分别是 <span class="math inline">\(m\)</span> 阶<strong>子式</strong> <span class="math display">\[
+|\text{AB}| = \sum_{1 \le j_1 \lt \dots \lt j_m \le n}
+\text{A}\begin{pmatrix}1 &amp; 2 &amp; \cdots &amp; m \\ j_1 &amp; j_2
+&amp; \cdots &amp; j_m   \end{pmatrix} \text{ B}\begin{pmatrix}j_1 &amp;
+j_2 &amp; \cdots &amp; j_m \\ 1 &amp; 2 &amp; \cdots &amp; m
+\\   \end{pmatrix}
+\]</span> 即在 1 到 <span class="math inline">\(n\)</span> 内取遍 <span class="math inline">\(m\)</span> 个指标的<strong>组合</strong></p></li>
+</ul></li>
 </ul>
 
                 
