@@ -1,0 +1,1001 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="矩阵  本篇是对高等代数中&quot;矩阵&quot;的性质、定理以及计算方法的速记，不涉及严密的推导证明。  一、矩阵的运算性质  数乘性质：  数分配律：\((c + d) \cdot \text{A} &#x3D; c \cdot \text{A} + d \cdot \text{A}\) 矩阵分配律：\(c \cdot (\text{A} + \text{B}) &#x3D; c\cdot \text{A}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『linear algebra-2』matrix">
+<meta property="og:url" content="http://larry0454.github.io/2024/08/25/linear_algebra/matrix/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="矩阵  本篇是对高等代数中&quot;矩阵&quot;的性质、定理以及计算方法的速记，不涉及严密的推导证明。  一、矩阵的运算性质  数乘性质：  数分配律：\((c + d) \cdot \text{A} &#x3D; c \cdot \text{A} + d \cdot \text{A}\) 矩阵分配律：\(c \cdot (\text{A} + \text{B}) &#x3D; c\cdot \text{A}">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-25T11:08:09.000Z">
+<meta property="article:modified_time" content="2024-08-26T02:01:21.817Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="inversion">
+<meta property="article:tag" content="linear equation">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>『linear algebra-2』matrix - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="『linear algebra-2』matrix"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-25 19:08" pubdate>
+          August 25, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          63 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">『linear algebra-2』matrix</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="矩阵">矩阵</h2>
+<p class="note note-info">
+本篇是对高等代数中"矩阵"的性质、定理以及计算方法的速记，不涉及严密的推导证明。
+</p>
+<h3 id="一矩阵的运算性质">一、矩阵的运算性质</h3>
+<ul>
+<li><p>数乘性质：</p>
+<ul>
+<li>数分配律：<span class="math inline">\((c + d) \cdot \text{A} = c
+\cdot \text{A} + d \cdot \text{A}\)</span></li>
+<li>矩阵分配律：<span class="math inline">\(c \cdot (\text{A} +
+\text{B}) = c\cdot \text{A} + c \cdot \text{B}\)</span></li>
+<li>数乘分配律：<span class="math inline">\((cd) \cdot \text{A} = c
+\cdot (d\cdot \text{A})\)</span></li>
+</ul></li>
+<li><p>矩阵乘法：设 <span class="math inline">\(\text{A} =
+(a_{ij})_{m\times k}\)</span>，<span class="math inline">\(\text{B} =
+(b_{ij})_{k\times n}\)</span>，<span class="math inline">\(\text{A}\)</span> 与 <span class="math inline">\(\text{B}\)</span> 的乘积 <span class="math inline">\(\text{C}_{m\times n}\)</span> 是 <span class="math inline">\(m \times n\)</span>
+阶矩阵，其<strong><u>元素</u></strong> <span class="math inline">\(c_{ij} = \sum_{r=1}^k a_{ir}b_{rj}\)</span></p>
+<ul>
+<li><span class="math inline">\(\text{A}\)</span> 的列数 = <span class="math inline">\(\text{B}\)</span> 的行数</li>
+<li><span class="math inline">\(\text{AB}\)</span> 的行数 = <span class="math inline">\(\text{A}\)</span> 的行数；<span class="math inline">\(\text{AB}\)</span> 的列数 = <span class="math inline">\(\text{B}\)</span> 的列数</li>
+<li>矩阵乘法一般不满足交换律，即 <span class="math inline">\(\text{AB}
+\ne \text{BA}\)</span></li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：设 <span class="math inline">\(\text{A}_{m\times n} \text{B}_{n\times p}
+\text{C}_{p\times q}\)</span>，其第 <span class="math inline">\((i,
+j)\)</span> 元素表示为 <span class="math inline">\(\sum_{k = 1}^n
+\sum_{r=1}^{p} a_{ik} b_{kr} c_{rj}\)</span>，其中插入两个循环指标 <span class="math inline">\(k, r\)</span></p>
+</blockquote></li>
+<li><p>乘法性质：设矩阵 <span class="math inline">\(\text{A}_{m\times
+n}\)</span></p>
+<ul>
+<li>结合律：<span class="math inline">\(\text{(AB)C} =
+\text{A(BC)}\)</span>，即支持任意加括号</li>
+<li>分配律：<span class="math inline">\(\text{(A + B)} \text{C} =
+\text{AC} + \text{BC}\)</span>；<span class="math inline">\(\text{A}
+(\text{B + C}) = \text{A} \text{B} + \text{A} \text{C}\)</span></li>
+<li>与数值相乘：<span class="math inline">\(c \cdot (\text{AB}) = (c
+\cdot \text{A})\text{B} = \text{A} (c\text{B})\)</span></li>
+<li>存在单位元：总有 <span class="math inline">\(\text{I}_m \text{A} =
+\text{A} = \text{A} \text{I}_n\)</span></li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：对于方阵，其自己可以与自己相乘；能与自己相乘的矩阵一定是方阵，记
+<span class="math inline">\(\text{A}^k = \text{A} \cdots
+\text{A}\)</span>（乘方定义）</p>
+</blockquote></li>
+<li><p>乘方性质：仅当 <span class="math inline">\(\text{A}\)</span>
+是一个<strong><u>方阵</u></strong>，才能在 <span class="math inline">\(\text{A}\)</span> 上定义乘方运算</p>
+<ul>
+<li><span class="math inline">\(\text{A}^r \text{A}^s =
+\text{A}^{r+s}\)</span>，<span class="math inline">\((\text{A}^r)^s =
+\text{A}^{rs}\)</span></li>
+<li>若 <strong><span class="math inline">\(\text{AB} =
+\text{BA}\)</span></strong>，则有 <span class="math inline">\((\text{AB})^r =
+\text{A}^r\text{B}^r\)</span>，同时有<strong><u>二项式定理</u></strong>
+<span class="math inline">\((\text{A} + \text{B})^{m} = \text{A}^m +
+\text{C}_{m}^1\text{A}^{m-1}\text{B} + \dots +
+\text{C}_{m}^{m-1}\text{AB}^{m-1} + \text{B}^m\)</span></li>
+<li>即便 <span class="math inline">\(\text{AB} = \text{AC}\)</span> 且
+<span class="math inline">\(\text{A} \ne 0\)</span>，也无法推出 <span class="math inline">\(\text{B} =
+\text{C}\)</span>（不满足乘法消去律，除非 <span class="math inline">\(\text{A}\)</span> 可逆）</li>
+<li>即便 <span class="math inline">\(\text{A} \ne 0\)</span> 且 <span class="math inline">\(\text{B} \ne 0\)</span>，也无法推出 <span class="math inline">\(\text{AB} \ne 0\)</span>（除非 <span class="math inline">\(\text{A}\)</span> 可逆且 <span class="math inline">\(\text{B} \ne 0\)</span>）</li>
+</ul></li>
+<li><p>矩阵转置：设 <span class="math inline">\(\text{A} =
+(a_{ij})_{m\times n}\)</span>，其转置 <span class="math inline">\(\text{A}^T = (b_{ij})_{n \times m}\)</span> 是
+<span class="math inline">\(n \times m\)</span> 阶矩阵，且满足 <span class="math inline">\(b_{ij} = a_{ji}\)</span></p>
+<ul>
+<li>对称阵 和 反对称阵：<span class="math inline">\(\text{A}^T =
+\text{A}\)</span> 说明 <span class="math inline">\(\text{A}\)</span>
+是对称阵，<span class="math inline">\(\text{A}^T = -\text{A}\)</span>
+说明 <span class="math inline">\(\text{A}\)</span>
+是反对称阵（差个负号）</li>
+<li><span class="math inline">\((\text{A} + \text{B})^T = \text{A}^T +
+\text{B}^T\)</span>，<span class="math inline">\((c\text{A})^T = c \cdot
+\text{A}^T\)</span>，<span class="math inline">\((\text{A}^T)^T =
+\text{A}\)</span></li>
+<li><span class="math inline">\((\text{AB})^T =
+\text{B}^T\text{A}^T\)</span>，即乘法拆开后<u>顺序要反转</u></li>
+</ul></li>
+<li><p>共轭矩阵：设 <span class="math inline">\(\text{A} =
+(a_{ij})_{m\times n}\)</span> 是复矩阵，其共轭 <span class="math inline">\(\overline{\text{A}} = (\overline{a_{ij}})_{m\times
+n}\)</span></p>
+<ul>
+<li><span class="math inline">\(\overline{\text{A} + \text{B}} =
+\overline{\text{A}} + \overline{\text{B}}\)</span>，<span class="math inline">\(\overline{\text{A} \cdot \text{B}} =
+\overline{\text{A}} \cdot
+\overline{\text{B}}\)</span>（加法乘法直接拆开不换序）</li>
+<li><span class="math inline">\(\overline{c \text{A}} = \overline{c}
+\overline{\text{A}}\)</span>，<span class="math inline">\(\overline{\text{A}}^T =
+\overline{\text{A}^T}\)</span>，<span class="math inline">\(\overline{\overline{\text{A}}} =
+\text{A}\)</span></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="二矩阵的逆">二、矩阵的逆</h3>
+<ul>
+<li><p>逆方阵的定义：设 <span class="math inline">\(\text{A}\)</span> 为
+<span class="math inline">\(n\)</span>
+阶<strong><u>方阵</u></strong>，若存在 <span class="math inline">\(n\)</span> 阶方阵 <span class="math inline">\(\text{B}\)</span>，使得 <span class="math inline">\(\text{AB} = \text{BA} = \text{I}_n\)</span>，则记
+<span class="math inline">\(\text{B} = \text{A}^{-1}\)</span> 为 <span class="math inline">\(\text{A}\)</span> 的逆矩阵</p>
+<ul>
+<li><p>可逆 与 不可逆：若 <span class="math inline">\(\text{A}\)</span>
+存在逆阵 <span class="math inline">\(\text{A}^{-1}\)</span>，记 <span class="math inline">\(\text{A}\)</span>
+是可逆（非奇异）的，否则是不可逆（奇异）的</p></li>
+<li><p>"可逆"只是针对方阵讨论的，若 <span class="math inline">\(m \ne
+n\)</span> 说明一定不可逆</p></li>
+</ul></li>
+<li><p>逆阵的性质：设 <span class="math inline">\(\text{A}\)</span> 为
+<span class="math inline">\(n\)</span> 阶方阵</p>
+<ul>
+<li><p>若 <span class="math inline">\(\text{A}\)</span>
+可逆，则逆阵一定<strong><u>唯一</u></strong>，且 <span class="math inline">\((\text{A}^{-1})^{-1} = \text{A}\)</span></p></li>
+<li><p>若 <span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{B}\)</span> 可逆，则 <span class="math inline">\(\text{AB}\)</span> 也可逆，且 <span class="math inline">\((\text{AB})^{-1} =
+\text{B}^{-1}\text{A}^{-1}\)</span>（乘法拆开后<u>顺序要反转</u>）</p>
+<blockquote>
+<p><strong>注意</strong>：设 <span class="math inline">\(\text{A}_1
+\dots \text{A}_n\)</span> 都可逆（<span class="math inline">\(m \ge
+2\)</span>），则 <span class="math inline">\((\text{A}_1\dots
+\text{A}_m)^{-1} = \text{A}^{-1}_m \dots \text{A}_1^{-1}\)</span>
+也可逆（上式推广）</p>
+</blockquote></li>
+<li><p>若 <span class="math inline">\(\text{A}\)</span> 可逆，且常数
+<span class="math inline">\(c \ne 0\)</span>，则 <span class="math inline">\(c\cdot \text{A}\)</span> 仍可逆，且 <span class="math inline">\((c\text{A})^{-1} =
+c^{-1}\text{A}^{-1}\)</span></p></li>
+<li><p>若 <span class="math inline">\(\text{A}\)</span> 可逆，则 <span class="math inline">\(\text{A}^T\)</span> 仍可逆，且 <span class="math inline">\((\text{A}^T)^{-1} = (\text{A}^{-1})^T\)</span>，即
+<u>求逆</u> 和 <u>转置</u> 运算可以交换次序</p></li>
+<li><p>设 <span class="math inline">\(\text{A}\)</span> 可逆，则有 <span class="math inline">\(\text{AB} = \text{AC} \Rightarrow \text{B} =
+\text{C}\)</span>（两边左乘<span class="math inline">\(\text{A}^{-1}\)</span>），<span class="math inline">\(\text{BA} = \text{CA} \Rightarrow \text{B} =
+\text{C}\)</span>（两边右乘<span class="math inline">\(\text{A}^{-1}\)</span>）</p>
+<blockquote>
+<p><strong>注意</strong>：由上述性质可知，若 <span class="math inline">\(\text{AB} = 0\)</span>（或 <span class="math inline">\(\text{BA} = 0\)</span>） 且 <span class="math inline">\(\text{A}\)</span> 可逆，则 <span class="math inline">\(\text{B} = 0\)</span>（可逆阵可被消去）</p>
+</blockquote></li>
+</ul></li>
+<li><p>伴随矩阵：设 <span class="math inline">\(\text{A} =
+(a_{ij})_{n\times n}\)</span>，<span class="math inline">\(\text{A}_{ij}\)</span> 是 <span class="math inline">\(a_{ij}\)</span> 在 <span class="math inline">\(|\text{A}|\)</span>
+中的<strong>代数余子式</strong>，则 <span class="math inline">\(\text{A}\)</span> 的伴随矩阵 <span class="math inline">\(\text{A}^*\)</span> 形式如下 <span class="math display">\[
+\begin{align}
+\text{A}^{*} = \begin{bmatrix} \text{A}_{11} &amp; \text{A}_{21} &amp;
+\cdots &amp; \text{A}_{n1} \\
+\text{A}_{12} &amp; \text{A}_{22} &amp; \cdots &amp; \text{A}_{n2} \\
+\vdots &amp; \cdots &amp; \cdots &amp; \vdots \\ \text{A}_{1n} &amp;
+\text{A}_{2n} &amp; \cdots &amp; \text{A}_{nn} \end{bmatrix}
+\end{align}
+\]</span> 注意其行列指标是按"<strong><u>转置</u></strong>"顺序排列的：第
+1 行是 原阵第 1 列的伴随矩阵</p>
+<ul>
+<li><p>设 <span class="math inline">\(\text{A}\)</span> 是 <span class="math inline">\(n\)</span> 阶方阵，则有 <span class="math inline">\(\text{AA}^{*} = \text{AA}^{*} = |\text{A}|\text{
+I}_n\)</span></p></li>
+<li><p>设 <span class="math inline">\(\text{A}\)</span> 是 <span class="math inline">\(n\)</span> 阶方阵，若 <span class="math inline">\(|\text{A}| \ne 0\)</span>，则 <span class="math inline">\(\text{A}\)</span> 可逆，由上面性质可知 <span class="math inline">\(\text{A}^{-1} =
+\dfrac{1}{|\text{A}|}\text{A}^{*}\)</span>（<u>伴随矩阵</u> /
+<u>行列式</u> 求<strong>逆阵</strong>）</p></li>
+<li><p>设 <span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{B}\)</span> 为 <span class="math inline">\(n\)</span> 阶方阵，则 <span class="math inline">\(|\text{AB}| =
+|\text{A}||\text{B}|\)</span>（乘积的行列式 = 行列式的乘积）</p></li>
+<li><p>设 <span class="math inline">\(\text{A}\)</span> 为 <span class="math inline">\(n\)</span> 阶方阵，则 <span class="math inline">\(\text{A}\)</span> 可逆 <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(|\text{A}| \ne
+0\)</span>，可推出<u>可逆阵的乘积一定可逆</u></p>
+<p>设 <span class="math inline">\(\text{A}_1, \dots, \text{A}_m\)</span>
+是 <span class="math inline">\(n\)</span>
+阶方阵，若其中<u>存在</u>一个是不可逆的，则乘积 <span class="math inline">\(\text{A}_1\dots\text{A}_m\)</span>
+一定是不可逆的</p></li>
+</ul></li>
+<li><p>有关行列式性质的扩展：设 <span class="math inline">\(\text{A}\)</span> 为 <span class="math inline">\(n\)</span> 阶方阵，依矩阵运算性质有</p>
+<ul>
+<li><span class="math inline">\(|c\text{A}| = c^n
+\text{A}\)</span>，即每一行都提出一个公因子 <span class="math inline">\(c\)</span></li>
+<li><span class="math inline">\(\overline{|\text{A}|} =
+|\overline{\text{A}}|\)</span>，即 <u>行列式</u> 和 <u>共轭</u>
+运算可交换顺序</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="三矩阵初等变换">三、矩阵初等变换</h3>
+<ul>
+<li><p>初等变换的种类：保持线性方程组<strong>解不变</strong>的矩阵变换</p>
+<ul>
+<li>第一类初等变换：对换矩阵中的两行（两列）</li>
+<li>第二类初等变换：矩阵的某行（某列）乘以<strong>非零</strong>常数</li>
+<li>第三类初等变换：矩阵的某行（某列）乘以常数加到另一行（列）上</li>
+</ul></li>
+<li><p>求解线性方程组的<u>一般步骤</u>：设 <span class="math inline">\(n\)</span> 元线性方程组的系数矩阵为 <span class="math inline">\(\text{A}_{n\times n}\)</span>，常数列为 <span class="math inline">\(b\)</span></p>
+<ol type="1">
+<li>写出线性方程组的增广矩阵 <span class="math inline">\(\tilde{\text{A}} = (\text{A } | \ b)\)</span></li>
+<li>对 <span class="math inline">\(\tilde{\text{A}}\)</span>
+实施<u>初等<strong>行</strong>变换</u>，过程可表示为 <span class="math inline">\(\tilde{\text{A}} \rightarrow (\text{I}_n \ | \
+\beta)\)</span>，其中 <span class="math inline">\(\beta\)</span>
+是新的常数列</li>
+<li>得到原方程组的解 <span class="math inline">\(x = \beta\)</span></li>
+</ol></li>
+<li><p>矩阵相抵：若矩阵 <span class="math inline">\(\text{A}\)</span>
+可通过若干次<strong><u>初等行（列）变换</u></strong>变为矩阵 <span class="math inline">\(\text{B}\)</span>，则称 <span class="math inline">\(\text{A}\)</span> 相抵于 <span class="math inline">\(\text{B}\)</span>，记作 <span class="math inline">\(\text{A} \sim \text{B}\)</span></p></li>
+<li><p>相抵关系是<strong>等价关系</strong>："等价"指同时满足"自反性"、"对称性"、"传递性"的<strong>二元关系</strong></p>
+<ul>
+<li>自反性：对于任意矩阵 <span class="math inline">\(\text{A}\)</span>，总有 <span class="math inline">\(\text{A} \sim \text{A}\)</span></li>
+<li>对称性：若 <span class="math inline">\(\text{A} \sim
+\text{B}\)</span>，则有 <span class="math inline">\(\text{B} \sim
+\text{A}\)</span></li>
+<li>传递性：若 <span class="math inline">\(\text{A} \sim
+\text{B}\)</span> 且 <span class="math inline">\(\text{B} \sim
+\text{C}\)</span>，则有 <span class="math inline">\(\text{A} \sim
+\text{C}\)</span></li>
+</ul></li>
+<li><p>相抵标准型：设 <span class="math inline">\(\text{A} =
+(a_{ij})_{m\times n}\)</span>，则 <span class="math inline">\(\text{A}\)</span>
+必相抵于其<strong>相抵标准型</strong>，其形式如下所示 <span class="math display">\[
+\begin{bmatrix} \text{I}_r &amp; \textbf{O} \\ \textbf{O} &amp;
+\textbf{O} \end{bmatrix}
+\]</span> 其中 <span class="math inline">\(0 \le r \le \min(m,
+n)\)</span>；且 <span class="math inline">\(r\)</span> 由 <span class="math inline">\(\text{A}\)</span>
+唯一确定，<u>不随初等变换的选取而改变</u></p></li>
+<li><p>阶梯型矩阵：阶梯点（非零行从左数第 1
+个非零元）的<strong>列指标<u>严格递增</u></strong>的矩阵，且零行必在最下方</p>
+<ul>
+<li>设 <span class="math inline">\(\text{A} = (a_{ij})_{m \times
+n}\)</span>，则总可以通过<u>初等<strong>行</strong>变换</u>将 <span class="math inline">\(\text{A}\)</span> 化为阶梯型矩阵</li>
+</ul></li>
+<li><p>初等阵：对单位方阵 <span class="math inline">\(\text{I}_n\)</span>
+实施一次三类初等<strong>行</strong>变换，得到的矩阵为三类初等阵</p>
+<ul>
+<li>第一类初等阵：对 <span class="math inline">\(\text{I}_n\)</span>
+实施一次<u>第一类</u>初等行变换，即调换第 <span class="math inline">\(i\)</span> 行和第 <span class="math inline">\(j\)</span> 行得到 <span class="math inline">\(\text{P}_{ij}\)</span></li>
+<li>第二类初等阵：对 <span class="math inline">\(\text{I}_n\)</span>
+实施一次<u>第二类</u>初等行变换，即对第 <span class="math inline">\(i\)</span> 行乘以<strong>非零</strong>常数 <span class="math inline">\(c\)</span> 得到 <span class="math inline">\(\text{P}_i\)</span></li>
+<li>第三类初等阵：对 <span class="math inline">\(\text{I}_n\)</span>
+实施一次<u>第三类</u>初等行变换，即把第 <span class="math inline">\(i\)</span> 行乘以常数 <span class="math inline">\(c\)</span> 累加到第 <span class="math inline">\(j\)</span> 行，得到 <span class="math inline">\(\text{T}_{ij}\)</span></li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：对 <span class="math inline">\(\text{A}\)</span> 做一次初等行（列）变换 <span class="math inline">\(\Leftrightarrow\)</span> 对 <span class="math inline">\(\text{A}\)</span> 左（右）乘对应初等阵</p>
+</blockquote></li>
+<li><p>初等阵的性质：矩阵 <span class="math inline">\(\text{A}\)</span>
+经过若干次初等变换可记作 <span class="math inline">\(\text{PAQ} =
+\text{P}_r \dots \text{P}_1 \text{A}
+\text{Q}_1\dots\text{Q}_s\)</span></p>
+<ul>
+<li>初等阵都是可逆阵，且有 <span class="math inline">\(\text{P}_{ij}^{-1} = \text{P}_{ij}\)</span>，<span class="math inline">\(\text{P}_{i}^{-1}(c) =
+\text{P}_i(\dfrac{1}{c})\)</span>，<span class="math inline">\(\text{T}^{-1}_{ij}(c) =
+\text{T}_{ij}(-c)\)</span></li>
+<li><span class="math inline">\(|\text{P}_{ij}| = -1\)</span>，<span class="math inline">\(|\text{P}_i(c)| = c\)</span>，<span class="math inline">\(|\text{T}_{ij}(c)| =
+1\)</span>（可见第三类初等变换不改变行列式值）</li>
+<li>非异阵经过初等变换仍为非异阵，奇异阵经过初等变换仍为奇异阵</li>
+</ul></li>
+<li><p>有关可逆方阵的四条<strong><u>等价性质</u></strong>⭐：</p>
+<ul>
+<li><p>矩阵 <span class="math inline">\(\text{A}\)</span>
+是非奇异阵</p></li>
+<li><p>矩阵 <span class="math inline">\(\text{A}\)</span> 的相抵标准型为
+<span class="math inline">\(\text{I}_n\)</span></p></li>
+<li><p>矩阵 <span class="math inline">\(\text{A}\)</span>
+可<strong><u>仅</u></strong>通过 <u>初等行变换</u> 或 <u>初等列变换</u>
+得到 <span class="math inline">\(\text{I}_n\)</span>（仅用行变换一般只能化到阶梯型）</p>
+<p>也就是：设矩阵 <span class="math inline">\(\text{A}_{m\times
+n}\)</span>，总存在 <span class="math inline">\(m\)</span> 阶非异阵
+<span class="math inline">\(\text{P}\)</span>，<span class="math inline">\(n\)</span> 阶非异阵 <span class="math inline">\(\text{Q}\)</span>，使 <span class="math inline">\(\text{A}\)</span> 变成<strong>相抵标准型</strong>
+<span class="math inline">\(\text{PAQ}\)</span>，即 <span class="math display">\[
+\text{A} \sim \begin{bmatrix} \text{I}_r &amp; \textbf{O} \\ \textbf{O}
+&amp; \textbf{O} \end{bmatrix} = \text{PAQ}
+\]</span></p></li>
+<li><p>矩阵 <span class="math inline">\(\text{A}\)</span>
+是若干个<strong>初等阵</strong>的乘积</p></li>
+</ul></li>
+<li><p>使用<u>初等<strong>行</strong>变换</u>求方阵的逆：设方阵 <span class="math inline">\(\text{A} = (a_{ij})_{n \times n}\)</span>，将
+<span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{I}_n\)</span> 左右拼接成一个 <span class="math inline">\(n \times 2n\)</span> 阶的矩阵，形式如下 <span class="math display">\[
+(\text{A } | \text{ I}_n) \xrightarrow{初等行变换} (\text{I}_n \ |
+\text{ A}^{-1})
+\]</span> 对左边大矩阵进行<strong>初等行变换</strong>，将左侧 <span class="math inline">\(n \times n\)</span> 的部分化为 <span class="math inline">\(\text{I}_n\)</span>，右侧 <span class="math inline">\(n \times n\)</span> 的部分即为 <span class="math inline">\(\text{A}^{-1}\)</span></p>
+<p>若只通过<strong>初等列变换</strong>得到逆阵，需要将 <span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{I}_n\)</span>
+<u>上下<strong>纵向</strong>堆叠</u>得到 <span class="math inline">\(2n
+\times n\)</span> 的大矩阵，再进行初等<strong>列</strong>变换得到 <span class="math inline">\(\text{A}^{-1}\)</span></p>
+<blockquote>
+<p><strong>注意</strong>：由可逆阵的第三条性质，可以仅通过初等变换得到
+<span class="math inline">\(\text{I}_n\)</span>，即 <span class="math inline">\(\text{A}^{-1} = \text{P}_r \dots
+\text{P}_2\text{P}_1 = \text{Q}_1\text{Q}_2\dots\text{Q}_s\)</span></p>
+</blockquote></li>
+<li><p>基于<u>初等变换</u>解矩阵方程：设矩阵方程为 <span class="math inline">\(\text{A}_{n \times n}\text{X}_{n \times m} =
+\text{B}_{n \times m}\)</span>，其中 <span class="math inline">\(\text{A}\)</span>
+<strong>可逆</strong>，可参照求逆阵的方式求解 <span class="math inline">\(\text{X}\)</span> <span class="math display">\[
+(\text{A } | \text{ B})_{n \times (n+m)} \xrightarrow{初等行变换}
+(\text{I}_n \ | \text{ X})
+\]</span>
+对左边大矩阵进行<strong>初等行变换</strong>，将左侧部分同样化为 <span class="math inline">\(\text{I}_n\)</span>，右侧部分即为 <span class="math inline">\(\text{X} = \text{A}^{-1}\text{B}\)</span></p>
+<blockquote>
+<p><strong>注意</strong>：对于矩阵方程 <span class="math inline">\(\text{X}_{m\times n}\text{A}_{n \times n} =
+\text{B}_{m\times n}\)</span>，将 <span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{B}\)</span> <strong>上下堆叠</strong>得到
+<span class="math inline">\((m+n) \times n\)</span>
+阶大矩阵，再做初等列变换得到 <span class="math inline">\(\text{X} =
+\text{BA}^{-1}\)</span></p>
+</blockquote></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/linear-algebra/" class="category-chain-item">linear algebra</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/inversion/">#inversion</a>
+      
+        <a href="/tags/linear-equation/">#linear equation</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>『linear algebra-2』matrix</div>
+      <div>http://larry0454.github.io/2024/08/25/linear_algebra/matrix/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 25, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/18/linear_algebra/determinant/" title="『linear algebra-1』determinant">
+                        <span class="hidden-mobile">『linear algebra-1』determinant</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
