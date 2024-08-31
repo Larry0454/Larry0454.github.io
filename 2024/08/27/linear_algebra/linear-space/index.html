@@ -16,18 +16,18 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="线性空间 一、列向量  数域与向量：数域一般记作 \(\text{K}\)，\(\text{K}\) 上的 \(n\) 维列向量 \(v\) 满足 \(v \in \text{K}^n\)（行向量一般记作 \(\text{K}_n\)） 向量的运算规则：针对 加法 和 数乘 两种运算，满足以下八条性质；设向量 \(\alpha, \beta, \gamma \in \text{K}^">
+    <meta name="description" content="线性空间  本篇是对高等代数中&quot;线性空间&quot;的性质、定理以及计算方法的速记，不涉及严密的推导证明。  一、列向量  数域与向量：数域一般记作 \(\text{K}\)，\(\text{K}\) 上的 \(n\) 维列向量 \(v\) 满足 \(v \in \text{K}^n\)（行向量一般记作 \(\text{K}_n\)） 向量的运算规则：针对 加法 和 数乘 两种运算，满足以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『linear algebra-3』linear space">
 <meta property="og:url" content="http://larry0454.github.io/2024/08/27/linear_algebra/linear-space/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="线性空间 一、列向量  数域与向量：数域一般记作 \(\text{K}\)，\(\text{K}\) 上的 \(n\) 维列向量 \(v\) 满足 \(v \in \text{K}^n\)（行向量一般记作 \(\text{K}_n\)） 向量的运算规则：针对 加法 和 数乘 两种运算，满足以下八条性质；设向量 \(\alpha, \beta, \gamma \in \text{K}^">
+<meta property="og:description" content="线性空间  本篇是对高等代数中&quot;线性空间&quot;的性质、定理以及计算方法的速记，不涉及严密的推导证明。  一、列向量  数域与向量：数域一般记作 \(\text{K}\)，\(\text{K}\) 上的 \(n\) 维列向量 \(v\) 满足 \(v \in \text{K}^n\)（行向量一般记作 \(\text{K}_n\)） 向量的运算规则：针对 加法 和 数乘 两种运算，满足以">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-27T11:27:00.000Z">
-<meta property="article:modified_time" content="2024-08-28T05:23:26.020Z">
+<meta property="article:modified_time" content="2024-08-31T14:16:24.208Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="rank">
 <meta property="article:tag" content="linear equation">
+<meta property="article:tag" content="rank">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -235,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k words
+          12k words
         
       </span>
     
@@ -246,7 +246,7 @@
         
         
         
-          25 mins
+          102 mins
         
       </span>
     
@@ -298,6 +298,9 @@
               <div class="markdown-body">
                 
                 <h2 id="线性空间">线性空间</h2>
+<p class="note note-info">
+本篇是对高等代数中"线性空间"的性质、定理以及计算方法的速记，不涉及严密的推导证明。
+</p>
 <h3 id="一列向量">一、列向量</h3>
 <ul>
 <li><p>数域与向量：数域一般记作 <span class="math inline">\(\text{K}\)</span>，<span class="math inline">\(\text{K}\)</span> 上的 <span class="math inline">\(n\)</span> 维列向量 <span class="math inline">\(v\)</span> 满足 <span class="math inline">\(v \in
@@ -326,7 +329,7 @@
 </ul></li>
 <li><p>线性空间的定义：设 <span class="math inline">\(\text{K}\)</span>
 为数域，<span class="math inline">\(\text{V}\)</span>
-为<strong>非空</strong>集合，若同时满足：</p>
+为<strong>非空</strong>向量集合，若同时满足：</p>
 <ul>
 <li>存在一个加法运算：<span class="math inline">\(+: \text{V} \times
 \text{V} \rightarrow \text{V}\)</span>，即 <span class="math inline">\((\alpha, \beta) \vdash \alpha +
@@ -363,7 +366,7 @@ k_n \alpha_n = 0 \Rightarrow k_1 = \dots = k_n =
 在实数域上无关，但在复数域上相关</p>
 </blockquote></li>
 <li><p>"扩张相关" 与 "缩减无关"：设 <span class="math inline">\(1 \le m
-\le n\)</span>，</p>
+\le n\)</span></p>
 <ul>
 <li>若 <span class="math inline">\(\{\alpha_1, \dots,
 \alpha_m\}\)</span> 线性<strong>相关</strong>，则<u>扩张</u>后的 <span class="math inline">\(\{\alpha_1, \dots, \alpha_m, \dots \alpha_n
@@ -372,11 +375,11 @@ k_n \alpha_n = 0 \Rightarrow k_1 = \dots = k_n =
 \alpha_n\}\)</span> 线性<strong>无关</strong>，则<u>缩减</u>后的 <span class="math inline">\(\{\alpha_1, \dots, \alpha_m\}\)</span>
 也线性无关</li>
 </ul></li>
-<li><p>"线性相关" 与 "线性组合"：设 <span class="math inline">\(\alpha_1, \dots, \alpha_n \in
+<li><p>"线性<u>相关</u>" 与 "线性组合"：设 <span class="math inline">\(\alpha_1, \dots, \alpha_n \in
 \text{V}\)</span>，则 <span class="math inline">\(\alpha_1, \dots,
 \alpha_n\)</span> 线性<strong>相关</strong> <span class="math inline">\(\Leftrightarrow\)</span> 存在 <span class="math inline">\(\alpha_i\)</span>
 是<u>其余向量的线性<strong>组合</strong></u></p></li>
-<li><p>"线性无关" 与 "线性组合"：设 <span class="math inline">\(\alpha_1, \dots, \alpha_n, \beta \in
+<li><p>"线性<u>无关</u>" 与 "线性组合"：设 <span class="math inline">\(\alpha_1, \dots, \alpha_n, \beta \in
 \text{V}\)</span>，且 <span class="math inline">\(\alpha_1, \dots,
 \alpha_n\)</span>
 是线性<strong>无关</strong>的，则只可能存在以下两种情况</p>
@@ -401,7 +404,8 @@ k_n\)</span> 取值唯一）<span class="math inline">\(\Leftrightarrow\)</span>
 <li><p>几个例子：</p>
 <ul>
 <li>设 <span class="math inline">\(\text{A} = \{\alpha\}\)</span>，则
-<span class="math inline">\(\text{A}\)</span> 线性无关 <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(\alpha \ne 0\)</span></li>
+<span class="math inline">\(\text{A}\)</span> 线性无关 <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(\alpha \ne
+0\)</span>，即零向量一定是线性相关的</li>
 <li>设 <span class="math inline">\(\alpha, \beta \in
 \text{K}_n\)</span>，则 <span class="math inline">\(\alpha,
 \beta\)</span> 线性相关 <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(\alpha, \beta\)</span>
@@ -414,6 +418,384 @@ k_n\)</span> 取值唯一）<span class="math inline">\(\Leftrightarrow\)</span>
 是空间内三个<strong>线性相关</strong>的向量 <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(\text{O, A, B, C}\)</span>
 四点共面（否则张成空间四面体）</li>
 </ul></li>
+</ul>
+<hr>
+<h3 id="三向量组的秩">三、向量组的秩</h3>
+<ul>
+<li><p>向量组 与 向量族：</p>
+<ul>
+<li>向量组：<span class="math inline">\(\text{V}\)</span>
+的一个有限子集（元素可重复）</li>
+<li>向量族：<span class="math inline">\(\text{V}\)</span>
+的一个子集，可无限大（元素可重复）</li>
+</ul></li>
+<li><p>极大线性无关组：设 <span class="math inline">\(\text{S}\)</span>
+是 <span class="math inline">\(\text{V}\)</span> 的向量族，若存在 <span class="math inline">\(\text{S}\)</span> 中的向量组 <span class="math inline">\(\{\alpha_1, \dots,
+\alpha_r\}\)</span>，同时满足以下两个条件：</p>
+<ul>
+<li><span class="math inline">\(\{\alpha_1, \dots, \alpha_n\}\)</span>
+是<strong>线性无关</strong>的</li>
+<li><span class="math inline">\(\text{S}\)</span> 中任意向量都是 <span class="math inline">\(\alpha_1, \dots, \alpha_r\)</span> 的线性组合</li>
+</ul>
+<p>则称 <span class="math inline">\(\{\alpha_1, \dots,
+\alpha_r\}\)</span> 是 <span class="math inline">\(\text{S}\)</span>
+的<strong><u>极大线性无关组</u></strong>；向其中加入任意向量，都会让
+<span class="math inline">\(r+1\)</span>
+个向量<strong>线性相关</strong></p></li>
+<li><p>设 <span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{B}\)</span> 为向量组，若 <span class="math inline">\(\text{A}\)</span> 线性无关，且 <span class="math inline">\(\text{A}\)</span> 中任一向量都是 <span class="math inline">\(\text{B}\)</span> 中向量的线性组合，则 <span class="math inline">\(\#\text{A} \le \#\text{B}\)</span></p>
+<p>若<strong>更大</strong>的向量组 <span class="math inline">\(\text{A}\)</span> 中向量可用较小的向量组 <span class="math inline">\(\text{B}\)</span> 线性表示，那么 <span class="math inline">\(\text{A}\)</span>
+肯定是<strong>线性相关</strong>的（上述逆否命题）</p></li>
+<li><p>向量族的秩：<span class="math inline">\(\text{S}\)</span> 中
+<strong><u>极大无关组中的向量个数</u></strong> 称为 <span class="math inline">\(\text{S}\)</span> 的秩，记作 <span class="math inline">\(\text{r(S)}\)</span>；规定 <span class="math inline">\(\{\textbf{0}\}\)</span> 的秩为 0</p></li>
+<li><p>等价向量组：设 <span class="math inline">\(\text{A}\)</span> 和
+<span class="math inline">\(\text{B}\)</span> 是向量组，若 <span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{B}\)</span> 中向量可相互表示，则称 <span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{B}\)</span> 是等价的</p>
+<p>且有：等价向量组有<u>相同的秩</u></p></li>
+<li><p>基与维度：设 <span class="math inline">\(\text{V}_{\text{K}}\)</span> 为线性空间，若存在
+<span class="math inline">\(\text{V}\)</span> 中线性无关的向量组 <span class="math inline">\(\{e_1, \dots, e_n\}\)</span>，使 <span class="math inline">\(\text{V}\)</span>
+中<u>任意向量</u>都是该<strong>无关组的<u>线性组合</u></strong></p>
+<p>则称 <span class="math inline">\(\{e_1, \dots, e_n\}\)</span>
+是一组基，维度 <span class="math inline">\(\text{dim}(\text{V}) =
+n\)</span></p>
+<blockquote>
+<p><strong>注意</strong>：<span class="math inline">\(n\)</span>
+维线性空间 <span class="math inline">\(\text{V}\)</span> 中，<u>超过</u>
+<span class="math inline">\(n\)</span> 个向量的向量组一定线性相关</p>
+</blockquote></li>
+<li><p>基的判定条件：设 <span class="math inline">\(\text{V}\)</span> 为
+<span class="math inline">\(n\)</span> 维线性空间，<span class="math inline">\(\{e_1, \dots, e_n\}\)</span>
+是空间中的向量组，若满足以下<strong><u>其中一个</u></strong>条件</p>
+<ul>
+<li><span class="math inline">\(e_1, \dots, e_n\)</span> 线性无关</li>
+<li><span class="math inline">\(\text{V}\)</span> 中任意向量都是 <span class="math inline">\(e_, \dots e_n\)</span> 的线性组合</li>
+</ul>
+<p>那么 <span class="math inline">\(\{e_, \dots, e_n\}\)</span> 是 <span class="math inline">\(\text{V}\)</span>
+的<strong>一组基</strong></p></li>
+<li><p>基扩张定理：设 <span class="math inline">\(\text{V}\)</span> 是
+<span class="math inline">\(n\)</span> 维线性空间，<span class="math inline">\(\{v_1, \dots, v_m\}\)</span>（<span class="math inline">\(m \le
+n\)</span>）为<strong>线性无关</strong>向量，<span class="math inline">\(\{e_1, \dots, e_n\}\)</span> 是 <span class="math inline">\(\text{V}\)</span> 的一组基</p>
+<p>则 <span class="math inline">\(\{v_1, \dots, v_m, e_1, \dots,
+e_{n-m}\}\)</span> 是 <span class="math inline">\(\text{V}\)</span>
+的一组新的基（<span class="math inline">\(\{e_1, \dots,
+e_{n-m}\}\)</span> 可以任意选取）</p></li>
+</ul>
+<hr>
+<h3 id="四矩阵的秩">四、矩阵的秩</h3>
+<ul>
+<li><p>行秩和列秩：设 <span class="math inline">\(\text{A}\)</span> 为
+<span class="math inline">\(m\times n\)</span> 矩阵</p>
+<ul>
+<li>行分块 与 行秩：行分块为 <span class="math inline">\(\text{A} =
+(\alpha_1, \dots, \alpha_m)^T\)</span>，<span class="math inline">\(\{\alpha_1, \dots, \alpha_m\}\)</span>
+的秩为<strong>行秩</strong></li>
+<li>列分块 和 列秩：列分块为 <span class="math inline">\(\text{A} =
+(\beta_1, \dots, \beta_n)\)</span>，<span class="math inline">\(\{\beta,
+\dots, \beta_n\}\)</span> 的秩为<strong>列秩</strong></li>
+</ul>
+<p>矩阵的<u>行秩</u>和<u>列秩</u>在<strong>初等变换</strong>下保持不变</p></li>
+<li><p>初等<strong>行</strong>变换<u>不改变</u>矩阵列向量组极大无关组的<strong>列指标</strong>：设
+<span class="math inline">\(\text{A}_{m\times n} = (\beta_1, \dots,
+\beta_n)\)</span>，且 <span class="math inline">\(\text{Q}_{n\times
+n}\)</span> 为 <span class="math inline">\(n\)</span> 阶非异阵</p>
+<p>若 <span class="math inline">\(\{\beta_{i_1}, \dots,
+\beta_{i_r}\}\)</span> 是 <span class="math inline">\(\text{A}\)</span>
+列向量组的极大无关组，那么 <span class="math inline">\(\{\text{Q}\beta_{i_1}, \dots,
+\text{Q}\beta_{i_r}\}\)</span> 是 <span class="math inline">\(\text{QA}\)</span> 列向量的极大无关组</p></li>
+<li><p>矩阵的秩：矩阵的秩 = 矩阵的行秩 = 矩阵的列秩，记作 <span class="math inline">\(\text{rank(A)}\)</span></p>
+<p>由"矩阵的行秩和列秩在初等变换下保持不变"，矩阵的<strong><u>秩</u></strong>在<strong>初等变换</strong>下保持不变，即
+<span class="math inline">\(\text{r(PAQ)}=\text{r(A)}\)</span></p></li>
+<li><p>初等变换 <strong><u>求解</u></strong> <span class="math inline">\(\text{A}_{m\times n}\)</span> 的
+<strong><u>秩</u></strong> 和 列向量极大无关组：</p>
+<ol type="1">
+<li>用初等<strong><u>行</u></strong>变换将 <span class="math inline">\(\text{A}\)</span> 化为<strong>阶梯型</strong>矩阵
+<span class="math inline">\(\text{B}\)</span>，得到各阶梯点 <span class="math inline">\(b_{1k_1}, \dots, b_{rk_r}\)</span>（<span class="math inline">\(1 \le k_1 \lt \dots \lt k_r \le n\)</span>）</li>
+<li>直接得到 <span class="math inline">\(\text{A}\)</span> 的
+<strong><u>秩</u></strong> 为 <span class="math inline">\(\text{r(A)}\)</span>（即阶梯型矩阵的非零行个数）</li>
+<li>由初等行变换不改变 <span class="math inline">\(\text{A}\)</span>
+列向量极大无关组的列指标，<strong><u>极大无关组</u></strong> 为 <span class="math inline">\(\{\beta_{k_1}, \dots, \beta_{k_r}\}\)</span></li>
+</ol></li>
+<li><p>初等变换 <strong><u>求解</u></strong>
+列（行）向量组的秩和线性相关性：</p>
+<ol type="1">
+<li>先将列向量组拼成一个大矩阵；行向量<strong>转置后当成列向量</strong>同理</li>
+<li>按上面方法求解 <span class="math inline">\(\text{r(A)}\)</span>，即列向量组的秩</li>
+<li>若 <span class="math inline">\(\text{r(A)}\)</span>
+等于<strong>向量组的秩</strong>，则线性无关，否则线性相关</li>
+</ol></li>
+<li><p>初等变换 <strong><u>求解</u></strong>
+列（行）向量组的极大无关组：</p>
+<ol type="1">
+<li>先将列向量组拼成一个大矩阵；行向量转置后当成列向量同理</li>
+<li>按"<u>初等变换求解矩阵列向量极大无关组</u>"的方式求解列向量极大无关组</li>
+</ol></li>
+<li><p>秩 与 相抵标准型的关系：</p>
+<ul>
+<li>矩阵的秩 = 相抵标准型中非零元矩阵 <span class="math inline">\(\text{I}_r\)</span> 的阶数 <span class="math inline">\(r\)</span>，且 <span class="math inline">\(r\)</span> 仅与 <span class="math inline">\(\text{A}\)</span> 本身性质有关，与 <span class="math inline">\(\text{P,Q}\)</span> 的选取无关</li>
+<li>设 <span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{B}\)</span> <u>同阶</u>，则有：<span class="math inline">\(\text{A} \sim \text{B}\)</span> <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(\text{r(A)} = \text{r(B)}\)</span></li>
+</ul></li>
+<li><p>行满秩 与 列满秩：设 <span class="math inline">\(\text{A}_{m\times n}\)</span></p>
+<ul>
+<li>行满秩：<span class="math inline">\(\text{r(A)} = m \Leftrightarrow
+m\)</span> 个行向量线性无关</li>
+<li>列满秩：<span class="math inline">\(\text{r(A)} = n
+\Leftrightarrow\)</span> <span class="math inline">\(n\)</span>
+个列向量线性无关</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：对于方阵 <span class="math inline">\(\text{A}_{n\times n}\)</span>，$ = n $
+行列都满秩（行列向量都线性无关），且有 <span class="math inline">\(\text{r(A)} = n \Leftrightarrow \text{A}\)</span>
+可逆</p>
+</blockquote></li>
+<li><p>子式判别法：设 <span class="math inline">\(\text{A}_{m\times
+n}\)</span>，则有 <span class="math inline">\(\text{r(A)} = r
+\Leftrightarrow\)</span> <span class="math inline">\(\text{A}\)</span>
+有一个 <span class="math inline">\(r\)</span> 阶子式不等于 0，且所有
+<span class="math inline">\(r + 1\)</span> 阶子式都等于 0</p></li>
+<li><p>两个关于秩的不等式结论：</p>
+<ul>
+<li><p>设矩阵 <span class="math inline">\(\text{C}\)</span>
+满足以下形式之一： <span class="math display">\[
+\text{C} = \begin{bmatrix} \text{A} &amp; \text{D} \\ \textbf{O} &amp;
+\text{B} \end{bmatrix} 或 \begin{bmatrix} \text{A} &amp; \textbf{O} \\
+\text{D} &amp; \text{B} \end{bmatrix}
+\]</span> 则 <span class="math inline">\(\text{r(C)} \ge \text{r(A)} +
+\text{r(B)}\)</span></p></li>
+<li><p><span class="math inline">\(\text{Sylvester}\)</span> 不等式：设
+<span class="math inline">\(\text{A}_{m\times n}\)</span>，<span class="math inline">\(\text{B}_{n\times p}\)</span>，则有 <span class="math inline">\(\text{r(A)} + \text{r(B)} - n \le \text{r(AB)} \le
+\min(\text{r(A)}, \text{r(B)})\)</span></p></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="五基变换与过渡矩阵">五、基变换与过渡矩阵</h3>
+<ul>
+<li><p>坐标向量：设 <span class="math inline">\(\{e_1, \dots,
+e_n\}\)</span> 是 <span class="math inline">\(n\)</span> 维线性空间
+<span class="math inline">\(\text{V}\)</span> 的一组基，可定义映射 <span class="math inline">\(\phi: \text{V} \vdash \text{K}^n\)</span>，将
+<span class="math inline">\(\alpha = \sum_{i=1}^n \alpha_i e_i\)</span>
+映射到向量 <span class="math inline">\((\alpha_1, \dots,
+\alpha_n)^T\)</span></p>
+<p>则称 <span class="math inline">\((\alpha_1, \dots,
+\alpha_n)^T\)</span> 是给定基 <span class="math inline">\(\{e_1, \dots,
+e_n\}\)</span> 下 <span class="math inline">\(\alpha\)</span>
+的<strong><u>坐标向量</u></strong></p>
+<blockquote>
+<p><strong>注意</strong>：可以证明，<span class="math inline">\(\phi\)</span>
+既是单射，又是满射，也即是<strong>一一对应</strong>（双射）</p>
+</blockquote></li>
+<li><p>过渡矩阵：设 <span class="math inline">\(\text{V}\)</span> 是
+<span class="math inline">\(n\)</span> 维线性空间，<span class="math inline">\(\{e_1, \dots, e_n\}\)</span> 和 <span class="math inline">\(\{f_1, \dots, f_n\}\)</span> 是两组基向量，总存在
+<span class="math inline">\(a_ij\)</span>，满足 <span class="math display">\[
+\begin{cases}
+f_1 = a_{11}e_1 + a_{21}e_2 + \dots + a_{n1}e_n \\
+\qquad \dots \\
+f_n = a_{1n}e_1 + a_{n1}e_2 + \dots + a_{nn}e_n \\
+\end{cases}
+\]</span> 则 <span class="math inline">\(e_i\)</span> 前的系数矩阵构成
+<span class="math inline">\(n\)</span>
+阶<u>方阵</u>的<strong><u>转置</u></strong> <span class="math inline">\(\text{A} = (a_{ij})_{n\times n}\)</span> 称为从基
+<span class="math inline">\(e\)</span> 到 基 <span class="math inline">\(f\)</span> 的过渡矩阵</p></li>
+<li><p>基变换：设基 <span class="math inline">\(e\)</span> 到 基 <span class="math inline">\(f\)</span> 的过渡矩阵为 <span class="math inline">\(\text{A}\)</span>，则有 <span class="math inline">\((f_1, \dots, f_n) = (e_1, \dots,
+e_n)\text{A}\)</span></p></li>
+<li><p>坐标变换：设 <span class="math inline">\(\alpha = \lambda_1e_1 +
+\dots + \lambda_n e_n = \mu_1f_1 + \dots + \mu_n
+f_n\)</span>，写成向量点乘形式为： <span class="math display">\[
+\alpha = (e_1, \dots, e_n) \begin{pmatrix} \lambda_1 \\ \vdots \\
+\lambda_n \end{pmatrix} = (f_1, \dots, f_n) \begin{pmatrix} \mu_1 \\
+\vdots  \\ \mu_n \end{pmatrix}
+\]</span> 把 <span class="math inline">\((f_1, \dots, f_n) = (e_1,
+\dots, e_n)\text{A}\)</span> 代入可得： <span class="math display">\[
+\begin{pmatrix} \lambda_1 \\ \vdots \\ \lambda_n \end{pmatrix}=
+\text{A}\begin{pmatrix} \mu_1 \\ \vdots  \\ \mu_n \end{pmatrix}
+\]</span>
+即<strong>新坐标</strong>左乘过渡矩阵可得到<strong>旧坐标</strong></p></li>
+<li><p>过渡矩阵的传递性：设从基 <span class="math inline">\(e\)</span>
+到基 <span class="math inline">\(f\)</span> 的过渡矩阵为 <span class="math inline">\(\text{A}\)</span>，从基 <span class="math inline">\(f\)</span> 到基 <span class="math inline">\(g\)</span> 的过渡矩阵为 <span class="math inline">\(\text{B}\)</span></p>
+<ul>
+<li><span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{B}\)</span>
+是过渡矩阵，即<strong><u>任何过渡矩阵都是非异阵</u></strong></li>
+<li>从基 <span class="math inline">\(e\)</span> 到（基 <span class="math inline">\(f\)</span> 再到）基 <span class="math inline">\(g\)</span> 的过渡矩阵为 <span class="math inline">\(\text{AB}\)</span>（直接相乘）</li>
+</ul></li>
+<li><p>求解两组 3 维基 <span class="math inline">\(f\)</span> 和 基
+<span class="math inline">\(g\)</span> 之间的过渡矩阵 <span class="math inline">\(\text{X}\)</span> ：先给出 <span class="math inline">\(\{e_1=(1, 0, 0), e_2 = (0, 1, 0), e_3=(0, 0,
+1)\}\)</span></p>
+<ol type="1">
+<li>直接写出从单位基 <span class="math inline">\(e\)</span> 到 <span class="math inline">\(f\)</span> 的过渡矩阵 <span class="math inline">\(\text{A}\)</span>：把 基<span class="math inline">\(f\)</span> 的列向量排成方阵即可</li>
+<li>同理得到从单位基 <span class="math inline">\(e\)</span> 到 <span class="math inline">\(g\)</span> 的过渡矩阵 <span class="math inline">\(\text{B}\)</span>：把 基<span class="math inline">\(g\)</span> 的列向量排成方阵即可</li>
+<li>由过渡矩阵<strong>传递性</strong> <span class="math inline">\(\text{AX} = \text{B}\)</span>，可知 <span class="math inline">\(\text{X} =
+\text{A}^{-1}\text{B}\)</span>，用初等<strong><u>行</u></strong>变换求得
+<span class="math inline">\((\text{A} | \text{B}) \vdash (\text{I}_3 |
+\text{A}^{-1}\text{B})\)</span></li>
+</ol></li>
+</ul>
+<hr>
+<h3 id="六子空间">六、子空间</h3>
+<ul>
+<li><p>子空间的定义：设 <span class="math inline">\(\text{V}_0\)</span>
+是线性空间 <span class="math inline">\(\text{V}\)</span>
+的<strong>非空子集</strong>，若 <span class="math inline">\(\forall \
+\alpha, \beta \in \text{V}_0\)</span>，<span class="math inline">\(\forall \ k \in
+\text{K}\)</span>，都满足以下两条性质：</p>
+<ul>
+<li>对<u>加法</u>封闭：<span class="math inline">\(\alpha + \beta \in
+\text{V}_0\)</span></li>
+<li>对<u>数乘</u>封闭：<span class="math inline">\(k \cdot \alpha \in
+\text{V}_0\)</span></li>
+</ul>
+<p>则称 <span class="math inline">\(\text{V}_0\)</span> 是 <span class="math inline">\(\text{V}\)</span>
+的线性子空间，且上述加法和数乘满足线性运算的 8 条性质</p></li>
+<li><p>平凡子空间：零子空间 <span class="math inline">\(\{0_{\text{V}}\}\)</span> 和 全子空间（<span class="math inline">\(\text{V}\)</span> 自己）</p></li>
+<li><p>子空间的维数：设 <span class="math inline">\(\text{V}_0\)</span>
+是 <span class="math inline">\(n\)</span> 维线性空间 <span class="math inline">\(\text{V}\)</span> 的子空间，则有 <span class="math inline">\(0 \le \dim_{\text{V}_0} \le n\)</span></p></li>
+<li><p>和空间和交空间：设 <span class="math inline">\(\text{V}_1\)</span> 和 <span class="math inline">\(\text{V}_2\)</span> 是 <span class="math inline">\(\text{V}\)</span> 的子空间</p>
+<ul>
+<li>和空间：<span class="math inline">\(\text{V}_1 + \text{V}_2 =
+\{\alpha + \beta \ | \ \alpha \in \text{V}_1, \beta \in
+\text{V}_2  \}\)</span>（<strong>各取一个</strong>向量求和）</li>
+<li>交空间：<span class="math inline">\(\text{V}_1 \cap \text{V}_2 =
+\{\alpha \ | \ \alpha \in \text{V}_1, \alpha \in \text{V}_2
+\}\)</span>（<strong>同时</strong>在两个子空间的向量）</li>
+</ul>
+<p>和空间 与 交空间 都是 <span class="math inline">\(\text{V}\)</span>
+的子空间</p>
+<blockquote>
+<p><strong>注意</strong>：上述定义可以推广到
+<strong><u>更多</u></strong> 的子空间上，如 <span class="math inline">\(\text{V}_1 + \dots + \text{V}_m\)</span>，<span class="math inline">\(\text{V}_1 \cap \dots \cap \text{V}_m\)</span></p>
+</blockquote></li>
+<li><p>维度公式：设 <span class="math inline">\(\text{V}_1,
+\text{V}_2\)</span> 是 <span class="math inline">\(\text{V}\)</span>
+的线性子空间，则有 <span class="math inline">\(\dim(\text{V}_1 +
+\text{V}_2) = \dim(\text{V}_1) + \dim (\text{V}_2) - \dim (\text{V}_1
+\cap \text{V}_2)\)</span></p></li>
+<li><p>生成子空间：设 <span class="math inline">\(\text{S} \in
+\text{V}\)</span> 是非空子集，记 <span class="math inline">\(\text{L(S)}\)</span> 是 <span class="math inline">\(\text{S}\)</span>
+中向量<strong><u>所有可能的线性组合</u></strong>构成的向量集合，则 <span class="math inline">\(\text{L(S)}\)</span> 是 <span class="math inline">\(\text{S}\)</span> 的生成子空间</p>
+<ul>
+<li>闭包性：<span class="math inline">\(\text{L(S)}\)</span>
+是<strong>包含</strong> <span class="math inline">\(\text{S}\)</span> 的
+<span class="math inline">\(\text{V}\)</span>
+的<strong>最小</strong>子空间</li>
+<li>子空间与闭包：设 <span class="math inline">\(\text{S}\)</span>
+的极大无关组 <span class="math inline">\(\{\alpha_, \dots,
+\alpha_r\}\)</span>，则 <span class="math inline">\(\text{L(S)} =
+\text{L}(\alpha_1, \dots, \alpha_r)\)</span>，且 <span class="math inline">\(\dim (\text{L(S)}) = \text{r(S)} = r\)</span></li>
+</ul></li>
+<li><p>直和：设 <span class="math inline">\(\text{V}_i\)</span>（<span class="math inline">\(1 \le i \le m\)</span>）为 <span class="math inline">\(\text{V}\)</span> 的子空间，且对 <span class="math inline">\(\forall \ 1 \le i \le m\)</span>，都有 <span class="math inline">\(\text{V}_i \cap (\text{V}_1 + \dots +
+\text{V}_{i-1} + \text{V}_{i+1} + \dots + \text{V}_m) = 0\)</span>
+成立</p>
+<p>则称 <span class="math inline">\(\text{V}_1 + \dots +
+\text{V}_m\)</span>
+为<strong><u>直和</u></strong>（比"和空间"条件更强），记作 <span class="math inline">\(\text{V}_1 \oplus \dots \oplus
+\text{V}_m\)</span></p></li>
+<li><p>关于"直和"的等价结论：设 <span class="math inline">\(\text{V}_{1\dots m}\)</span> 是 <span class="math inline">\(\text{V}\)</span> 的子空间，记 <span class="math inline">\(\text{V}_0 = \text{V}_1 + \dots +
+\text{V}_m\)</span>，有以下<strong><u>等价三结论</u></strong></p>
+<ul>
+<li><span class="math inline">\(\text{V}_0 = \text{V}_1 \oplus \dots
+\oplus \text{V}_m\)</span>（满足直和条件）</li>
+<li><span class="math inline">\(\dim(\text{V}_1 + \dots + \text{V}_m) =
+\dim(\text{V}_1) + \dots +
+\dim(\text{V}_m)\)</span>（维度可以<strong><u>直接相加</u></strong>）</li>
+<li>每个 <span class="math inline">\(\text{V}_i\)</span>
+中拿出一组基，<u>拼在一起</u>可以得到 <span class="math inline">\(\text{V}_0\)</span> 的一组基</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="七线性方程组的解">七、线性方程组的解</h3>
+<ul>
+<li><p>方程组有解的判定定理：设线性方程组为 <span class="math inline">\(\text{A}x = \beta\)</span>，<span class="math inline">\(\text{A}\)</span> 的增广矩阵 <span class="math inline">\(\tilde{\text{A}} = (\text{A} \  | \
+\beta)\)</span>，未定元数量为 <span class="math inline">\(n\)</span></p>
+<ul>
+<li>若 <span class="math inline">\(\text{r(A)} =
+\text{r}(\tilde{\text{A}}) =
+n\)</span>，则方程组有<strong><u>唯一解</u></strong></li>
+<li>若 <span class="math inline">\(\text{r(A)} =
+\text{r}(\tilde{\text{A}}) &lt;
+n\)</span>，则方程组有<strong><u>无穷多组解</u></strong></li>
+<li>若 <span class="math inline">\(\text{r(A)} \ne
+\text{r}(\tilde{\text{A}})\)</span>，则方程组<strong><u>无解</u></strong>（即<u>系数矩阵</u>和<u>增广矩阵</u>的<strong>秩</strong>决定了是否有解）</li>
+</ul></li>
+<li><p><strong>齐次</strong>线性方程组的结构定理：设齐次线性方程组为
+<span class="math inline">\(\text{A}x = \textbf{0}\)</span>，其解空间为
+<span class="math inline">\(\text{V}_\text{A}\)</span>，则有 <span class="math inline">\(\dim(\text{V}_\text{A}) = n -
+\text{r(A)}\)</span></p>
+<p>即必存在一组解空间的基 <span class="math inline">\(\{\eta_1, \dots,
+\eta_{n-r}\}\)</span>（基础解系），使得 <span class="math inline">\(\text{A}x = \textbf{0}\)</span>
+的<strong>所有解</strong>都是该组基的<strong><u>线性组合</u></strong></p>
+<blockquote>
+<p><strong>注意</strong>：由上述结论可知，若 <span class="math inline">\(\text{A}\)</span> 可逆，则 <span class="math inline">\(\dim(\text{A}_\text{A}) = 0\)</span>，即 <span class="math inline">\(\text{A}x = \textbf{0}\)</span>
+<strong><u>只有零解</u></strong></p>
+</blockquote></li>
+<li><p>"<u>求解方程组</u>"的标准型：通过<u>初等行变换</u>以及<u>列<strong>对换</strong></u>可将
+<span class="math inline">\(\text{A}\)</span>
+转化为解方程组标准型，形式如下 <span class="math display">\[
+\text{A}_{n\times n} \rightarrow \begin{bmatrix} \text{I}_r &amp;
+\text{C}_{r\times(n-r)} \\ \textbf{O} &amp; \textbf{O} \end{bmatrix}
+\]</span> 化成上述"标准型"的简单步骤：设行分块 <span class="math inline">\(\text{A} = (\alpha_1, \dots,
+\alpha_m)^T\)</span></p>
+<ol type="1">
+<li><p>初等行变换：先计算 <span class="math inline">\(\text{A}\)</span>
+<u><strong>行</strong>向量组的<strong>极大无关组</strong></u>，并将组里的
+<span class="math inline">\(r\)</span>
+个向量通过<strong>行对换</strong>调整到 <span class="math inline">\(\text{A}\)</span> 的前 <span class="math inline">\(r\)</span> 行</p>
+<p>再通过第<strong>三</strong>类初等<strong>行</strong>变换消去其余行，得到
+<span class="math inline">\(\text{A} = (\alpha_1, \dots, \alpha_r,
+\textbf{O})^T\)</span>，并记 <span class="math inline">\(\text{A}_1 =
+(\alpha_1, \dots, \alpha_r)^T\)</span></p></li>
+<li><p>列<strong>对换</strong>：先计算 <span class="math inline">\(\text{A}_1\)</span>
+<u><strong>列</strong>向量组的<strong>极大无关组</strong></u>，并将组里的
+<span class="math inline">\(r\)</span>
+个向量通过<strong>列对换</strong>调整到 <span class="math inline">\(\text{A}_1\)</span> 的前 <span class="math inline">\(r\)</span> 列</p>
+<p>从而将 <span class="math inline">\(\text{A}_1\)</span> 化作 <span class="math inline">\((\text{B}_{r\times r},
+\text{U}_{r\times(n-r)})\)</span>
+的形式，再通过初等<strong>行</strong>变换将 <span class="math inline">\(\text{B}\)</span> 化成 <span class="math inline">\(\text{I}_r\)</span>，同时有 <span class="math inline">\(\text{A}_1 \rightarrow (\text{I}_r,
+\text{C})\)</span>，结束</p></li>
+</ol></li>
+<li><p>结构定理：设 <span class="math inline">\(\text{r(A)} =
+\text{r}(\tilde{\text{A}}) =
+r\)</span>（<strong>保证有解</strong>），<span class="math inline">\(\gamma\)</span> 是 <span class="math inline">\(\text{A}x = \beta\)</span> 的特解，<span class="math inline">\(\{\eta_1, \dots, \eta_{n-r}\}\)</span> 是 <span class="math inline">\(\text{A}x = \textbf{0}\)</span> 的基础解系</p>
+<p>则原线性方程组 <span class="math inline">\(\text{A}x = \beta\)</span>
+的 <strong><u>通解</u></strong> 形式为 <span class="math inline">\(\gamma + k_1\eta_1 + \dots +
+k_{n-r}\eta_{n-r}\)</span>（<span class="math inline">\(k_i \in
+\text{K}\)</span>）</p>
+<ul>
+<li><p>基础解系的求法：先把 <span class="math inline">\(\text{A}\)</span>
+化成<u>解方程组</u>的标准型，再不妨令 <span class="math inline">\(x_{r+i} = 0, x_{\gt r \wedge \ne r+i} =
+1\)</span>，得到 <span class="math inline">\(\eta_i\)</span>（<span class="math inline">\(i \ge 1\)</span>）</p>
+<p>比如设 <span class="math inline">\(\text{C}\)</span> 的第 1 列 <span class="math inline">\(\text{C}_1 = (c_{11}, \dots, c_{r1},
+\textbf{0})^T\)</span>，则 <span class="math inline">\(\eta_1 =
+(-c_{11}, \dots, -c_{r1}, 1, 0, \textbf{0})^T\)</span></p>
+<p>比如设 <span class="math inline">\(\text{C}\)</span> 的第 2 列 <span class="math inline">\(\text{C}_2 = (c_{12}, \dots, c_{r2},
+\textbf{0})^T\)</span>，则 <span class="math inline">\(\eta_2 =
+(-c_{12}, \dots, -c_{r2}, 0, 1,
+\textbf{0})^T\)</span>，其余以此类推</p></li>
+<li><p>原方程特解的求法：将 <span class="math inline">\(\text{A}\)</span>
+化成<u>解方程组</u>的标准型后，<strong>常数列</strong>自然就是 <span class="math inline">\((\gamma, \textbf{0})^T\)</span></p></li>
+</ul></li>
+<li><p>求解线性方程组 <span class="math inline">\(\text{A}x =
+\beta\)</span> 的通用方法：</p>
+<ol type="1">
+<li><p>判断是否有解：通过初等<strong><u>行</u></strong>变换将 <span class="math inline">\(\tilde{\text{A}} = (\text{A} \  | \
+\beta)\)</span> 化作<strong>阶梯型</strong>矩阵，若 <span class="math inline">\(\text{r(A)} \ne
+\text{r}(\tilde{\text{A}})\)</span>
+说明<strong><u>无解</u></strong></p></li>
+<li><p>按上述方法，对 <span class="math inline">\((\text{A} \ | \
+\beta)\)</span>
+实施<u>初等<strong>行</strong>变换</u>和<u>列对换</u>得到"解方程组"的标准型，形式如下
+<span class="math display">\[
+\begin{bmatrix} \text{I}_r &amp; \text{C}_{r\times (n-r)} \ | \ \gamma
+\\ \textbf{O} &amp; \textbf{O} \ \ \ \ \ \ \ \ \ \ \ \  | \ \textbf{0}
+\end{bmatrix}
+\]</span> 从而得到<strong>特解</strong>为 <span class="math inline">\((\gamma,
+\textbf{0})^T\)</span>，<strong>基础解系</strong>为 <span class="math inline">\(\eta_1, \dots, \eta_{n-r}\)</span></p></li>
+<li><p>根据之前<u>列对换</u>的情况，调整各个未定元值分量，最终得到原方程组的<strong>特解</strong>和<strong>基础解系</strong></p>
+<p>比如之前第 1 列 和 第 3 列对换过，则特解的第 1 元 与 第 3
+元值对换，基础解系各向量的第 1 元 与 第 3 元值也对换</p></li>
+<li><p>依照<strong><u>结构定理</u></strong>写出 <span class="math inline">\(\text{A}x = \beta\)</span> 的通解</p></li>
+</ol>
+<blockquote>
+<p><strong>注意</strong>：对于<u>齐次</u>方程组 <span class="math inline">\(\text{A}x =
+\textbf{0}\)</span>，解空间过<strong>过线性空间原点</strong>；对于<u>非齐次</u>方程组
+<span class="math inline">\(\text{A}x =
+\beta\)</span>，解空间的所有向量都<strong>偏离原点</strong> <span class="math inline">\(\gamma\)</span></p>
+</blockquote></li>
 </ul>
 
                 
@@ -448,9 +830,9 @@ k_n\)</span> 取值唯一）<span class="math inline">\(\Leftrightarrow\)</span>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/rank/">#rank</a>
-      
         <a href="/tags/linear-equation/">#linear equation</a>
+      
+        <a href="/tags/rank/">#rank</a>
       
     </div>
   
@@ -506,6 +888,12 @@ k_n\)</span> 取值唯一）<span class="math inline">\(\Leftrightarrow\)</span>
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2024/08/30/computer_organization/digital-circuit/" title="『computer organization-1』digital circuit">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">『computer organization-1』digital circuit</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
