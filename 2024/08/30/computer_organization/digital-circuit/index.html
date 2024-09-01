@@ -23,10 +23,17 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="数字电路 一、逻辑代数  逻辑运算优先级降序：括号 &gt; 非 &gt; 与（乘） &gt; 异或 &gt; 或（加） 逻辑代数基本定律：设 A \(\in \{0, 1\}\) 是逻辑变量  自等律：A + 0 &#x3D; A，A \(\cdot\) 1 &#x3D; A 0-1 律：A + 1 &#x3D; 1，A \(\cdot\) 0 &#x3D; 0 交换律：A + B &#x3D; B + A，A \(\c">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E4%B8%B2%E8%A1%8C%E5%8A%A0%E6%B3%95%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E5%B9%B6%E8%A1%8C%E5%8A%A0%E6%B3%95%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E5%88%86%E7%BB%84%E5%B9%B6%E8%A1%8C%E8%BF%9B%E4%BD%8D%E5%8A%A0%E6%B3%95%E5%99%A8.png">
 <meta property="article:published_time" content="2024-08-30T13:54:05.000Z">
-<meta property="article:modified_time" content="2024-08-31T14:23:11.564Z">
+<meta property="article:modified_time" content="2024-09-01T15:16:05.183Z">
 <meta property="article:author" content="WangLe">
+<meta property="article:tag" content="logical algebra">
+<meta property="article:tag" content="combinational logic">
+<meta property="article:tag" content="sequantial logic">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E4%B8%B2%E8%A1%8C%E5%8A%A0%E6%B3%95%E5%99%A8.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -233,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k words
+          2.7k words
         
       </span>
     
@@ -244,7 +251,7 @@
         
         
         
-          13 mins
+          23 mins
         
       </span>
     
@@ -317,7 +324,7 @@ B = B <span class="math inline">\(\cdot\)</span> A</li>
 <blockquote>
 <p><strong>注意</strong>：代入定理扩大了基本逻辑公式的使用范围</p>
 </blockquote></li>
-<li><p>反演定理：设原逻辑函数为<span class="math inline">\(\text{F}\)</span>，对F中的所有元素按以下方式替换</p>
+<li><p>反演定理⭐：设原逻辑函数为<span class="math inline">\(\text{F}\)</span>，对F中的所有元素按以下方式替换</p>
 <ul>
 <li>将乘法换成加法，将加法换成乘法</li>
 <li>将 0 换成 1，将 1 换成 0</li>
@@ -330,14 +337,14 @@ B = B <span class="math inline">\(\cdot\)</span> A</li>
 <p><strong>注意</strong>：对于第三条替换原则，<strong>不属于单个变量</strong>的非运算在变换中<strong>不变</strong>，如
 <span class="math inline">\(\overline{\text{A+B}}\)</span> 仍是 <span class="math inline">\(\text{A+B}\)</span></p>
 </blockquote></li>
-<li><p>对偶定理：设原逻辑函数为F，对F中的所有元素按如下方式替换</p>
+<li><p>对偶定理⭐：设原逻辑函数为F，对F中的所有元素按如下方式替换</p>
 <ul>
 <li>将乘法换成加法，将加法换成乘法</li>
 <li>将 0 换成 1，将 1 换成 0</li>
 </ul>
 <p>所得到的新函数 F' 与 F
-互为<strong>对偶式</strong>，且对偶公式一定成立（见分配律的两种情况）</p></li>
-<li><p>标准表达式</p>
+互为<strong>对偶式</strong>，且<strong><u>对偶公式一定成立</u></strong>（见分配律的两种情况）</p></li>
+<li><p>标准表达式：包括"最大"和"最小"表达式</p>
 <ul>
 <li>最小项表达式：全部由最小项构成的<strong>积之和</strong>式</li>
 <li>最大项表达式：全部由最大项构成的<strong>和之积</strong>式</li>
@@ -360,7 +367,7 @@ B = B <span class="math inline">\(\cdot\)</span> A</li>
 111（最大的最大项），<span class="math inline">\(\text{A} +
 \overline{\text{B}} + \overline{\text{C}}\)</span> 表示为 011</p></li>
 <li><p>最大项的相邻性：若 2 个最大项<strong>只有</strong> 1
-个变量分别以<u>原变量</u>和<u>反变量</u>的形式出现，记这两个最大项相邻</p></li>
+个变量分别以<u>原变量</u>和<u>反变量</u>的形式出现，记这两个最大项<strong><u>相邻</u></strong></p></li>
 <li><p>最大项的性质：</p>
 <ul>
 <li>对于任意最大项，仅有一组变量取值使其为 0（所有变量同时取
@@ -380,6 +387,68 @@ B = B <span class="math inline">\(\cdot\)</span> A</li>
 <p>再将所有<u>输出为 0
 的组合</u>对应的<strong><u>和项相乘</u></strong>得到最终的逻辑函数 <span class="math inline">\(\text{F}\)</span></p></li>
 </ul></li>
+</ul>
+<hr>
+<h3 id="二组合逻辑设计">二、组合逻辑设计</h3>
+<ul>
+<li><p>组合逻辑特点：满足以下三种特点</p>
+<ul>
+<li>由<strong>逻辑门</strong>（与或非）电路组成</li>
+<li>输出不能直接反馈到输入（<strong><u>无环路</u></strong>），且不具备记忆存储电路</li>
+<li><u>当前</u>的输出仅由<u>当前</u>的输入决定，响应速度较快</li>
+</ul></li>
+<li><p>半加器：对<strong>两个</strong> 1bit
+二进制数相加，<u>向高位进位</u>的同时<u><strong>不考虑</strong>来自低位的进位</u></p>
+<ul>
+<li>输入两个 1bit 二进制数 <span class="math inline">\(\text{A,
+B}\)</span>，输出两个 1bit 二进制数 <strong>求和</strong> <span class="math inline">\(\text{SO}\)</span> 与 <strong>进位</strong> <span class="math inline">\(\text{CO}\)</span></li>
+<li>真值映射：<span class="math inline">\(\text{SO} = \text{A} \oplus
+\text{B}\)</span>（异或、无低位进位），<span class="math inline">\(\text{CO} =
+\text{AB}\)</span>（向高位进位，同"1"进位）</li>
+</ul></li>
+<li><p>全加器：对<strong>三个</strong> 1bit
+二进制数，<u>向高位进位</u>的同时<u><strong>考虑</strong>来自低位的进位</u></p>
+<ul>
+<li>输入三个 1bit 二进制数 <span class="math inline">\(\text{A,
+B}\)</span> 以及低位进位 <span class="math inline">\(\text{CI}\)</span>，输出两个 1bit 二进制数
+<strong>求和</strong> <span class="math inline">\(\text{SO}\)</span> 和
+<strong>进位</strong> <span class="math inline">\(\text{CO}\)</span></li>
+<li>真值映射：<span class="math inline">\(\text{SO} = \text{A} \oplus
+\text{B} \oplus \text{CI}\)</span>，<span class="math inline">\(\text{CO} = \text{A }\overline{\text{B}}\text{ CI}
++ \overline{\text{A}} \text{ B} \text{ CI} + \text{AB}\)</span></li>
+</ul></li>
+<li><p>多位加法器：能实现<strong><u>多位二进制数</u></strong>相加的电路（上面两个都是
+1bit 二进制）</p>
+<ul>
+<li><p>串行进位加法器：<u>低位全加器</u>的 <span class="math inline">\(\text{CO}\)</span> 接 <u>高位全加器</u> 的 <span class="math inline">\(\text{CI}\)</span>，电路简单，但由于是串行所以<strong>时延长</strong></p>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/串行加法器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>并行进位加法器：设置专用的<strong><u>进位形成电路</u></strong>提前把各进位算出来，又称<u>超前</u>进位加法器，时延短但电路复杂</p>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/并行加法器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>分组并行进位加法器：组内并行，组间传递</p>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/分组并行进位加法器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+</ul></li>
+<li><p>减法运算电路：数字在计算机中是以<strong><u>补码</u></strong>形式存储的</p>
+<ul>
+<li><p>补码运算：<span class="math inline">\([\text{A} +
+\text{B}]_{\text{补}} = [\text{A}]_{\text{补}} +
+[\text{B}]_{\text{补}}\)</span>，同理 <span class="math inline">\([\text{A} - \text{B}]_{\text{补}} =
+[\text{A}]_{补} + [-\text{B}]_{补}\)</span></p></li>
+<li><p>整数的补码表示：设 <span class="math inline">\([x]_{补} =
+x_{n-1}\dots x_{0}\)</span>，则 <span class="math inline">\([-x]_{补} =
+\overline{x_{n-1}} \dots \overline{x_{0}} +
+1\)</span>，即<strong>按位取反再加一</strong></p>
+<p>故<u>减法电路</u>和<u>加法电路</u>是可以<strong>共用</strong>的，即
+<span class="math inline">\([\text{A} - \text{B}]_{\text{补}} =
+[\text{A}]_{补} + \overline{[\text{B}]_{补}} + 1\)</span></p></li>
+</ul></li>
+<li><p>运算溢出：分为加法溢出和减法溢出</p>
+<ul>
+<li>加法溢出：<strong>符号位<u>相同</u></strong>的两数相加，结果的符号位与加数符号位<strong>相反</strong></li>
+<li>减法溢出：<strong>符号位<u>相异</u></strong>的两数相减，结果的符号位与<u>减数</u>符号位<strong>相同</strong></li>
+</ul>
+<p><strong><u>双</u></strong>符号位："00" 表示正、"11"
+表示负，结果符号位出现 "<strong>01</strong>" 或 "<strong>10</strong>"
+表示溢出</p></li>
 </ul>
 
                 
@@ -410,6 +479,17 @@ B = B <span class="math inline">\(\cdot\)</span> A</li>
 
     </div>
   
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/logical-algebra/">#logical algebra</a>
+      
+        <a href="/tags/combinational-logic/">#combinational logic</a>
+      
+        <a href="/tags/sequantial-logic/">#sequantial logic</a>
+      
+    </div>
   
 </div>
 
