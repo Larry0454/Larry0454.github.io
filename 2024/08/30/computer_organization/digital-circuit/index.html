@@ -24,7 +24,7 @@
 <meta property="og:description" content="数字电路 一、逻辑代数  逻辑运算优先级降序：括号 &gt; 非 &gt; 与（乘） &gt; 异或 &gt; 或（加） 逻辑代数基本定律：设 A \(\in \{0, 1\}\) 是逻辑变量  自等律：A + 0 &#x3D; A，A \(\cdot\) 1 &#x3D; A 0-1 律：A + 1 &#x3D; 1，A \(\cdot\) 0 &#x3D; 0 交换律：A + B &#x3D; B + A，A \(\c">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-30T13:54:05.000Z">
-<meta property="article:modified_time" content="2024-08-30T15:34:09.832Z">
+<meta property="article:modified_time" content="2024-08-31T14:23:11.564Z">
 <meta property="article:author" content="WangLe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -363,12 +363,13 @@ B = B <span class="math inline">\(\cdot\)</span> A</li>
 个变量分别以<u>原变量</u>和<u>反变量</u>的形式出现，记这两个最大项相邻</p></li>
 <li><p>最大项的性质：</p>
 <ul>
-<li>对于任意最大项，仅有一组变量取值使其为 0，其余情况都是 1</li>
+<li>对于任意最大项，仅有一组变量取值使其为 0（所有变量同时取
+1），其余情况都是 1</li>
 <li>全体最大项之积为 0（<span class="math inline">\(\text{A}\overline{\text{A}} =
 0\)</span>），任意两个最大项之和为 1（<span class="math inline">\(\text{A} + \overline{\text{A}} = 1\)</span>）</li>
 <li><strong>相邻</strong>两个最大项之积可以<strong><u>合并</u></strong>为一个和项，如
 <span class="math inline">\((\overline{\text{A}} + \text{B})(\text{A} +
-\text{B}) = \text{B}\)</span>（消去变化的量）</li>
+\text{B}) = \text{B}\)</span>（消去<strong>变化</strong>的量）</li>
 </ul></li>
 <li><p>最大项推导法：将<u>输出为 0
 对应的输入组合</u>写成<strong>和项</strong>形式，对于和项的变量：</p>
@@ -462,6 +463,12 @@ B = B <span class="math inline">\(\cdot\)</span> A</li>
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2024/08/31/linear_algebra/linear-mapping/" title="『linear algebra-4』linear mapping">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">『linear algebra-4』linear mapping</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

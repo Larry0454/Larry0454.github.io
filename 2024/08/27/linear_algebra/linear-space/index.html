@@ -24,10 +24,11 @@
 <meta property="og:description" content="线性空间  本篇是对高等代数中&quot;线性空间&quot;的性质、定理以及计算方法的速记，不涉及严密的推导证明。  一、列向量  数域与向量：数域一般记作 \(\text{K}\)，\(\text{K}\) 上的 \(n\) 维列向量 \(v\) 满足 \(v \in \text{K}^n\)（行向量一般记作 \(\text{K}_n\)） 向量的运算规则：针对 加法 和 数乘 两种运算，满足以">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-27T11:27:00.000Z">
-<meta property="article:modified_time" content="2024-08-31T14:16:24.208Z">
+<meta property="article:modified_time" content="2024-09-01T09:57:35.199Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="linear equation">
 <meta property="article:tag" content="rank">
+<meta property="article:tag" content="linear equation">
+<meta property="article:tag" content="base vector">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -443,7 +444,7 @@ k_n\)</span> 取值唯一）<span class="math inline">\(\Leftrightarrow\)</span>
 <span class="math inline">\(r+1\)</span>
 个向量<strong>线性相关</strong></p></li>
 <li><p>设 <span class="math inline">\(\text{A}\)</span> 和 <span class="math inline">\(\text{B}\)</span> 为向量组，若 <span class="math inline">\(\text{A}\)</span> 线性无关，且 <span class="math inline">\(\text{A}\)</span> 中任一向量都是 <span class="math inline">\(\text{B}\)</span> 中向量的线性组合，则 <span class="math inline">\(\#\text{A} \le \#\text{B}\)</span></p>
-<p>若<strong>更大</strong>的向量组 <span class="math inline">\(\text{A}\)</span> 中向量可用较小的向量组 <span class="math inline">\(\text{B}\)</span> 线性表示，那么 <span class="math inline">\(\text{A}\)</span>
+<p>若<strong>更大</strong>的向量组 <span class="math inline">\(\text{A}\)</span> 中向量都可用较小的向量组 <span class="math inline">\(\text{B}\)</span> 线性表示，那么 <span class="math inline">\(\text{A}\)</span>
 肯定是<strong>线性相关</strong>的（上述逆否命题）</p></li>
 <li><p>向量族的秩：<span class="math inline">\(\text{S}\)</span> 中
 <strong><u>极大无关组中的向量个数</u></strong> 称为 <span class="math inline">\(\text{S}\)</span> 的秩，记作 <span class="math inline">\(\text{r(S)}\)</span>；规定 <span class="math inline">\(\{\textbf{0}\}\)</span> 的秩为 0</p></li>
@@ -468,14 +469,15 @@ n\)</span></p>
 <li><span class="math inline">\(e_1, \dots, e_n\)</span> 线性无关</li>
 <li><span class="math inline">\(\text{V}\)</span> 中任意向量都是 <span class="math inline">\(e_, \dots e_n\)</span> 的线性组合</li>
 </ul>
-<p>那么 <span class="math inline">\(\{e_, \dots, e_n\}\)</span> 是 <span class="math inline">\(\text{V}\)</span>
+<p>那么 <span class="math inline">\(\{e_1, \dots , e_n\}\)</span> 是
+<span class="math inline">\(\text{V}\)</span>
 的<strong>一组基</strong></p></li>
 <li><p>基扩张定理：设 <span class="math inline">\(\text{V}\)</span> 是
 <span class="math inline">\(n\)</span> 维线性空间，<span class="math inline">\(\{v_1, \dots, v_m\}\)</span>（<span class="math inline">\(m \le
 n\)</span>）为<strong>线性无关</strong>向量，<span class="math inline">\(\{e_1, \dots, e_n\}\)</span> 是 <span class="math inline">\(\text{V}\)</span> 的一组基</p>
 <p>则 <span class="math inline">\(\{v_1, \dots, v_m, e_1, \dots,
 e_{n-m}\}\)</span> 是 <span class="math inline">\(\text{V}\)</span>
-的一组新的基（<span class="math inline">\(\{e_1, \dots,
+的一组新的基（其中 <span class="math inline">\(\{e_1, \dots,
 e_{n-m}\}\)</span> 可以任意选取）</p></li>
 </ul>
 <hr>
@@ -504,14 +506,14 @@ n}\)</span> 为 <span class="math inline">\(n\)</span> 阶非异阵</p>
 <p>由"矩阵的行秩和列秩在初等变换下保持不变"，矩阵的<strong><u>秩</u></strong>在<strong>初等变换</strong>下保持不变，即
 <span class="math inline">\(\text{r(PAQ)}=\text{r(A)}\)</span></p></li>
 <li><p>初等变换 <strong><u>求解</u></strong> <span class="math inline">\(\text{A}_{m\times n}\)</span> 的
-<strong><u>秩</u></strong> 和 列向量极大无关组：</p>
+<strong><u>秩</u></strong> 和 <u>列向量极大无关组</u>：</p>
 <ol type="1">
 <li>用初等<strong><u>行</u></strong>变换将 <span class="math inline">\(\text{A}\)</span> 化为<strong>阶梯型</strong>矩阵
 <span class="math inline">\(\text{B}\)</span>，得到各阶梯点 <span class="math inline">\(b_{1k_1}, \dots, b_{rk_r}\)</span>（<span class="math inline">\(1 \le k_1 \lt \dots \lt k_r \le n\)</span>）</li>
 <li>直接得到 <span class="math inline">\(\text{A}\)</span> 的
 <strong><u>秩</u></strong> 为 <span class="math inline">\(\text{r(A)}\)</span>（即阶梯型矩阵的非零行个数）</li>
 <li>由初等行变换不改变 <span class="math inline">\(\text{A}\)</span>
-列向量极大无关组的列指标，<strong><u>极大无关组</u></strong> 为 <span class="math inline">\(\{\beta_{k_1}, \dots, \beta_{k_r}\}\)</span></li>
+列向量极大无关组的列指标，<strong><u>极大无关组</u></strong> 即为 <span class="math inline">\(\{\beta_{k_1}, \dots, \beta_{k_r}\}\)</span></li>
 </ol></li>
 <li><p>初等变换 <strong><u>求解</u></strong>
 列（行）向量组的秩和线性相关性：</p>
@@ -524,7 +526,7 @@ n}\)</span> 为 <span class="math inline">\(n\)</span> 阶非异阵</p>
 <li><p>初等变换 <strong><u>求解</u></strong>
 列（行）向量组的极大无关组：</p>
 <ol type="1">
-<li>先将列向量组拼成一个大矩阵；行向量转置后当成列向量同理</li>
+<li>先将列向量组拼成一个大矩阵；行向量<strong>转置后当成列向量</strong>同理</li>
 <li>按"<u>初等变换求解矩阵列向量极大无关组</u>"的方式求解列向量极大无关组</li>
 </ol></li>
 <li><p>秩 与 相抵标准型的关系：</p>
@@ -583,7 +585,7 @@ e_n\}\)</span> 下 <span class="math inline">\(\alpha\)</span>
 </blockquote></li>
 <li><p>过渡矩阵：设 <span class="math inline">\(\text{V}\)</span> 是
 <span class="math inline">\(n\)</span> 维线性空间，<span class="math inline">\(\{e_1, \dots, e_n\}\)</span> 和 <span class="math inline">\(\{f_1, \dots, f_n\}\)</span> 是两组基向量，总存在
-<span class="math inline">\(a_ij\)</span>，满足 <span class="math display">\[
+<span class="math inline">\(a_{ij}\)</span>，满足 <span class="math display">\[
 \begin{cases}
 f_1 = a_{11}e_1 + a_{21}e_2 + \dots + a_{n1}e_n \\
 \qquad \dots \\
@@ -622,8 +624,8 @@ f_n\)</span>，写成向量点乘形式为： <span class="math display">\[
 <li>同理得到从单位基 <span class="math inline">\(e\)</span> 到 <span class="math inline">\(g\)</span> 的过渡矩阵 <span class="math inline">\(\text{B}\)</span>：把 基<span class="math inline">\(g\)</span> 的列向量排成方阵即可</li>
 <li>由过渡矩阵<strong>传递性</strong> <span class="math inline">\(\text{AX} = \text{B}\)</span>，可知 <span class="math inline">\(\text{X} =
 \text{A}^{-1}\text{B}\)</span>，用初等<strong><u>行</u></strong>变换求得
-<span class="math inline">\((\text{A} | \text{B}) \vdash (\text{I}_3 |
-\text{A}^{-1}\text{B})\)</span></li>
+<span class="math inline">\((\text{A} | \text{B}) \rightarrow
+(\text{I}_3 | \text{A}^{-1}\text{B})\)</span></li>
 </ol></li>
 </ul>
 <hr>
@@ -672,7 +674,7 @@ f_n\)</span>，写成向量点乘形式为： <span class="math display">\[
 <li>闭包性：<span class="math inline">\(\text{L(S)}\)</span>
 是<strong>包含</strong> <span class="math inline">\(\text{S}\)</span> 的
 <span class="math inline">\(\text{V}\)</span>
-的<strong>最小</strong>子空间</li>
+中的<strong>最小</strong>子空间</li>
 <li>子空间与闭包：设 <span class="math inline">\(\text{S}\)</span>
 的极大无关组 <span class="math inline">\(\{\alpha_, \dots,
 \alpha_r\}\)</span>，则 <span class="math inline">\(\text{L(S)} =
@@ -765,7 +767,7 @@ k_{n-r}\eta_{n-r}\)</span>（<span class="math inline">\(k_i \in
 <p>比如设 <span class="math inline">\(\text{C}\)</span> 的第 2 列 <span class="math inline">\(\text{C}_2 = (c_{12}, \dots, c_{r2},
 \textbf{0})^T\)</span>，则 <span class="math inline">\(\eta_2 =
 (-c_{12}, \dots, -c_{r2}, 0, 1,
-\textbf{0})^T\)</span>，其余以此类推</p></li>
+\textbf{0})^T\)</span>，其余依此类推</p></li>
 <li><p>原方程特解的求法：将 <span class="math inline">\(\text{A}\)</span>
 化成<u>解方程组</u>的标准型后，<strong>常数列</strong>自然就是 <span class="math inline">\((\gamma, \textbf{0})^T\)</span></p></li>
 </ul></li>
@@ -783,11 +785,12 @@ k_{n-r}\eta_{n-r}\)</span>（<span class="math inline">\(k_i \in
 \begin{bmatrix} \text{I}_r &amp; \text{C}_{r\times (n-r)} \ | \ \gamma
 \\ \textbf{O} &amp; \textbf{O} \ \ \ \ \ \ \ \ \ \ \ \  | \ \textbf{0}
 \end{bmatrix}
-\]</span> 从而得到<strong>特解</strong>为 <span class="math inline">\((\gamma,
-\textbf{0})^T\)</span>，<strong>基础解系</strong>为 <span class="math inline">\(\eta_1, \dots, \eta_{n-r}\)</span></p></li>
+\]</span> 从而初步得到<strong>特解</strong> <span class="math inline">\((\gamma,
+\textbf{0})^T\)</span>，<strong>基础解系</strong> <span class="math inline">\(\eta_1, \dots, \eta_{n-r}\)</span></p></li>
 <li><p>根据之前<u>列对换</u>的情况，调整各个未定元值分量，最终得到原方程组的<strong>特解</strong>和<strong>基础解系</strong></p>
-<p>比如之前第 1 列 和 第 3 列对换过，则特解的第 1 元 与 第 3
-元值对换，基础解系各向量的第 1 元 与 第 3 元值也对换</p></li>
+<p>比如之前第 1 列 和 第 3 列对换过，则<strong>特解</strong>的第 1 元 与
+第 3 元值对换，同理<strong>基础解系各向量</strong>的第 1 元 与 第 3
+元值也对换</p></li>
 <li><p>依照<strong><u>结构定理</u></strong>写出 <span class="math inline">\(\text{A}x = \beta\)</span> 的通解</p></li>
 </ol>
 <blockquote>
@@ -830,9 +833,11 @@ k_{n-r}\eta_{n-r}\)</span>（<span class="math inline">\(k_i \in
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/rank/">#rank</a>
+      
         <a href="/tags/linear-equation/">#linear equation</a>
       
-        <a href="/tags/rank/">#rank</a>
+        <a href="/tags/base-vector/">#base vector</a>
       
     </div>
   
