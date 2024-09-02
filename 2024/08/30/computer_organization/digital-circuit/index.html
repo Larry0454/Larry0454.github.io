@@ -26,8 +26,13 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E4%B8%B2%E8%A1%8C%E5%8A%A0%E6%B3%95%E5%99%A8.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E5%B9%B6%E8%A1%8C%E5%8A%A0%E6%B3%95%E5%99%A8.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E5%88%86%E7%BB%84%E5%B9%B6%E8%A1%8C%E8%BF%9B%E4%BD%8D%E5%8A%A0%E6%B3%95%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E4%B9%98%E6%B3%95%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E7%BC%96%E7%A0%81%E5%99%A8%E5%92%8C%E8%A7%A3%E7%A0%81%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E6%89%A9%E5%B1%95%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E5%8D%A1%E8%AF%BA%E5%9B%BE%E5%88%A4%E6%96%AD%E6%B3%95.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E5%86%97%E4%BD%99%E9%A1%B9.png">
 <meta property="article:published_time" content="2024-08-30T13:54:05.000Z">
-<meta property="article:modified_time" content="2024-09-01T15:16:05.183Z">
+<meta property="article:modified_time" content="2024-09-02T13:55:12.489Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="logical algebra">
 <meta property="article:tag" content="combinational logic">
@@ -240,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k words
+          4.1k words
         
       </span>
     
@@ -251,7 +256,7 @@
         
         
         
-          23 mins
+          35 mins
         
       </span>
     
@@ -449,6 +454,86 @@ x_{n-1}\dots x_{0}\)</span>，则 <span class="math inline">\([-x]_{补} =
 <p><strong><u>双</u></strong>符号位："00" 表示正、"11"
 表示负，结果符号位出现 "<strong>01</strong>" 或 "<strong>10</strong>"
 表示溢出</p></li>
+<li><p>乘法器：<span class="math inline">\(n\)</span> 位的阵列乘法，需要
+<span class="math inline">\(n(n-1)\)</span>
+个<strong><u>全加器</u></strong>FA</p>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/乘法器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>比较器：比较两个二进制数的大小</p>
+<ul>
+<li>一位比较器：讨论 <span class="math inline">\(\text{F}_{\text{A} &gt;
+\text{B}}\)</span>，<span class="math inline">\(\text{F}_{\text{A} =
+\text{B}}\)</span>，<span class="math inline">\(\text{F}_{\text{A} &lt;
+\text{B}}\)</span> 输出为 1
+对应的输入组合（x4），分别列出<strong><u>最小项表达式</u></strong>即可</li>
+<li>多位比较器：由多个 1bit 比较器组成，<u>优先比较<strong>高位
+bit</strong></u>，直至比出大小</li>
+</ul></li>
+<li><p>编码器 与 解码器：</p>
+<ul>
+<li>编码器：将<strong><u>独热信号</u></strong>转换为一组<strong><u>二进制编码</u></strong>输出
+<ul>
+<li>BCD 编码器（10 bit <span class="math inline">\(\rightarrow\)</span>
+4 bit）：将 <u><strong>十进制</strong>独热信号 0~9</u> 转换为
+<u>对应<strong>二进制</strong>编码</u>（进制转换）</li>
+<li><span class="math inline">\(2^n \sim n\)</span> 编码器：将 <span class="math inline">\(2^n\)</span> 个<u><strong>独热</strong>信号</u>
+转换为 对应的 <span class="math inline">\(n\)</span>
+位<u><strong>二进制</strong>编码</u>（如38编码器）</li>
+</ul></li>
+<li>解码器：执行编码器的<strong>逆运算</strong>
+<ul>
+<li>BCD 解码器（4 bit <span class="math inline">\(\rightarrow\)</span>
+10 bit）：将 <u><strong>二进制</strong>编码</u> 转换为
+对应的<u><strong>十进制</strong>独热信号</u>（进制转换）</li>
+<li><span class="math inline">\(n \sim 2^n\)</span> 解码器：将 <span class="math inline">\(n\)</span> 位<u><strong>二进制</strong>编码</u>
+转换为 对应的 <span class="math inline">\(2^n\)</span>
+个<u><strong>独热</strong>信号</u></li>
+<li>7 段数码管显示解码器：将 <u>二进制值</u> 转换为 <u>7段数码管</u>
+的开闭</li>
+</ul></li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：由"独热"可知，编码器任何时刻最多允许<strong>一个输入</strong>有效，解码器任何时刻最多允许<strong>一个输出</strong>有效</p>
+</blockquote>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/编码器和解码器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>多路复用器：从一组输入（<span class="math inline">\(\{\text{D}_i\}_{0\dots
+n-1}\)</span>）中<strong><u>选出</u></strong>（控制为 <span class="math inline">\(\{\text{A}_i\}_{0\dots (\log
+n)-1}\)</span>）一个作为输出，又称 <strong><span class="math inline">\(n\)</span>选1多路选择器</strong></p>
+<ul>
+<li><p>数据选择器：当 <span class="math inline">\(\text{A}\)</span>
+作为控制端时，可从 <span class="math inline">\(n\)</span>
+个输入中选择一个作为输出（原始用途）</p></li>
+<li><p>设计<strong><u>任意组合逻辑</u></strong>：当 <span class="math inline">\(\text{D}\)</span> 为控制端时，可通过对 <span class="math inline">\(\text{D}\)</span>
+赋予<strong><u>固定的一组值</u></strong>，实现任意组合逻辑</p>
+<ol type="1">
+<li>写出组合逻辑函数：将函数 <span class="math inline">\(\text{F}\)</span> 化为最小项之和的标准形式，如
+<span class="math inline">\(\text{F} = m_1 + m_3\)</span></li>
+<li>写出多路复用器输出：<span class="math inline">\(\text{Y} =
+m_0\text{D}_0 + m_1\text{D}_1 + m_2\text{D}_2 +
+m_3\text{D}_3\)</span></li>
+<li>对照上两式，令 <span class="math inline">\(\text{F} =
+\text{Y}\)</span>，写出<strong><u>固定</u></strong>的 <span class="math inline">\(\text{D}_0 = 0\)</span>，<span class="math inline">\(\text{D}_1 = 1\)</span>，<span class="math inline">\(\text{D}_2 = 0\)</span>，<span class="math inline">\(\text{D}_3 = 1\)</span></li>
+</ol></li>
+<li><p>扩展多路复用器：新增 <span class="math inline">\(\text{A}_{\log
+n}\)</span> 接<strong>低片</strong>的使能端，<span class="math inline">\(\overline{\text{A}_{\log n}}\)</span>
+接<strong>高片</strong>的使能端，从而扩展输入 <span class="math inline">\(\text{D}\)</span> 的范围</p>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/扩展多路复用器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+</ul></li>
+<li><p>竞争 与 冒险：</p>
+<ul>
+<li><p>竞争：某一个输入变量通过<strong>多条<u>延迟不同</u>的路径</strong>传输到输出端，到达时间有先有后</p></li>
+<li><p>冒险：因输入端<strong>竞争</strong>导致的输出端产生不正常的干扰冒充信号（毛刺）</p></li>
+<li><p>判断冒险方法：</p>
+<ul>
+<li><p>代数法：在某些输入条件下，<span class="math inline">\(\text{F}\)</span> 可化简为 <span class="math inline">\(\text{A} + \overline{\text{A}}\)</span> 或 <span class="math inline">\(\text{A}\overline{\text{A}}\)</span>
+的形式</p></li>
+<li><p>卡诺图法：<span class="math inline">\(\text{F}\)</span>
+的最小项表达式的乘积项间存在 <strong><u>相切</u></strong></p>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/卡诺图判断法.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+</ul></li>
+<li><p>解决冒险方法：尝试<u>消除互补变量</u>，或在 <span class="math inline">\(\text{F}\)</span>
+中添加新的<u><strong>冗余项</strong>覆盖相切位置</u></p>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/冗余项.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+</ul></li>
 </ul>
 
                 
