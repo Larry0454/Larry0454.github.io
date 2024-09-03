@@ -1,0 +1,844 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="特征值 一、特征值与特征向量  什么是简单的&quot;表示矩阵&quot;：对角阵 或 分块对角阵 线性变换的特征值与特征向量：设 \(\phi \in \mathcal{L}(\text{V}_\text{K}^n)\)，若存在 \(\lambda \in \text{K}\)，非零 \(e \in \text{V}\)，使得 \(\phi(e) &#x3D; \lambda e\)  特征值：\(\">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『linear algebra-6』eigenvalue">
+<meta property="og:url" content="http://larry0454.github.io/2024/09/02/linear_algebra/eigenvalue/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="特征值 一、特征值与特征向量  什么是简单的&quot;表示矩阵&quot;：对角阵 或 分块对角阵 线性变换的特征值与特征向量：设 \(\phi \in \mathcal{L}(\text{V}_\text{K}^n)\)，若存在 \(\lambda \in \text{K}\)，非零 \(e \in \text{V}\)，使得 \(\phi(e) &#x3D; \lambda e\)  特征值：\(\">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-02T15:12:01.000Z">
+<meta property="article:modified_time" content="2024-09-03T15:22:30.484Z">
+<meta property="article:author" content="WangLe">
+<meta property="article:tag" content="eigenvalue">
+<meta property="article:tag" content="eigenvector">
+<meta property="article:tag" content="diagonalization">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>『linear algebra-6』eigenvalue - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="『linear algebra-6』eigenvalue"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-09-02 23:12" pubdate>
+          September 2, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">『linear algebra-6』eigenvalue</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="特征值">特征值</h2>
+<h3 id="一特征值与特征向量">一、特征值与特征向量</h3>
+<ul>
+<li><p>什么是简单的"表示矩阵"：<u>对角</u>阵 或
+分块<u>对角</u>阵</p></li>
+<li><p>线性变换的特征值与特征向量：设 <span class="math inline">\(\phi
+\in \mathcal{L}(\text{V}_\text{K}^n)\)</span>，若存在 <span class="math inline">\(\lambda \in
+\text{K}\)</span>，<strong>非零</strong> <span class="math inline">\(e
+\in \text{V}\)</span>，使得 <span class="math inline">\(\phi(e) =
+\lambda e\)</span></p>
+<ul>
+<li>特征值：<span class="math inline">\(\lambda\)</span> 是 <span class="math inline">\(\phi\)</span>
+的<strong><u>特征值</u></strong></li>
+<li>特征向量：<span class="math inline">\(e\)</span> 是 <span class="math inline">\(\phi\)</span> 对应 <span class="math inline">\(\lambda\)</span>
+的<strong><u>特征向量</u></strong></li>
+<li>特征子空间：<span class="math inline">\(\text{V}_{\lambda} = \{v \in
+\text{V} \ | \ \phi(v) = \lambda v \} = \{\lambda \ 的特征向量\} \cup
+\{\textbf{0}\}\)</span></li>
+</ul></li>
+<li><p>矩阵的特征值与特征向量：设 <span class="math inline">\(\text{A}
+\in \text{M}_n(\text{K})\)</span>，若存在 <span class="math inline">\(\lambda \in
+\text{K}\)</span>，<strong>非零</strong> <span class="math inline">\(\alpha \in \text{K}^n\)</span>，使得 <span class="math inline">\(\text{A} \alpha = \lambda \alpha\)</span></p>
+<ul>
+<li>特征值：<span class="math inline">\(\lambda\)</span> 是 <span class="math inline">\(\text{A}\)</span>
+的<strong><u>特征值</u></strong></li>
+<li>特征向量：<span class="math inline">\(\alpha\)</span> 是 <span class="math inline">\(\text{A}\)</span> 对应 <span class="math inline">\(\lambda\)</span>
+的<strong><u>特征向量</u></strong></li>
+<li>特征子空间：<span class="math inline">\(\text{V}_\lambda\)</span>
+为线性方程组 <span class="math inline">\((\lambda \text{I} - \text{A}) =
+0\)</span> 的<strong><u>解空间</u></strong></li>
+</ul></li>
+<li><p>特征值的充要条件：以下四个命题<strong><u>等价</u></strong></p>
+<p><span class="math inline">\(\lambda_0\)</span> 是 <span class="math inline">\(\text{A}\)</span> 的特征值 <span class="math inline">\(\Leftrightarrow\)</span> 存在<strong>非零</strong>
+<span class="math inline">\(\alpha\)</span> 使得 <span class="math inline">\(\text{A}\alpha = \lambda_0 \alpha\)</span> <span class="math inline">\(\Leftrightarrow\)</span> 线性方程组 <span class="math inline">\((\lambda \text{I} - \text{A})x = 0\)</span>
+存在<strong>非零解</strong> <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(|\lambda \text{I} - \text{A}| =
+0\)</span></p></li>
+<li><p>"特征值" 与
+"相似矩阵"：<u>相似矩阵</u>具有<u>相同的特征值</u>（记重数），<span class="math inline">\(\text{A} \cong
+\text{P}^{-1}\text{AP}\)</span>（<span class="math inline">\(\text{P}\)</span> 可逆）</p></li>
+<li><p>"特征值" 与 "矩阵"：设 <span class="math inline">\(\text{A}\)</span> 的特征值为 <span class="math inline">\(\lambda_1, \dots
+\lambda_n\)</span>，<strong>则有</strong> <span class="math inline">\(\sum \lambda_i =
+\text{tr}(\text{A})\)</span>，<span class="math inline">\(\Pi \
+\lambda_i = |\text{A}|\)</span>（<span class="math inline">\(\text{A}\)</span> 可逆 <span class="math inline">\(\Leftrightarrow\)</span> 特征值 <span class="math inline">\(\lambda_i\)</span> 全部不是 0）</p></li>
+<li><p>求解<u>特征值</u>和<u>特征向量</u>的方法：</p>
+<ul>
+<li><p>求出特征多项式 <span class="math inline">\(|\lambda \text{I} -
+\text{A}|\)</span> 的根（计算行列式 <span class="math inline">\(\Rightarrow\)</span> 分解因式求出 <span class="math inline">\(\lambda\)</span>），即<strong><u>特征值</u></strong>
+<span class="math inline">\(\lambda_1, \dots, \lambda_n\)</span></p>
+<blockquote>
+<p><strong>注意</strong>：<span class="math inline">\(\lambda_i\)</span>
+里可能有重根，因此要计入重根的数量，保证（可重复）的特征值数量为 <span class="math inline">\(n\)</span></p>
+</blockquote></li>
+<li><p>对每一个 <span class="math inline">\(\lambda_i\)</span>，求解线性方程组 <span class="math inline">\((\lambda_i \text{I} - \text{A})x = 0\)</span>
+的非零解（由奇异必有非零解），即为 <span class="math inline">\(\lambda_i\)</span>
+对应的<strong><u>特征向量</u></strong> <span class="math inline">\(\alpha_i\)</span></p></li>
+</ul></li>
+<li><p>上三角化：设 <span class="math inline">\(\text{A} \in
+\text{M}_n(\text{k})\)</span> 的<u>所有特征值</u>都在 <span class="math inline">\(\text{K}\)</span> 上，则有 <span class="math inline">\(\text{A}\)</span>
+必<u><strong>相似</strong>于上（下）三角方阵</u>，且 <span class="math inline">\(\text{P}^{-1}\text{AP}\)</span> 对角线为 <span class="math inline">\(\lambda_1, \dots, \lambda_n\)</span></p></li>
+<li><p>"特征值" 与 "多项式"：设 <span class="math inline">\(f\)</span>
+为 <span class="math inline">\(n\)</span>
+次<strong>多项式</strong>，<span class="math inline">\(\text{A}\)</span>
+的特征值为 <span class="math inline">\(\lambda_1, \dots
+,\lambda_n\)</span>，<strong>则有</strong> <span class="math inline">\(f(\text{A})\)</span> 的特征值为 <span class="math inline">\(f(\lambda_1), \dots,
+f(\lambda_n)\)</span></p></li>
+<li><p>"特征值" 与 "矩阵运算"：</p>
+<ul>
+<li>"特征值" 与 "逆阵"：设<strong>可逆</strong> <span class="math inline">\(\text{A}\)</span> 的特征值为 <span class="math inline">\(\lambda_1, \dots,
+\lambda_n\)</span>，<strong>则有</strong> <span class="math inline">\(\text{A}^{-1}\)</span> 的特征值为 <span class="math inline">\(\lambda_1^{-1}, \dots ,\lambda_n^{-1}\)</span>（对
+<span class="math inline">\(\text{P}^{-1}\text{AP}\)</span>
+取逆即可）</li>
+<li>"特征值" 与 "数乘"：设 <span class="math inline">\(\text{A}\)</span>
+的特征值为 <span class="math inline">\(\lambda_1, \dots,
+\lambda_n\)</span>，<strong>则有</strong> <span class="math inline">\(k\text{A}\)</span> 的特征值为 <span class="math inline">\(k\lambda_1, \dots, k\lambda_n\)</span></li>
+<li>转置<strong><u>不改变</u></strong>矩阵的特征值</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="二可对角化">二、可对角化</h3>
+<ul>
+<li><p>线性变换与矩阵的<strong><u>可对角化</u></strong>："可对角化"是指线性变换
+<span class="math inline">\(\phi\)</span> 在某组基下 <span class="math inline">\(\{e_i\}_{1\dots n}\)</span>
+的表示矩阵为<strong><u>对角阵</u></strong> <span class="math inline">\(\text{diag}(\lambda_1, \dots,
+\lambda_n)\)</span></p>
+<ul>
+<li>线性变换可对角化：设 <span class="math inline">\(\phi \in
+\mathcal{L}(\text{V}_V^n)\)</span>，则 <span class="math inline">\(\phi\)</span> 可对角化 <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(\phi\)</span> 有 <span class="math inline">\(n\)</span>
+个<u>线性无关的<strong>特征向量</strong></u></li>
+<li>矩阵可对角化：设 <span class="math inline">\(\text{A} \in
+\text{M}_n(\text{K})\)</span>，则 <span class="math inline">\(\text{A}\)</span> 可对角化 <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(\text{A}\)</span> 有 <span class="math inline">\(n\)</span>
+个<u>线性无关的<strong>特征向量</strong></u>，即存在可逆 <span class="math inline">\(\text{P}\)</span>，使 <span class="math inline">\(\text{P}^{-1}\text{AP}\)</span> 为对角阵</li>
+</ul></li>
+<li><p>特征子空间存在<strong><u>直和</u></strong>：设 <span class="math inline">\(\phi\)</span> 有 <span class="math inline">\(k\)</span>
+个<strong><u>不同的</u></strong>特征值，<span class="math inline">\(\text{V}_i\)</span> 是特征值 <span class="math inline">\(\lambda_i\)</span> 对应的特征子空间，则有 <span class="math inline">\(\sum_{i=1}^k \text{V}_i = \bigoplus_{i=1}^k
+\text{V}_i\)</span></p>
+<p>"可对角化" 与 "直和"：<span class="math inline">\(\phi\)</span>
+可对角化 <span class="math inline">\(\Leftrightarrow\)</span> 全空间
+<span class="math inline">\(\text{V} = \bigoplus_{i=1}^k
+\text{V}_i\)</span></p></li>
+<li><p>"特征值" 与 "线性相关"：属于<u>不同特征值</u>（<span class="math inline">\(\lambda_{1\dots
+k}\)</span>）的特征向量必然<strong><u>线性无关</u></strong></p></li>
+<li><p>"特征值" 与 "可对角化"：若 <span class="math inline">\(\phi\)</span> 有 <span class="math inline">\(n\)</span> 个不同的特征值（<span class="math inline">\(n\)</span> 个不同的特征值 <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(n\)</span>
+个<strong>线性无关特征向量</strong>），<strong>则有</strong> <span class="math inline">\(\phi\)</span>
+必然<strong><u>可对角化</u></strong></p></li>
+<li><p>"代数重数" 与 "几何重数"：设 <span class="math inline">\(\lambda_0\)</span> 是 <span class="math inline">\(\phi\)</span> 的一个特征值，<span class="math inline">\(\text{V}_0\)</span> 是属于 <span class="math inline">\(\lambda_0\)</span> 的特征子空间</p>
+<ul>
+<li>代数重数：<span class="math inline">\(\phi\)</span> 的特征多项式中
+<strong><u>根</u></strong><span class="math inline">\(\lambda_0\)</span>
+的重数</li>
+<li>几何重数：即 <span class="math inline">\(\dim(\text{V}_0)\)</span></li>
+</ul>
+<p>且总有重要关系：对于任意特征值，"几何重数" <span class="math inline">\(\le\)</span> "代数重数"，即
+<u>特征子空间的维数</u> <span class="math inline">\(\le\)</span>
+<u>特征值的次数</u></p></li>
+<li><p>利用两个重数判断可对角化：设 <span class="math inline">\(\phi\)</span> 的第 <span class="math inline">\(i\)</span> 个代数重数为 <span class="math inline">\(m_i\)</span>，第 <span class="math inline">\(i\)</span> 个几何重数为 <span class="math inline">\(t_i\)</span></p>
+<p><strong>则有</strong> <span class="math inline">\(\forall \ 1 \le i
+\le k\)</span> ，<span class="math inline">\(m_i = t_i\)</span> <span class="math inline">\(\Leftrightarrow\)</span> <span class="math inline">\(\phi\)</span> 可对角化</p></li>
+<li><p><span class="math inline">\(\text{Cayley-Hamilton}\)</span>
+定理：</p>
+<ul>
+<li>几何形式：设 <span class="math inline">\(\phi \in
+\mathcal{L}(\text{V}_\text{K}^n)\)</span>，<span class="math inline">\(f\)</span> 是 <span class="math inline">\(\phi\)</span>
+的<u>特征多项式</u>，<strong>则有</strong> <span class="math inline">\(f(\phi) = \textbf{0}\)</span></li>
+<li>代数形式：设 <span class="math inline">\(\text{A} \in
+\text{M}_n(\text{K})\)</span>，<span class="math inline">\(f\)</span> 是
+<span class="math inline">\(\text{A}\)</span>
+的<u>特征多项式</u>，<strong>则有</strong> <span class="math inline">\(f(\text{A}) = \textbf{O}\)</span></li>
+</ul></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/linear-algebra/" class="category-chain-item">linear algebra</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/eigenvalue/">#eigenvalue</a>
+      
+        <a href="/tags/eigenvector/">#eigenvector</a>
+      
+        <a href="/tags/diagonalization/">#diagonalization</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>『linear algebra-6』eigenvalue</div>
+      <div>http://larry0454.github.io/2024/09/02/linear_algebra/eigenvalue/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 2, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/01/linear_algebra/inner-product-space/" title="『linear algebra-5』inner product space">
+                        <span class="hidden-mobile">『linear algebra-5』inner product space</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
