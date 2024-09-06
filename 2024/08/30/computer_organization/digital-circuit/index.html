@@ -24,15 +24,21 @@
 <meta property="og:description" content="数字电路 一、逻辑代数  逻辑运算优先级降序：括号 &gt; 非 &gt; 与（乘） &gt; 异或 &gt; 或（加） 逻辑代数基本定律：设 A \(\in \{0, 1\}\) 是逻辑变量  自等律：A + 0 &#x3D; A，A \(\cdot\) 1 &#x3D; A 0-1 律：A + 1 &#x3D; 1，A \(\cdot\) 0 &#x3D; 0 交换律：A + B &#x3D; B + A，A \(\c">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E4%B8%B2%E8%A1%8C%E5%8A%A0%E6%B3%95%E5%99%A8.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E5%B9%B6%E8%A1%8C%E5%8A%A0%E6%B3%95%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/Users/Lenovo/Downloads/%E5%B9%B6%E8%A1%8C%E5%8A%A0%E6%B3%95%E5%99%A8.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E5%88%86%E7%BB%84%E5%B9%B6%E8%A1%8C%E8%BF%9B%E4%BD%8D%E5%8A%A0%E6%B3%95%E5%99%A8.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E4%B9%98%E6%B3%95%E5%99%A8.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E7%BC%96%E7%A0%81%E5%99%A8%E5%92%8C%E8%A7%A3%E7%A0%81%E5%99%A8.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E6%89%A9%E5%B1%95%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E5%99%A8.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E5%8D%A1%E8%AF%BA%E5%9B%BE%E5%88%A4%E6%96%AD%E6%B3%95.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E5%86%97%E4%BD%99%E9%A1%B9.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E5%9F%BA%E6%9C%ACRS%E9%94%81%E5%AD%98%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E9%92%9F%E6%8E%A7RS%E9%94%81%E5%AD%98%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/%E9%92%9F%E6%8E%A7D%E9%94%81%E5%AD%98%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/D%E8%A7%A6%E5%8F%91%E5%99%A8.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/Moore.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/30/computer_organization/digital-circuit/Mealy.png">
 <meta property="article:published_time" content="2024-08-30T13:54:05.000Z">
-<meta property="article:modified_time" content="2024-09-02T14:37:24.351Z">
+<meta property="article:modified_time" content="2024-09-06T01:43:43.439Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="logical algebra">
 <meta property="article:tag" content="combinational logic">
@@ -245,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.1k words
+          6.5k words
         
       </span>
     
@@ -256,7 +262,7 @@
         
         
         
-          35 mins
+          55 mins
         
       </span>
     
@@ -331,34 +337,36 @@ B = B <span class="math inline">\(\cdot\)</span> A</li>
 </blockquote></li>
 <li><p>反演定理⭐：设原逻辑函数为<span class="math inline">\(\text{F}\)</span>，对F中的所有元素按以下方式替换</p>
 <ul>
-<li>将乘法换成加法，将加法换成乘法</li>
-<li>将 0 换成 1，将 1 换成 0</li>
-<li>将原变量换成反变量，将反变量换成原变量</li>
+<li>将<u>乘法</u>换成<u>加法</u>，将<u>加法</u>换成<u>乘法</u></li>
+<li>将 <u>0</u> 换成 <u>1</u>，将 <u>1</u> 换成 <u>0</u></li>
+<li>将<u>原变量</u>换成<u>反变量</u>，将<u>反变量</u>换成<u>原变量</u></li>
 </ul>
 <p>所得到的新函数 <span class="math inline">\(\overline{\text{F}}\)</span>
 即为反演式；反演式可用于化简，比如先对 <span class="math inline">\(\text{F}\)</span> 取反演得到 <span class="math inline">\(\overline{\text{F}}\)</span>，再化简 <span class="math inline">\(\text{F} =
 \overline{\overline{\text{F}}}\)</span></p>
 <blockquote>
 <p><strong>注意</strong>：对于第三条替换原则，<strong>不属于单个变量</strong>的非运算在变换中<strong>不变</strong>，如
-<span class="math inline">\(\overline{\text{A+B}}\)</span> 仍是 <span class="math inline">\(\text{A+B}\)</span></p>
+<span class="math inline">\(\overline{\text{A+B}}\)</span> 仍是 <span class="math inline">\(\overline{\text{A+B}}\)</span></p>
 </blockquote></li>
 <li><p>对偶定理⭐：设原逻辑函数为F，对F中的所有元素按如下方式替换</p>
 <ul>
-<li>将乘法换成加法，将加法换成乘法</li>
-<li>将 0 换成 1，将 1 换成 0</li>
+<li>将<u>乘法</u>换成<u>加法</u>，将<u>加法</u>换成<u>乘法</u></li>
+<li>将 <u>0</u> 换成 <u>1</u>，将 <u>1</u> 换成 <u>0</u></li>
 </ul>
 <p>所得到的新函数 F' 与 F
 互为<strong>对偶式</strong>，且<strong><u>对偶公式一定成立</u></strong>（见分配律的两种情况）</p></li>
 <li><p>标准表达式：包括"最大"和"最小"表达式</p>
 <ul>
-<li>最小项表达式：全部由最小项构成的<strong>积之和</strong>式</li>
-<li>最大项表达式：全部由最大项构成的<strong>和之积</strong>式</li>
+<li>最小项表达式：全部由最小项构成的<strong>积之<u>和</u></strong>式</li>
+<li>最大项表达式：全部由最大项构成的<strong>和之<u>积</u></strong>式</li>
 </ul></li>
 <li><p>最小推导法：将<u>输出为 1
 对应的输入组合</u>写成<strong>乘积项</strong>的形式，对于乘积项的变量</p>
 <ul>
-<li>若其取值为 1，在乘积项中用原变量表示</li>
-<li>若其取值为 0，在乘积项中用反变量表示</li>
+<li>若其取值为
+<u>1</u>，在乘积项中用<u><strong>原变量</strong></u>表示</li>
+<li>若其取值为
+<u>0</u>，在乘积项中用<u><strong>反变量</strong></u>表示</li>
 </ul>
 <p>再将所有<u>输出为 1
 的组合</u>对应的<strong><u>乘积项相加</u></strong>得到最终的逻辑函数
@@ -386,19 +394,27 @@ B = B <span class="math inline">\(\cdot\)</span> A</li>
 <li><p>最大项推导法：将<u>输出为 0
 对应的输入组合</u>写成<strong>和项</strong>形式，对于和项的变量：</p>
 <ul>
-<li>若其取值为 0，在和项中用原变量表示</li>
-<li>若其取值为 1，在和项中用反变量表示</li>
+<li>若其取值为
+<u>0</u>，在和项中用<u><strong>原变量</strong></u>表示</li>
+<li>若其取值为
+<u>1</u>，在和项中用<u><strong>反变量</strong></u>表示</li>
 </ul>
 <p>再将所有<u>输出为 0
 的组合</u>对应的<strong><u>和项相乘</u></strong>得到最终的逻辑函数 <span class="math inline">\(\text{F}\)</span></p></li>
-</ul></li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>："最大项"推导 和
+"最小项"推导是相反的，比如<strong>选取输出为1 or
+0的<u>输入组合</u></strong>，<strong><u>原变量/反变量</u>对应为1 or
+0</strong></p>
+</blockquote></li>
 </ul>
 <hr>
 <h3 id="二组合逻辑设计">二、组合逻辑设计</h3>
 <ul>
 <li><p>组合逻辑特点：无记忆的电路，输出信号随输入信号的消失而消失</p>
 <ul>
-<li>由<strong>逻辑门</strong>（与或非）电路组成</li>
+<li>由<strong><u>逻辑门</u></strong>（与或非）电路组成</li>
 <li>输出不能直接反馈到输入（<strong><u>无环路</u></strong>），且不具备记忆存储电路</li>
 <li><u>当前</u>的输出仅由<u>当前</u>的输入决定，响应速度较快</li>
 </ul></li>
@@ -428,7 +444,7 @@ B}\)</span> 以及低位进位 <span class="math inline">\(\text{CI}\)</span>，
 <li><p>串行进位加法器：<u>低位全加器</u>的 <span class="math inline">\(\text{CO}\)</span> 接 <u>高位全加器</u> 的 <span class="math inline">\(\text{CI}\)</span>，电路简单，但由于是串行所以<strong>时延长</strong></p>
 <p><img src="/2024/08/30/computer_organization/digital-circuit/串行加法器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 <li><p>并行进位加法器：设置专用的<strong><u>进位形成电路</u></strong>提前把各进位算出来，又称<u>超前</u>进位加法器，时延短但电路复杂</p>
-<p><img src="/2024/08/30/computer_organization/digital-circuit/并行加法器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/Users/Lenovo\Downloads\并行加法器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 <li><p>分组并行进位加法器：组内并行，组间传递</p>
 <p><img src="/2024/08/30/computer_organization/digital-circuit/分组并行进位加法器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul></li>
@@ -441,7 +457,7 @@ B}\)</span> 以及低位进位 <span class="math inline">\(\text{CI}\)</span>，
 <li><p>整数的补码表示：设 <span class="math inline">\([x]_{补} =
 x_{n-1}\dots x_{0}\)</span>，则 <span class="math inline">\([-x]_{补} =
 \overline{x_{n-1}} \dots \overline{x_{0}} +
-1\)</span>，即<strong>按位取反再加一</strong></p>
+1\)</span>，即<strong><u>按位取反再加一</u></strong></p>
 <p>故<u>减法电路</u>和<u>加法电路</u>是可以<strong>共用</strong>的，即
 <span class="math inline">\([\text{A} - \text{B}]_{\text{补}} =
 [\text{A}]_{补} + \overline{[\text{B}]_{补}} + 1\)</span></p></li>
@@ -456,7 +472,7 @@ x_{n-1}\dots x_{0}\)</span>，则 <span class="math inline">\([-x]_{补} =
 表示溢出</p></li>
 <li><p>乘法器：<span class="math inline">\(n\)</span> 位的阵列乘法，需要
 <span class="math inline">\(n(n-1)\)</span>
-个<strong><u>全加器</u></strong>FA</p>
+个<strong><u>全加器</u></strong> FA</p>
 <p><img src="/2024/08/30/computer_organization/digital-circuit/乘法器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 <li><p>比较器：比较两个二进制数的大小</p>
 <ul>
@@ -467,7 +483,8 @@ x_{n-1}\dots x_{0}\)</span>，则 <span class="math inline">\([-x]_{补} =
 对应的输入组合（x4），分别列出<strong><u>最小项表达式</u></strong>即可</li>
 <li>多位比较器：由多个 1bit 比较器组成，<u>优先比较<strong>高位
 bit</strong></u>，直至比出大小</li>
-</ul></li>
+</ul>
+<hr></li>
 <li><p>编码器 与 解码器：</p>
 <ul>
 <li>编码器：将<strong><u>独热信号</u></strong>转换为一组<strong><u>二进制编码</u></strong>输出
@@ -492,12 +509,12 @@ bit</strong></u>，直至比出大小</li>
 </ul></li>
 </ul>
 <blockquote>
-<p><strong>注意</strong>：由"独热"可知，编码器任何时刻最多允许<strong>一个输入</strong>有效，解码器任何时刻最多允许<strong>一个输出</strong>有效</p>
+<p><strong>注意</strong>：由"独热"可知，编码器任何时刻最多允许<strong><u>一个</u>输入</strong>有效，解码器任何时刻最多允许<strong><u>一个</u>输出</strong>有效</p>
 </blockquote>
 <p><img src="/2024/08/30/computer_organization/digital-circuit/编码器和解码器.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 <li><p>多路复用器：从一组输入（<span class="math inline">\(\{\text{D}_i\}_{0\dots
 n-1}\)</span>）中<strong><u>选出</u></strong>（控制为 <span class="math inline">\(\{\text{A}_i\}_{0\dots (\log
-n)-1}\)</span>）一个作为输出，又称 <strong><span class="math inline">\(n\)</span>选1多路选择器</strong></p>
+n)-1}\)</span>）一个作为输出，又称 <strong><span class="math inline">\(n\)</span>选1 Mux</strong></p>
 <ul>
 <li><p>数据选择器：当 <span class="math inline">\(\text{A}\)</span>
 作为控制端时，可从 <span class="math inline">\(n\)</span>
@@ -521,7 +538,7 @@ n}\)</span> 接<strong>低片</strong>的使能端，<span class="math inline">\
 <li><p>竞争 与 冒险：</p>
 <ul>
 <li><p>竞争：某一个输入变量通过<strong>多条<u>延迟不同</u>的路径</strong>传输到输出端，到达时间有先有后</p></li>
-<li><p>冒险：因输入端<strong>竞争</strong>导致的输出端产生不正常的干扰冒充信号（毛刺）</p></li>
+<li><p>冒险：因输入端<strong>竞争</strong>导致的输出端产生不正常的干扰冒充信号（尖锋毛刺）</p></li>
 <li><p>判断冒险方法：</p>
 <ul>
 <li><p>代数法：在某些输入条件下，<span class="math inline">\(\text{F}\)</span> 可化简为 <span class="math inline">\(\text{A} + \overline{\text{A}}\)</span> 或 <span class="math inline">\(\text{A}\overline{\text{A}}\)</span>
@@ -530,10 +547,122 @@ n}\)</span> 接<strong>低片</strong>的使能端，<span class="math inline">\
 的最小项表达式的乘积项间存在 <strong><u>相切</u></strong></p>
 <p><img src="/2024/08/30/computer_organization/digital-circuit/卡诺图判断法.png" srcset="/img/loading.gif" lazyload width="45%"></p></li>
 </ul></li>
-<li><p>解决冒险方法：尝试<u>消除互补变量</u>，或在 <span class="math inline">\(\text{F}\)</span>
-中添加新的<u><strong>冗余项</strong>覆盖相切位置</u></p>
+<li><p>解决冒险方法：尝试<u>消除互补变量</u>（改），或在 <span class="math inline">\(\text{F}\)</span>
+中添加新的<u><strong>冗余项</strong>覆盖相切位置</u>（增）</p>
+<p>以后者为例，设 <span class="math inline">\(\text{F} = \text{AC} +
+\overline{\text{A}}\text{B}\)</span>，当 <span class="math inline">\(\text{B} = \text{C} = 1\)</span> 时 <span class="math inline">\(\text{F} = \text{A} + \overline{\text{A}}\)</span>
+<strong><u>存在冒险</u></strong>；故增加 <span class="math inline">\(\text{BC}\)</span>，防止出现毛刺（<span class="math inline">\(\text{BC}=1\)</span>）</p>
 <p><img src="/2024/08/30/computer_organization/digital-circuit/冗余项.png" srcset="/img/loading.gif" lazyload width="45%"></p></li>
 </ul></li>
+</ul>
+<hr>
+<p>### 三、时序逻辑设计</p>
+<ul>
+<li><p>时序电路的特点：当时的输出与<u>当时的输入</u>和<u>原来的状态</u>决定，具有
+"<strong><u>记忆功能</u></strong>"</p></li>
+<li><p>基本RS锁存器：具有"置0"、"置1"、"保持"功能，输入两个变量 <span class="math inline">\(\text{S}_\text{D},
+\text{R}_\text{D}\)</span>，输出两个<strong>互非</strong>状态 <span class="math inline">\(\text{Q}\)</span> 和 <span class="math inline">\(\overline{\text{Q}}\)</span></p>
+<ul>
+<li>特性方程：<span class="math inline">\(\text{Q}_{n+1} =
+\text{S}_\text{D} + \overline{\text{R}_\text{D}}
+\text{Q}^n\)</span>，同时满足约束 <span class="math inline">\(\text{S}_\text{D} \text{R}_\text{D} =
+0\)</span>（两个输入不许同时激活）</li>
+<li>功能描述：<span class="math inline">\(\text{S}_\text{D} =
+\text{R}_\text{D} = 0\)</span> <strong><u>保持</u></strong>，<span class="math inline">\(\text{S}_\text{D} = 1, \ \text{R}_\text{D} =
+0\)</span> <u><strong>置1</strong></u>，<span class="math inline">\(\text{S}_\text{D} = 0, \ \text{R}_\text{D} =
+1\)</span> <u><strong>置0</strong></u></li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：下标 <span class="math inline">\(\text{D}\)</span> 指
+Direct，表示输入信号<strong><u>直接</u>控制</strong>锁存器输出</p>
+</blockquote>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/基本RS锁存器.png" srcset="/img/loading.gif" lazyload width="30%"></p></li>
+<li><p>钟控RS锁存器：在基本锁存器的基础上新增<u><strong>时钟控制信号</strong></u>
+<span class="math inline">\(\text{CP}\)</span> 控制输入 <span class="math inline">\(\text{R}\)</span> 和 <span class="math inline">\(\text{S}\)</span></p>
+<ul>
+<li><p>钟控电路：<span class="math inline">\(\text{S}_\text{D} =
+\text{S} \cdot \text{CP}\)</span>，<span class="math inline">\(\text{R}_\text{D} = \text{R} \cdot
+\text{CP}\)</span></p></li>
+<li><p>锁存器电路：与基本RS锁存电路相同，其输入是钟控电路的输出 <span class="math inline">\(\text{S}_\text{D},
+\text{R}_\text{D}\)</span></p></li>
+<li><p>功能描述：当 <span class="math inline">\(\text{CP} = 0\)</span>
+时，<span class="math inline">\(\text{S}_\text{D} = \text{R}_\text{D} =
+0\)</span> <strong>始终保持</strong>；当 <span class="math inline">\(\text{CP} = 1\)</span>
+时，<u>整个电路功能与<strong>基本锁存器</strong>相同</u></p></li>
+</ul>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/钟控RS锁存器.png" srcset="/img/loading.gif" lazyload width="30%"></p></li>
+<li><p>钟控D锁存器：消除RS锁存器的不确定状态（<span class="math inline">\(\text{S}_\text{D} = \text{R}_\text{D} =
+1\)</span>），将输入从两个改成<strong>一个</strong> <span class="math inline">\(\text{D}\)</span></p>
+<ul>
+<li>钟控电路：<span class="math inline">\(\text{S}_\text{D} = \text{D}
+\cdot \text{CP}\)</span>，<span class="math inline">\(\text{R}_\text{D}
+= \overline{\text{D}} \cdot \text{CP}\)</span>（相当于 <span class="math inline">\(\text{S}\)</span> 和 <span class="math inline">\(\text{R}\)</span>
+<u>总是<strong>互非</strong></u>的）</li>
+<li>特性方程：<span class="math inline">\(\text{Q}^{n+1} =
+\text{D}\)</span>（当 <span class="math inline">\(\text{CP} = 1\)</span>
+时），当 <span class="math inline">\(\text{CP} = 0\)</span>
+时保持原态（时钟就是<strong>使能端</strong>）</li>
+</ul>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/钟控D锁存器.png" srcset="/img/loading.gif" lazyload width="30%"></p>
+<hr></li>
+<li><p>D触发器：由两个D锁存器组成（主锁存器 + 从锁存器）</p>
+<ul>
+<li>功能描述：当 <span class="math inline">\(\text{CP} = 0\)</span>
+时，<span class="math inline">\(\text{Q}_{\text{master}} =
+\text{D}\)</span>，但 <span class="math inline">\(\text{Q}_\text{slave}\)</span>
+仍被<strong>抑制保持</strong>；当 <span class="math inline">\(\text{CP}\)</span> <u><strong>跳升</strong></u>到
+<span class="math inline">\(1\)</span> 时，<span class="math inline">\(\text{Q}_\text{slave} = \text{D}\)</span>，<span class="math inline">\(\text{Q}_\text{master}\)</span> 不变</li>
+<li>使能端：用 Mux 选择 <span class="math inline">\(\text{Q}\)</span> 与
+<span class="math inline">\(\text{D}\)</span>，当 <span class="math inline">\(\text{EN} = 0\)</span>
+时，触发器<u>保持原态</u>；否则触发器<u><strong>随时钟跳变</strong></u>将
+<span class="math inline">\(\text{Q}\)</span> 更新为 <span class="math inline">\(\text{D}\)</span></li>
+<li>复位端：用 And 输入 <span class="math inline">\(\text{D}\)</span> 与
+<span class="math inline">\(\overline{\text{RESET}}\)</span>，当 <span class="math inline">\(\text{RESET} = 0\)</span>
+时，触发器正常工作；否则触发器始终更新为 <span class="math inline">\(0\)</span>（复位）</li>
+</ul>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/D触发器.png" srcset="/img/loading.gif" lazyload width="40%"></p></li>
+<li><p>JK触发器：在钟控RS锁存器基础上增加<strong>两条反馈线</strong>，并将
+S/R 改成 J/K，<u>功能更强大</u>且<u>无输入约束</u></p>
+<ul>
+<li>功能描述：当 <span class="math inline">\(\text{CP} = 1\)</span>
+时，支持
+"保持"(0/0)、"置0"(0/1)、"置1"(1/0)、"<strong><u>翻转</u></strong>"(1/1)，扩展了翻转功能
+<span class="math inline">\(\text{Q}^{n+1} =
+\overline{\text{Q}^n}\)</span></li>
+<li>特性方程：<span class="math inline">\(\text{Q}^{n+1} =
+\text{J}\overline{\text{Q}^n} +
+\text{K}\overline{\text{Q}^n}\)</span>（当 <span class="math inline">\(\text{CP} = 1\)</span> 时），当 <span class="math inline">\(\text{CP} = 0\)</span>
+时保持原态（时钟就是<strong>使能端</strong>）</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="四有限状态机">四、有限状态机</h3>
+<ul>
+<li><p>FSM
+模型：表示<strong><u>有限个状态</u></strong>以及这些状态之间的<strong>转移</strong>和<strong>动作</strong>等行为等离散数学模型</p></li>
+<li><p>有限状态机等种类：主要在 "输出" 上有差异</p>
+<ul>
+<li>Moore
+型状态机：输出<u>仅与<strong>当前状态</strong>有关</u>，与当前输入无关</li>
+<li>Mealy
+型状态机：输出<u>与<strong>当前状态</strong>和<strong>当前输入</strong>有关</u></li>
+</ul></li>
+<li><p>Moore 型状态机：</p>
+<ul>
+<li>组成：<strong>次态逻辑</strong>（当前状态 + 当前输入 <span class="math inline">\(\Rightarrow\)</span>
+下一状态），状态寄存器，<strong>输出逻辑</strong>（当前状态 <span class="math inline">\(\Rightarrow\)</span> 当前输出）</li>
+<li>表示方法：状态图 or 状态表（当前状态｜下一状态｜输出）</li>
+</ul>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/Moore.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>Mealy 型状态机：</p>
+<ul>
+<li>组成：<strong>次态逻辑</strong>（当前状态 + 当前输入 <span class="math inline">\(\Rightarrow\)</span>
+下一状态），状态寄存器，<u><strong>输出逻辑</strong></u>（当前状态 +
+<strong><u>输入</u></strong> <span class="math inline">\(\Rightarrow\)</span> 当前输出）</li>
+<li>表示方法：状态图 or 状态表（当前状态 | <strong><u>输入</u></strong>
+| 下一状态 | 输出）</li>
+</ul>
+<p><img src="/2024/08/30/computer_organization/digital-circuit/Mealy.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul>
 
                 
