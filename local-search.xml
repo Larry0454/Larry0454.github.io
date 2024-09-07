@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>『computer organization-2』memory</title>
+    <link href="/2024/09/06/computer_organization/memory/"/>
+    <url>/2024/09/06/computer_organization/memory/</url>
+    
+    <content type="html"><![CDATA[<h2 id="主存储器">主存储器</h2><h3 id="一存储系统概述">一、存储系统概述</h3><ul><li><p>存储器的分类：可按"<u>介质</u>"分类、按"<u>访问方式</u>"分类，按"<u>功能</u>"分类</p><ul><li>按介质分类：<u>半导体</u>存储器（<strong>易失</strong>） or<u>磁介质</u>存储器 or <u>光盘</u>存储器</li><li>按访问方式分类：<u>随机访问</u>存储器（<strong>RAM</strong>） or<u>只读</u>存储器（<strong>ROM</strong>）or<u>顺序访问</u>存储器（<strong>Tape</strong>）</li><li>按功能分类：高速缓存 or 主存 or 辅助存储器</li></ul></li><li><p>存储器的性能指标：</p><ul><li>访问时间：给定地址 <span class="math inline">\(\Rightarrow\)</span>完成读（写）操作所需时间</li><li>存储周期：<u>两次</u>访问存储单元之间的<strong>最小时间间隔</strong></li><li>带宽：即数据传输率</li></ul></li><li><p>半导体存储器：包括 "RAM" 和 "ROM"</p><ul><li><p>SRAM：静态RAM，速度更<strong>快</strong>也更<strong>贵</strong>，加电时信息能一直保持，一般用于制作<u><strong>Cache</strong></u></p></li><li><p>DRAM：动态RAM，速度较<strong>慢</strong>但<strong>便宜</strong>，每隔一段时间必须刷新一次，一般用于制作<u><strong>主存</strong></u></p><hr></li><li><p>PROM：一次性可编程ROM</p></li><li><p>EPROM 与 EEPROM：<u><strong>紫外线</strong>可擦除可编程</u>ROM 与<u><strong>电</strong>可擦除可编程</u>ROM</p></li><li><p>FlashROM：闪存，本质上是电擦除可编程ROM，一般用于制作<u><strong>SD卡</strong></u>、<u><strong>BIOS存储器</strong></u>、<u><strong>图形卡</strong></u>等</p></li></ul></li></ul><hr><h3 id="二存储芯片结构">二、存储芯片结构</h3><ul><li><p>存储单元电路：存储 1bit二进制信息的电路，可实现状态<u><strong>写入</strong></u>和<u><strong>读取</strong></u></p></li><li><p>存储芯片的容量描述：<span class="math inline">\(2^n \timesm\)</span>，即 字数 <span class="math inline">\(\times\)</span>单字的位数</p><ul><li>存储位元：<span class="math inline">\(2^n \times m\)</span> 个bit</li><li>地址线：<span class="math inline">\(n\)</span> 条地址线 <span class="math inline">\(\text{A}_0\dots \text{A}_{n-1}\)</span>，可表示<span class="math inline">\(2^n\)</span> 个字（单向线）</li><li>数据线：<span class="math inline">\(m\)</span>条数据线，可表示一个字的 <span class="math inline">\(m\)</span> 个bit（双向线，可读可写）</li></ul></li><li><p>一维地址结构：只有"行译码"</p><ul><li>译码电路：将<u><strong>二进制</strong>地址编码</u> <span class="math inline">\(\text{A}_0\dots \text{A}_{n-1}\)</span>转化为<u><strong>十进制独热</strong>片选信号</u>，使唯一的<strong>字选线</strong><span class="math inline">\(\text{W}_i\)</span> 处于工作状态</li><li>数据线：<u>读出</u>或<u>写入</u>字选线选中的那个字的各 bit 信号<span class="math inline">\(\text{D}_0\dots \text{D}_{n-1}\)</span></li></ul><p><img src="/2024/09/06/computer_organization/memory/一维地址.png" width="60%"></p></li><li><p>二维地址结构："行译码" + "列译码"，地址格式为 <span class="math inline">\(2^m \times 2^{n-m} \times n\)</span></p><ul><li><p>译码电路：将一维地址<u><strong>拆分</strong></u>为<u>行地址</u> +<u>列地址</u></p><ul><li>行地址：地址线 <span class="math inline">\(\text{A}_0\dots\text{A}_{m-1}\)</span>，用于选择某一行的<strong>所有字</strong>，编址范围<span class="math inline">\(0 \sim  2^m - 1\)</span></li><li>列地址：地址线 <span class="math inline">\(\text{A}_{m}\dots\text{A}_{n-1}\)</span>，用于<strong><u>进一步</u></strong>选择某一行的<strong>其中一个字</strong>，编址范围<span class="math inline">\(0 \sim 2^{n-m} - 1\)</span></li></ul><p><img src="/2024/09/06/computer_organization/memory/二维地址.png" width="60%"></p></li></ul></li></ul><hr><h3 id="三存储器扩展">三、存储器扩展</h3><ul><li><p>位扩展：适用于 CPU 提供的数据总线 &gt; 芯片数据总线 的情况</p><ul><li>位芯片数量 = CPU DBs / Chip DBs</li><li>连线方式：各芯片<strong>共享地址线</strong>，分用<u>低位数据线</u>和<u>高位数据线</u></li></ul><p><img src="/2024/09/06/computer_organization/memory/位扩展.png" width="50%"></p></li><li><p>字扩展：适用于 CPU 提供的数据总线 &gt; 芯片数据总线 的情况</p><ul><li>字扩展芯片数量 = <span class="math inline">\(2^{\text{CPU ABs}} \div2^{\text{Chip ABs}}\)</span></li><li>连线方式：各芯片<strong>共享数据线</strong>，CPU提供的<strong>多余地址线</strong>用于设计选片信号CS（extraABs <u><strong>Mux</strong></u> CS）</li></ul><p><img src="/2024/09/06/computer_organization/memory/字扩展.png" width="50%"></p></li><li><p>混合扩展：适用于以上两种混合情况</p><ul><li>总扩展芯片数量 = 位扩展芯片数量 <span class="math inline">\(\times\)</span> 字扩展芯片数量</li><li>连线方式：同一字空间的 CS连在一起，同一位空间芯片共享CPU数据总线</li></ul><blockquote><p><strong>注意</strong>：同地址范围的各芯片必须<strong>被同时选中</strong>（共享CS信号），同地址范围的各芯片<strong>分用高/低数据总线</strong></p></blockquote><p><img src="/2024/09/06/computer_organization/memory/混合扩展.png" width="50%"></p><hr><h3 id="四dram的刷新">四、DRAM的刷新</h3><ul><li><p>为什么要刷新：读操作是"<u><strong>破坏性</strong></u>"的，读"1"时放电，读"0"时充电，故会削弱原数据的强度，需要<strong><u>读后恢复</u></strong></p></li><li><p>传感放大器：让读出的信号<strong>更显著</strong>，"1"的电平更高，"0"的电平更低，故<u><strong>读出放大</strong></u>过程就是<u><strong>刷新过程</strong></u></p></li><li><p>DRAM 刷新特点：按行刷新，刷新与CPU访存分开进行</p></li><li><p>"刷新间隔" 与 "刷新周期"：</p><ul><li><p>刷新间隔：某一行两次刷新之间的时间差（<u><strong>不固定</strong></u>）</p><ul><li>刷新周期：存储芯片<u><strong>固定</strong>的时间间隔</u>，要求在一个周期内将所有内存单元都刷新一遍</li></ul></li><li><p>刷新方式：DRAM需要在<u>规定的刷新周期内</u>将<strong>所有内存单元</strong>都刷新一遍</p><ul><li><p>集中式刷新：将集中刷新间隔分为"<u>集中访存</u>"和"<u>集中刷新</u>"两部分，两阶段任务互斥</p><p><img src="/2024/09/06/computer_organization/memory/集中刷新.png" width="60%"></p><p>该方式 集中刷新间隔 =刷新周期，存在不能读写内存的<strong>访存死区</strong></p></li><li><p>分散式刷新：CPU与刷新电路交替访问内存，一个存储周期/刷新一行，最后一行刷新后又回到第一行</p><p><img src="/2024/09/06/computer_organization/memory/分散刷新.png" width="60%"></p><p>该方式 分散刷新间隔 = 存储周期 <span class="math inline">\(\times\)</span> 总刷新行数 <span class="math inline">\(\le\)</span>刷新周期（访存刷新绑定），不存在访存死区，但会<strong>降低系统速率</strong></p></li><li><p>异步刷新：保证一个刷新周期内将所有行都刷新一遍即可（<strong>单行刷新间隔不固定</strong>）</p><p><img src="/2024/09/06/computer_organization/memory/异步刷新.png" width="60%"></p><p>该方式 异步刷新间隔 =刷新周期，兼顾了以上两种方法优势，<strong><u>充分利用一整个刷新周期</u></strong></p></li></ul></li></ul></li></ul></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>computer organization</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>DRAM</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>『linear algebra-7』quadratic form</title>
     <link href="/2024/09/04/linear_algebra/quadratic-form/"/>
     <url>/2024/09/04/linear_algebra/quadratic-form/</url>
@@ -352,9 +377,9 @@
     
     <tags>
       
-      <tag>geometry transform</tag>
-      
       <tag>D-H parametric method</tag>
+      
+      <tag>geometry transform</tag>
       
     </tags>
     

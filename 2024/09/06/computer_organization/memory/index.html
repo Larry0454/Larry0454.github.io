@@ -16,29 +16,33 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="正向运动学 一、D-H 参数法  什么是&quot;正向运动学&quot;：已知开链机构各关节转角，求末端的位置和姿态 设置坐标系位置：  确定 轴\(i\) 的 \(\hat{z_i}\)轴：\(\hat{z}_i\) 的正方向与 关节轴\(i\) 的轴线重合，正方向由轴旋转下的右手螺旋定则确定 确定连杆坐标系的原点：设 \(\hat{z}_{i-1}\) 和 \(\hat{z}_{i}\) 有唯">
+    <meta name="description" content="主存储器 一、存储系统概述  存储器的分类：可按&quot;介质&quot;分类、按&quot;访问方式&quot;分类，按&quot;功能&quot;分类  按介质分类：半导体存储器（易失） or 磁介质存储器 or 光盘存储器 按访问方式分类：随机访问存储器（RAM） or 只读存储器（ROM）or 顺序访问存储器（Tape） 按功能分类：高速缓存 or 主存 or 辅助存储器  存储器的性能指标：  访问时间：给定地址 \">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『robotics-2』forward kinematics">
-<meta property="og:url" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/index.html">
+<meta property="og:title" content="『computer organization-2』memory">
+<meta property="og:url" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="正向运动学 一、D-H 参数法  什么是&quot;正向运动学&quot;：已知开链机构各关节转角，求末端的位置和姿态 设置坐标系位置：  确定 轴\(i\) 的 \(\hat{z_i}\)轴：\(\hat{z}_i\) 的正方向与 关节轴\(i\) 的轴线重合，正方向由轴旋转下的右手螺旋定则确定 确定连杆坐标系的原点：设 \(\hat{z}_{i-1}\) 和 \(\hat{z}_{i}\) 有唯">
+<meta property="og:description" content="主存储器 一、存储系统概述  存储器的分类：可按&quot;介质&quot;分类、按&quot;访问方式&quot;分类，按&quot;功能&quot;分类  按介质分类：半导体存储器（易失） or 磁介质存储器 or 光盘存储器 按访问方式分类：随机访问存储器（RAM） or 只读存储器（ROM）or 顺序访问存储器（Tape） 按功能分类：高速缓存 or 主存 or 辅助存储器  存储器的性能指标：  访问时间：给定地址 \">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/%E5%9B%9B%E4%B8%AA%E5%8F%82%E6%95%B0.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/RRRP.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/%E8%A1%A8%E6%A0%BC%E6%B3%95.jpg">
-<meta property="article:published_time" content="2024-07-22T04:31:17.000Z">
-<meta property="article:modified_time" content="2024-08-11T10:59:33.675Z">
+<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E4%B8%80%E7%BB%B4%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E4%BA%8C%E7%BB%B4%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E4%BD%8D%E6%89%A9%E5%B1%95.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E5%AD%97%E6%89%A9%E5%B1%95.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E6%B7%B7%E5%90%88%E6%89%A9%E5%B1%95.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E9%9B%86%E4%B8%AD%E5%88%B7%E6%96%B0.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E5%88%86%E6%95%A3%E5%88%B7%E6%96%B0.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E5%BC%82%E6%AD%A5%E5%88%B7%E6%96%B0.png">
+<meta property="article:published_time" content="2024-09-06T07:08:19.000Z">
+<meta property="article:modified_time" content="2024-09-07T15:34:45.004Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="D-H parametric method">
-<meta property="article:tag" content="geometry transform">
+<meta property="article:tag" content="DRAM">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/%E5%9B%9B%E4%B8%AA%E5%8F%82%E6%95%B0.jpg">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E4%B8%80%E7%BB%B4%E5%9C%B0%E5%9D%80.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『robotics-2』forward kinematics - Blog</title>
+  <title>『computer organization-2』memory - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -216,7 +220,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『robotics-2』forward kinematics"></span>
+            <span id="subtitle" data-typed-text="『computer organization-2』memory"></span>
           
         </div>
 
@@ -227,8 +231,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-22 12:31" pubdate>
-          July 22, 2024 pm
+        <time datetime="2024-09-06 15:08" pubdate>
+          September 6, 2024 pm
         </time>
       </span>
     
@@ -239,7 +243,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.9k words
+          1.8k words
         
       </span>
     
@@ -250,7 +254,7 @@
         
         
         
-          25 mins
+          16 mins
         
       </span>
     
@@ -296,131 +300,141 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『robotics-2』forward kinematics</h1>
+            <h1 style="display: none">『computer organization-2』memory</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="正向运动学">正向运动学</h2>
-<h3 id="一d-h-参数法">一、D-H 参数法</h3>
+                <h2 id="主存储器">主存储器</h2>
+<h3 id="一存储系统概述">一、存储系统概述</h3>
 <ul>
-<li><p>什么是"正向运动学"：已知开链机构各<strong><u>关节</u></strong>转角，求<strong><u>末端</u></strong>的位置和姿态</p></li>
-<li><p>设置坐标系位置：</p>
+<li><p>存储器的分类：可按"<u>介质</u>"分类、按"<u>访问方式</u>"分类，按"<u>功能</u>"分类</p>
 <ul>
-<li><p>确定 轴<span class="math inline">\(i\)</span> 的 <span class="math inline">\(\hat{z_i}\)</span>轴：<span class="math inline">\(\hat{z}_i\)</span> 的正方向与 关节轴<span class="math inline">\(i\)</span>
-的轴线重合，正方向由轴旋转下的<strong>右手螺旋定则</strong>确定</p></li>
-<li><p>确定连杆坐标系的<strong>原点</strong>：设 <span class="math inline">\(\hat{z}_{i-1}\)</span> 和 <span class="math inline">\(\hat{z}_{i}\)</span>
-有唯一的<strong><u>公法线</u></strong>，令该公法线连接轴 <span class="math inline">\(\hat{z}_{i-1}\)</span> 和 轴 <span class="math inline">\(\hat{z}_i\)</span><br>系 {i-1} 的坐标原点就放在
-<u>轴i-1</u> 和 <u>公法线</u> 的交点处（系 {i}
-的原点暂时不确定）</p></li>
-<li><p>确定 <span class="math inline">\(\hat{x}\)</span> 和 <span class="math inline">\(\hat{y}\)</span> 的正方向：{i-1} 的 <span class="math inline">\(\hat{x}\)</span>
-常选在对应的<strong>公法线</strong>上，指向 轴i；{i-1} 的 <span class="math inline">\(\hat{y}\)</span> 方向由右手系规范确定，即 <span class="math inline">\(\hat{x} \times \hat{y} = \hat{z}\)</span></p>
-<blockquote>
-<p><strong>注意</strong>：如果两个旋转轴相交导致<strong>公法线长度=0</strong>，任选一条平面<span class="math inline">\((\hat{z}_{i-1},
-\hat{z_i})\)</span>的法线即可；如果两个旋转轴平行，从<strong>无数条</strong>公法线中任选一条即可</p>
-</blockquote></li>
+<li>按介质分类：<u>半导体</u>存储器（<strong>易失</strong>） or
+<u>磁介质</u>存储器 or <u>光盘</u>存储器</li>
+<li>按访问方式分类：<u>随机访问</u>存储器（<strong>RAM</strong>） or
+<u>只读</u>存储器（<strong>ROM</strong>）or
+<u>顺序访问</u>存储器（<strong>Tape</strong>）</li>
+<li>按功能分类：高速缓存 or 主存 or 辅助存储器</li>
 </ul></li>
-<li><p>定义 4 个参数：</p>
+<li><p>存储器的性能指标：</p>
 <ul>
-<li><p>连杆长度 <span class="math inline">\(a_{i-1}\)</span>：公法线的长度，即 <span class="math inline">\(\hat{z}_{i-1}
-\xrightarrow{\text{沿}\hat{x}_{i-1}\text{平移}}\hat{z}_i\)</span>
-的距离</p>
-<blockquote>
-<p><strong>注意</strong>：这里不应该望文生义，<u>不是真实连杆的物理长度</u></p>
-</blockquote></li>
-<li><p>连杆扭转角度 <span class="math inline">\(\alpha_{i-1}\)</span>：
-<span class="math inline">\(\hat{z}_{i-1} \xrightarrow{\text{绕}
-\hat{x}_{i-1}\text{旋转}} \hat{z}_i\)</span> 的角度</p></li>
-<li><p>连杆偏距 <span class="math inline">\(d_i\)</span>：从 <span class="math inline">\(\hat{x}_{i-1}\)</span> 与 <span class="math inline">\(\hat{z}_i\)</span> 的交点到连杆坐标系 {i}
-原点的<strong><u>有向</u>距离</strong>，即 <span class="math inline">\(\hat{x}_{i-1}  \xrightarrow{\text{沿}\hat{z}_i\text{平移}}
-\hat{x}_i\)</span> 的距离</p></li>
-<li><p>关节转角 <span class="math inline">\(\phi_i\)</span>：<span class="math inline">\(\hat{x}_{i-1} \xrightarrow{\text{绕}\hat{z}_i旋转}
-\hat{x}_i\)</span> 的角度</p></li>
-</ul>
-<p><img src="/2024/07/22/robotics/forward-kinematics/四个参数.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li>访问时间：给定地址 <span class="math inline">\(\Rightarrow\)</span>
+完成读（写）操作所需时间</li>
+<li>存储周期：<u>两次</u>访问存储单元之间的<strong>最小时间间隔</strong></li>
+<li>带宽：即数据传输率</li>
+</ul></li>
+<li><p>半导体存储器：包括 "RAM" 和 "ROM"</p>
+<ul>
+<li><p>SRAM：静态RAM，速度更<strong>快</strong>也更<strong>贵</strong>，加电时信息能一直保持，一般用于制作<u><strong>Cache</strong></u></p></li>
+<li><p>DRAM：动态RAM，速度较<strong>慢</strong>但<strong>便宜</strong>，每隔一段时间必须刷新一次，一般用于制作<u><strong>主存</strong></u></p>
+<hr></li>
+<li><p>PROM：一次性可编程ROM</p></li>
+<li><p>EPROM 与 EEPROM：<u><strong>紫外线</strong>可擦除可编程</u>ROM 与
+<u><strong>电</strong>可擦除可编程</u>ROM</p></li>
+<li><p>Flash
+ROM：闪存，本质上是电擦除可编程ROM，一般用于制作<u><strong>SD卡</strong></u>、<u><strong>BIOS存储器</strong></u>、<u><strong>图形卡</strong></u>等</p></li>
+</ul></li>
 </ul>
 <hr>
-<h3 id="二机器人正向运动学">二、机器人正向运动学</h3>
+<h3 id="二存储芯片结构">二、存储芯片结构</h3>
 <ul>
-<li><p>齐次变换矩阵：由 <strong><u>D-H 参数</u></strong>决定变换矩阵
-<span class="math inline">\(T_{i-1,i}\)</span>，每个连杆坐标系对应的齐次变换矩阵都有如下形式
-<span class="math display">\[
-\begin{align}
-T_{i-1,i} &amp;= \mathbf{Rot}(\hat{x}, \alpha_{i-1})
-\mathbf{Trans}(\hat{x}, a_{i-1}) \mathbf{Trans}(\hat{z},
-d_i)\mathbf{Rot}(\hat{z}, \phi_i) \\ &amp;= \begin{bmatrix} \cos \phi_i
-&amp; -\sin \phi_i &amp; 0 &amp; a_{i-1} \\ \sin \phi_i \cos
-\alpha_{i-1} &amp;\cos phi_i \cos \alpha_{i-1} &amp; -\sin \alpha_{i-1}
-&amp; -d_i \sin \alpha_{i-1} \\ \sin \phi_i \sin \alpha_{i-1} &amp; \cos
-\phi_i \sin \alpha_{i-1} &amp; \cos \alpha_{i-1} &amp; d_i \cos
-\alpha_{i-1} \\ 0 &amp; 0 &amp; 0 &amp; 1 \\ \end{bmatrix}
-\end{align}
-\]</span></p>
+<li><p>存储单元电路：存储 1bit
+二进制信息的电路，可实现状态<u><strong>写入</strong></u>和<u><strong>读取</strong></u></p></li>
+<li><p>存储芯片的容量描述：<span class="math inline">\(2^n \times
+m\)</span>，即 字数 <span class="math inline">\(\times\)</span>
+单字的位数</p>
 <ul>
-<li><p>旋转算子 1： <span class="math display">\[\mathbf{Rot}(\hat{x},
-\alpha_{i-1}) = \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp;
-\cos \alpha_{i-1} &amp; -\sin \alpha_{i-1} &amp; 0 \\0 &amp; \sin
-\alpha_{i-1} &amp; \cos \alpha_{i-1} &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;
-1 \\ \end{bmatrix}\]</span></p></li>
-<li><p>平移算子 1： <span class="math display">\[\mathbf{Trans}(\hat{x},
-a_{i-1}) = \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; a_{i-1} \\ 0 &amp; 1
-&amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;
-1 \end{bmatrix}\]</span></p></li>
-<li><p>平移算子 2： <span class="math display">\[\mathbf{Trans}(\hat{z},
-d_i) = \begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0
-&amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; d_i \\ 0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}\]</span></p></li>
-<li><p>旋转算子 2： <span class="math display">\[\mathbf{Rot}(\hat{z},
-\phi_i) = \begin{bmatrix} \cos \phi_{i-1} &amp; -\sin \phi_{i-1} &amp; 0
-&amp; 0 \\ \sin \phi_{i-1} &amp; \cos \phi_{i-1} &amp; 0 &amp; 0 \\ 0
-&amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;
-1  \end{bmatrix}\]</span></p></li>
+<li>存储位元：<span class="math inline">\(2^n \times m\)</span> 个
+bit</li>
+<li>地址线：<span class="math inline">\(n\)</span> 条地址线 <span class="math inline">\(\text{A}_0\dots \text{A}_{n-1}\)</span>，可表示
+<span class="math inline">\(2^n\)</span> 个字（单向线）</li>
+<li>数据线：<span class="math inline">\(m\)</span>
+条数据线，可表示一个字的 <span class="math inline">\(m\)</span> 个
+bit（双向线，可读可写）</li>
+</ul></li>
+<li><p>一维地址结构：只有"行译码"</p>
+<ul>
+<li>译码电路：将<u><strong>二进制</strong>地址编码</u> <span class="math inline">\(\text{A}_0\dots \text{A}_{n-1}\)</span>
+转化为<u><strong>十进制独热</strong>片选信号</u>，使唯一的<strong>字选线</strong>
+<span class="math inline">\(\text{W}_i\)</span> 处于工作状态</li>
+<li>数据线：<u>读出</u>或<u>写入</u>字选线选中的那个字的各 bit 信号
+<span class="math inline">\(\text{D}_0\dots \text{D}_{n-1}\)</span></li>
 </ul>
-<p>则该开链机构的正向运动学方程为 <span class="math inline">\(T_{0n}(\theta_1, \dots ,\theta_n) =
-T_{01}(\theta_1)T_{12}(\theta_2)\dots T_{n-1,n}(\theta_n)\)</span><br>
-<span class="math inline">\(T_{i-1,i}\)</span>
-表示<strong>相邻两个连杆</strong> {i-1} 和 {i} 的相对位移</p></li>
-<li><p>齐次变换过程：从连杆坐标系{i-1} 变换到 连杆坐标系{i}</p>
-<ol type="1">
-<li>绕 {i-1} 的 <span class="math inline">\(\hat{x}\)</span> 旋转 <span class="math inline">\(\alpha_{i-1}\)</span></li>
-<li>沿 {i-1} 的 <span class="math inline">\(\hat{x}\)</span> 平移 <span class="math inline">\(a_{i-1}\)</span></li>
-<li>沿 {i} 的 <span class="math inline">\(\hat{z}\)</span> 平移 <span class="math inline">\(d_{i}\)</span></li>
-<li>绕 {i} 的 <span class="math inline">\(\hat{z}\)</span> 旋转 <span class="math inline">\(\phi_i\)</span></li>
-</ol></li>
+<p><img src="/2024/09/06/computer_organization/memory/一维地址.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<li><p>二维地址结构："行译码" + "列译码"，地址格式为 <span class="math inline">\(2^m \times 2^{n-m} \times n\)</span></p>
+<ul>
+<li><p>译码电路：将一维地址<u><strong>拆分</strong></u>为<u>行地址</u> +
+<u>列地址</u></p>
+<ul>
+<li>行地址：地址线 <span class="math inline">\(\text{A}_0\dots
+\text{A}_{m-1}\)</span>，用于选择某一行的<strong>所有字</strong>，编址范围
+<span class="math inline">\(0 \sim  2^m - 1\)</span></li>
+<li>列地址：地址线 <span class="math inline">\(\text{A}_{m}\dots
+\text{A}_{n-1}\)</span>，用于<strong><u>进一步</u></strong>选择某一行的<strong>其中一个字</strong>，编址范围
+<span class="math inline">\(0 \sim 2^{n-m} - 1\)</span></li>
+</ul>
+<p><img src="/2024/09/06/computer_organization/memory/二维地址.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+</ul></li>
 </ul>
 <hr>
-<h3 id="三实际算例">三、实际算例</h3>
+<h3 id="三存储器扩展">三、存储器扩展</h3>
 <ul>
-<li><p>求解时额外需要注意的：</p>
+<li><p>位扩展：适用于 CPU 提供的数据总线 &gt; 芯片数据总线 的情况</p>
 <ul>
-<li>选取基坐标系：一般令 {0} 与 <strong>{1}</strong>
-重合，保证当关节为转动副时 <span class="math inline">\(a_0 = \alpha_0 =
-d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
-= \phi_1 = 0\)</span></li>
-<li>选取末端坐标系：一般把 {n}
-放在<strong>末端执行器</strong>上的某个参考点</li>
-<li>关节是移动副：坐标系设置方式与 转动副 不同
+<li>位芯片数量 = CPU DBs / Chip DBs</li>
+<li>连线方式：各芯片<strong>共享地址线</strong>，分用<u>低位数据线</u>和<u>高位数据线</u></li>
+</ul>
+<p><img src="/2024/09/06/computer_organization/memory/位扩展.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<li><p>字扩展：适用于 CPU 提供的数据总线 &gt; 芯片数据总线 的情况</p>
 <ul>
-<li><span class="math inline">\(\hat{z}\)</span>
-轴与移动副作用线方向相同（转动副的 <span class="math inline">\(\hat{z}\)</span> 满足右手螺旋）</li>
-<li>连杆偏距 <span class="math inline">\({d}\)</span> 成为变量，关节转角
-<span class="math inline">\({\phi}\)</span>
-成为常量（转动副则相反）</li>
+<li>字扩展芯片数量 = <span class="math inline">\(2^{\text{CPU ABs}} \div
+2^{\text{Chip ABs}}\)</span></li>
+<li>连线方式：各芯片<strong>共享数据线</strong>，CPU提供的<strong>多余地址线</strong>用于设计选片信号CS（extra
+ABs <u><strong>Mux</strong></u> CS）</li>
+</ul>
+<p><img src="/2024/09/06/computer_organization/memory/字扩展.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<li><p>混合扩展：适用于以上两种混合情况</p>
+<ul>
+<li>总扩展芯片数量 = 位扩展芯片数量 <span class="math inline">\(\times\)</span> 字扩展芯片数量</li>
+<li>连线方式：同一字空间的 CS
+连在一起，同一位空间芯片共享CPU数据总线</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：同地址范围的各芯片必须<strong>被同时选中</strong>（共享CS信号），同地址范围的各芯片<strong>分用高/低数据总线</strong></p>
+</blockquote>
+<p><img src="/2024/09/06/computer_organization/memory/混合扩展.png" srcset="/img/loading.gif" lazyload width="50%"></p>
+<hr>
+<h3 id="四dram的刷新">四、DRAM的刷新</h3>
+<ul>
+<li><p>为什么要刷新：读操作是"<u><strong>破坏性</strong></u>"的，读"1"时放电，读"0"时充电，故会削弱原数据的强度，需要<strong><u>读后恢复</u></strong></p></li>
+<li><p>传感放大器：让读出的信号<strong>更显著</strong>，"1"
+的电平更高，"0"
+的电平更低，故<u><strong>读出放大</strong></u>过程就是<u><strong>刷新过程</strong></u></p></li>
+<li><p>DRAM 刷新特点：按行刷新，刷新与CPU访存分开进行</p></li>
+<li><p>"刷新间隔" 与 "刷新周期"：</p>
+<ul>
+<li><p>刷新间隔：某一行两次刷新之间的时间差（<u><strong>不固定</strong></u>）</p>
+<ul>
+<li>刷新周期：存储芯片<u><strong>固定</strong>的时间间隔</u>，要求在一个周期内将所有内存单元都刷新一遍</li>
 </ul></li>
-<li>齐次变换的求解顺序：1 和 2 可颠倒，3 和 4 可颠倒</li>
-<li><span class="math inline">\(\phi\)</span>
-转动的正方向：满足右手定则，大拇指沿轴方向，四指指向的方向是旋转正方向</li>
-</ul></li>
-<li><p>例题：下面以空间开链RRRP机器人为例，同时包含移动副和转动副</p>
-<p><img src="/2024/07/22/robotics/forward-kinematics/RRRP.png" srcset="/img/loading.gif" lazyload width="70%"></p>
-<p><img src="/2024/07/22/robotics/forward-kinematics/表格法.jpg" srcset="/img/loading.gif" lazyload width="70%"></p>
+<li><p>刷新方式：DRAM
+需要在<u>规定的刷新周期内</u>将<strong>所有内存单元</strong>都刷新一遍</p>
 <ul>
-<li>上表格中的 <span class="math inline">\((i, j)\)</span> 表示从 {i-1}
-到 {i} 需要经过 变换j</li>
-<li>变换j 的值是在经过 变换j-1 后才求出的（不是开始时一次性量出的）</li>
-<li>对于填充最后一个变量 <span class="math inline">\(\phi\)</span>，保持
-{i-1} 不动、先把 {i} 旋转 <span class="math inline">\(\phi_i\)</span>
-度，再看把 {i-1} 绕<span class="math inline">\(\hat{z}_i\)</span>旋转多少度可得到 {i}</li>
+<li><p>集中式刷新：将集中刷新间隔分为"<u>集中访存</u>"和"<u>集中刷新</u>"两部分，两阶段任务互斥</p>
+<p><img src="/2024/09/06/computer_organization/memory/集中刷新.png" srcset="/img/loading.gif" lazyload width="60%"></p>
+<p>该方式 集中刷新间隔 =
+刷新周期，存在不能读写内存的<strong>访存死区</strong></p></li>
+<li><p>分散式刷新：CPU与刷新电路交替访问内存，一个存储周期/刷新一行，最后一行刷新后又回到第一行</p>
+<p><img src="/2024/09/06/computer_organization/memory/分散刷新.png" srcset="/img/loading.gif" lazyload width="60%"></p>
+<p>该方式 分散刷新间隔 = 存储周期 <span class="math inline">\(\times\)</span> 总刷新行数 <span class="math inline">\(\le\)</span>
+刷新周期（访存刷新绑定），不存在访存死区，但会<strong>降低系统速率</strong></p></li>
+<li><p>异步刷新：保证一个刷新周期内将所有行都刷新一遍即可（<strong>单行刷新间隔不固定</strong>）</p>
+<p><img src="/2024/09/06/computer_organization/memory/异步刷新.png" srcset="/img/loading.gif" lazyload width="60%"></p>
+<p>该方式 异步刷新间隔 =
+刷新周期，兼顾了以上两种方法优势，<strong><u>充分利用一整个刷新周期</u></strong></p></li>
+</ul></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -441,7 +455,7 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
     
       <span class="category-chain">
         
-  <a href="/categories/robotics/" class="category-chain-item">robotics</a>
+  <a href="/categories/computer-organization/" class="category-chain-item">computer organization</a>
   
   
 
@@ -456,9 +470,7 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/D-H-parametric-method/">#D-H parametric method</a>
-      
-        <a href="/tags/geometry-transform/">#geometry transform</a>
+        <a href="/tags/DRAM/">#DRAM</a>
       
     </div>
   
@@ -470,8 +482,8 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『robotics-2』forward kinematics</div>
-      <div>http://larry0454.github.io/2024/07/22/robotics/forward-kinematics/</div>
+      <div>『computer organization-2』memory</div>
+      <div>http://larry0454.github.io/2024/09/06/computer_organization/memory/</div>
     </div>
     <div class="license-meta">
       
@@ -483,7 +495,7 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>July 22, 2024</div>
+          <div>September 6, 2024</div>
         </div>
       
       
@@ -515,18 +527,12 @@ d_1 = 0\)</span>，为移动副时 <span class="math inline">\(a_o = \alpha_0
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/22/cyber_security/asymmetric-encryption/" title="『cyber security-2』asymmetric encryption">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『cyber security-2』asymmetric encryption</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/12/signal_and_system/Fourier-transform/" title="『signal and system-3』Fourier transform">
-                        <span class="hidden-mobile">『signal and system-3』Fourier transform</span>
+                      <a href="/2024/09/04/linear_algebra/quadratic-form/" title="『linear algebra-7』quadratic form">
+                        <span class="hidden-mobile">『linear algebra-7』quadratic form</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
