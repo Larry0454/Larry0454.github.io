@@ -16,33 +16,31 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="主存储器 一、存储系统概述  存储器的分类：可按&quot;介质&quot;分类、按&quot;访问方式&quot;分类，按&quot;功能&quot;分类  按介质分类：半导体存储器（易失） or 磁介质存储器 or 光盘存储器 按访问方式分类：随机访问存储器（RAM） or 只读存储器（ROM）or 顺序访问存储器（Tape） 按功能分类：高速缓存 or 主存 or 辅助存储器  存储器的性能指标：  访问时间：给定地址 \">
+    <meta name="description" content="RAG survey 一、LLM 的问题  “幻觉“问题：LLM 会生成看似合理流畅，但实际是错误的回答 ”知识更新“问题：基于新的知识重新训练&#x2F;微调 LLM 开销非常大 “特定领域”问题：LLM 不具备针对特定领域的专业知识   二、Retriever  Retriever 的组成：三部分  encoder：将 inputs 编码为 embeddings inde">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『computer organization-2』memory">
-<meta property="og:url" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/index.html">
+<meta property="og:title" content="『paper-RAG-1』《RAG for NLP: A Survey》">
+<meta property="og:url" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="主存储器 一、存储系统概述  存储器的分类：可按&quot;介质&quot;分类、按&quot;访问方式&quot;分类，按&quot;功能&quot;分类  按介质分类：半导体存储器（易失） or 磁介质存储器 or 光盘存储器 按访问方式分类：随机访问存储器（RAM） or 只读存储器（ROM）or 顺序访问存储器（Tape） 按功能分类：高速缓存 or 主存 or 辅助存储器  存储器的性能指标：  访问时间：给定地址 \">
+<meta property="og:description" content="RAG survey 一、LLM 的问题  “幻觉“问题：LLM 会生成看似合理流畅，但实际是错误的回答 ”知识更新“问题：基于新的知识重新训练&#x2F;微调 LLM 开销非常大 “特定领域”问题：LLM 不具备针对特定领域的专业知识   二、Retriever  Retriever 的组成：三部分  encoder：将 inputs 编码为 embeddings inde">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E4%B8%80%E7%BB%B4%E5%9C%B0%E5%9D%80.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E4%BA%8C%E7%BB%B4%E5%9C%B0%E5%9D%80.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E4%BD%8D%E6%89%A9%E5%B1%95.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E5%AD%97%E6%89%A9%E5%B1%95.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E6%B7%B7%E5%90%88%E6%89%A9%E5%B1%95.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E9%9B%86%E4%B8%AD%E5%88%B7%E6%96%B0.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E5%88%86%E6%95%A3%E5%88%B7%E6%96%B0.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E5%BC%82%E6%AD%A5%E5%88%B7%E6%96%B0.png">
-<meta property="article:published_time" content="2024-09-06T07:08:19.000Z">
-<meta property="article:modified_time" content="2024-10-13T09:30:20.609Z">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/build-retriever.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/query-retriever.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/query-based-fusions.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/logits-based-fusions.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/latent-fusions.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/train-without-update.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/train-with-update.png">
+<meta property="article:published_time" content="2024-10-13T09:12:40.000Z">
+<meta property="article:modified_time" content="2024-10-13T09:54:04.516Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="DRAM">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/09/06/computer_organization/memory/%E4%B8%80%E7%BB%B4%E5%9C%B0%E5%9D%80.png">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/build-retriever.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『computer organization-2』memory - Blog</title>
+  <title>『paper-RAG-1』《RAG for NLP: A Survey》 - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -220,7 +218,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『computer organization-2』memory"></span>
+            <span id="subtitle" data-typed-text="『paper-RAG-1』《RAG for NLP: A Survey》"></span>
           
         </div>
 
@@ -231,8 +229,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-06 15:08" pubdate>
-          September 6, 2024 pm
+        <time datetime="2024-10-13 17:12" pubdate>
+          October 13, 2024 pm
         </time>
       </span>
     
@@ -243,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k words
+          1.7k words
         
       </span>
     
@@ -254,7 +252,7 @@
         
         
         
-          16 mins
+          15 mins
         
       </span>
     
@@ -300,140 +298,124 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『computer organization-2』memory</h1>
+            <h1 style="display: none">『paper-RAG-1』《RAG for NLP: A Survey》</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="主存储器">主存储器</h2>
-<h3 id="一存储系统概述">一、存储系统概述</h3>
+                <h2 id="rag-survey">RAG survey</h2>
+<h3 id="一llm-的问题">一、LLM 的问题</h3>
 <ul>
-<li><p>存储器的分类：可按"<u>介质</u>"分类、按"<u>访问方式</u>"分类，按"<u>功能</u>"分类</p>
+<li>“幻觉“问题：LLM
+会生成看似合理流畅，但实际是<strong>错误</strong>的回答</li>
+<li>”知识更新“问题：基于新的知识重新训练/微调 LLM
+<strong>开销非常大</strong></li>
+<li>“特定领域”问题：LLM
+不具备针对<strong>特定领域</strong>的专业知识</li>
+</ul>
+<hr>
+<h3 id="二retriever">二、Retriever</h3>
 <ul>
-<li>按介质分类：<u>半导体</u>存储器（<strong>易失</strong>） or
-<u>磁介质</u>存储器 or <u>光盘</u>存储器</li>
-<li>按访问方式分类：<u>随机访问</u>存储器（<strong>RAM</strong>） or
-<u>只读</u>存储器（<strong>ROM</strong>）or
-<u>顺序访问</u>存储器（<strong>Tape</strong>）</li>
-<li>按功能分类：高速缓存 or 主存 or 辅助存储器</li>
+<li><p>Retriever 的组成：三部分</p>
+<ul>
+<li>encoder：将 inputs 编码为 embeddings</li>
+<li>indexing：基于ANN(近似最邻近算法)查询相关向量</li>
+<li>datastore：以“K-V”形式存储<strong>外部知识</strong>的数据库</li>
 </ul></li>
-<li><p>存储器的性能指标：</p>
+<li><p>构造 Retriever：四步骤</p>
+<ol type="1">
+<li><p>语料切块：将原始文档切分为小块</p>
 <ul>
-<li>访问时间：给定地址 <span class="math inline">\(\Rightarrow\)</span>
-完成读（写）操作所需时间</li>
-<li>存储周期：<u>两次</u>访问存储单元之间的<strong>最小时间间隔</strong></li>
-<li>带宽：即数据传输率</li>
+<li>分块间语义应<strong>相互独立</strong>，各分块语义<strong>不应模糊</strong>，只能包含一种核心观点</li>
+<li>对较短的分块编码速度更快，更省显存</li>
+</ul>
+<p>分块大小是决定<strong>分块语义</strong>+<strong>编码效率</strong>的核心因素，分块大小取决于RAG场景：</p>
+<ul>
+<li>任务角度：问答任务用小块，摘要任务用大块</li>
+<li>编码角度：编码器模型决定了适用的分块大小</li>
+<li>查询角度：分块大小应与用户查询大小匹配</li>
+</ul>
+<p>分块方法：三种</p>
+<ul>
+<li>定长分割</li>
+<li>基于语义分割：按 语句周期 or 换行 分割</li>
+<li>基于内容分割：按 章节 or 代码块 分割</li>
 </ul></li>
-<li><p>半导体存储器：包括 "RAM" 和 "ROM"</p>
+<li><p>切块编码：</p>
 <ul>
-<li><p>SRAM：静态RAM，速度更<strong>快</strong>也更<strong>贵</strong>，加电时信息能一直保持，一般用于制作<u><strong>Cache</strong></u></p></li>
-<li><p>DRAM：动态RAM，速度较<strong>慢</strong>但<strong>便宜</strong>，每隔一段时间必须刷新一次，一般用于制作<u><strong>主存</strong></u></p>
-<hr></li>
-<li><p>PROM：一次性可编程ROM</p></li>
-<li><p>EPROM 与 EEPROM：<u><strong>紫外线</strong>可擦除可编程</u>ROM 与
-<u><strong>电</strong>可擦除可编程</u>ROM</p></li>
-<li><p>Flash
-ROM：闪存，本质上是电擦除可编程ROM，一般用于制作<u><strong>SD卡</strong></u>、<u><strong>BIOS存储器</strong></u>、<u><strong>图形卡</strong></u>等</p></li>
+<li>稀疏编码：用高维向量表示一段 chunk，向量中有很多 0
+<ul>
+<li>词袋模型：一段 chunk <span class="math inline">\(\Leftrightarrow\)</span>
+一个定长向量，每个维度指对应词出现的<strong>次数</strong>；只考虑单词数量，不考虑单词位置和语义</li>
+<li><span class="math inline">\(\text{TF} \times \text{IDF}\)</span>
+：<span class="math inline">\(\text{TF}(t,d) = \dfrac{t_d}{d}\)</span>
+（衡量单词 t 在文档 d 中的重要程度） <br> <span class="math inline">\(\text{IDF(t)}=\log (\dfrac{N}{n_t + 1})\)</span>
+（<strong>削弱常见停用词的重要性</strong>）</li>
+</ul></li>
+<li>稠密编码：基于深度学习模型生成，每个维度是浮点数，记录语义信息，0
+很少</li>
+</ul></li>
+<li><p>构建索引：加速高维空间中与用户 query 接近的向量</p>
+<ul>
+<li>相似度衡量：余弦相似度，欧氏距离，曼哈顿距离 等</li>
+<li>嵌入降维：PCA、LSH，以及 Product Quantization (子空间码本) <br>降低
+embed 维度可提高搜索效率，但也可能丢失语义信息</li>
+<li>ANN索引：优化存储结构，从而优化ANN算法</li>
+</ul></li>
+<li><p>构建向量数据库：K<span class="math inline">\(\leftrightarrow\)</span>V 指 domain-specific
+<strong>embed</strong> <span class="math inline">\(\leftrightarrow\)</span> domain-specific
+<strong>chunk</strong> <br>算法见 (Algorithm Wu 等, 2024, page
+4)，以分块嵌入 <span class="math inline">\(e_i\)</span> 为 key，以分块
+<span class="math inline">\(c_i, c_{i+1}\)</span> 为 value，并在 key
+上建索引</p></li>
+</ol>
+<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/build-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<li><p>查询 Retriever：两步骤</p>
+<ol type="1">
+<li>查询编码：查找相关性 top-k 的索引，返回数据库中对应的 values</li>
+<li>后处理：重排序 (根据任务类型重新排序)</li>
+</ol>
+<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/query-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<li><p>Retriever 融合：三种</p>
+<ul>
+<li><p>query-based：先编码 query 和各 retrievals (可选)，再拼接 query 和
+retrievals，最后输入给 LLM <br>算法见 (algorithm Wu 等, 2024, page
+6)</p>
+<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/query-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<li><p>logits-based：先将 query 和各 retrievals 输入
+LLM，再对各输出响应<strong>加权求和</strong> <br>算法见 (algorithm Wu
+等, 2024, page 6)，有“集成”和“校准”两种方法</p>
+<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/logits-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<li><p>latent-based：将 retrievals 融入 LLM 的 hidden-states <br>算法见
+(algorithm Wu 等, 2024, page
+7)，有"attention-based"和"weighted"（开销较小）两种集成方法，RAG
+使用较多</p>
+<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/latent-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
 </ul></li>
 </ul>
 <hr>
-<h3 id="二存储芯片结构">二、存储芯片结构</h3>
+<h3 id="三generator">三、Generator</h3>
 <ul>
-<li><p>存储单元电路：存储 1bit
-二进制信息的电路，可实现状态<u><strong>写入</strong></u>和<u><strong>读取</strong></u></p></li>
-<li><p>存储芯片的容量描述：<span class="math inline">\(2^n \times
-m\)</span>，即 字数 <span class="math inline">\(\times\)</span>
-单字的位数</p>
-<ul>
-<li>存储位元：<span class="math inline">\(2^n \times m\)</span> 个
-bit</li>
-<li>地址线：<span class="math inline">\(n\)</span> 条地址线 <span class="math inline">\(\text{A}_0\dots \text{A}_{n-1}\)</span>，可表示
-<span class="math inline">\(2^n\)</span> 个字（单向线）</li>
-<li>数据线：<span class="math inline">\(m\)</span>
-条数据线，可表示一个字的 <span class="math inline">\(m\)</span> 个
-bit（双向线，可读可写）</li>
-</ul></li>
-<li><p>一维地址结构：只有"行译码"</p>
-<ul>
-<li>译码电路：将<u><strong>二进制</strong>地址编码</u> <span class="math inline">\(\text{A}_0\dots \text{A}_{n-1}\)</span>
-转化为<u><strong>十进制独热</strong>片选信号</u>，使唯一的<strong>字选线</strong>
-<span class="math inline">\(\text{W}_i\)</span> 处于工作状态</li>
-<li>数据线：<u>读出</u>或<u>写入</u>字选线选中的那个字的各 bit 信号
-<span class="math inline">\(\text{D}_0\dots \text{D}_{n-1}\)</span></li>
-</ul>
-<p><img src="/2024/09/06/computer_organization/memory/一维地址.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>二维地址结构："行译码" + "列译码"，地址格式为 <span class="math inline">\(2^m \times 2^{n-m} \times n\)</span></p>
-<ul>
-<li><p>译码电路：将一维地址<u><strong>拆分</strong></u>为<u>行地址</u> +
-<u>列地址</u></p>
-<ul>
-<li>行地址：地址线 <span class="math inline">\(\text{A}_0\dots
-\text{A}_{m-1}\)</span>，用于选择某一行的<strong>所有字</strong>，编址范围
-<span class="math inline">\(0 \sim  2^m - 1\)</span></li>
-<li>列地址：地址线 <span class="math inline">\(\text{A}_{m}\dots
-\text{A}_{n-1}\)</span>，用于<strong><u>进一步</u></strong>选择某一行的<strong>其中一个字</strong>，编址范围
-<span class="math inline">\(0 \sim 2^{n-m} - 1\)</span></li>
-</ul>
-<p><img src="/2024/09/06/computer_organization/memory/二维地址.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-</ul></li>
+<li>LLM 经典分支：Llama, GPT, Gemini 等</li>
+<li>当前 RAG 多设计拓展模块，采用 latent-based 方法</li>
 </ul>
 <hr>
-<h3 id="三存储器扩展">三、存储器扩展</h3>
+<h3 id="四rag-training">四、RAG Training</h3>
 <ul>
-<li><p>位扩展：适用于 CPU 提供的数据总线 &gt; 芯片数据总线 的情况</p>
+<li><p>训练方案：两种，”数据库更新”和“数据库不更新”</p></li>
+<li><p>数据库不更新：三种方式</p>
 <ul>
-<li>位芯片数量 = CPU DBs / Chip DBs</li>
-<li>连线方式：各芯片<strong>共享地址线</strong>，分用<u>低位数据线</u>和<u>高位数据线</u></li>
+<li><p>训练 Retriever：仅针对
+dense-encoder，用于提升语义表征、加速编码，或 学习特定领域的知识
+<br>encoder 改变 <span class="math inline">\(\rightarrow\)</span> embed
+改变 <span class="math inline">\(\rightarrow\)</span> index
+改变</p></li>
+<li><p>训练 Generator：LoRA</p></li>
+<li><p>联合训练：端到端优化，同时提升 retriever 和 generator</p></li>
 </ul>
-<p><img src="/2024/09/06/computer_organization/memory/位扩展.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
-<li><p>字扩展：适用于 CPU 提供的数据总线 &gt; 芯片数据总线 的情况</p>
-<ul>
-<li>字扩展芯片数量 = <span class="math inline">\(2^{\text{CPU ABs}} \div
-2^{\text{Chip ABs}}\)</span></li>
-<li>连线方式：各芯片<strong>共享数据线</strong>，CPU提供的<strong>多余地址线</strong>用于设计选片信号CS（extra
-ABs <u><strong>Mux</strong></u> CS）</li>
-</ul>
-<p><img src="/2024/09/06/computer_organization/memory/字扩展.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
-<li><p>混合扩展：适用于以上两种混合情况</p>
-<ul>
-<li>总扩展芯片数量 = 位扩展芯片数量 <span class="math inline">\(\times\)</span> 字扩展芯片数量</li>
-<li>连线方式：同一字空间的 CS
-连在一起，同一位空间芯片共享CPU数据总线</li>
-</ul>
-<blockquote>
-<p><strong>注意</strong>：同地址范围的各芯片必须<strong>被同时选中</strong>（共享CS信号），同地址范围的各芯片<strong>分用高/低数据总线</strong></p>
-</blockquote>
-<p><img src="/2024/09/06/computer_organization/memory/混合扩展.png" srcset="/img/loading.gif" lazyload width="50%"></p>
-<hr>
-<h3 id="四dram的刷新">四、DRAM的刷新</h3>
-<ul>
-<li><p>为什么要刷新：读操作是"<u><strong>破坏性</strong></u>"的，读"1"时放电，读"0"时充电，故会削弱原数据的强度，需要<strong><u>读后恢复</u></strong></p></li>
-<li><p>传感放大器：让读出的信号<strong>更显著</strong>，"1"
-的电平更高，"0"
-的电平更低，故<u><strong>读出放大</strong></u>过程就是<u><strong>刷新过程</strong></u></p></li>
-<li><p>DRAM 刷新特点：按行刷新，刷新与CPU访存分开进行</p></li>
-<li><p>"刷新间隔" 与 "刷新周期"：</p>
-<ul>
-<li>刷新间隔：某一行两次刷新之间的时间差（<u><strong>不固定</strong></u>）</li>
-<li>刷新周期：存储芯片<u><strong>固定</strong>的时间间隔</u>，要求在一个周期内将所有内存单元都刷新一遍</li>
-</ul></li>
-<li><p>刷新方式：DRAM
-需要在<u>规定的刷新周期内</u>将<strong>所有内存单元</strong>都刷新一遍</p>
-<ul>
-<li><p>集中式刷新：将集中刷新间隔分为"<u>集中访存</u>"和"<u>集中刷新</u>"两部分，两阶段任务互斥</p>
-<p><img src="/2024/09/06/computer_organization/memory/集中刷新.png" srcset="/img/loading.gif" lazyload width="60%"></p>
-<p>该方式 集中刷新间隔 =
-刷新周期，存在不能读写内存的<strong>访存死区</strong></p></li>
-<li><p>分散式刷新：CPU与刷新电路交替访问内存，一个存储周期/刷新一行，最后一行刷新后又回到第一行</p>
-<p><img src="/2024/09/06/computer_organization/memory/分散刷新.png" srcset="/img/loading.gif" lazyload width="60%"></p>
-<p>该方式 分散刷新间隔 = 存储周期 <span class="math inline">\(\times\)</span> 总刷新行数 <span class="math inline">\(\le\)</span>
-刷新周期（访存刷新绑定），不存在访存死区，但会<strong>降低系统速率</strong></p></li>
-<li><p>异步刷新：保证一个刷新周期内将所有行都刷新一遍即可（<strong>单行刷新间隔不固定</strong>）</p>
-<p><img src="/2024/09/06/computer_organization/memory/异步刷新.png" srcset="/img/loading.gif" lazyload width="60%"></p>
-<p>该方式 异步刷新间隔 =
-刷新周期，兼顾以上两种方法优势，<strong><u>充分利用一整个刷新周期</u></strong></p></li>
-</ul></li>
-</ul></li>
+<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/train-without-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<li><p>数据库更新：插入新的 K-V 或 修改 values</p>
+<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/train-with-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
 </ul>
 
                 
@@ -453,8 +435,15 @@ ABs <u><strong>Mux</strong></u> CS）</li>
     
       <span class="category-chain">
         
-  <a href="/categories/computer-organization/" class="category-chain-item">computer organization</a>
+  <a href="/categories/paper/" class="category-chain-item">paper</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/paper/RAG/" class="category-chain-item">RAG</a>
+  
+  
+
   
 
       </span>
@@ -465,13 +454,6 @@ ABs <u><strong>Mux</strong></u> CS）</li>
     </div>
   
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/DRAM/">#DRAM</a>
-      
-    </div>
-  
 </div>
 
 
@@ -480,8 +462,8 @@ ABs <u><strong>Mux</strong></u> CS）</li>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『computer organization-2』memory</div>
-      <div>http://larry0454.github.io/2024/09/06/computer_organization/memory/</div>
+      <div>『paper-RAG-1』《RAG for NLP: A Survey》</div>
+      <div>http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/</div>
     </div>
     <div class="license-meta">
       
@@ -493,7 +475,7 @@ ABs <u><strong>Mux</strong></u> CS）</li>
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>September 6, 2024</div>
+          <div>October 13, 2024</div>
         </div>
       
       
@@ -525,18 +507,12 @@ ABs <u><strong>Mux</strong></u> CS）</li>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/13/HuggingFace/basics/" title="『HuggingFace-1』basics">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『HuggingFace-1』basics</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/04/linear_algebra/quadratic-form/" title="『linear algebra-7』quadratic form">
-                        <span class="hidden-mobile">『linear algebra-7』quadratic form</span>
+                      <a href="/2024/10/13/HuggingFace/basics/" title="『HuggingFace-1』basics">
+                        <span class="hidden-mobile">『HuggingFace-1』basics</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
