@@ -1,0 +1,795 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="WangLe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="HuggingFace 基础组件 pipeline  查看 pipeline 支持的所有任务类型 1234from transformers.pipelines import SUPPORTED_TASKSfor k, v in SUPPORTED_TASKS.items():		print(k, v)# k-v: NLP任务名称-任务实现 创建并调用 pipeline 1234567">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『HuggingFace-1』basics">
+<meta property="og:url" content="http://larry0454.github.io/2024/10/13/HuggingFace/basics/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="HuggingFace 基础组件 pipeline  查看 pipeline 支持的所有任务类型 1234from transformers.pipelines import SUPPORTED_TASKSfor k, v in SUPPORTED_TASKS.items():		print(k, v)# k-v: NLP任务名称-任务实现 创建并调用 pipeline 1234567">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-13T08:25:30.000Z">
+<meta property="article:modified_time" content="2024-10-13T08:29:46.422Z">
+<meta property="article:author" content="WangLe">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>『HuggingFace-1』basics - Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"larry0454.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cover.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="『HuggingFace-1』basics"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-13 16:25" pubdate>
+          October 13, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.4k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          62 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">『HuggingFace-1』basics</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="huggingface-基础组件">HuggingFace 基础组件</h2>
+<h3 id="pipeline">pipeline</h3>
+<ul>
+<li><p>查看 pipeline 支持的<strong><u>所有</u>任务类型</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers.pipelines <span class="hljs-keyword">import</span> SUPPORTED_TASKS<br><span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> SUPPORTED_TASKS.items():<br>		<span class="hljs-built_in">print</span>(k, v)<br><span class="hljs-comment"># k-v: NLP任务名称-任务实现</span><br></code></pre></td></tr></table></figure></li>
+<li><p>创建并调用 pipeline</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 直接指定任务类型+模型仓库</span><br>pipe = pipeline(<span class="hljs-string">&quot;&lt;task_name&gt;&quot;</span>, model=<span class="hljs-string">&quot;&lt;repository&gt;&quot;</span>)<br><br><span class="hljs-comment"># 加载预训练模型+分词器</span><br>model = AutoModel.from_pretrained(<span class="hljs-string">&quot;&lt;repository&gt;&quot;</span>)<br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;&lt;repository&gt;&quot;</span>)<br>pipe = pipeline(<span class="hljs-string">&quot;&lt;task_name&gt;&quot;</span>, model=model, tokenizer=tokenizer)<br><br>pipe(<span class="hljs-string">&quot;&lt;some_sentence&gt;&quot;</span>)<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意</strong>：加载<u>预训练</u>方式必须<strong><u>同时</u>指定模型和分词器</strong></p>
+</blockquote></li>
+<li><p>指定模型加载到显卡上：<u>默认</u>在CPU上</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 指定GPU的数字编号</span><br>pipe = pipeline(..., device=<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure></li>
+<li><p>查看 pipeline 的调用实例：点进入 pipe
+类<strong>实例</strong>，查看<strong>__call__方法</strong></p></li>
+</ul>
+<h3 id="tokenizer">tokenizer</h3>
+<ul>
+<li><p>加载与保存分词器</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 加载预训练分词器</span><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;&lt;repository&gt;&quot;</span>)<br><br><span class="hljs-comment"># 保存分词器到本地</span><br>tokenizer.save_pretrained(<span class="hljs-string">&quot;&lt;local_path&gt;&quot;</span>)<br><span class="hljs-comment"># 之后可以直接从 &lt;local_path&gt; 所在位置加载分词器 (无需通过远程&lt;repository&gt;加载)</span><br></code></pre></td></tr></table></figure></li>
+<li><p>查看词典</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 打印词典全部内容</span><br><span class="hljs-built_in">print</span>(tokenizer.vocab)<br><br><span class="hljs-comment"># 打印词典大小</span><br><span class="hljs-built_in">print</span>(tokenizer.vocab_size)<br></code></pre></td></tr></table></figure></li>
+<li><p>编码与解码：调用 encode/decode 方法，或直接调用 tokenizer 的
+__call__ 方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">sen = <span class="hljs-string">&quot;&lt;some_sentence&gt;&quot;</span><br>常规方法<br>ids = tokenizer.encode(sen)<br>words = tokenizer.decode(ids)<br><br><span class="hljs-comment"># 将编码后的句子填充到指定长度</span><br>ids = tokenizer.encode(sen, padding=<span class="hljs-string">&quot;max_length&quot;</span>, max_length=<span class="hljs-number">20</span>)<br><span class="hljs-comment"># 将编码后的句子截断为指定长度</span><br>ids = tokenizer.decode(sen, max_length=<span class="hljs-number">5</span>, truncation=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment">###### 对一条语句编码, 可输出含 ids, type_id 和 attention_masked 的字典 ######</span><br>ids = tokenizer(sen, return_tensors=<span class="hljs-string">&quot;pt&quot;</span>, (padding, truncation...))<br><span class="hljs-comment">###### 对批次语句编码 ######</span><br>sens = [<span class="hljs-string">&quot;&lt;sen_1&gt;&quot;</span>, ..., <span class="hljs-string">&quot;&lt;sens_n&gt;&quot;</span>]<br>res = tokenizer(sens, ...)<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意</strong>：上述<strong><u>批次</u></strong>处理 比
+for循环处理多条语句<u><strong>更高效</strong></u></p>
+</blockquote></li>
+<li><p>快慢分词器：快分词器基于 Rust 实现，慢分词器基于 Python
+实现；默认使用快分词器</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 快分词器支持分析拆分得到的&quot;子词&quot;</span><br><span class="hljs-comment"># 快分词器支持 return_offsets_mapping, 如&quot;jumping&quot;实际被拆分为&quot;jump&quot;和&quot;ing&quot;，表示为[(0,0),(0,4),(4,7),(0,0)]</span><br>inputs = fast_tokenizer(sen, return_offsets_mapping=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># 快分词器支持 word_ids() 方法，如&quot;i eating&quot;实际被拆分为&quot;i&quot;和&quot;eat&quot;&quot;ing&quot;，表示为[None,0,1,1,None]</span><br>inputs.word_ids() <span class="hljs-comment"># = [None, ..., &lt;original_wordidx_for_subword&gt;, ..., None]</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="model">model</h3>
+<ul>
+<li><p>任务头：纯 AutoModel
+只输出编码结果（不带任务头），AutoModelForXXX
+指带有<u>不同<strong>任务头</strong></u>的模型</p></li>
+<li><p>模型类型：Encoder，Decoder，Encoder-Decoder</p>
+<ul>
+<li>Encoder：BERT系列，<strong><u>文本分类</u></strong> +
+<strong><u>阅读理解</u></strong>；计算一个 token 可见完整上下文</li>
+<li>Decoder：GPT系列、LLaMa系列，<strong><u>文本生成</u></strong>；计算一个
+token 仅可见上文</li>
+<li>Encoder-Decoder：GLM、BART，<u><strong>文本摘要</strong></u> +
+<strong><u>机器翻译</u></strong></li>
+</ul></li>
+<li><p>获取模型参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 获得部分参数</span><br><span class="hljs-built_in">print</span>(model.config)<br><br><span class="hljs-comment"># 获取并修改完整参数</span><br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoConfig<br>config = AutoConfig.from_pretrained(<span class="hljs-string">&quot;&lt;model_name&gt;&quot;</span>)<br>config.xxx<br></code></pre></td></tr></table></figure></li>
+<li><p>模型调用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">inputs = tokenizer(sen, return_tensors=<span class="hljs-string">&quot;pt&quot;</span>) <span class="hljs-comment"># 要输入模型，所以要返回tensor</span><br>output = model(**<span class="hljs-built_in">input</span>) <span class="hljs-comment"># 注意传入的是Dict，要用**解包</span><br><br>output.logits <span class="hljs-comment"># 取最后一层分数</span><br>output.loss <span class="hljs-comment"># 训练时取出loss.backward()</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="datasets">datasets</h3>
+<ul>
+<li><p>加载数据集：使用 load_dataset 方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> load_dataset<br><span class="hljs-comment"># 返回一个DatasetDict, 即 DatasetDict(&#123;train: Dataset, validation: Dataset&#125;)</span><br>dataset = load_dataset(<span class="hljs-string">&quot;&lt;repository&gt;&quot;</span>)<br><span class="hljs-comment"># 加载数据集中的特定任务子集</span><br>dataset = load_dataset(<span class="hljs-string">&quot;&lt;repository&gt;&quot;</span>, <span class="hljs-string">&quot;&lt;subset&gt;&quot;</span>)<br><span class="hljs-comment"># 仅加载训练集的 m~n 行</span><br>dataset = load_dataset(<span class="hljs-string">&quot;&lt;repository&gt;&quot;</span>, spilt=<span class="hljs-string">&quot;validate[&lt;m&gt;:&lt;n&gt;]&quot;</span>)<br><span class="hljs-comment"># 支持 百分比 加载</span><br>dataset = load_dataset(<span class="hljs-string">&quot;&lt;repository&gt;&quot;</span>, split=[<span class="hljs-string">&quot;train[:50%]&quot;</span>, <span class="hljs-string">&quot;validation[:20%]&quot;</span>])<br></code></pre></td></tr></table></figure></li>
+<li><p>查看数据集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 查看训练集中的前2条, 返回一个字典, 即 &#123;field_1: [x11, x12], ..., field_n: [xn1, xn2]&#125;</span><br><span class="hljs-built_in">print</span>(dataset[<span class="hljs-string">&quot;train&quot;</span>][:<span class="hljs-number">2</span>])<br><span class="hljs-comment"># 查看训练集中&quot;field&quot;字段的前5条, 返回一个列表，即 [x0, ..., x4]</span><br><span class="hljs-built_in">print</span>(dataset[<span class="hljs-string">&quot;train&quot;</span>][<span class="hljs-string">&quot;field&quot;</span>][:<span class="hljs-number">5</span>])<br><br><span class="hljs-comment"># 查看训练集中的各字段名, 返回一个列表</span><br><span class="hljs-built_in">print</span>(dataset[<span class="hljs-string">&quot;train&quot;</span>].colume_names)<br><span class="hljs-comment"># 查看训练集中各字段信息, 返回一个字典</span><br><span class="hljs-built_in">print</span>(dataset[<span class="hljs-string">&quot;train&quot;</span>].features)<br></code></pre></td></tr></table></figure></li>
+<li><p>数据集划分：使用 dataset 的 train_test_split 方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">train_set = dataset[<span class="hljs-string">&quot;train&quot;</span>]<br><span class="hljs-comment"># 指定训练集比例</span><br>train_set.train_test_split(test_size=<span class="hljs-number">0.1</span>)<br><span class="hljs-comment"># 也可以按标签类别划分, 分层抽样保证数据集划分均衡</span><br>train_set.train_test_split(test_size=<span class="hljs-number">0.1</span>, stratify_by_column=<span class="hljs-string">&quot;label&quot;</span>)<br></code></pre></td></tr></table></figure></li>
+<li><p>数据选取与过滤：使用 select 和 filter 方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 选取训练集中特定索引的样本，仍返回一个Dataset</span><br>dataset[<span class="hljs-string">&quot;train&quot;</span>].select([<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>]) <span class="hljs-comment"># 选取训练集第0, 第2和第5个样本</span><br><br><span class="hljs-comment"># 保留训练集中满足一定条件的样本，仍返回一个Dataset</span><br>dataset[<span class="hljs-string">&quot;train&quot;</span>].<span class="hljs-built_in">filter</span>(<span class="hljs-keyword">lambda</span> example: &lt;<span class="hljs-built_in">bool</span> expr on example&gt;) <span class="hljs-comment"># 对每个example做判断, True则保留 </span><br></code></pre></td></tr></table></figure></li>
+<li><p>数据集映射：使用 map 方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;xxx&quot;</span>)<br><span class="hljs-comment"># 对数据集中的一个样本做预处理</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">preprocess</span>(<span class="hljs-params">example</span>):<br>    content = tokenizer(example[<span class="hljs-string">&quot;content&quot;</span>], ...) <span class="hljs-comment"># 分词</span><br>    label = tokenzier(example[<span class="hljs-string">&quot;label&quot;</span>], ...)     <span class="hljs-comment"># 分词</span><br>    model_inputs[<span class="hljs-string">&quot;content&quot;</span>], model_inputs[<span class="hljs-string">&quot;label&quot;</span>] = content, label<br>    <span class="hljs-keyword">return</span> model_inputs<br>  <br>dataset.<span class="hljs-built_in">map</span>(preprocess) <span class="hljs-comment"># 可同时处理 训练集 和 测试集</span><br><span class="hljs-comment"># 加速1: 快速分词器支持批处理</span><br>dataset.<span class="hljs-built_in">map</span>(preprocess, batched=<span class="hljs-literal">True</span>)<br><span class="hljs-comment"># 加速2: 支持多进程处理</span><br>dataset.<span class="hljs-built_in">map</span>(preprocess, num_proc=<span class="hljs-number">4</span>)<br><span class="hljs-comment"># 可以移除不需要的字段</span><br>dataset.<span class="hljs-built_in">map</span>(preprocess, remove_columns=&lt;list_of_fields&gt;)<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意</strong>：使用多进程时，需要将 tokenizer 一并传入
+"preprocess" 函数（多进程各资源不共享）</p>
+</blockquote></li>
+<li><p>保存数据与加载数据：一对方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 保存至本地</span><br>dataset.save_to_disk(<span class="hljs-string">&quot;&lt;local_path&gt;&quot;</span>)<br><br><span class="hljs-comment"># 从本地加载</span><br>dataset.load_from_disk(<span class="hljs-string">&quot;&lt;local_path&gt;&quot;</span>)<br></code></pre></td></tr></table></figure></li>
+<li><p>加载自定义生数据集：仍使用 load_dataset 接口</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 第一个字段可填文件类型</span><br>dataset = load_dataset(<span class="hljs-string">&quot;csv&quot;</span>, data_files=[<span class="hljs-string">&quot;data.csv&quot;</span>, ...])<br><br><span class="hljs-comment"># 从 pandas 加载</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>data = pd.read_csv(<span class="hljs-string">&quot;./data.csv&quot;</span>)<br>dataset = Dataset.from_pandas(data) <span class="hljs-comment"># 调用Dataset类的from_pandas方法</span><br></code></pre></td></tr></table></figure></li>
+<li><p>编写<strong>加载脚本</strong>：用于自动构建数据集，需要实现三个抽象方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># load_script.py</span><br><span class="hljs-keyword">import</span> datasets<br><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> DownloadManager, DatasetInfo<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">DATASET2024</span>(datasets.GeneratorBasedBuilder):<br>    <span class="hljs-comment"># 实现 _info, 定义数据集和字段信息</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_info</span>(<span class="hljs-params">self</span>) -&gt; DatasetInfo:<br>        <span class="hljs-keyword">return</span> datasets.DatasetInfo(<br>            <span class="hljs-comment"># 数据集描述</span><br>            description=<span class="hljs-string">&quot;DATASET 2024&quot;</span>,<br>            <span class="hljs-comment"># 数据集字段</span><br>            features=datasets.Features(&#123;<br>                <span class="hljs-string">&quot;&lt;field_name&gt;&quot;</span>: &lt;<span class="hljs-built_in">type</span>&gt; <br>            &#125;)<br>            <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">            这里的&lt;type&gt;可以为</span><br><span class="hljs-string">            datasets.Value(&quot;string&quot;), datasets.Value(&quot;int32&quot;) 等</span><br><span class="hljs-string">            或 复合类型</span><br><span class="hljs-string">            datasets.features.Sequence(&#123;&quot;&lt;field&gt;&quot;: &lt;type&gt;, ... &#125;) 等</span><br><span class="hljs-string">            &quot;&quot;&quot;</span><br>        )<br>     <br>    <span class="hljs-comment"># 实现 _split_generators, 定义数据划分方式</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_split_generators</span>(<span class="hljs-params">self, dl_manager: DownloadManager</span>):<br>        <span class="hljs-keyword">return</span> [datasets.SplitGenerator(name=datasets.Split.TRAIN,<br>                                        gen_kwargs=&#123;<span class="hljs-string">&quot;filepath&quot;</span>: &lt;local_path_to_train&gt;&#125;),<br>        				datasets.SplitGenerator(name=datasets.Split.TEST,<br>                                        gen_kwargs=&#123;<span class="hljs-string">&quot;filepath&quot;</span>: &lt;local_path_to_test&gt;&#125;)]<br>    <br>    <span class="hljs-comment"># 实现 _generate_examples, 接收上面传入的filepath, 产生一个样本</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_generate_examples</span>(<span class="hljs-params">self, filepath</span>):<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(filepath) <span class="hljs-keyword">as</span> f:<br>            &lt;<span class="hljs-keyword">for</span>-loop&gt;<br>            		<span class="hljs-built_in">id</span> = &lt;get_id&gt;<br>                data = &lt;get_data_from_f&gt;<br>                <span class="hljs-comment"># 必须有id, 类型可以是整数或字符串</span><br>                <span class="hljs-keyword">yield</span> <span class="hljs-built_in">id</span>, &#123;<br>                  <span class="hljs-string">&quot;field&quot;</span>: &lt;data&gt;,<br>                  ...<br>                &#125;<br>                <span class="hljs-comment">###### 注意这里的 field 必须和 _info 中定义的字段名相同</span><br>            &lt;<span class="hljs-keyword">for</span>-loop&gt;<br></code></pre></td></tr></table></figure>
+<p>之后直接调用 <strong>load_dataset("./load_script.py")</strong>
+即可载入自定义数据集</p></li>
+</ul>
+<h3 id="evaluate">evaluate</h3>
+<ul>
+<li><p>加载并查看评估函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> evaluate<br><br><span class="hljs-comment"># 加载评估函数</span><br>eval_func = evaluate.load(<span class="hljs-string">&quot;&lt;eval_name&gt;&quot;</span>) <span class="hljs-comment"># 输入评估函数名, 如&quot;accuracy&quot;</span><br><br><span class="hljs-comment"># 查看评估函数 简单描述</span><br><span class="hljs-built_in">print</span>(eval_func.description)<br><span class="hljs-comment"># 查看评估函数 具体文档</span><br><span class="hljs-built_in">print</span>(eval_func.inputs_description)<br></code></pre></td></tr></table></figure></li>
+<li><p>指标计算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 单指标全局计算, 返回字典&#123;&quot;eval&quot;: value&#125;</span><br>eval_func.compute(predictions=&lt;list_of_pred&gt;, reference=&lt;list_of_ref&gt;)<br><br><span class="hljs-comment"># 单指标迭代计算</span><br><span class="hljs-keyword">for</span> ref, pred <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(&lt;list_of_ref&gt;, &lt;list_of_pred&gt;):<br>   eval_func.add(reference=ref, prediction=pred)<br>eval_func.compute()<br><br><span class="hljs-comment"># 多指标计算, 返回字典&#123;&quot;eval1&quot;: value1, &quot;eval2&quot;: value2, ...&#125;</span><br>metrics = evaluate.combine([<span class="hljs-string">&quot;accuracy&quot;</span>, <span class="hljs-string">&quot;f1&quot;</span>, <span class="hljs-string">&quot;recall&quot;</span>, <span class="hljs-string">&quot;precision&quot;</span>])<br>metrics.compute(predictions=&lt;list_of_pred&gt;, reference=&lt;list_of_ref&gt;)<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意</strong>：可以在 huggingface 中的 task
+文档里查询，针对<u><strong>特定任务</strong></u>可采用哪些 metric</p>
+</blockquote></li>
+</ul>
+<h3 id="trainer">Trainer</h3>
+<ul>
+<li><p>创建 trainer：Trainer 自身集成了<strong>优化器</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 构建训练参数, 可指定很多参数</span><br>args = TrainingArguments(...)<br><br><span class="hljs-comment"># 创建训练器</span><br>trainer = Trainer(<br>  					model=model,<br>            args=args,<br>            train_dataset=dataset[<span class="hljs-string">&quot;train&quot;</span>],<br>            eval_dataset=dataset[<span class="hljs-string">&quot;test&quot;</span>],<br>            <span class="hljs-comment"># 相当于tokenizer指定padding=&quot;max_length&quot;, 以及max_length</span><br>            data_collator=DataCollatorWithPadding(tokenizer=tokenzier),<br>            compute_metrics=metrics,<br>            ...<br>					)<br></code></pre></td></tr></table></figure></li>
+<li><p>训练流程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 启动训练</span><br>trainer.train()<br><span class="hljs-comment"># 效果评估</span><br>trainer.evaluate() <span class="hljs-comment"># 可传入自定义验证集</span><br><span class="hljs-comment"># 模型预测</span><br>trainer.predict(dataset[<span class="hljs-string">&quot;test&quot;</span>])<br></code></pre></td></tr></table></figure></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HuggingFace/" class="category-chain-item">HuggingFace</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>『HuggingFace-1』basics</div>
+      <div>http://larry0454.github.io/2024/10/13/HuggingFace/basics/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>WangLe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 13, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/06/computer_organization/memory/" title="『computer organization-2』memory">
+                        <span class="hidden-mobile">『computer organization-2』memory</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
