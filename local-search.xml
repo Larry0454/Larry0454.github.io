@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>『paper-NBV-1』《GenNBV》</title>
+    <link href="/2024/10/18/paper/GenNBV/"/>
+    <url>/2024/10/18/paper/GenNBV/</url>
+    
+    <content type="html"><![CDATA[<h2 id="gennbv-generalizable-next-best-view-policy-for-active-3d-reconstruction">GenNBV:Generalizable Next-Best-View Policy for Active 3D Reconstruction</h2><h3 id="一拟解决问题">一、拟解决问题</h3><ul><li>大规模场景数字化：图像捕捉费时费力</li><li>现有 NBV 问题：基于实际经验的视角选取 +人工限定的action范围，限制针对陌生场景的泛化能力</li></ul><p>需要改进NBV，使其支持<u><strong>任意场景下</strong></u>的主动探索</p><hr><h3 id="二相关工作">二、相关工作</h3><ul><li>传统三维重建：利用光度和几何信息进行重建评估，展现出大规模场景中的重建能力，但泛化性较差、实时性差</li><li>主动三维重建：NBV，依赖于人工制定视角选取标准，候选视角有限，仅在特定场景下表现较好，泛化性同样较差</li></ul><hr><h3 id="三研究方法">三、研究方法</h3><p><img src="/2024/10/18/paper/GenNBV/GenNBV.png" width="80%"></p><ul><li><p>NBV 问题描述：（对无人机）给定当前观测 <span class="math inline">\(o_t\)</span>，执行 <span class="math inline">\(a_t\)</span>，到达下一个观测点 <span class="math inline">\(o_{t+1}\)</span></p><ul><li>观测空间：<span class="math inline">\(o_t\)</span> <span class="math inline">\(\leftarrow\)</span> 过去所有捕捉的RGB图片 +所有深度信息D + 所有5D位姿 <span class="math inline">\((x,y,z,y,p)\)</span></li><li>行动空间：相机三维位置空间 <span class="math inline">\((x, y,z)\)</span> + 二维旋转空间 <span class="math inline">\((y,p)\)</span>（不支持 <span class="math inline">\(r\)</span>）</li></ul></li><li><p>可泛化状态嵌入：</p><ul><li><p>几何表征：将 <span class="math inline">\(t\)</span>时刻场景划分为 3D Grids <span class="math inline">\(F_t^G\)</span>，用概率表示"occupied"、"free" 以及"unscanned"</p><p>设 <span class="math inline">\(i^{th}\)</span> 体素概率为 <span class="math inline">\(v_i\)</span>，<span class="math inline">\(z_j\)</span> 表示相机 <span class="math inline">\(j^{th}\)</span> 视线穿过 <span class="math inline">\(i^{th}\)</span> 对应的体素之measurement <br>则有<span class="math inline">\(\log \text{Odd}(v_i | z_j) = \log\text{Odd}(v_i) + C\)</span>，其中 <span class="math inline">\(c\)</span> 是基于经验的更新常数</p></li><li><p>语义表征：将当前 RGB <span class="math inline">\(I_t\)</span> 和灰化的过去 <span class="math inline">\(k\)</span> 帧图 <span class="math inline">\([I_{t-1}, \dots, I_{t-k}]\)</span>拼接，再输入两层卷积网络提取融合特征 <span class="math inline">\(F_t^S\)</span></p><blockquote><p>"语义表征" 可用于区分处理 hole 和 unscanned 区域</p></blockquote></li><li><p>状态嵌入：<span class="math inline">\(s_t = \text{Linear}(s_t^G;s_t^S;s_t^A)\)</span>，其中 <span class="math inline">\(s_t^G =\text{Linear}(\text{Flatten}(F_t^G))\)</span>，<span class="math inline">\(s_t^A = \text{Linear}(a_{1:t})\)</span></p></li><li><p>Policy：将 <span class="math inline">\(s_t\)</span>作为输入，经过<strong>三层MLP</strong>，实现 <span class="math inline">\(a \sim \pi(\cdot | o_t)\)</span></p></li></ul></li><li><p>优化过程：RL-based NBV</p><ul><li>计算 occupied 比率：设置一个 occupied 阈值，计数 occupiedvoxels，得到被占用比率 <span class="math inline">\(\text{CR}_t =\dfrac{\tilde{N}_t}{N^{*}}\)</span></li><li>奖励函数：<span class="math inline">\(r^{\text{CR}}_t =\text{CR}_{t+1} -\text{CR}_t\)</span>，即鼓励无人机扫描更多的未知领域；若在自由空间发生碰撞，给予负奖励</li><li>PPO 损失函数：<span class="math inline">\(L(\theta) =\mathbb{E}_t[\dfrac{\pi_\theta (a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t| s_t)}A^{\pi_{\theta_{\text{old}}}}(s_t,a_t)]\)</span>，<strong><u>限制新旧策略变化</u></strong>剧烈的同时<strong><u>提升策略增益<span class="math inline">\(A\)</span></u></strong></li></ul></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>paper</category>
+      
+      <category>NBV</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>『paper-RAG-1』《RAG for NLP: A Survey》</title>
     <link href="/2024/10/13/paper/RAG-for-NLP-A-Survey/"/>
     <url>/2024/10/13/paper/RAG-for-NLP-A-Survey/</url>
@@ -228,9 +249,9 @@
     
     <tags>
       
-      <tag>rank</tag>
-      
       <tag>linear equation</tag>
+      
+      <tag>rank</tag>
       
       <tag>base vector</tag>
       
@@ -257,9 +278,9 @@
     
     <tags>
       
-      <tag>linear equation</tag>
-      
       <tag>inversion</tag>
+      
+      <tag>linear equation</tag>
       
     </tags>
     
@@ -419,9 +440,9 @@
     
     <tags>
       
-      <tag>geometry transform</tag>
-      
       <tag>D-H parametric method</tag>
+      
+      <tag>geometry transform</tag>
       
     </tags>
     
