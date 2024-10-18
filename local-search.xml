@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>『paper-NBV-2』《NBV-planning》</title>
+    <link href="/2024/10/18/paper/NBV-planning/"/>
+    <url>/2024/10/18/paper/NBV-planning/</url>
+    
+    <content type="html"><![CDATA[<h2 id="nbvnbc-planning-considering-confidence-obtained-from-shape-completion-learning">NBV/NBCPlanning Considering Confidence Obtained From Shape CompletionLearning</h2><h3 id="一拟解决问题">一、拟解决问题</h3><p>对于类似“金属薄板”的目标，难以估计其三维原貌</p><ul><li>异常区域：反射光干扰</li><li>自遮挡：弯曲板面遮挡自身形状</li></ul><hr><h3 id="二相关工作">二、相关工作</h3><ul><li><p>NBV：从候选视角中选择最佳视角；多基于空间体素分析，无法精确表示薄板细节</p></li><li><p>3D形状补全：从部分观测中生成完整三维模型；本文基于PCN模型补全预测，削弱由反光和噪声造成的pc缺失</p></li></ul><hr><h3 id="三研究方法">三、研究方法</h3><ul><li><p>Workflow: 从机械手中的变形金属板开始 <span class="math inline">\(\Rightarrow\)</span>外部静态传感器捕捉<strong><u>局部点云</u></strong> <span class="math inline">\(\Rightarrow\)</span> 输入 PCN预测<u><strong>全局点云</strong></u> <span class="math inline">\(\Rightarrow\)</span> 计算置信度 <span class="math inline">\(\Rightarrow\)</span>若置信度高，就进入网格重建，否则进入 Optimization</p><p><img src="/2024/10/18/paper/NBV-planning/PCN.png" width="70%"></p></li><li><p>Point Cloud CompletionNetwork：输入局部、不完整的电云，输出完整点云</p><ol type="1"><li><p>生成金属板模型：随机指派长宽高，并随机扭曲金属板</p></li><li><p>生成真实视图点云：用<strong>柏松盘采样法</strong>生成金属板的<strong><u>GT点云</u></strong></p></li><li><p>模拟部分视图点云：定义一个角度阈值 <span class="math inline">\(\overline{\psi}\)</span>，当视角小于 <span class="math inline">\(\overline{\psi}\)</span>时可视点较多，否则可视点较少<br>并进一步引入遮挡和噪声，模拟更加真实的视角</p></li><li><p>训练 PCN：input 为多局部视角点云，output 与对应 GT 对齐；loss指定为 Earth Mover Distance</p><p><img src="/2024/10/18/paper/NBV-planning/NBV-threshold.png" width="70%"></p></li></ol></li><li><p>NBV Optimization：两个步骤</p><ol type="1"><li><p>置信度估计：将 PCN 输出 predictions 下采样为 <span class="math inline">\(n\)</span> 个点，计算每个点 <span class="math inline">\(p_i\)</span> 周围半径 <span class="math inline">\(r\)</span>内的<strong><u>邻居数量</u></strong></p><p>记 <span class="math inline">\(\mu(p_i)\)</span> 为 <span class="math inline">\(p_i\)</span> 的邻居数量，则置信度 <span class="math inline">\(c(p_i) = \dfrac{\mu(p_i) - \min \mu}{\max \mu -\min \mu} + 1\)</span><br>邻居越多，点云密度越大，说明该领域点云重建效果好</p></li><li><p>优化过程：将 NBV 问题转为以下优化问题</p><p><img src="/2024/10/18/paper/NBV-planning/NBV-optimization.png" width="70%"></p><ul><li><p>优化问题定义：</p><ul><li>(2b) 约束：每个 viewpoint <span class="math inline">\(x\)</span>满足 6dof 约束</li><li>(2c) 约束：重建输出的完整点云 <span class="math inline">\(\text{S}^{*}\)</span> 需要在 <span class="math inline">\(x\)</span> 射出的相机锥形视角范围内</li><li>(2d) 约束：旋转自由度取值约束</li><li>(2e) 约束：<span class="math inline">\(f\)</span> 输入 由 <span class="math inline">\(\text{S}^{*}\)</span> 重建的三维模型 + viewpoint<span class="math inline">\(x\)</span> 得到<strong><u>新的局部点云</u></strong> <span class="math inline">\(\tilde{\text{S}}\)</span>；基于 ray-casting方法</li></ul></li><li><p>如何计算 Gain：对于某一视角 <span class="math inline">\(x\)</span> 对应的 局部电云 <span class="math inline">\(\tilde{\text{S}}\)</span>，Gain <span class="math inline">\(\leftarrow\)</span> Gain + (1 - <span class="math inline">\(c(p_i)\)</span>)</p><p>恰说明置信度越低，该视角下重建的点云越少，增益越大</p></li><li><p>当 <span class="math inline">\(\min \mu &gt; \delta\)</span>时，优化迭代结束</p></li></ul></li></ol></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>paper</category>
+      
+      <category>NBV</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>『paper-NBV-1』《GenNBV》</title>
     <link href="/2024/10/18/paper/GenNBV/"/>
     <url>/2024/10/18/paper/GenNBV/</url>
@@ -249,9 +270,9 @@
     
     <tags>
       
-      <tag>linear equation</tag>
-      
       <tag>rank</tag>
+      
+      <tag>linear equation</tag>
       
       <tag>base vector</tag>
       
@@ -278,9 +299,9 @@
     
     <tags>
       
-      <tag>inversion</tag>
-      
       <tag>linear equation</tag>
+      
+      <tag>inversion</tag>
       
     </tags>
     
@@ -440,9 +461,9 @@
     
     <tags>
       
-      <tag>D-H parametric method</tag>
-      
       <tag>geometry transform</tag>
+      
+      <tag>D-H parametric method</tag>
       
     </tags>
     
