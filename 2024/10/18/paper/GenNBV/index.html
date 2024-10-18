@@ -25,8 +25,10 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://larry0454.github.io/2024/10/18/paper/GenNBV/GenNBV.png">
 <meta property="article:published_time" content="2024-10-18T09:37:59.000Z">
-<meta property="article:modified_time" content="2024-10-18T09:45:30.030Z">
+<meta property="article:modified_time" content="2024-10-18T10:23:13.529Z">
 <meta property="article:author" content="WangLe">
+<meta property="article:tag" content="next-best-view">
+<meta property="article:tag" content="3D reconstruction">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://larry0454.github.io/2024/10/18/paper/GenNBV/GenNBV.png">
   
@@ -235,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k words
+          1.4k words
         
       </span>
     
@@ -246,7 +248,7 @@
         
         
         
-          11 mins
+          12 mins
         
       </span>
     
@@ -338,11 +340,14 @@ p)\)</span>（不支持 <span class="math inline">\(r\)</span>）</li>
 灰化的过去 <span class="math inline">\(k\)</span> 帧图 <span class="math inline">\([I_{t-1}, \dots, I_{t-k}]\)</span>
 拼接，再输入两层卷积网络提取融合特征 <span class="math inline">\(F_t^S\)</span></p>
 <blockquote>
-<p>"语义表征" 可用于区分处理 hole 和 unscanned 区域</p>
+<p>"语义表征" 可用于区分处理 hole 和 unscanned
+区域，弥补了"几何表征"的缺陷</p>
 </blockquote></li>
 <li><p>状态嵌入：<span class="math inline">\(s_t = \text{Linear}(s_t^G;
 s_t^S;s_t^A)\)</span>，其中 <span class="math inline">\(s_t^G =
-\text{Linear}(\text{Flatten}(F_t^G))\)</span>，<span class="math inline">\(s_t^A = \text{Linear}(a_{1:t})\)</span></p></li>
+\text{Linear}(\text{Flatten}(F_t^G))\)</span>，<span class="math inline">\(s_t^A = \text{Linear}(a_{1:t})\)</span>
+<br>"状态嵌入"进一步融合了多源信息（几何表征 + 语义表征 +
+action）</p></li>
 <li><p>Policy：将 <span class="math inline">\(s_t\)</span>
 作为输入，经过<strong>三层MLP</strong>，实现 <span class="math inline">\(a \sim \pi(\cdot | o_t)\)</span></p></li>
 </ul></li>
@@ -353,7 +358,7 @@ voxels，得到被占用比率 <span class="math inline">\(\text{CR}_t =
 \dfrac{\tilde{N}_t}{N^{*}}\)</span></li>
 <li>奖励函数：<span class="math inline">\(r^{\text{CR}}_t =
 \text{CR}_{t+1} -
-\text{CR}_t\)</span>，即鼓励无人机扫描更多的未知领域；若在自由空间发生碰撞，给予负奖励</li>
+\text{CR}_t\)</span>，即<strong><u>鼓励无人机扫描更多的未知领域</u></strong>；若在自由空间发生碰撞，给予负奖励</li>
 <li>PPO 损失函数：<span class="math inline">\(L(\theta) =
 \mathbb{E}_t[\dfrac{\pi_\theta (a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t
 | s_t)}A^{\pi_{\theta_{\text{old}}}}(s_t,
@@ -397,6 +402,15 @@ a_t)]\)</span>，<strong><u>限制新旧策略变化</u></strong>剧烈的同时
 
     </div>
   
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/next-best-view/">#next-best-view</a>
+      
+        <a href="/tags/3D-reconstruction/">#3D reconstruction</a>
+      
+    </div>
   
 </div>
 
