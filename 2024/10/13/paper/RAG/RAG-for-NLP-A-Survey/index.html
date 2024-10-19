@@ -19,22 +19,22 @@
     <meta name="description" content="《RAG for NLP: A Survey》 一、LLM 的问题  “幻觉“问题：LLM 会生成看似合理流畅，但实际是错误的回答 ”知识更新“问题：基于新的知识重新训练&#x2F;微调 LLM 开销非常大 “特定领域”问题：LLM 不具备针对特定领域的专业知识   二、Retriever  Retriever 的组成：三部分  encoder：将 inputs 编码为 emb">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『paper-RAG-1』《RAG for NLP: A Survey》">
-<meta property="og:url" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/index.html">
+<meta property="og:url" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/index.html">
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="《RAG for NLP: A Survey》 一、LLM 的问题  “幻觉“问题：LLM 会生成看似合理流畅，但实际是错误的回答 ”知识更新“问题：基于新的知识重新训练&#x2F;微调 LLM 开销非常大 “特定领域”问题：LLM 不具备针对特定领域的专业知识   二、Retriever  Retriever 的组成：三部分  encoder：将 inputs 编码为 emb">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/build-retriever.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/query-retriever.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/query-based-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/logits-based-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/latent-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/train-without-update.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/train-with-update.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/build-retriever.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/query-retriever.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/query-based-fusions.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/logits-based-fusions.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/latent-fusions.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/train-without-update.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/train-with-update.png">
 <meta property="article:published_time" content="2024-10-13T09:12:40.000Z">
 <meta property="article:modified_time" content="2024-10-19T02:24:27.908Z">
 <meta property="article:author" content="WangLe">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/build-retriever.png">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/build-retriever.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -369,28 +369,28 @@ embed 维度可提高搜索效率，但也可能丢失语义信息</li>
 <span class="math inline">\(c_i, c_{i+1}\)</span> 为 value，并在 key
 上建索引</p></li>
 </ol>
-<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/build-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/build-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
 <li><p>查询 Retriever：两步骤</p>
 <ol type="1">
 <li>查询编码：查找相关性 top-k 的索引，返回数据库中对应的 values</li>
 <li>后处理：重排序 (根据任务类型重新排序)</li>
 </ol>
-<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/query-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/query-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
 <li><p>Retriever 融合：三种</p>
 <ul>
 <li><p>query-based：先编码 query 和各 retrievals (可选)，再拼接 query 和
 retrievals，最后输入给 LLM <br>算法见 (algorithm Wu 等, 2024, page
 6)</p>
-<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/query-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/query-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
 <li><p>logits-based：先将 query 和各 retrievals 输入
 LLM，再对各输出响应<strong>加权求和</strong> <br>算法见 (algorithm Wu
 等, 2024, page 6)，有“集成”和“校准”两种方法</p>
-<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/logits-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/logits-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
 <li><p>latent-based：将 retrievals 融入 LLM 的 hidden-states <br>算法见
 (algorithm Wu 等, 2024, page
 7)，有"attention-based"和"weighted"（开销较小）两种集成方法，RAG
 使用较多</p>
-<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/latent-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/latent-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
 </ul></li>
 </ul>
 <hr>
@@ -413,9 +413,9 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
 <li><p>训练 Generator：LoRA</p></li>
 <li><p>联合训练：端到端优化，同时提升 retriever 和 generator</p></li>
 </ul>
-<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/train-without-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/train-without-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
 <li><p>数据库更新：插入新的 K-V 或 修改 values</p>
-<p><img src="/2024/10/13/paper/RAG-for-NLP-A-Survey/train-with-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/train-with-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
 </ul>
 
                 
@@ -463,7 +463,7 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
   <div class="license-box my-3">
     <div class="license-title">
       <div>『paper-RAG-1』《RAG for NLP: A Survey》</div>
-      <div>http://larry0454.github.io/2024/10/13/paper/RAG-for-NLP-A-Survey/</div>
+      <div>http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/</div>
     </div>
     <div class="license-meta">
       
@@ -507,7 +507,7 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/18/paper/GenNBV/" title="『paper-NBV-1』《GenNBV》">
+                      <a href="/2024/10/18/paper/NBV/GenNBV/" title="『paper-NBV-1』《GenNBV》">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">『paper-NBV-1』《GenNBV》</span>
                         <span class="visible-mobile">Previous</span>
