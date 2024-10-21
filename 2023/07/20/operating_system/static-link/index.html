@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2023/07/20/operating_system/static-link/%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%E5%88%86%E8%A7%A3.png">
 <meta property="og:image" content="http://larry0454.github.io/2023/07/20/operating_system/static-link/%E8%A1%A8%E9%97%B4%E5%85%B3%E7%B3%BB.png">
 <meta property="article:published_time" content="2023-07-20T12:50:10.000Z">
-<meta property="article:modified_time" content="2024-08-11T07:25:57.323Z">
+<meta property="article:modified_time" content="2024-10-21T12:07:31.788Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="static link">
 <meta property="article:tag" content="ELF">
@@ -662,7 +662,7 @@ call的<strong>下一条指令</strong>地址 +
 <li><p>SECTIONS命令语句：</p></li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c">SECTIONS<br>&#123;<br>    ...<br>     <span class="hljs-comment">/* secname 表示输出段的段名 */</span><br>     <span class="hljs-comment">/* contents 表示若干个输出段应符合的条件 */</span><br>     secname : &#123; contents &#125;<br>    ...<br>     <span class="hljs-comment">/* DISCARD 段表示丢弃符合条件的输入文件，不作链接 */</span><br>     /DISCARD/ : &#123; contents &#125;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
-<pre><code class="hljs">      下面是规则**contents**的语法示例：将**符合条件**的所有段**合并为输出段secname**</code></pre>
+<p>下面是规则<strong>contents</strong>的语法示例：将<strong>符合条件</strong>的所有段<strong>合并为输出段secname</strong></p>
 <ul>
 <li>file1.o(.data)：输入文件file1.o中的.data段符合条件</li>
 <li>file1.o(.data, .rodata)：输入文件file1.o中的.data 或
@@ -686,9 +686,9 @@ Library）：通过<strong>统一的接口</strong>处理<strong>不同的目标
 <h3 id="四windows-pecoff">四、Windows PE/COFF</h3>
 <ul>
 <li><p>PE与COFF：</p>
-<p>“PE”（Portable
+<p>"PE"（Portable
 Executable）：<u>微软</u>引入的一种<strong>可执行文件</strong>格式（Win32平台）</p>
-<p>“COFF”（Common Object File
+<p>"COFF"（Common Object File
 Format）：PE格式（Windows）和ELF格式（Linux格式）的<strong>共同起源</strong></p>
 <p><strong>注意</strong>：PE/COFF格式同样以<strong>段</strong>的格式组织，代码段为.code、数据段为.data</p></li>
 <li><p>Microsoft Visual
@@ -718,14 +718,14 @@ C++编译环境：编译器cl（compiler）、链接器（link），可执行文
 <hr></li>
 <li><p>段：COFF各段的存储方式和内容与ELF几乎相同，新增了“.drectve”段和“.debug$...”段</p></li>
 <li><p>.drectve段：包含了编译器向链接器<strong>传递的链接指令</strong></p></li>
-<li><p>.debug$段：以“.debug$”关键字开头的段，如：</p>
+<li><p>.debug$段：以 .debug\$ 关键字开头的段，如：</p>
 <ul>
 <li>.debug$S：表示<strong>符号</strong>相关的调试信息段</li>
 <li>.debug$P；表示<strong>预编译头文件</strong>的调试信息段</li>
 <li>.debug$T：表示包含<strong>类型</strong>相关的调试信息段</li>
 </ul>
-<p><strong>注意</strong>：.drectve段和.debug$段的文件数据都位于SECTION
-HEADER下方的RAW DATA中</p>
+<p><strong>注意</strong>：.drectve段和.debug$段的文件数据都位于 SECTION
+HEADER 下方的 RAW DATA 中</p>
 <hr></li>
 <li><p>符号表：与ELF文件符号表类似，包含符号名、符号类型、是否可外部链接等信息</p></li>
 </ul>

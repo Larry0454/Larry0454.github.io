@@ -27,11 +27,11 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/10/18/paper/NBV/NBV-planning/NBV-threshold.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/10/18/paper/NBV/NBV-planning/NBV-optimization.png">
 <meta property="article:published_time" content="2024-10-18T09:59:00.000Z">
-<meta property="article:modified_time" content="2024-10-19T02:24:18.426Z">
+<meta property="article:modified_time" content="2024-10-21T12:02:39.747Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="next best view">
-<meta property="article:tag" content="point cloud">
 <meta property="article:tag" content="3D reconstruction">
+<meta property="article:tag" content="point cloud">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://larry0454.github.io/2024/10/18/paper/NBV/NBV-planning/PCN.png">
   
@@ -342,7 +342,7 @@ Network：输入局部、不完整的电云，输出完整点云</p>
 <li><p>置信度估计：将 PCN 输出 predictions 下采样为 <span class="math inline">\(n\)</span> 个点，计算每个点 <span class="math inline">\(p_i\)</span> 周围半径 <span class="math inline">\(r\)</span>
 内的<strong><u>邻居数量</u></strong></p>
 <p>记 <span class="math inline">\(\mu(p_i)\)</span> 为 <span class="math inline">\(p_i\)</span> 的邻居数量，则置信度 <span class="math inline">\(c(p_i) = \dfrac{\mu(p_i) - \min \mu}{\max \mu -
-\min \mu} + 1\)</span>
+\min \mu + 1}\)</span>
 <br>邻居越多，点云密度越大，说明<strong><u>该领域点云重建效果好</u></strong></p></li>
 <li><p>优化过程：将 NBV 问题转为以下优化问题</p>
 <p><img src="/2024/10/18/paper/NBV/NBV-planning/NBV-optimization.png" srcset="/img/loading.gif" lazyload width="70%"></p>
@@ -407,9 +407,9 @@ Network：输入局部、不完整的电云，输出完整点云</p>
       
         <a href="/tags/next-best-view/">#next best view</a>
       
-        <a href="/tags/point-cloud/">#point cloud</a>
-      
         <a href="/tags/3D-reconstruction/">#3D reconstruction</a>
+      
+        <a href="/tags/point-cloud/">#point cloud</a>
       
     </div>
   
