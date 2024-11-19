@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>『paper-NLP-2』《SneakyPrompt》</title>
+    <link href="/2024/11/19/paper/NLP/sneaky-prompt/"/>
+    <url>/2024/11/19/paper/NLP/sneaky-prompt/</url>
+    
+    <content type="html"><![CDATA[<h2 id="sneakyprompt-jailbreaking-text-to-image-generative-models">《SneakyPrompt:Jailbreaking Text-to-image Generative Models》</h2><h3 id="一拟解决问题">一、拟解决问题</h3><ul><li>现有攻击方式比较低效，进攻开销大</li><li>adv prompt 初次使用效果好，重用后效果差</li><li>现有攻击方法不太关注生图质量</li></ul><hr><h3 id="二相关工作">二、相关工作</h3><ul><li>文生图模型：Stable Diffusion、DALLE<span class="math inline">\(\cdot\)</span>E；攻击方法多为手工打造，绕过率低且多针对非商业模型</li><li>对抗样本：用以混淆模型决策的输入；当前方法无法保持生图语义不变 +多轮询问攻击开销大 + adv prompt 在随机种子下不可重用</li><li>强化学习：policy 在当前 state 执行一个 action 并获得 reward；policy会执行<strong>未来累计奖励最大</strong>对应的 action</li></ul><hr><h3 id="三研究方法">三、研究方法</h3><ul><li><p>攻击目标：给定一个提示词 <span class="math inline">\(p_t\)</span>，找到一个绕过过滤器 <span class="math inline">\(\mathcal{F}\)</span> 从而攻击文生图模型 <span class="math inline">\(\mathcal{M}\)</span>的<u><strong>对抗样本</strong></u> <span class="math inline">\(p_a\)</span></p><ul><li>生成图 <span class="math inline">\(\mathcal{M}(p_a)\)</span>的语义接近原始 <span class="math inline">\(p_t\)</span>：采用余弦相似度衡量 <u>图像嵌入</u>和 <u><span class="math inline">\(p_t\)</span> 嵌入</u>的语义相似度</li><li>对抗样本可以绕过安全过滤器，即 <span class="math inline">\(\mathcal{F}(\mathcal{M}, p_a) =0\)</span>：持续询问 <span class="math inline">\(\mathcal{M}\)</span>，直至绕过过滤器</li><li>最小化询问 <span class="math inline">\(\mathcal{M}\)</span>的次数，即降低攻击成本：采用<u>强化学习</u>策略，根据查询结果扰动更新提示词<span class="math inline">\(p_a\)</span></li></ul></li><li><p>攻击算法：</p><ol type="1"><li><p>离线查询：使用 <strong>影子编码器</strong> <span class="math inline">\(\hat{\epsilon}\)</span>执行离线查询，得到原始提示词 <span class="math inline">\(p_t\)</span>的嵌入 <span class="math inline">\(\hat{\epsilon}(p_t)\)</span></p></li><li><p>初始化采样空间：设 <span class="math inline">\(\mathcal{S}\)</span>为总搜索空间，其中每个行为对应一个 <span class="math inline">\(\mathcal{C}\)</span></p></li><li><p>循环迭代在线查询：设查询迭代次数上限为 <span class="math inline">\(Q\)</span>，当前迭代轮次为 <span class="math inline">\(q\)</span>，<span class="math inline">\(\mathcal{P}\)</span> 为强化学习算法</p><ol type="1"><li><p>采样：对 <span class="math inline">\(p_t\)</span> 中 <span class="math inline">\(n\)</span> 个敏感词的每个词找指派 <span class="math inline">\(m\)</span> 个候选替换词，形成 <span class="math inline">\(\mathcal{C} = \{c_{11}, \dots,c_{nm}\}\)</span></p><ul><li><p>暴力采样：从单词长度为 <span class="math inline">\(l\)</span>的单词表中随机挑选 <span class="math inline">\(nm\)</span> 个单词，得到<span class="math inline">\(\mathcal{C}\)</span></p></li><li><p>贪婪采样：设已选出 <span class="math inline">\(j\)</span> 个单词<span class="math inline">\((c_1, \dots, c_j)\)</span>，继续选使 <span class="math inline">\((c_1, \dots, c_{j+1})\)</span> 与 <span class="math inline">\(p_t\)</span> 间距最近的 <span class="math inline">\(c_{j+1}\)</span>，直至选出 <span class="math inline">\(nm\)</span> 个单词</p></li><li><p>光束采样：设置 <span class="math inline">\(k\)</span>条单词链，每条单词链长度为 <span class="math inline">\(j\)</span>，下一步为各单词链的第 <span class="math inline">\(j+1\)</span> 位选出 <span class="math inline">\(k\)</span> 个候选单词，得到 <span class="math inline">\(k^2\)</span> 条链 <br>再筛除与 <span class="math inline">\(p_t\)</span> 间距离最远的 <span class="math inline">\(k^2 - k\)</span> 个链条得到长度为 <span class="math inline">\(j+1\)</span> 的 <span class="math inline">\(k\)</span> 条单词链；最后选出长度为 <span class="math inline">\(nm\)</span>，且距 <span class="math inline">\(p_t\)</span> 最近的链</p></li><li><p>强化学习：policy network 用 LSTM 建模，根据 <span class="math inline">\(P(c_j \ | \ c_1 c_2 \dots c_{j-1})\)</span> 选出<span class="math inline">\(c_j\)</span>，直至选出 <span class="math inline">\(nm\)</span> 个单词</p></li></ul><p>最后，对 <span class="math inline">\(p_a\)</span> 中的第 <span class="math inline">\(i\)</span> 个敏感词用其候选单词集合 <span class="math inline">\(\{c_{i1}, \dots, c_{im} \}\)</span>进行替换</p></li><li><p>在线查询：用 <span class="math inline">\(p_a\)</span> 查询 <span class="math inline">\(\mathcal{M}\)</span> 得到 <span class="math inline">\(\mathcal{M}(p_{a})\)</span></p><ul><li>若 绕过防御，记奖励 <span class="math inline">\(r_q\)</span>为<strong><u>正的</u></strong> <span class="math inline">\(\text{Sim}(\mathcal{M}(p_{a}), \\hat{\epsilon}(p_t))\)</span></li><li>若 未绕过防御，记奖励 <span class="math inline">\(r_q\)</span>为<u><strong>负的</strong></u> <span class="math inline">\(-\dfrac{q}{10\cdot Q}\)</span></li></ul><p>若 <span class="math inline">\(r_q &gt; r_{max}\)</span>，更新 <span class="math inline">\(r_{max}, \ p_a, \\mathcal{M}(p_a)\)</span></p></li><li><p>更新采样策略：用 学习率 <span class="math inline">\(\eta\)</span>和 <span class="math inline">\(r_q\)</span> 更新 policy network <span class="math inline">\(P\)</span>，其损失函数 <span class="math inline">\(\mathcal{L} = -r_q \ln (P)\)</span></p></li><li><p>迭代终止判断：三种情况</p><ul><li>若 <span class="math inline">\(r_q &gt; \textbf{Threshold} &gt;0\)</span>，直接返回当前 <span class="math inline">\(p_a\)</span> 和<span class="math inline">\(\mathcal{M}(p_a)\)</span>，算法结束</li><li>若 <span class="math inline">\(r_{q-3,\ q-2,\ q-1}\)</span><strong>波动很小</strong>，或 <span class="math inline">\(p_a\)</span>中<strong>被替换的单词比例</strong>超过 30%，直接返回当前 <span class="math inline">\(p_a\)</span> 和 <span class="math inline">\(\mathcal{M}(p_a)\)</span>，算法结束</li><li>若 <span class="math inline">\(r_{q-1, \ \dots, \ q-5} &lt;0\)</span>，进一步<u>扩大采样范围</u> <span class="math inline">\(\mathcal{S}\)</span>，<u><strong>继续迭代</strong></u></li></ul></li></ol></li></ol></li><li><p>采样空间算法 <span class="math inline">\(\mathcal{S}\)</span>：设敏感词词表 为 <span class="math inline">\(keywords\)</span>，原始提示词为 <span class="math inline">\(p_t\)</span>，单词长度为 <span class="math inline">\(l\)</span> 的单词表为 <span class="math inline">\(\mathcal{D}_l\)</span></p><ul><li>初始 <span class="math inline">\(\mathcal{S}\)</span>：记 <span class="math inline">\(p_t\)</span> 中与 <span class="math inline">\(keywords\)</span> 匹配的敏感词数量为 <span class="math inline">\(n\)</span>，则返回 <span class="math inline">\(\mathcal{S} = \{(c_1, \dots, c_{nm}) \ | \ c_j \in\mathcal{D}_l, \ j = 1, \dots, nm \}\)</span></li><li>扩展 <span class="math inline">\(\mathcal{S}\)</span>：<span class="math inline">\(n \leftarrow n+1\)</span>，返回 <span class="math inline">\(\mathcal{S} = \{(c_{11}, \dots, c_{(n+1)m}) \ | \c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li></ul></li></ul><hr><h3 id="四实验评估">四、实验评估</h3><ul><li>SneakyPrompt 提高了 Bypass rate</li><li>SneakyPrompt 提高了生图效果 (FID)</li><li>RL 奖励函数选择：<ul><li><span class="math inline">\(\cos (\mathcal{M}(\mathcal{p_a}), \\hat{\epsilon}(p_t))\)</span>：更高的绕过率 + 更好的生图质量</li><li><span class="math inline">\(1 - \mathcal{l}_2(\hat{\epsilon}(p_t), \\hat{\epsilon(p_a)})\)</span>：更少的查询次数</li></ul></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>paper</category>
+      
+      <category>NLP</category>
+      
+      <category>jailbreak</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>LLM</tag>
+      
+      <tag>jailbreak</tag>
+      
+      <tag>reinforcement learning</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>『paper-NBV-2』《NBV-planning》</title>
     <link href="/2024/10/18/paper/NBV/NBV-planning/"/>
     <url>/2024/10/18/paper/NBV/NBV-planning/</url>
@@ -56,6 +89,8 @@
       <tag>next best view</tag>
       
       <tag>3D reconstruction</tag>
+      
+      <tag>reinforcement learning</tag>
       
     </tags>
     
