@@ -16,31 +16,25 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="《RAG for NLP: A Survey》 一、LLM 的问题  “幻觉“问题：LLM 会生成看似合理流畅，但实际是错误的回答 ”知识更新“问题：基于新的知识重新训练&#x2F;微调 LLM 开销非常大 “特定领域”问题：LLM 不具备针对特定领域的专业知识   二、Retriever  Retriever 的组成：三部分  encoder：将 inputs 编码为 emb">
+    <meta name="description" content="《SneakyPrompt: Jailbreaking Text-to-image Generative Models》 一、拟解决问题  现有攻击方式比较低效，进攻开销大 adv prompt 初次使用效果好，重用后效果差 现有攻击方法不太关注生图质量   二、相关工作  文生图模型：Stable Diffusion、DALLE\(\cdot\)E；攻击方法多为手工打造，绕">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『paper-NLP-2』《RAG for NLP: A Survey》">
-<meta property="og:url" content="http://larry0454.github.io/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/index.html">
+<meta property="og:title" content="『paper-NLP-3』《SneakyPrompt》">
+<meta property="og:url" content="http://larry0454.github.io/2024/11/19/paper/NLP/LLM/sneaky-prompt/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="《RAG for NLP: A Survey》 一、LLM 的问题  “幻觉“问题：LLM 会生成看似合理流畅，但实际是错误的回答 ”知识更新“问题：基于新的知识重新训练&#x2F;微调 LLM 开销非常大 “特定领域”问题：LLM 不具备针对特定领域的专业知识   二、Retriever  Retriever 的组成：三部分  encoder：将 inputs 编码为 emb">
+<meta property="og:description" content="《SneakyPrompt: Jailbreaking Text-to-image Generative Models》 一、拟解决问题  现有攻击方式比较低效，进攻开销大 adv prompt 初次使用效果好，重用后效果差 现有攻击方法不太关注生图质量   二、相关工作  文生图模型：Stable Diffusion、DALLE\(\cdot\)E；攻击方法多为手工打造，绕">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/build-retriever.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/query-retriever.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/query-based-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/logits-based-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/latent-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/train-without-update.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/train-with-update.png">
-<meta property="article:published_time" content="2024-10-13T09:12:40.000Z">
-<meta property="article:modified_time" content="2024-11-20T15:35:10.414Z">
+<meta property="article:published_time" content="2024-11-19T15:32:29.000Z">
+<meta property="article:modified_time" content="2024-11-20T15:57:29.514Z">
 <meta property="article:author" content="WangLe">
+<meta property="article:tag" content="jailbreak">
+<meta property="article:tag" content="reinforcement learning">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/build-retriever.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『paper-NLP-2』《RAG for NLP: A Survey》 - Blog</title>
+  <title>『paper-NLP-3』《SneakyPrompt》 - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -218,7 +212,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『paper-NLP-2』《RAG for NLP: A Survey》"></span>
+            <span id="subtitle" data-typed-text="『paper-NLP-3』《SneakyPrompt》"></span>
           
         </div>
 
@@ -229,8 +223,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-13 17:12" pubdate>
-          October 13, 2024 pm
+        <time datetime="2024-11-19 23:32" pubdate>
+          November 19, 2024 pm
         </time>
       </span>
     
@@ -241,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          2.4k words
         
       </span>
     
@@ -252,7 +246,7 @@
         
         
         
-          15 mins
+          21 mins
         
       </span>
     
@@ -298,124 +292,114 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『paper-NLP-2』《RAG for NLP: A Survey》</h1>
+            <h1 style="display: none">『paper-NLP-3』《SneakyPrompt》</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="rag-for-nlp-a-survey">《RAG for NLP: A Survey》</h2>
-<h3 id="一llm-的问题">一、LLM 的问题</h3>
+                <h2 id="sneakyprompt-jailbreaking-text-to-image-generative-models">《SneakyPrompt:
+Jailbreaking Text-to-image Generative Models》</h2>
+<h3 id="一拟解决问题">一、拟解决问题</h3>
 <ul>
-<li>“幻觉“问题：LLM
-会生成看似合理流畅，但实际是<strong>错误</strong>的回答</li>
-<li>”知识更新“问题：基于新的知识重新训练/微调 LLM
-<strong>开销非常大</strong></li>
-<li>“特定领域”问题：LLM
-不具备针对<strong>特定领域</strong>的专业知识</li>
+<li>现有攻击方式比较低效，进攻开销大</li>
+<li>adv prompt 初次使用效果好，重用后效果差</li>
+<li>现有攻击方法不太关注生图质量</li>
 </ul>
 <hr>
-<h3 id="二retriever">二、Retriever</h3>
+<h3 id="二相关工作">二、相关工作</h3>
 <ul>
-<li><p>Retriever 的组成：三部分</p>
+<li>文生图模型：Stable Diffusion、DALLE<span class="math inline">\(\cdot\)</span>E；攻击方法多为手工打造，绕过率低且多针对非商业模型</li>
+<li>对抗样本：用以混淆模型决策的输入；当前方法无法保持生图语义不变 +
+多轮询问攻击开销大 + adv prompt 在随机种子下不可重用</li>
+<li>强化学习：policy 在当前 state 执行一个 action 并获得 reward；policy
+会执行<strong>未来累计奖励最大</strong>对应的 action</li>
+</ul>
+<hr>
+<h3 id="三研究方法">三、研究方法</h3>
 <ul>
-<li>encoder：将 inputs 编码为 embeddings</li>
-<li>indexing：基于ANN(近似最邻近算法)查询相关向量</li>
-<li>datastore：以“K-V”形式存储<strong>外部知识</strong>的数据库</li>
+<li><p>攻击目标：给定一个提示词 <span class="math inline">\(p_t\)</span>，找到一个绕过过滤器 <span class="math inline">\(\mathcal{F}\)</span> 从而攻击文生图模型 <span class="math inline">\(\mathcal{M}\)</span>
+的<u><strong>对抗样本</strong></u> <span class="math inline">\(p_a\)</span></p>
+<ul>
+<li>生成图 <span class="math inline">\(\mathcal{M}(p_a)\)</span>
+的语义接近原始 <span class="math inline">\(p_t\)</span>：采用余弦相似度衡量 <u>图像嵌入</u>
+和 <u><span class="math inline">\(p_t\)</span> 嵌入</u>的语义相似度</li>
+<li>对抗样本可以绕过安全过滤器，即 <span class="math inline">\(\mathcal{F}(\mathcal{M}, p_a) =
+0\)</span>：持续询问 <span class="math inline">\(\mathcal{M}\)</span>，直至绕过过滤器</li>
+<li>最小化询问 <span class="math inline">\(\mathcal{M}\)</span>
+的次数，即降低攻击成本：采用<u>强化学习</u>策略，根据查询结果扰动更新提示词
+<span class="math inline">\(p_a\)</span></li>
 </ul></li>
-<li><p>构造 Retriever：四步骤</p>
+<li><p>攻击算法：</p>
 <ol type="1">
-<li><p>语料切块：将原始文档切分为小块</p>
-<ul>
-<li>分块间语义应<strong>相互独立</strong>，各分块语义<strong>不应模糊</strong>，只能包含一种核心观点</li>
-<li>对较短的分块编码速度更快，更省显存</li>
-</ul>
-<p>分块大小是决定<strong>分块语义</strong>+<strong>编码效率</strong>的核心因素，分块大小取决于RAG场景：</p>
-<ul>
-<li>任务角度：问答任务用小块，摘要任务用大块</li>
-<li>编码角度：编码器模型决定了适用的分块大小</li>
-<li>查询角度：分块大小应与用户查询大小匹配</li>
-</ul>
-<p>分块方法：三种</p>
-<ul>
-<li>定长分割</li>
-<li>基于语义分割：按 语句周期 or 换行 分割</li>
-<li>基于内容分割：按 章节 or 代码块 分割</li>
-</ul></li>
-<li><p>切块编码：</p>
-<ul>
-<li>稀疏编码：用高维向量表示一段 chunk，向量中有很多 0
-<ul>
-<li>词袋模型：一段 chunk <span class="math inline">\(\Leftrightarrow\)</span>
-一个定长向量，每个维度指对应词出现的<strong>次数</strong>；只考虑单词数量，不考虑单词位置和语义</li>
-<li><span class="math inline">\(\text{TF} \times \text{IDF}\)</span>
-：<span class="math inline">\(\text{TF}(t,d) = \dfrac{t_d}{d}\)</span>
-（衡量单词 t 在文档 d 中的重要程度） <br> <span class="math inline">\(\text{IDF(t)}=\log (\dfrac{N}{n_t + 1})\)</span>
-（<strong>削弱常见停用词的重要性</strong>）</li>
-</ul></li>
-<li>稠密编码：基于深度学习模型生成，每个维度是浮点数，记录语义信息，0
-很少</li>
-</ul></li>
-<li><p>构建索引：加速高维空间中与用户 query 接近的向量</p>
-<ul>
-<li>相似度衡量：余弦相似度，欧氏距离，曼哈顿距离 等</li>
-<li>嵌入降维：PCA、LSH，以及 Product Quantization (子空间码本) <br>降低
-embed 维度可提高搜索效率，但也可能丢失语义信息</li>
-<li>ANN索引：优化存储结构，从而优化ANN算法</li>
-</ul></li>
-<li><p>构建向量数据库：K<span class="math inline">\(\leftrightarrow\)</span>V 指 domain-specific
-<strong>embed</strong> <span class="math inline">\(\leftrightarrow\)</span> domain-specific
-<strong>chunk</strong> <br>算法见 (Algorithm Wu 等, 2024, page
-4)，以分块嵌入 <span class="math inline">\(e_i\)</span> 为 key，以分块
-<span class="math inline">\(c_i, c_{i+1}\)</span> 为 value，并在 key
-上建索引</p></li>
-</ol>
-<p><img src="/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/build-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>查询 Retriever：两步骤</p>
+<li><p>离线查询：使用 <strong>影子编码器</strong> <span class="math inline">\(\hat{\epsilon}\)</span>
+执行离线查询，得到原始提示词 <span class="math inline">\(p_t\)</span>
+的嵌入 <span class="math inline">\(\hat{\epsilon}(p_t)\)</span></p></li>
+<li><p>初始化采样空间：设 <span class="math inline">\(\mathcal{S}\)</span>
+为总搜索空间，其中每个行为对应一个 <span class="math inline">\(\mathcal{C}\)</span></p></li>
+<li><p>循环迭代在线查询：设查询迭代次数上限为 <span class="math inline">\(Q\)</span>，当前迭代轮次为 <span class="math inline">\(q\)</span>，<span class="math inline">\(\mathcal{P}\)</span> 为强化学习算法</p>
 <ol type="1">
-<li>查询编码：查找相关性 top-k 的索引，返回数据库中对应的 values</li>
-<li>后处理：重排序 (根据任务类型重新排序)</li>
-</ol>
-<p><img src="/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/query-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>Retriever 融合：三种</p>
+<li><p>采样：对 <span class="math inline">\(p_t\)</span> 中 <span class="math inline">\(n\)</span> 个敏感词的每个词找指派 <span class="math inline">\(m\)</span> 个候选替换词，形成 <span class="math inline">\(\mathcal{C} = \{c_{11}, \dots,
+c_{nm}\}\)</span></p>
 <ul>
-<li><p>query-based：先编码 query 和各 retrievals (可选)，再拼接 query 和
-retrievals，最后输入给 LLM <br>算法见 (algorithm Wu 等, 2024, page
-6)</p>
-<p><img src="/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/query-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>logits-based：先将 query 和各 retrievals 输入
-LLM，再对各输出响应<strong>加权求和</strong> <br>算法见 (algorithm Wu
-等, 2024, page 6)，有“集成”和“校准”两种方法</p>
-<p><img src="/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/logits-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>latent-based：将 retrievals 融入 LLM 的 hidden-states <br>算法见
-(algorithm Wu 等, 2024, page
-7)，有"attention-based"和"weighted"（开销较小）两种集成方法，RAG
-使用较多</p>
-<p><img src="/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/latent-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<li><p>暴力采样：从单词长度为 <span class="math inline">\(l\)</span>
+的单词表中随机挑选 <span class="math inline">\(nm\)</span> 个单词，得到
+<span class="math inline">\(\mathcal{C}\)</span></p></li>
+<li><p>贪婪采样：设已选出 <span class="math inline">\(j\)</span> 个单词
+<span class="math inline">\((c_1, \dots, c_j)\)</span>，继续选使 <span class="math inline">\((c_1, \dots, c_{j+1})\)</span> 与 <span class="math inline">\(p_t\)</span> 间距最近的 <span class="math inline">\(c_{j+1}\)</span>，直至选出 <span class="math inline">\(nm\)</span> 个单词</p></li>
+<li><p>光束采样：设置 <span class="math inline">\(k\)</span>
+条单词链，每条单词链长度为 <span class="math inline">\(j\)</span>，下一步为各单词链的第 <span class="math inline">\(j+1\)</span> 位选出 <span class="math inline">\(k\)</span> 个候选单词，得到 <span class="math inline">\(k^2\)</span> 条链 <br>再筛除与 <span class="math inline">\(p_t\)</span> 间距离最远的 <span class="math inline">\(k^2 - k\)</span> 个链条得到长度为 <span class="math inline">\(j+1\)</span> 的 <span class="math inline">\(k\)</span> 条单词链；最后选出长度为 <span class="math inline">\(nm\)</span>，且距 <span class="math inline">\(p_t\)</span> 最近的链</p></li>
+<li><p>强化学习：policy network 用 LSTM 建模，根据 <span class="math inline">\(P(c_j \ | \ c_1 c_2 \dots c_{j-1})\)</span> 选出
+<span class="math inline">\(c_j\)</span>，直至选出 <span class="math inline">\(nm\)</span> 个单词</p></li>
+</ul>
+<p>最后，对 <span class="math inline">\(p_a\)</span> 中的第 <span class="math inline">\(i\)</span> 个敏感词用其候选单词集合 <span class="math inline">\(\{c_{i1}, \dots, c_{im} \}\)</span>
+进行替换</p></li>
+<li><p>在线查询：用 <span class="math inline">\(p_a\)</span> 查询 <span class="math inline">\(\mathcal{M}\)</span> 得到 <span class="math inline">\(\mathcal{M}(p_{a})\)</span></p>
+<ul>
+<li>若 绕过防御，记奖励 <span class="math inline">\(r_q\)</span>
+为<strong><u>正的</u></strong> <span class="math inline">\(\text{Sim}(\mathcal{M}(p_{a}), \
+\hat{\epsilon}(p_t))\)</span></li>
+<li>若 未绕过防御，记奖励 <span class="math inline">\(r_q\)</span>
+为<u><strong>负的</strong></u> <span class="math inline">\(-\dfrac{q}{10
+\cdot Q}\)</span></li>
+</ul>
+<p>若 <span class="math inline">\(r_q &gt; r_{max}\)</span>，更新 <span class="math inline">\(r_{max}, \ p_a, \
+\mathcal{M}(p_a)\)</span></p></li>
+<li><p>更新采样策略：用 学习率 <span class="math inline">\(\eta\)</span>
+和 <span class="math inline">\(r_q\)</span> 更新 policy network <span class="math inline">\(P\)</span>，其损失函数 <span class="math inline">\(\mathcal{L} = -r_q \ln (P)\)</span></p></li>
+<li><p>迭代终止判断：三种情况</p>
+<ul>
+<li>若 <span class="math inline">\(r_q &gt; \textbf{Threshold} &gt;
+0\)</span>，直接返回当前 <span class="math inline">\(p_a\)</span> 和
+<span class="math inline">\(\mathcal{M}(p_a)\)</span>，算法结束</li>
+<li>若 <span class="math inline">\(r_{q-3,\ q-2,\ q-1}\)</span>
+<strong>波动很小</strong>，或 <span class="math inline">\(p_a\)</span>
+中<strong>被替换的单词比例</strong>超过 30%，直接返回当前 <span class="math inline">\(p_a\)</span> 和 <span class="math inline">\(\mathcal{M}(p_a)\)</span>，算法结束</li>
+<li>若 <span class="math inline">\(r_{q-1, \ \dots, \ q-5} &lt;
+0\)</span>，进一步<u>扩大采样范围</u> <span class="math inline">\(\mathcal{S}\)</span>，<u><strong>继续迭代</strong></u></li>
+</ul></li>
+</ol></li>
+</ol></li>
+<li><p>采样空间算法 <span class="math inline">\(\mathcal{S}\)</span>：设
+敏感词词表 为 <span class="math inline">\(keywords\)</span>，原始提示词为 <span class="math inline">\(p_t\)</span>，单词长度为 <span class="math inline">\(l\)</span> 的单词表为 <span class="math inline">\(\mathcal{D}_l\)</span></p>
+<ul>
+<li>初始 <span class="math inline">\(\mathcal{S}\)</span>：记 <span class="math inline">\(p_t\)</span> 中与 <span class="math inline">\(keywords\)</span> 匹配的敏感词数量为 <span class="math inline">\(n\)</span>，则返回 <span class="math inline">\(\mathcal{S} = \{(c_1, \dots, c_{nm}) \ | \ c_j \in
+\mathcal{D}_l, \ j = 1, \dots, nm \}\)</span></li>
+<li>扩展 <span class="math inline">\(\mathcal{S}\)</span>：<span class="math inline">\(n \leftarrow n+1\)</span>，返回 <span class="math inline">\(\mathcal{S} = \{(c_{11}, \dots, c_{(n+1)m}) \ | \
+c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
 </ul></li>
 </ul>
 <hr>
-<h3 id="三generator">三、Generator</h3>
+<h3 id="四实验评估">四、实验评估</h3>
 <ul>
-<li>LLM 经典分支：Llama, GPT, Gemini 等</li>
-<li>当前 RAG 多设计拓展模块，采用 latent-based 方法</li>
-</ul>
-<hr>
-<h3 id="四rag-training">四、RAG Training</h3>
+<li>SneakyPrompt 提高了 Bypass rate</li>
+<li>SneakyPrompt 提高了生图效果 (FID)</li>
+<li>RL 奖励函数选择：
 <ul>
-<li><p>训练方案：两种，”数据库更新”和“数据库不更新”</p></li>
-<li><p>数据库不更新：三种方式</p>
-<ul>
-<li><p>训练 Retriever：仅针对
-dense-encoder，用于提升语义表征、加速编码，或 学习特定领域的知识
-<br>encoder 改变 <span class="math inline">\(\rightarrow\)</span> embed
-改变 <span class="math inline">\(\rightarrow\)</span> index
-改变</p></li>
-<li><p>训练 Generator：LoRA</p></li>
-<li><p>联合训练：端到端优化，同时提升 retriever 和 generator</p></li>
-</ul>
-<p><img src="/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/train-without-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
-<li><p>数据库更新：插入新的 K-V 或 修改 values</p>
-<p><img src="/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/train-with-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<li><span class="math inline">\(\cos (\mathcal{M}(\mathcal{p_a}), \
+\hat{\epsilon}(p_t))\)</span>：更高的绕过率 + 更好的生图质量</li>
+<li><span class="math inline">\(1 - \mathcal{l}_2(\hat{\epsilon}(p_t), \
+\hat{\epsilon(p_a)})\)</span>：更少的查询次数</li>
+</ul></li>
 </ul>
 
                 
@@ -461,6 +445,15 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
     </div>
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/jailbreak/">#jailbreak</a>
+      
+        <a href="/tags/reinforcement-learning/">#reinforcement learning</a>
+      
+    </div>
+  
 </div>
 
 
@@ -469,8 +462,8 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『paper-NLP-2』《RAG for NLP: A Survey》</div>
-      <div>http://larry0454.github.io/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/</div>
+      <div>『paper-NLP-3』《SneakyPrompt》</div>
+      <div>http://larry0454.github.io/2024/11/19/paper/NLP/LLM/sneaky-prompt/</div>
     </div>
     <div class="license-meta">
       
@@ -482,7 +475,7 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>October 13, 2024</div>
+          <div>November 19, 2024</div>
         </div>
       
       
@@ -514,18 +507,12 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/18/paper/CV/NBV/NBV-planning/" title="『paper-CV-1』《NBV-planning》">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『paper-CV-1』《NBV-planning》</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/13/tools/HuggingFace/" title="『tools-1』HuggingFace">
-                        <span class="hidden-mobile">『tools-1』HuggingFace</span>
+                      <a href="/2024/10/18/paper/CV/NBV/GenNBV/" title="『paper-CV-2』《GenNBV》">
+                        <span class="hidden-mobile">『paper-CV-2』《GenNBV》</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

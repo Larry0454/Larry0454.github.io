@@ -19,18 +19,18 @@
     <meta name="description" content="《Attention is all you need》 一、架构总览  模型结构：由左边的 encoder 和 右边的 decoder 组成，架构总览图如下：  推理流程：这里以&quot;机器翻译&quot;为例子，输入中文&quot;我爱你&quot;、输出英文&quot;i love you &lt;EOS&gt;&quot;  encoder 词嵌入：中文输入左侧的&quot;encoder&quot;模块，将中文单词&quot;我&quot;、&quot;爱&quot;、&quot;你&quot;分别转换">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『paper-NLP-1』《Attention is all you need》">
-<meta property="og:url" content="http://larry0454.github.io/2024/08/11/paper/NLP/transformer/index.html">
+<meta property="og:url" content="http://larry0454.github.io/2024/08/11/paper/NLP/LLM/transformer/index.html">
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="《Attention is all you need》 一、架构总览  模型结构：由左边的 encoder 和 右边的 decoder 组成，架构总览图如下：  推理流程：这里以&quot;机器翻译&quot;为例子，输入中文&quot;我爱你&quot;、输出英文&quot;i love you &lt;EOS&gt;&quot;  encoder 词嵌入：中文输入左侧的&quot;encoder&quot;模块，将中文单词&quot;我&quot;、&quot;爱&quot;、&quot;你&quot;分别转换">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/transformer/%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/transformer/QKV.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/transformer/qkvector.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/transformer/QKVZ.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/transformer/multi.jpg">
-<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/transformer/MaskQKVZ.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/transformer/cross.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/transformer/auto.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/LLM/transformer/%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/LLM/transformer/QKV.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/LLM/transformer/qkvector.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/LLM/transformer/QKVZ.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/LLM/transformer/multi.jpg">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/LLM/transformer/MaskQKVZ.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/LLM/transformer/cross.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/LLM/transformer/auto.png">
 <meta property="article:published_time" content="2024-08-11T11:25:57.000Z">
 <meta property="article:modified_time" content="2024-11-20T15:35:32.905Z">
 <meta property="article:author" content="WangLe">
@@ -38,7 +38,7 @@
 <meta property="article:tag" content="transformer">
 <meta property="article:tag" content="embedding">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/transformer/%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/08/11/paper/NLP/LLM/transformer/%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -312,7 +312,7 @@
 <ul>
 <li><p>模型结构：由左边的 <strong>encoder</strong> 和 右边的
 <strong>decoder</strong> 组成，架构总览图如下：</p>
-<p><img src="/2024/08/11/paper/NLP/transformer/架构图.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<p><img src="/2024/08/11/paper/NLP/LLM/transformer/架构图.jpg" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 <li><p>推理流程：这里以"机器翻译"为例子，输入中文"我爱你"、输出英文"i
 love you &lt;EOS&gt;"</p>
 <ol type="1">
@@ -416,7 +416,7 @@ latent representation</p>
 <blockquote>
 <p><strong>注意</strong>：本例以及下面的例子中，"嵌入向量"都是<strong>行向量</strong>，列方向指向句子长度延伸方向</p>
 </blockquote>
-<p><img src="/2024/08/11/paper/NLP/transformer/QKV.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<p><img src="/2024/08/11/paper/NLP/LLM/transformer/QKV.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
 <li><p>Multi-Head Attention：多头注意力机制，由多个 self-attention
 模块堆叠组成</p>
 <ul>
@@ -429,12 +429,12 @@ latent representation</p>
 softmax 矩阵元素间<strong>差距过大</strong></p>
 </blockquote></li>
 <li><p>注意力分数：设单词 1 发起的"查询"为 <span class="math inline">\(q_1\)</span>，单词 2 的"回应"为 <span class="math inline">\(k_2\)</span>，则注意力分数 <span class="math inline">\(\alpha_{1,2} = q_1 \cdot k_2^T\)</span></p>
-<p><img src="/2024/08/11/paper/NLP/transformer/qkvector.png" srcset="/img/loading.gif" lazyload width="70%"></p>
+<p><img src="/2024/08/11/paper/NLP/LLM/transformer/qkvector.png" srcset="/img/loading.gif" lazyload width="70%"></p>
 <p>写成矩阵形式，则有 <span class="math inline">\(\alpha =
 \text{QK}^T\)</span>；再经过 <span class="math inline">\(\text{softmax}\)</span> 变换（压缩归一化），使
 <span class="math inline">\(\alpha\)</span> 每一行的<strong><u>行和为
 1</u></strong></p>
-<p><img src="/2024/08/11/paper/NLP/transformer/QKVZ.png" srcset="/img/loading.gif" lazyload width="60%"></p>
+<p><img src="/2024/08/11/paper/NLP/LLM/transformer/QKVZ.png" srcset="/img/loading.gif" lazyload width="60%"></p>
 <blockquote>
 <p><strong>注意</strong>："自主意"指的是单词的query同时也询问了自己的key，从而输出<strong>自己的重构信息</strong>，修正原有信息</p>
 </blockquote></li>
@@ -451,7 +451,7 @@ softmax 矩阵元素间<strong>差距过大</strong></p>
 <span class="math inline">\(\text{W}_i^\text{Q},
 \text{W}_i^{\text{K}}\)</span> （<span class="math inline">\(1 \le i \le
 h\)</span>）代表一种相关性）</p>
-<p><img src="/2024/08/11/paper/NLP/transformer/multi.jpg" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<p><img src="/2024/08/11/paper/NLP/LLM/transformer/multi.jpg" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 </ul></li>
 <li><p>Masked Multi-Head Attention：位于 decoder
 的第一层，基于<strong>掩码</strong>的多头注意力机制</p>
@@ -464,14 +464,14 @@ h\)</span>）代表一种相关性）</p>
 <p><strong>注意</strong>：decoder 是 auto-regressive
 的，其输入是截至上一时间步的输出，输出下一个单词</p>
 </blockquote>
-<p><img src="/2024/08/11/paper/NLP/transformer/MaskQKVZ.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<p><img src="/2024/08/11/paper/NLP/LLM/transformer/MaskQKVZ.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul></li>
 <li><p>Cross Attention：位于 decoder 的第二层，其结构与 Multi-Head
 Attention 相同，<u>但输入源不同</u></p>
 <ul>
 <li><p>输入：输入的 <span class="math inline">\(\text{Q}\)</span> 来自
 decoder 上层 Mask Attention 模块，输入的 <span class="math inline">\(\text{K, V}\)</span> 来自 encoder 的全局输出</p>
-<p><img src="/2024/08/11/paper/NLP/transformer/cross.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<p><img src="/2024/08/11/paper/NLP/LLM/transformer/cross.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 <li><p>输出：经过 <span class="math inline">\(\text{FFN}\)</span>、<span class="math inline">\(\text{Linear}\)</span>层 和 <span class="math inline">\(\textbf{softmax}\)</span>
 后，得到词表中每个单词的预测prob</p>
 <blockquote>
@@ -479,7 +479,7 @@ decoder 上层 Mask Attention 模块，输入的 <span class="math inline">\(\te
 持有当前输出，询问已知整个序列信息的 encoder
 "下一个单词应该是什么？"</p>
 </blockquote>
-<p><img src="/2024/08/11/paper/NLP/transformer/auto.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<p><img src="/2024/08/11/paper/NLP/LLM/transformer/auto.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
 </ul></li>
 </ul>
 <hr>
@@ -584,7 +584,7 @@ decoder 上层 Mask Attention 模块，输入的 <span class="math inline">\(\te
   <div class="license-box my-3">
     <div class="license-title">
       <div>『paper-NLP-1』《Attention is all you need》</div>
-      <div>http://larry0454.github.io/2024/08/11/paper/NLP/transformer/</div>
+      <div>http://larry0454.github.io/2024/08/11/paper/NLP/LLM/transformer/</div>
     </div>
     <div class="license-meta">
       
