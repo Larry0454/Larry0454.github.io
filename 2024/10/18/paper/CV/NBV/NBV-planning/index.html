@@ -16,31 +16,30 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="《RAG for NLP: A Survey》 一、LLM 的问题  “幻觉“问题：LLM 会生成看似合理流畅，但实际是错误的回答 ”知识更新“问题：基于新的知识重新训练&#x2F;微调 LLM 开销非常大 “特定领域”问题：LLM 不具备针对特定领域的专业知识   二、Retriever  Retriever 的组成：三部分  encoder：将 inputs 编码为 emb">
+    <meta name="description" content="《NBV&#x2F;NBC Planning Considering Confidence Obtained From Shape Completion Learning》 一、拟解决问题 对于类似“金属薄板”的目标，难以估计其三维原貌  异常区域：反射光干扰 自遮挡：弯曲板面遮挡自身形状   二、相关工作  NBV：从候选视角中选择最佳视角；多基于空间体素分析，无法精确表示薄板细节">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『paper-RAG-1』《RAG for NLP: A Survey》">
-<meta property="og:url" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/index.html">
+<meta property="og:title" content="『paper-CV-1』《NBV-planning》">
+<meta property="og:url" content="http://larry0454.github.io/2024/10/18/paper/CV/NBV/NBV-planning/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="《RAG for NLP: A Survey》 一、LLM 的问题  “幻觉“问题：LLM 会生成看似合理流畅，但实际是错误的回答 ”知识更新“问题：基于新的知识重新训练&#x2F;微调 LLM 开销非常大 “特定领域”问题：LLM 不具备针对特定领域的专业知识   二、Retriever  Retriever 的组成：三部分  encoder：将 inputs 编码为 emb">
+<meta property="og:description" content="《NBV&#x2F;NBC Planning Considering Confidence Obtained From Shape Completion Learning》 一、拟解决问题 对于类似“金属薄板”的目标，难以估计其三维原貌  异常区域：反射光干扰 自遮挡：弯曲板面遮挡自身形状   二、相关工作  NBV：从候选视角中选择最佳视角；多基于空间体素分析，无法精确表示薄板细节">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/build-retriever.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/query-retriever.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/query-based-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/logits-based-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/latent-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/train-without-update.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/train-with-update.png">
-<meta property="article:published_time" content="2024-10-13T09:12:40.000Z">
-<meta property="article:modified_time" content="2024-10-19T02:24:27.908Z">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/18/paper/CV/NBV/NBV-planning/PCN.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/18/paper/CV/NBV/NBV-planning/NBV-threshold.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/18/paper/CV/NBV/NBV-planning/NBV-optimization.png">
+<meta property="article:published_time" content="2024-10-18T09:59:00.000Z">
+<meta property="article:modified_time" content="2024-11-20T15:44:57.688Z">
 <meta property="article:author" content="WangLe">
+<meta property="article:tag" content="next best view">
+<meta property="article:tag" content="3D reconstruction">
+<meta property="article:tag" content="point cloud">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/build-retriever.png">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/10/18/paper/CV/NBV/NBV-planning/PCN.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『paper-RAG-1』《RAG for NLP: A Survey》 - Blog</title>
+  <title>『paper-CV-1』《NBV-planning》 - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -218,7 +217,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『paper-RAG-1』《RAG for NLP: A Survey》"></span>
+            <span id="subtitle" data-typed-text="『paper-CV-1』《NBV-planning》"></span>
           
         </div>
 
@@ -229,8 +228,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-13 17:12" pubdate>
-          October 13, 2024 pm
+        <time datetime="2024-10-18 17:59" pubdate>
+          October 18, 2024 pm
         </time>
       </span>
     
@@ -241,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          1.2k words
         
       </span>
     
@@ -252,7 +251,7 @@
         
         
         
-          15 mins
+          10 mins
         
       </span>
     
@@ -298,124 +297,73 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『paper-RAG-1』《RAG for NLP: A Survey》</h1>
+            <h1 style="display: none">『paper-CV-1』《NBV-planning》</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="rag-for-nlp-a-survey">《RAG for NLP: A Survey》</h2>
-<h3 id="一llm-的问题">一、LLM 的问题</h3>
+                <h2 id="nbvnbc-planning-considering-confidence-obtained-from-shape-completion-learning">《NBV/NBC
+Planning Considering Confidence Obtained From Shape Completion
+Learning》</h2>
+<h3 id="一拟解决问题">一、拟解决问题</h3>
+<p>对于类似“金属薄板”的目标，难以估计其三维原貌</p>
 <ul>
-<li>“幻觉“问题：LLM
-会生成看似合理流畅，但实际是<strong>错误</strong>的回答</li>
-<li>”知识更新“问题：基于新的知识重新训练/微调 LLM
-<strong>开销非常大</strong></li>
-<li>“特定领域”问题：LLM
-不具备针对<strong>特定领域</strong>的专业知识</li>
+<li>异常区域：反射光干扰</li>
+<li>自遮挡：弯曲板面遮挡自身形状</li>
 </ul>
 <hr>
-<h3 id="二retriever">二、Retriever</h3>
+<h3 id="二相关工作">二、相关工作</h3>
 <ul>
-<li><p>Retriever 的组成：三部分</p>
+<li><p>NBV：从候选视角中选择最佳视角；多基于空间体素分析，无法精确表示薄板细节</p></li>
+<li><p>3D形状补全：从部分观测中生成完整三维模型；本文基于PCN模型补全预测，削弱由反光和噪声造成的pc缺失</p></li>
+</ul>
+<hr>
+<h3 id="三研究方法">三、研究方法</h3>
 <ul>
-<li>encoder：将 inputs 编码为 embeddings</li>
-<li>indexing：基于ANN(近似最邻近算法)查询相关向量</li>
-<li>datastore：以“K-V”形式存储<strong>外部知识</strong>的数据库</li>
-</ul></li>
-<li><p>构造 Retriever：四步骤</p>
+<li><p>Workflow: 从机械手中的变形金属板开始 <span class="math inline">\(\Rightarrow\)</span>
+外部静态传感器捕捉<strong><u>局部点云</u></strong> <span class="math inline">\(\Rightarrow\)</span> 输入 PCN
+预测<u><strong>全局点云</strong></u> <span class="math inline">\(\Rightarrow\)</span> 计算置信度 <span class="math inline">\(\Rightarrow\)</span>
+若置信度高，就进入网格重建，否则进入 Optimization</p>
+<p><img src="/2024/10/18/paper/CV/NBV/NBV-planning/PCN.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+<li><p>Point Cloud Completion
+Network：输入局部、不完整的电云，输出完整点云</p>
 <ol type="1">
-<li><p>语料切块：将原始文档切分为小块</p>
-<ul>
-<li>分块间语义应<strong>相互独立</strong>，各分块语义<strong>不应模糊</strong>，只能包含一种核心观点</li>
-<li>对较短的分块编码速度更快，更省显存</li>
-</ul>
-<p>分块大小是决定<strong>分块语义</strong>+<strong>编码效率</strong>的核心因素，分块大小取决于RAG场景：</p>
-<ul>
-<li>任务角度：问答任务用小块，摘要任务用大块</li>
-<li>编码角度：编码器模型决定了适用的分块大小</li>
-<li>查询角度：分块大小应与用户查询大小匹配</li>
-</ul>
-<p>分块方法：三种</p>
-<ul>
-<li>定长分割</li>
-<li>基于语义分割：按 语句周期 or 换行 分割</li>
-<li>基于内容分割：按 章节 or 代码块 分割</li>
-</ul></li>
-<li><p>切块编码：</p>
-<ul>
-<li>稀疏编码：用高维向量表示一段 chunk，向量中有很多 0
-<ul>
-<li>词袋模型：一段 chunk <span class="math inline">\(\Leftrightarrow\)</span>
-一个定长向量，每个维度指对应词出现的<strong>次数</strong>；只考虑单词数量，不考虑单词位置和语义</li>
-<li><span class="math inline">\(\text{TF} \times \text{IDF}\)</span>
-：<span class="math inline">\(\text{TF}(t,d) = \dfrac{t_d}{d}\)</span>
-（衡量单词 t 在文档 d 中的重要程度） <br> <span class="math inline">\(\text{IDF(t)}=\log (\dfrac{N}{n_t + 1})\)</span>
-（<strong>削弱常见停用词的重要性</strong>）</li>
-</ul></li>
-<li>稠密编码：基于深度学习模型生成，每个维度是浮点数，记录语义信息，0
-很少</li>
-</ul></li>
-<li><p>构建索引：加速高维空间中与用户 query 接近的向量</p>
-<ul>
-<li>相似度衡量：余弦相似度，欧氏距离，曼哈顿距离 等</li>
-<li>嵌入降维：PCA、LSH，以及 Product Quantization (子空间码本) <br>降低
-embed 维度可提高搜索效率，但也可能丢失语义信息</li>
-<li>ANN索引：优化存储结构，从而优化ANN算法</li>
-</ul></li>
-<li><p>构建向量数据库：K<span class="math inline">\(\leftrightarrow\)</span>V 指 domain-specific
-<strong>embed</strong> <span class="math inline">\(\leftrightarrow\)</span> domain-specific
-<strong>chunk</strong> <br>算法见 (Algorithm Wu 等, 2024, page
-4)，以分块嵌入 <span class="math inline">\(e_i\)</span> 为 key，以分块
-<span class="math inline">\(c_i, c_{i+1}\)</span> 为 value，并在 key
-上建索引</p></li>
-</ol>
-<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/build-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>查询 Retriever：两步骤</p>
+<li><p>生成金属板模型：随机指派长宽高，并随机扭曲金属板</p></li>
+<li><p>生成真实视图点云：用<strong>柏松盘采样法</strong>生成金属板的<strong><u>GT点云</u></strong></p></li>
+<li><p>模拟部分视图点云：定义一个角度阈值 <span class="math inline">\(\overline{\psi}\)</span>，当视角小于 <span class="math inline">\(\overline{\psi}\)</span>
+时可视点较多，否则可视点较少
+<br>并进一步引入遮挡和噪声，模拟<strong>更加真实</strong>的视角</p></li>
+<li><p>训练 PCN：input 为多局部视角点云，output 与对应 GT 对齐；loss
+指定为 Earth Mover Distance</p>
+<p><img src="/2024/10/18/paper/CV/NBV/NBV-planning/NBV-threshold.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
+</ol></li>
+<li><p>NBV Optimization：两个步骤</p>
 <ol type="1">
-<li>查询编码：查找相关性 top-k 的索引，返回数据库中对应的 values</li>
-<li>后处理：重排序 (根据任务类型重新排序)</li>
-</ol>
-<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/query-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>Retriever 融合：三种</p>
+<li><p>置信度估计：将 PCN 输出 predictions 下采样为 <span class="math inline">\(n\)</span> 个点，计算每个点 <span class="math inline">\(p_i\)</span> 周围半径 <span class="math inline">\(r\)</span>
+内的<strong><u>邻居数量</u></strong></p>
+<p>记 <span class="math inline">\(\mu(p_i)\)</span> 为 <span class="math inline">\(p_i\)</span> 的邻居数量，则置信度 <span class="math inline">\(c(p_i) = \dfrac{\mu(p_i) - \min \mu}{\max \mu -
+\min \mu + 1}\)</span>
+<br>邻居越多，点云密度越大，说明<strong><u>该领域点云重建效果好</u></strong></p></li>
+<li><p>优化过程：将 NBV 问题转为以下优化问题</p>
+<p><img src="/2024/10/18/paper/CV/NBV/NBV-planning/NBV-optimization.png" srcset="/img/loading.gif" lazyload width="70%"></p>
 <ul>
-<li><p>query-based：先编码 query 和各 retrievals (可选)，再拼接 query 和
-retrievals，最后输入给 LLM <br>算法见 (algorithm Wu 等, 2024, page
-6)</p>
-<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/query-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>logits-based：先将 query 和各 retrievals 输入
-LLM，再对各输出响应<strong>加权求和</strong> <br>算法见 (algorithm Wu
-等, 2024, page 6)，有“集成”和“校准”两种方法</p>
-<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/logits-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>latent-based：将 retrievals 融入 LLM 的 hidden-states <br>算法见
-(algorithm Wu 等, 2024, page
-7)，有"attention-based"和"weighted"（开销较小）两种集成方法，RAG
-使用较多</p>
-<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/latent-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<li><p>优化问题定义：</p>
+<ul>
+<li>(2b) 约束：每个 viewpoint <span class="math inline">\(x\)</span>
+满足 6dof 约束</li>
+<li>(2c) 约束：重建输出的完整点云 <span class="math inline">\(\text{S}^{*}\)</span> 需要在 <span class="math inline">\(x\)</span> 射出的相机锥形视角范围内</li>
+<li>(2d) 约束：旋转自由度取值约束</li>
+<li>(2e) 约束：<span class="math inline">\(f\)</span> 输入 由 <span class="math inline">\(\text{S}^{*}\)</span> 重建的三维模型 + viewpoint
+<span class="math inline">\(x\)</span> 得到
+<strong><u>新的局部点云</u></strong> <span class="math inline">\(\tilde{\text{S}}\)</span>；基于 ray-casting
+方法</li>
 </ul></li>
-</ul>
-<hr>
-<h3 id="三generator">三、Generator</h3>
-<ul>
-<li>LLM 经典分支：Llama, GPT, Gemini 等</li>
-<li>当前 RAG 多设计拓展模块，采用 latent-based 方法</li>
-</ul>
-<hr>
-<h3 id="四rag-training">四、RAG Training</h3>
-<ul>
-<li><p>训练方案：两种，”数据库更新”和“数据库不更新”</p></li>
-<li><p>数据库不更新：三种方式</p>
-<ul>
-<li><p>训练 Retriever：仅针对
-dense-encoder，用于提升语义表征、加速编码，或 学习特定领域的知识
-<br>encoder 改变 <span class="math inline">\(\rightarrow\)</span> embed
-改变 <span class="math inline">\(\rightarrow\)</span> index
-改变</p></li>
-<li><p>训练 Generator：LoRA</p></li>
-<li><p>联合训练：端到端优化，同时提升 retriever 和 generator</p></li>
-</ul>
-<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/train-without-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
-<li><p>数据库更新：插入新的 K-V 或 修改 values</p>
-<p><img src="/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/train-with-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<li><p>如何计算 Gain：对于某一视角 <span class="math inline">\(x\)</span> 对应的 局部电云 <span class="math inline">\(\tilde{\text{S}}\)</span>，Gain <span class="math inline">\(\leftarrow\)</span> Gain + (1 - <span class="math inline">\(c(p_i)\)</span>)</p>
+<p>恰说明置信度越低，该视角下重建的点云越少，增益越大</p></li>
+<li><p>当 <span class="math inline">\(\min \mu &gt; \delta\)</span>
+时，优化迭代结束</p></li>
+</ul></li>
+</ol></li>
 </ul>
 
                 
@@ -440,8 +388,15 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
   
     <span>></span>
     
-  <a href="/categories/paper/RAG/" class="category-chain-item">RAG</a>
+  <a href="/categories/paper/CV/" class="category-chain-item">CV</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/paper/CV/NBV/" class="category-chain-item">NBV</a>
+  
+  
+
   
 
   
@@ -454,6 +409,17 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
     </div>
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/next-best-view/">#next best view</a>
+      
+        <a href="/tags/3D-reconstruction/">#3D reconstruction</a>
+      
+        <a href="/tags/point-cloud/">#point cloud</a>
+      
+    </div>
+  
 </div>
 
 
@@ -462,8 +428,8 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『paper-RAG-1』《RAG for NLP: A Survey》</div>
-      <div>http://larry0454.github.io/2024/10/13/paper/RAG/RAG-for-NLP-A-Survey/</div>
+      <div>『paper-CV-1』《NBV-planning》</div>
+      <div>http://larry0454.github.io/2024/10/18/paper/CV/NBV/NBV-planning/</div>
     </div>
     <div class="license-meta">
       
@@ -475,7 +441,7 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>October 13, 2024</div>
+          <div>October 18, 2024</div>
         </div>
       
       
@@ -507,9 +473,9 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/18/paper/NBV/GenNBV/" title="『paper-NBV-1』《GenNBV》">
+                      <a href="/2024/10/18/paper/CV/NBV/GenNBV/" title="『paper-CV-2』《GenNBV》">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『paper-NBV-1』《GenNBV》</span>
+                        <span class="hidden-mobile">『paper-CV-2』《GenNBV》</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -517,8 +483,8 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/13/tools/HuggingFace/" title="『tools-1』HuggingFace">
-                        <span class="hidden-mobile">『tools-1』HuggingFace</span>
+                      <a href="/2024/10/13/paper/NLP/RAG/RAG-for-NLP-A-Survey/" title="『paper-NLP-2』《RAG for NLP: A Survey》">
+                        <span class="hidden-mobile">『paper-NLP-2』《RAG for NLP: A Survey》</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

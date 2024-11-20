@@ -16,26 +16,28 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="《SneakyPrompt: Jailbreaking Text-to-image Generative Models》 一、拟解决问题  现有攻击方式比较低效，进攻开销大 adv prompt 初次使用效果好，重用后效果差 现有攻击方法不太关注生图质量   二、相关工作  文生图模型：Stable Diffusion、DALLE\(\cdot\)E；攻击方法多为手工打造，绕">
+    <meta name="description" content="《GenNBV: Generalizable Next-Best-View Policy for Active 3D Reconstruction》 一、拟解决问题  大规模场景数字化：图像捕捉费时费力 现有 NBV 问题：基于实际经验的视角选取 + 人工限定的action范围，限制针对陌生场景的泛化能力  需要改进 NBV，使其支持任意场景下的主动探索  二、相关工作">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『paper-NLP-2』《SneakyPrompt》">
-<meta property="og:url" content="http://larry0454.github.io/2024/11/19/paper/NLP/sneaky-prompt/index.html">
+<meta property="og:title" content="『paper-CV-2』《GenNBV》">
+<meta property="og:url" content="http://larry0454.github.io/2024/10/18/paper/CV/NBV/GenNBV/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="《SneakyPrompt: Jailbreaking Text-to-image Generative Models》 一、拟解决问题  现有攻击方式比较低效，进攻开销大 adv prompt 初次使用效果好，重用后效果差 现有攻击方法不太关注生图质量   二、相关工作  文生图模型：Stable Diffusion、DALLE\(\cdot\)E；攻击方法多为手工打造，绕">
+<meta property="og:description" content="《GenNBV: Generalizable Next-Best-View Policy for Active 3D Reconstruction》 一、拟解决问题  大规模场景数字化：图像捕捉费时费力 现有 NBV 问题：基于实际经验的视角选取 + 人工限定的action范围，限制针对陌生场景的泛化能力  需要改进 NBV，使其支持任意场景下的主动探索  二、相关工作">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-11-19T15:32:29.000Z">
-<meta property="article:modified_time" content="2024-11-19T15:38:24.902Z">
+<meta property="og:image" content="http://larry0454.github.io/2024/10/18/paper/CV/NBV/GenNBV/GenNBV.png">
+<meta property="article:published_time" content="2024-10-18T10:37:59.000Z">
+<meta property="article:modified_time" content="2024-11-20T15:45:03.557Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="LLM">
-<meta property="article:tag" content="jailbreak">
+<meta property="article:tag" content="next best view">
+<meta property="article:tag" content="3D reconstruction">
 <meta property="article:tag" content="reinforcement learning">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/10/18/paper/CV/NBV/GenNBV/GenNBV.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『paper-NLP-2』《SneakyPrompt》 - Blog</title>
+  <title>『paper-CV-2』《GenNBV》 - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +215,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『paper-NLP-2』《SneakyPrompt》"></span>
+            <span id="subtitle" data-typed-text="『paper-CV-2』《GenNBV》"></span>
           
         </div>
 
@@ -224,8 +226,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-19 23:32" pubdate>
-          November 19, 2024 pm
+        <time datetime="2024-10-18 18:37" pubdate>
+          October 18, 2024 pm
         </time>
       </span>
     
@@ -236,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k words
+          1.4k words
         
       </span>
     
@@ -247,7 +249,7 @@
         
         
         
-          21 mins
+          12 mins
         
       </span>
     
@@ -293,113 +295,76 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『paper-NLP-2』《SneakyPrompt》</h1>
+            <h1 style="display: none">『paper-CV-2』《GenNBV》</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="sneakyprompt-jailbreaking-text-to-image-generative-models">《SneakyPrompt:
-Jailbreaking Text-to-image Generative Models》</h2>
+                <h2 id="gennbv-generalizable-next-best-view-policy-for-active-3d-reconstruction">《GenNBV:
+Generalizable Next-Best-View Policy for Active 3D Reconstruction》</h2>
 <h3 id="一拟解决问题">一、拟解决问题</h3>
 <ul>
-<li>现有攻击方式比较低效，进攻开销大</li>
-<li>adv prompt 初次使用效果好，重用后效果差</li>
-<li>现有攻击方法不太关注生图质量</li>
+<li>大规模场景数字化：图像捕捉费时费力</li>
+<li>现有 NBV 问题：基于实际经验的视角选取 +
+人工限定的action范围，限制针对陌生场景的泛化能力</li>
 </ul>
+<p>需要改进
+NBV，使其支持<u><strong>任意场景下</strong></u>的主动探索</p>
 <hr>
 <h3 id="二相关工作">二、相关工作</h3>
 <ul>
-<li>文生图模型：Stable Diffusion、DALLE<span class="math inline">\(\cdot\)</span>E；攻击方法多为手工打造，绕过率低且多针对非商业模型</li>
-<li>对抗样本：用以混淆模型决策的输入；当前方法无法保持生图语义不变 +
-多轮询问攻击开销大 + adv prompt 在随机种子下不可重用</li>
-<li>强化学习：policy 在当前 state 执行一个 action 并获得 reward；policy
-会执行<strong>未来累计奖励最大</strong>对应的 action</li>
+<li>传统三维重建：利用光度和几何信息进行重建评估，展现出大规模场景中的重建能力，但泛化性较差、实时性差</li>
+<li>主动三维重建：NBV，依赖于人工制定视角选取标准，候选视角有限，仅在特定场景下表现较好，泛化性同样较差</li>
 </ul>
 <hr>
 <h3 id="三研究方法">三、研究方法</h3>
+<p><img src="/2024/10/18/paper/CV/NBV/GenNBV/GenNBV.png" srcset="/img/loading.gif" lazyload width="80%"></p>
 <ul>
-<li><p>攻击目标：给定一个提示词 <span class="math inline">\(p_t\)</span>，找到一个绕过过滤器 <span class="math inline">\(\mathcal{F}\)</span> 从而攻击文生图模型 <span class="math inline">\(\mathcal{M}\)</span>
-的<u><strong>对抗样本</strong></u> <span class="math inline">\(p_a\)</span></p>
+<li><p>NBV 问题描述：（对无人机）给定当前观测 <span class="math inline">\(o_t\)</span>，执行 <span class="math inline">\(a_t\)</span>，到达下一个观测点 <span class="math inline">\(o_{t+1}\)</span></p>
 <ul>
-<li>生成图 <span class="math inline">\(\mathcal{M}(p_a)\)</span>
-的语义接近原始 <span class="math inline">\(p_t\)</span>：采用余弦相似度衡量 <u>图像嵌入</u>
-和 <u><span class="math inline">\(p_t\)</span> 嵌入</u>的语义相似度</li>
-<li>对抗样本可以绕过安全过滤器，即 <span class="math inline">\(\mathcal{F}(\mathcal{M}, p_a) =
-0\)</span>：持续询问 <span class="math inline">\(\mathcal{M}\)</span>，直至绕过过滤器</li>
-<li>最小化询问 <span class="math inline">\(\mathcal{M}\)</span>
-的次数，即降低攻击成本：采用<u>强化学习</u>策略，根据查询结果扰动更新提示词
-<span class="math inline">\(p_a\)</span></li>
+<li>观测空间：<span class="math inline">\(o_t\)</span> <span class="math inline">\(\leftarrow\)</span> 过去所有捕捉的RGB图片 +
+所有深度信息D + 所有5D位姿 <span class="math inline">\((x,y,z,
+y,p)\)</span></li>
+<li>行动空间：相机三维位置空间 <span class="math inline">\((x, y,
+z)\)</span> + 二维旋转空间 <span class="math inline">\((y,
+p)\)</span>（不支持 <span class="math inline">\(r\)</span>）</li>
 </ul></li>
-<li><p>攻击算法：</p>
-<ol type="1">
-<li><p>离线查询：使用 <strong>影子编码器</strong> <span class="math inline">\(\hat{\epsilon}\)</span>
-执行离线查询，得到原始提示词 <span class="math inline">\(p_t\)</span>
-的嵌入 <span class="math inline">\(\hat{\epsilon}(p_t)\)</span></p></li>
-<li><p>初始化采样空间：设 <span class="math inline">\(\mathcal{S}\)</span>
-为总搜索空间，其中每个行为对应一个 <span class="math inline">\(\mathcal{C}\)</span></p></li>
-<li><p>循环迭代在线查询：设查询迭代次数上限为 <span class="math inline">\(Q\)</span>，当前迭代轮次为 <span class="math inline">\(q\)</span>，<span class="math inline">\(\mathcal{P}\)</span> 为强化学习算法</p>
-<ol type="1">
-<li><p>采样：对 <span class="math inline">\(p_t\)</span> 中 <span class="math inline">\(n\)</span> 个敏感词的每个词找指派 <span class="math inline">\(m\)</span> 个候选替换词，形成 <span class="math inline">\(\mathcal{C} = \{c_{11}, \dots,
-c_{nm}\}\)</span></p>
+<li><p>可泛化状态嵌入：</p>
 <ul>
-<li><p>暴力采样：从单词长度为 <span class="math inline">\(l\)</span>
-的单词表中随机挑选 <span class="math inline">\(nm\)</span> 个单词，得到
-<span class="math inline">\(\mathcal{C}\)</span></p></li>
-<li><p>贪婪采样：设已选出 <span class="math inline">\(j\)</span> 个单词
-<span class="math inline">\((c_1, \dots, c_j)\)</span>，继续选使 <span class="math inline">\((c_1, \dots, c_{j+1})\)</span> 与 <span class="math inline">\(p_t\)</span> 间距最近的 <span class="math inline">\(c_{j+1}\)</span>，直至选出 <span class="math inline">\(nm\)</span> 个单词</p></li>
-<li><p>光束采样：设置 <span class="math inline">\(k\)</span>
-条单词链，每条单词链长度为 <span class="math inline">\(j\)</span>，下一步为各单词链的第 <span class="math inline">\(j+1\)</span> 位选出 <span class="math inline">\(k\)</span> 个候选单词，得到 <span class="math inline">\(k^2\)</span> 条链 <br>再筛除与 <span class="math inline">\(p_t\)</span> 间距离最远的 <span class="math inline">\(k^2 - k\)</span> 个链条得到长度为 <span class="math inline">\(j+1\)</span> 的 <span class="math inline">\(k\)</span> 条单词链；最后选出长度为 <span class="math inline">\(nm\)</span>，且距 <span class="math inline">\(p_t\)</span> 最近的链</p></li>
-<li><p>强化学习：policy network 用 LSTM 建模，根据 <span class="math inline">\(P(c_j \ | \ c_1 c_2 \dots c_{j-1})\)</span> 选出
-<span class="math inline">\(c_j\)</span>，直至选出 <span class="math inline">\(nm\)</span> 个单词</p></li>
-</ul>
-<p>最后，对 <span class="math inline">\(p_a\)</span> 中的第 <span class="math inline">\(i\)</span> 个敏感词用其候选单词集合 <span class="math inline">\(\{c_{i1}, \dots, c_{im} \}\)</span>
-进行替换</p></li>
-<li><p>在线查询：用 <span class="math inline">\(p_a\)</span> 查询 <span class="math inline">\(\mathcal{M}\)</span> 得到 <span class="math inline">\(\mathcal{M}(p_{a})\)</span></p>
-<ul>
-<li>若 绕过防御，记奖励 <span class="math inline">\(r_q\)</span>
-为<strong><u>正的</u></strong> <span class="math inline">\(\text{Sim}(\mathcal{M}(p_{a}), \
-\hat{\epsilon}(p_t))\)</span></li>
-<li>若 未绕过防御，记奖励 <span class="math inline">\(r_q\)</span>
-为<u><strong>负的</strong></u> <span class="math inline">\(-\dfrac{q}{10
-\cdot Q}\)</span></li>
-</ul>
-<p>若 <span class="math inline">\(r_q &gt; r_{max}\)</span>，更新 <span class="math inline">\(r_{max}, \ p_a, \
-\mathcal{M}(p_a)\)</span></p></li>
-<li><p>更新采样策略：用 学习率 <span class="math inline">\(\eta\)</span>
-和 <span class="math inline">\(r_q\)</span> 更新 policy network <span class="math inline">\(P\)</span>，其损失函数 <span class="math inline">\(\mathcal{L} = -r_q \ln (P)\)</span></p></li>
-<li><p>迭代终止判断：三种情况</p>
-<ul>
-<li>若 <span class="math inline">\(r_q &gt; \textbf{Threshold} &gt;
-0\)</span>，直接返回当前 <span class="math inline">\(p_a\)</span> 和
-<span class="math inline">\(\mathcal{M}(p_a)\)</span>，算法结束</li>
-<li>若 <span class="math inline">\(r_{q-3,\ q-2,\ q-1}\)</span>
-<strong>波动很小</strong>，或 <span class="math inline">\(p_a\)</span>
-中<strong>被替换的单词比例</strong>超过 30%，直接返回当前 <span class="math inline">\(p_a\)</span> 和 <span class="math inline">\(\mathcal{M}(p_a)\)</span>，算法结束</li>
-<li>若 <span class="math inline">\(r_{q-1, \ \dots, \ q-5} &lt;
-0\)</span>，进一步<u>扩大采样范围</u> <span class="math inline">\(\mathcal{S}\)</span>，<u><strong>继续迭代</strong></u></li>
+<li><p>几何表征：将 <span class="math inline">\(t\)</span>
+时刻场景划分为 3D Grids <span class="math inline">\(F_t^G\)</span>，用概率表示"occupied"、"free" 以及
+"unscanned"</p>
+<p>设 <span class="math inline">\(i^{th}\)</span> 体素概率为 <span class="math inline">\(v_i\)</span>，<span class="math inline">\(z_j\)</span> 表示相机 <span class="math inline">\(j^{th}\)</span> 视线穿过 <span class="math inline">\(i^{th}\)</span> 对应的体素之measurement <br>则有
+<span class="math inline">\(\log \text{Odd}(v_i | z_j) = \log
+\text{Odd}(v_i) + C\)</span>，其中 <span class="math inline">\(c\)</span> 是基于经验的更新常数</p></li>
+<li><p>语义表征：将当前 RGB <span class="math inline">\(I_t\)</span> 和
+灰化的过去 <span class="math inline">\(k\)</span> 帧图 <span class="math inline">\([I_{t-1}, \dots, I_{t-k}]\)</span>
+拼接，再输入两层卷积网络提取融合特征 <span class="math inline">\(F_t^S\)</span></p>
+<blockquote>
+<p>"语义表征" 可用于区分处理 hole 和 unscanned
+区域，弥补了"几何表征"的缺陷</p>
+</blockquote></li>
+<li><p>状态嵌入：<span class="math inline">\(s_t = \text{Linear}(s_t^G;
+s_t^S;s_t^A)\)</span>，其中 <span class="math inline">\(s_t^G =
+\text{Linear}(\text{Flatten}(F_t^G))\)</span>，<span class="math inline">\(s_t^A = \text{Linear}(a_{1:t})\)</span>
+<br>"状态嵌入"进一步融合了多源信息（几何表征 + 语义表征 +
+action）</p></li>
+<li><p>Policy：将 <span class="math inline">\(s_t\)</span>
+作为输入，经过<strong>三层MLP</strong>，实现 <span class="math inline">\(a \sim \pi(\cdot | o_t)\)</span></p></li>
 </ul></li>
-</ol></li>
-</ol></li>
-<li><p>采样空间算法 <span class="math inline">\(\mathcal{S}\)</span>：设
-敏感词词表 为 <span class="math inline">\(keywords\)</span>，原始提示词为 <span class="math inline">\(p_t\)</span>，单词长度为 <span class="math inline">\(l\)</span> 的单词表为 <span class="math inline">\(\mathcal{D}_l\)</span></p>
+<li><p>优化过程：RL-based NBV</p>
 <ul>
-<li>初始 <span class="math inline">\(\mathcal{S}\)</span>：记 <span class="math inline">\(p_t\)</span> 中与 <span class="math inline">\(keywords\)</span> 匹配的敏感词数量为 <span class="math inline">\(n\)</span>，则返回 <span class="math inline">\(\mathcal{S} = \{(c_1, \dots, c_{nm}) \ | \ c_j \in
-\mathcal{D}_l, \ j = 1, \dots, nm \}\)</span></li>
-<li>扩展 <span class="math inline">\(\mathcal{S}\)</span>：<span class="math inline">\(n \leftarrow n+1\)</span>，返回 <span class="math inline">\(\mathcal{S} = \{(c_{11}, \dots, c_{(n+1)m}) \ | \
-c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
-</ul></li>
-</ul>
-<hr>
-<h3 id="四实验评估">四、实验评估</h3>
-<ul>
-<li>SneakyPrompt 提高了 Bypass rate</li>
-<li>SneakyPrompt 提高了生图效果 (FID)</li>
-<li>RL 奖励函数选择：
-<ul>
-<li><span class="math inline">\(\cos (\mathcal{M}(\mathcal{p_a}), \
-\hat{\epsilon}(p_t))\)</span>：更高的绕过率 + 更好的生图质量</li>
-<li><span class="math inline">\(1 - \mathcal{l}_2(\hat{\epsilon}(p_t), \
-\hat{\epsilon(p_a)})\)</span>：更少的查询次数</li>
+<li>计算 occupied 比率：设置一个 occupied 阈值，计数 occupied
+voxels，得到被占用比率 <span class="math inline">\(\text{CR}_t =
+\dfrac{\tilde{N}_t}{N^{*}}\)</span></li>
+<li>奖励函数：<span class="math inline">\(r^{\text{CR}}_t =
+\text{CR}_{t+1} -
+\text{CR}_t\)</span>，即<strong><u>鼓励无人机扫描更多的未知领域</u></strong>；若在自由空间发生碰撞，给予负奖励</li>
+<li>PPO 损失函数：<span class="math inline">\(L(\theta) =
+\mathbb{E}_t[\dfrac{\pi_\theta (a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t
+| s_t)}A^{\pi_{\theta_{\text{old}}}}(s_t,
+a_t)]\)</span>，<strong><u>限制新旧策略变化</u></strong>剧烈的同时<strong><u>提升策略增益
+<span class="math inline">\(A\)</span></u></strong></li>
 </ul></li>
 </ul>
 
@@ -425,12 +390,12 @@ c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
   
     <span>></span>
     
-  <a href="/categories/paper/NLP/" class="category-chain-item">NLP</a>
+  <a href="/categories/paper/CV/" class="category-chain-item">CV</a>
   
   
     <span>></span>
     
-  <a href="/categories/paper/NLP/jailbreak/" class="category-chain-item">jailbreak</a>
+  <a href="/categories/paper/CV/NBV/" class="category-chain-item">NBV</a>
   
   
 
@@ -449,9 +414,9 @@ c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/LLM/">#LLM</a>
+        <a href="/tags/next-best-view/">#next best view</a>
       
-        <a href="/tags/jailbreak/">#jailbreak</a>
+        <a href="/tags/3D-reconstruction/">#3D reconstruction</a>
       
         <a href="/tags/reinforcement-learning/">#reinforcement learning</a>
       
@@ -465,8 +430,8 @@ c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『paper-NLP-2』《SneakyPrompt》</div>
-      <div>http://larry0454.github.io/2024/11/19/paper/NLP/sneaky-prompt/</div>
+      <div>『paper-CV-2』《GenNBV》</div>
+      <div>http://larry0454.github.io/2024/10/18/paper/CV/NBV/GenNBV/</div>
     </div>
     <div class="license-meta">
       
@@ -478,7 +443,7 @@ c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>November 19, 2024</div>
+          <div>October 18, 2024</div>
         </div>
       
       
@@ -510,12 +475,18 @@ c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2024/11/19/paper/NLP/jailbreak/sneaky-prompt/" title="『paper-NLP-3』《SneakyPrompt》">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">『paper-NLP-3』《SneakyPrompt》</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/18/paper/NBV/NBV-planning/" title="『paper-NBV-2』《NBV-planning》">
-                        <span class="hidden-mobile">『paper-NBV-2』《NBV-planning》</span>
+                      <a href="/2024/10/18/paper/CV/NBV/NBV-planning/" title="『paper-CV-1』《NBV-planning》">
+                        <span class="hidden-mobile">『paper-CV-1』《NBV-planning》</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

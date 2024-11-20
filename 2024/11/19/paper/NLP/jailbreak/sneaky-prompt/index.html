@@ -16,30 +16,26 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="《NBV&#x2F;NBC Planning Considering Confidence Obtained From Shape Completion Learning》 一、拟解决问题 对于类似“金属薄板”的目标，难以估计其三维原貌  异常区域：反射光干扰 自遮挡：弯曲板面遮挡自身形状   二、相关工作  NBV：从候选视角中选择最佳视角；多基于空间体素分析，无法精确表示薄板细节">
+    <meta name="description" content="《SneakyPrompt: Jailbreaking Text-to-image Generative Models》 一、拟解决问题  现有攻击方式比较低效，进攻开销大 adv prompt 初次使用效果好，重用后效果差 现有攻击方法不太关注生图质量   二、相关工作  文生图模型：Stable Diffusion、DALLE\(\cdot\)E；攻击方法多为手工打造，绕">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『paper-NBV-2』《NBV-planning》">
-<meta property="og:url" content="http://larry0454.github.io/2024/10/18/paper/NBV/NBV-planning/index.html">
+<meta property="og:title" content="『paper-NLP-3』《SneakyPrompt》">
+<meta property="og:url" content="http://larry0454.github.io/2024/11/19/paper/NLP/jailbreak/sneaky-prompt/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="《NBV&#x2F;NBC Planning Considering Confidence Obtained From Shape Completion Learning》 一、拟解决问题 对于类似“金属薄板”的目标，难以估计其三维原貌  异常区域：反射光干扰 自遮挡：弯曲板面遮挡自身形状   二、相关工作  NBV：从候选视角中选择最佳视角；多基于空间体素分析，无法精确表示薄板细节">
+<meta property="og:description" content="《SneakyPrompt: Jailbreaking Text-to-image Generative Models》 一、拟解决问题  现有攻击方式比较低效，进攻开销大 adv prompt 初次使用效果好，重用后效果差 现有攻击方法不太关注生图质量   二、相关工作  文生图模型：Stable Diffusion、DALLE\(\cdot\)E；攻击方法多为手工打造，绕">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/18/paper/NBV/NBV-planning/PCN.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/18/paper/NBV/NBV-planning/NBV-threshold.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/18/paper/NBV/NBV-planning/NBV-optimization.png">
-<meta property="article:published_time" content="2024-10-18T09:59:00.000Z">
-<meta property="article:modified_time" content="2024-10-21T12:02:39.747Z">
+<meta property="article:published_time" content="2024-11-19T15:32:29.000Z">
+<meta property="article:modified_time" content="2024-11-20T15:35:20.283Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="next best view">
-<meta property="article:tag" content="3D reconstruction">
-<meta property="article:tag" content="point cloud">
+<meta property="article:tag" content="reinforcement learning">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="jailbreak">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/10/18/paper/NBV/NBV-planning/PCN.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『paper-NBV-2』《NBV-planning》 - Blog</title>
+  <title>『paper-NLP-3』《SneakyPrompt》 - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -217,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『paper-NBV-2』《NBV-planning》"></span>
+            <span id="subtitle" data-typed-text="『paper-NLP-3』《SneakyPrompt》"></span>
           
         </div>
 
@@ -228,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-18 17:59" pubdate>
-          October 18, 2024 pm
+        <time datetime="2024-11-19 23:32" pubdate>
+          November 19, 2024 pm
         </time>
       </span>
     
@@ -240,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          2.4k words
         
       </span>
     
@@ -251,7 +247,7 @@
         
         
         
-          10 mins
+          21 mins
         
       </span>
     
@@ -297,73 +293,114 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『paper-NBV-2』《NBV-planning》</h1>
+            <h1 style="display: none">『paper-NLP-3』《SneakyPrompt》</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="nbvnbc-planning-considering-confidence-obtained-from-shape-completion-learning">《NBV/NBC
-Planning Considering Confidence Obtained From Shape Completion
-Learning》</h2>
+                <h2 id="sneakyprompt-jailbreaking-text-to-image-generative-models">《SneakyPrompt:
+Jailbreaking Text-to-image Generative Models》</h2>
 <h3 id="一拟解决问题">一、拟解决问题</h3>
-<p>对于类似“金属薄板”的目标，难以估计其三维原貌</p>
 <ul>
-<li>异常区域：反射光干扰</li>
-<li>自遮挡：弯曲板面遮挡自身形状</li>
+<li>现有攻击方式比较低效，进攻开销大</li>
+<li>adv prompt 初次使用效果好，重用后效果差</li>
+<li>现有攻击方法不太关注生图质量</li>
 </ul>
 <hr>
 <h3 id="二相关工作">二、相关工作</h3>
 <ul>
-<li><p>NBV：从候选视角中选择最佳视角；多基于空间体素分析，无法精确表示薄板细节</p></li>
-<li><p>3D形状补全：从部分观测中生成完整三维模型；本文基于PCN模型补全预测，削弱由反光和噪声造成的pc缺失</p></li>
+<li>文生图模型：Stable Diffusion、DALLE<span class="math inline">\(\cdot\)</span>E；攻击方法多为手工打造，绕过率低且多针对非商业模型</li>
+<li>对抗样本：用以混淆模型决策的输入；当前方法无法保持生图语义不变 +
+多轮询问攻击开销大 + adv prompt 在随机种子下不可重用</li>
+<li>强化学习：policy 在当前 state 执行一个 action 并获得 reward；policy
+会执行<strong>未来累计奖励最大</strong>对应的 action</li>
 </ul>
 <hr>
 <h3 id="三研究方法">三、研究方法</h3>
 <ul>
-<li><p>Workflow: 从机械手中的变形金属板开始 <span class="math inline">\(\Rightarrow\)</span>
-外部静态传感器捕捉<strong><u>局部点云</u></strong> <span class="math inline">\(\Rightarrow\)</span> 输入 PCN
-预测<u><strong>全局点云</strong></u> <span class="math inline">\(\Rightarrow\)</span> 计算置信度 <span class="math inline">\(\Rightarrow\)</span>
-若置信度高，就进入网格重建，否则进入 Optimization</p>
-<p><img src="/2024/10/18/paper/NBV/NBV-planning/PCN.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
-<li><p>Point Cloud Completion
-Network：输入局部、不完整的电云，输出完整点云</p>
-<ol type="1">
-<li><p>生成金属板模型：随机指派长宽高，并随机扭曲金属板</p></li>
-<li><p>生成真实视图点云：用<strong>柏松盘采样法</strong>生成金属板的<strong><u>GT点云</u></strong></p></li>
-<li><p>模拟部分视图点云：定义一个角度阈值 <span class="math inline">\(\overline{\psi}\)</span>，当视角小于 <span class="math inline">\(\overline{\psi}\)</span>
-时可视点较多，否则可视点较少
-<br>并进一步引入遮挡和噪声，模拟<strong>更加真实</strong>的视角</p></li>
-<li><p>训练 PCN：input 为多局部视角点云，output 与对应 GT 对齐；loss
-指定为 Earth Mover Distance</p>
-<p><img src="/2024/10/18/paper/NBV/NBV-planning/NBV-threshold.png" srcset="/img/loading.gif" lazyload width="70%"></p></li>
-</ol></li>
-<li><p>NBV Optimization：两个步骤</p>
-<ol type="1">
-<li><p>置信度估计：将 PCN 输出 predictions 下采样为 <span class="math inline">\(n\)</span> 个点，计算每个点 <span class="math inline">\(p_i\)</span> 周围半径 <span class="math inline">\(r\)</span>
-内的<strong><u>邻居数量</u></strong></p>
-<p>记 <span class="math inline">\(\mu(p_i)\)</span> 为 <span class="math inline">\(p_i\)</span> 的邻居数量，则置信度 <span class="math inline">\(c(p_i) = \dfrac{\mu(p_i) - \min \mu}{\max \mu -
-\min \mu + 1}\)</span>
-<br>邻居越多，点云密度越大，说明<strong><u>该领域点云重建效果好</u></strong></p></li>
-<li><p>优化过程：将 NBV 问题转为以下优化问题</p>
-<p><img src="/2024/10/18/paper/NBV/NBV-planning/NBV-optimization.png" srcset="/img/loading.gif" lazyload width="70%"></p>
+<li><p>攻击目标：给定一个提示词 <span class="math inline">\(p_t\)</span>，找到一个绕过过滤器 <span class="math inline">\(\mathcal{F}\)</span> 从而攻击文生图模型 <span class="math inline">\(\mathcal{M}\)</span>
+的<u><strong>对抗样本</strong></u> <span class="math inline">\(p_a\)</span></p>
 <ul>
-<li><p>优化问题定义：</p>
-<ul>
-<li>(2b) 约束：每个 viewpoint <span class="math inline">\(x\)</span>
-满足 6dof 约束</li>
-<li>(2c) 约束：重建输出的完整点云 <span class="math inline">\(\text{S}^{*}\)</span> 需要在 <span class="math inline">\(x\)</span> 射出的相机锥形视角范围内</li>
-<li>(2d) 约束：旋转自由度取值约束</li>
-<li>(2e) 约束：<span class="math inline">\(f\)</span> 输入 由 <span class="math inline">\(\text{S}^{*}\)</span> 重建的三维模型 + viewpoint
-<span class="math inline">\(x\)</span> 得到
-<strong><u>新的局部点云</u></strong> <span class="math inline">\(\tilde{\text{S}}\)</span>；基于 ray-casting
-方法</li>
+<li>生成图 <span class="math inline">\(\mathcal{M}(p_a)\)</span>
+的语义接近原始 <span class="math inline">\(p_t\)</span>：采用余弦相似度衡量 <u>图像嵌入</u>
+和 <u><span class="math inline">\(p_t\)</span> 嵌入</u>的语义相似度</li>
+<li>对抗样本可以绕过安全过滤器，即 <span class="math inline">\(\mathcal{F}(\mathcal{M}, p_a) =
+0\)</span>：持续询问 <span class="math inline">\(\mathcal{M}\)</span>，直至绕过过滤器</li>
+<li>最小化询问 <span class="math inline">\(\mathcal{M}\)</span>
+的次数，即降低攻击成本：采用<u>强化学习</u>策略，根据查询结果扰动更新提示词
+<span class="math inline">\(p_a\)</span></li>
 </ul></li>
-<li><p>如何计算 Gain：对于某一视角 <span class="math inline">\(x\)</span> 对应的 局部电云 <span class="math inline">\(\tilde{\text{S}}\)</span>，Gain <span class="math inline">\(\leftarrow\)</span> Gain + (1 - <span class="math inline">\(c(p_i)\)</span>)</p>
-<p>恰说明置信度越低，该视角下重建的点云越少，增益越大</p></li>
-<li><p>当 <span class="math inline">\(\min \mu &gt; \delta\)</span>
-时，优化迭代结束</p></li>
+<li><p>攻击算法：</p>
+<ol type="1">
+<li><p>离线查询：使用 <strong>影子编码器</strong> <span class="math inline">\(\hat{\epsilon}\)</span>
+执行离线查询，得到原始提示词 <span class="math inline">\(p_t\)</span>
+的嵌入 <span class="math inline">\(\hat{\epsilon}(p_t)\)</span></p></li>
+<li><p>初始化采样空间：设 <span class="math inline">\(\mathcal{S}\)</span>
+为总搜索空间，其中每个行为对应一个 <span class="math inline">\(\mathcal{C}\)</span></p></li>
+<li><p>循环迭代在线查询：设查询迭代次数上限为 <span class="math inline">\(Q\)</span>，当前迭代轮次为 <span class="math inline">\(q\)</span>，<span class="math inline">\(\mathcal{P}\)</span> 为强化学习算法</p>
+<ol type="1">
+<li><p>采样：对 <span class="math inline">\(p_t\)</span> 中 <span class="math inline">\(n\)</span> 个敏感词的每个词找指派 <span class="math inline">\(m\)</span> 个候选替换词，形成 <span class="math inline">\(\mathcal{C} = \{c_{11}, \dots,
+c_{nm}\}\)</span></p>
+<ul>
+<li><p>暴力采样：从单词长度为 <span class="math inline">\(l\)</span>
+的单词表中随机挑选 <span class="math inline">\(nm\)</span> 个单词，得到
+<span class="math inline">\(\mathcal{C}\)</span></p></li>
+<li><p>贪婪采样：设已选出 <span class="math inline">\(j\)</span> 个单词
+<span class="math inline">\((c_1, \dots, c_j)\)</span>，继续选使 <span class="math inline">\((c_1, \dots, c_{j+1})\)</span> 与 <span class="math inline">\(p_t\)</span> 间距最近的 <span class="math inline">\(c_{j+1}\)</span>，直至选出 <span class="math inline">\(nm\)</span> 个单词</p></li>
+<li><p>光束采样：设置 <span class="math inline">\(k\)</span>
+条单词链，每条单词链长度为 <span class="math inline">\(j\)</span>，下一步为各单词链的第 <span class="math inline">\(j+1\)</span> 位选出 <span class="math inline">\(k\)</span> 个候选单词，得到 <span class="math inline">\(k^2\)</span> 条链 <br>再筛除与 <span class="math inline">\(p_t\)</span> 间距离最远的 <span class="math inline">\(k^2 - k\)</span> 个链条得到长度为 <span class="math inline">\(j+1\)</span> 的 <span class="math inline">\(k\)</span> 条单词链；最后选出长度为 <span class="math inline">\(nm\)</span>，且距 <span class="math inline">\(p_t\)</span> 最近的链</p></li>
+<li><p>强化学习：policy network 用 LSTM 建模，根据 <span class="math inline">\(P(c_j \ | \ c_1 c_2 \dots c_{j-1})\)</span> 选出
+<span class="math inline">\(c_j\)</span>，直至选出 <span class="math inline">\(nm\)</span> 个单词</p></li>
+</ul>
+<p>最后，对 <span class="math inline">\(p_a\)</span> 中的第 <span class="math inline">\(i\)</span> 个敏感词用其候选单词集合 <span class="math inline">\(\{c_{i1}, \dots, c_{im} \}\)</span>
+进行替换</p></li>
+<li><p>在线查询：用 <span class="math inline">\(p_a\)</span> 查询 <span class="math inline">\(\mathcal{M}\)</span> 得到 <span class="math inline">\(\mathcal{M}(p_{a})\)</span></p>
+<ul>
+<li>若 绕过防御，记奖励 <span class="math inline">\(r_q\)</span>
+为<strong><u>正的</u></strong> <span class="math inline">\(\text{Sim}(\mathcal{M}(p_{a}), \
+\hat{\epsilon}(p_t))\)</span></li>
+<li>若 未绕过防御，记奖励 <span class="math inline">\(r_q\)</span>
+为<u><strong>负的</strong></u> <span class="math inline">\(-\dfrac{q}{10
+\cdot Q}\)</span></li>
+</ul>
+<p>若 <span class="math inline">\(r_q &gt; r_{max}\)</span>，更新 <span class="math inline">\(r_{max}, \ p_a, \
+\mathcal{M}(p_a)\)</span></p></li>
+<li><p>更新采样策略：用 学习率 <span class="math inline">\(\eta\)</span>
+和 <span class="math inline">\(r_q\)</span> 更新 policy network <span class="math inline">\(P\)</span>，其损失函数 <span class="math inline">\(\mathcal{L} = -r_q \ln (P)\)</span></p></li>
+<li><p>迭代终止判断：三种情况</p>
+<ul>
+<li>若 <span class="math inline">\(r_q &gt; \textbf{Threshold} &gt;
+0\)</span>，直接返回当前 <span class="math inline">\(p_a\)</span> 和
+<span class="math inline">\(\mathcal{M}(p_a)\)</span>，算法结束</li>
+<li>若 <span class="math inline">\(r_{q-3,\ q-2,\ q-1}\)</span>
+<strong>波动很小</strong>，或 <span class="math inline">\(p_a\)</span>
+中<strong>被替换的单词比例</strong>超过 30%，直接返回当前 <span class="math inline">\(p_a\)</span> 和 <span class="math inline">\(\mathcal{M}(p_a)\)</span>，算法结束</li>
+<li>若 <span class="math inline">\(r_{q-1, \ \dots, \ q-5} &lt;
+0\)</span>，进一步<u>扩大采样范围</u> <span class="math inline">\(\mathcal{S}\)</span>，<u><strong>继续迭代</strong></u></li>
 </ul></li>
 </ol></li>
+</ol></li>
+<li><p>采样空间算法 <span class="math inline">\(\mathcal{S}\)</span>：设
+敏感词词表 为 <span class="math inline">\(keywords\)</span>，原始提示词为 <span class="math inline">\(p_t\)</span>，单词长度为 <span class="math inline">\(l\)</span> 的单词表为 <span class="math inline">\(\mathcal{D}_l\)</span></p>
+<ul>
+<li>初始 <span class="math inline">\(\mathcal{S}\)</span>：记 <span class="math inline">\(p_t\)</span> 中与 <span class="math inline">\(keywords\)</span> 匹配的敏感词数量为 <span class="math inline">\(n\)</span>，则返回 <span class="math inline">\(\mathcal{S} = \{(c_1, \dots, c_{nm}) \ | \ c_j \in
+\mathcal{D}_l, \ j = 1, \dots, nm \}\)</span></li>
+<li>扩展 <span class="math inline">\(\mathcal{S}\)</span>：<span class="math inline">\(n \leftarrow n+1\)</span>，返回 <span class="math inline">\(\mathcal{S} = \{(c_{11}, \dots, c_{(n+1)m}) \ | \
+c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="四实验评估">四、实验评估</h3>
+<ul>
+<li>SneakyPrompt 提高了 Bypass rate</li>
+<li>SneakyPrompt 提高了生图效果 (FID)</li>
+<li>RL 奖励函数选择：
+<ul>
+<li><span class="math inline">\(\cos (\mathcal{M}(\mathcal{p_a}), \
+\hat{\epsilon}(p_t))\)</span>：更高的绕过率 + 更好的生图质量</li>
+<li><span class="math inline">\(1 - \mathcal{l}_2(\hat{\epsilon}(p_t), \
+\hat{\epsilon(p_a)})\)</span>：更少的查询次数</li>
+</ul></li>
 </ul>
 
                 
@@ -388,8 +425,15 @@ Network：输入局部、不完整的电云，输出完整点云</p>
   
     <span>></span>
     
-  <a href="/categories/paper/NBV/" class="category-chain-item">NBV</a>
+  <a href="/categories/paper/NLP/" class="category-chain-item">NLP</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/paper/NLP/jailbreak/" class="category-chain-item">jailbreak</a>
+  
+  
+
   
 
   
@@ -405,11 +449,11 @@ Network：输入局部、不完整的电云，输出完整点云</p>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/next-best-view/">#next best view</a>
+        <a href="/tags/reinforcement-learning/">#reinforcement learning</a>
       
-        <a href="/tags/3D-reconstruction/">#3D reconstruction</a>
+        <a href="/tags/LLM/">#LLM</a>
       
-        <a href="/tags/point-cloud/">#point cloud</a>
+        <a href="/tags/jailbreak/">#jailbreak</a>
       
     </div>
   
@@ -421,8 +465,8 @@ Network：输入局部、不完整的电云，输出完整点云</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『paper-NBV-2』《NBV-planning》</div>
-      <div>http://larry0454.github.io/2024/10/18/paper/NBV/NBV-planning/</div>
+      <div>『paper-NLP-3』《SneakyPrompt》</div>
+      <div>http://larry0454.github.io/2024/11/19/paper/NLP/jailbreak/sneaky-prompt/</div>
     </div>
     <div class="license-meta">
       
@@ -434,7 +478,7 @@ Network：输入局部、不完整的电云，输出完整点云</p>
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>October 18, 2024</div>
+          <div>November 19, 2024</div>
         </div>
       
       
@@ -466,18 +510,12 @@ Network：输入局部、不完整的电云，输出完整点云</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/11/19/paper/NLP/sneaky-prompt/" title="『paper-NLP-2』《SneakyPrompt》">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『paper-NLP-2』《SneakyPrompt》</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/18/paper/NBV/GenNBV/" title="『paper-NBV-1』《GenNBV》">
-                        <span class="hidden-mobile">『paper-NBV-1』《GenNBV》</span>
+                      <a href="/2024/10/18/paper/CV/NBV/GenNBV/" title="『paper-CV-2』《GenNBV》">
+                        <span class="hidden-mobile">『paper-CV-2』《GenNBV》</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
