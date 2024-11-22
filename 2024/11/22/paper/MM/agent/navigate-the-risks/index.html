@@ -16,32 +16,30 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="《RAG for NLP: A Survey》  From ArXiv (2024)  一、LLM 的问题  “幻觉“问题：LLM 会生成看似合理流畅，但实际是错误的回答 ”知识更新“问题：基于新的知识重新训练&#x2F;微调 LLM 开销非常大 “特定领域”问题：LLM 不具备针对特定领域的专业知识   二、Retriever  Retriever 的组成：三部分  e">
+    <meta name="description" content="《A Survey of Security, Privacy, and Ethics Threats in LLM-Based Agents》  From ArXiv (2024)  一、LLM-Based Agents 安全  与启发式&#x2F;强化学习 Agents 的区别：LLM Agents 可与用户交流，其庞大的知识量可支撑其像人类一样理解 + 规划 LLM-Based A">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『paper-NLP-2』《RAG for NLP: A Survey》">
-<meta property="og:url" content="http://larry0454.github.io/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/index.html">
+<meta property="og:title" content="『paper-MM-1』《A Survey on Threats in LLM-Based Agents》">
+<meta property="og:url" content="http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="《RAG for NLP: A Survey》  From ArXiv (2024)  一、LLM 的问题  “幻觉“问题：LLM 会生成看似合理流畅，但实际是错误的回答 ”知识更新“问题：基于新的知识重新训练&#x2F;微调 LLM 开销非常大 “特定领域”问题：LLM 不具备针对特定领域的专业知识   二、Retriever  Retriever 的组成：三部分  e">
+<meta property="og:description" content="《A Survey of Security, Privacy, and Ethics Threats in LLM-Based Agents》  From ArXiv (2024)  一、LLM-Based Agents 安全  与启发式&#x2F;强化学习 Agents 的区别：LLM Agents 可与用户交流，其庞大的知识量可支撑其像人类一样理解 + 规划 LLM-Based A">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/build-retriever.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/query-retriever.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/query-based-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/logits-based-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/latent-fusions.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/train-without-update.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/train-with-update.png">
-<meta property="article:published_time" content="2024-10-13T09:12:40.000Z">
-<meta property="article:modified_time" content="2024-11-22T15:49:07.258Z">
+<meta property="og:image" content="http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/new-taxonomy.png">
+<meta property="og:image" content="http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/structure.png">
+<meta property="article:published_time" content="2024-11-22T15:25:55.000Z">
+<meta property="article:modified_time" content="2024-11-22T15:51:10.910Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="agent">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Multimodal">
+<meta property="article:tag" content="safety">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/build-retriever.png">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/new-taxonomy.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『paper-NLP-2』《RAG for NLP: A Survey》 - Blog</title>
+  <title>『paper-MM-1』《A Survey on Threats in LLM-Based Agents》 - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -219,7 +217,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『paper-NLP-2』《RAG for NLP: A Survey》"></span>
+            <span id="subtitle" data-typed-text="『paper-MM-1』《A Survey on Threats in LLM-Based Agents》"></span>
           
         </div>
 
@@ -230,8 +228,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-13 17:12" pubdate>
-          October 13, 2024 pm
+        <time datetime="2024-11-22 23:25" pubdate>
+          November 22, 2024 pm
         </time>
       </span>
     
@@ -242,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          1.6k words
         
       </span>
     
@@ -253,7 +251,7 @@
         
         
         
-          15 mins
+          14 mins
         
       </span>
     
@@ -299,127 +297,112 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『paper-NLP-2』《RAG for NLP: A Survey》</h1>
+            <h1 style="display: none">『paper-MM-1』《A Survey on Threats in LLM-Based Agents》</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="rag-for-nlp-a-survey">《RAG for NLP: A Survey》</h2>
+                <h2 id="a-survey-of-security-privacy-and-ethics-threats-in-llm-based-agents">《A
+Survey of Security, Privacy, and Ethics Threats in LLM-Based
+Agents》</h2>
 <p class="note note-info">
 From ArXiv (2024)
 </p>
-<h3 id="一llm-的问题">一、LLM 的问题</h3>
+<h3 id="一llm-based-agents-安全">一、LLM-Based Agents 安全</h3>
 <ul>
-<li>“幻觉“问题：LLM
-会生成看似合理流畅，但实际是<strong>错误</strong>的回答</li>
-<li>”知识更新“问题：基于新的知识重新训练/微调 LLM
-<strong>开销非常大</strong></li>
-<li>“特定领域”问题：LLM
-不具备针对<strong>特定领域</strong>的专业知识</li>
+<li><p>与启发式/强化学习 Agents 的区别：LLM Agents
+可<strong><u>与用户交流</u></strong>，其庞大的知识量可支撑其<u><strong>像人类一样</strong></u>理解
++ 规划</p></li>
+<li><p>LLM-Based Agents 的脆弱性：<u>多轮对话</u> + <u>多源输入</u>
+为智能体引入了更多威胁</p></li>
+<li><p>现有的<strong>针对安全威胁</strong>的分类学：模块化 or 阶段化</p>
+<ul>
+<li>模块化：输入模块 + 决策模块 + 工具链模块 + 输出模块</li>
+<li>阶段化：感知阶段 <span class="math inline">\(\rightarrow\)</span>
+内部执行阶段 <span class="math inline">\(\rightarrow\)</span>
+环境执行阶段 <span class="math inline">\(\rightarrow\)</span>
+外部交互阶段</li>
+</ul>
+<p>各种威胁往往是跨模块/跨阶段的，难以精确定位到单个模块/阶段</p></li>
+<li><p><strong>全新</strong>的分类学：基于
+<strong><u>威胁源</u></strong>+<strong><u>威胁类型</u></strong>
+的分类方法</p>
+<ul>
+<li>威胁源：模型输入 or 模型本身 or 两者混合（左 1/4）</li>
+<li>威胁类型：安全 or 隐私 or 道德（右 3/4）</li>
+</ul>
+<p><img src="/2024/11/22/paper/MM/agent/navigate-the-risks/new-taxonomy.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
 </ul>
 <hr>
-<h3 id="二retriever">二、Retriever</h3>
+<h3 id="二关于-llm-based-agents">二、关于 LLM-Based Agents</h3>
 <ul>
-<li><p>Retriever 的组成：三部分</p>
+<li><p>LLM-Based Agents 结构：</p>
 <ul>
-<li>encoder：将 inputs 编码为 embeddings</li>
-<li>indexing：基于ANN(近似最邻近算法)查询相关向量</li>
-<li>datastore：以“K-V”形式存储<strong>外部知识</strong>的数据库</li>
-</ul></li>
-<li><p>构造 Retriever：四步骤</p>
-<ol type="1">
-<li><p>语料切块：将原始文档切分为小块</p>
-<ul>
-<li>分块间语义应<strong>相互独立</strong>，各分块语义<strong>不应模糊</strong>，只能包含一种核心观点</li>
-<li>对较短的分块编码速度更快，更省显存</li>
+<li>输入模块：接收用户<strong>输入</strong> <span class="math inline">\(\rightarrow\)</span> 检测有害信息 or 纯化 <span class="math inline">\(\rightarrow\)</span> 追加提示词</li>
+<li>决策模块：根据用户输入<strong>给出规划和回应</strong>；简单任务可使用单一
+LLM，复杂任务可使用多 LLM 实现</li>
+<li>外挂实体：将 记忆模块 (数据库 or RAG) + 外部工具 (搜索引擎 or
+机械单元) 作为执行复杂任务的<strong>辅助工具</strong></li>
+<li>输出模块：任务执行结束后，agents
+通过输出模块<strong>向用户返回结果</strong>，同时执行安全检测</li>
 </ul>
-<p>分块大小是决定<strong>分块语义</strong>+<strong>编码效率</strong>的核心因素，分块大小取决于RAG场景：</p>
+<p><img src="/2024/11/22/paper/MM/agent/navigate-the-risks/structure.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<li><p>LLM-Based Agents 特征：如下特征带来了新的安全隐患</p>
 <ul>
-<li>任务角度：问答任务用小块，摘要任务用大块</li>
-<li>编码角度：编码器模型决定了适用的分块大小</li>
-<li>查询角度：分块大小应与用户查询大小匹配</li>
-</ul>
-<p>分块方法：三种</p>
-<ul>
-<li>定长分割</li>
-<li>基于语义分割：按 语句周期 or 换行 分割</li>
-<li>基于内容分割：按 章节 or 代码块 分割</li>
-</ul></li>
-<li><p>切块编码：</p>
-<ul>
-<li>稀疏编码：用高维向量表示一段 chunk，向量中有很多 0
-<ul>
-<li>词袋模型：一段 chunk <span class="math inline">\(\Leftrightarrow\)</span>
-一个定长向量，每个维度指对应词出现的<strong>次数</strong>；只考虑单词数量，不考虑单词位置和语义</li>
-<li><span class="math inline">\(\text{TF} \times \text{IDF}\)</span>
-：<span class="math inline">\(\text{TF}(t,d) = \dfrac{t_d}{d}\)</span>
-（衡量单词 t 在文档 d 中的重要程度） <br> <span class="math inline">\(\text{IDF(t)}=\log (\dfrac{N}{n_t + 1})\)</span>
-（<strong>削弱常见停用词的重要性</strong>）</li>
-</ul></li>
-<li>稠密编码：基于深度学习模型生成，每个维度是浮点数，记录语义信息，0
-很少</li>
-</ul></li>
-<li><p>构建索引：加速高维空间中与用户 query 接近的向量</p>
-<ul>
-<li>相似度衡量：余弦相似度，欧氏距离，曼哈顿距离 等</li>
-<li>嵌入降维：PCA、LSH，以及 Product Quantization (子空间码本) <br>降低
-embed 维度可提高搜索效率，但也可能丢失语义信息</li>
-<li>ANN索引：优化存储结构，从而优化ANN算法</li>
-</ul></li>
-<li><p>构建向量数据库：K<span class="math inline">\(\leftrightarrow\)</span>V 指 domain-specific
-<strong>embed</strong> <span class="math inline">\(\leftrightarrow\)</span> domain-specific
-<strong>chunk</strong> <br>算法见 (Algorithm Wu 等, 2024, page
-4)，以分块嵌入 <span class="math inline">\(e_i\)</span> 为 key，以分块
-<span class="math inline">\(c_i, c_{i+1}\)</span> 为 value，并在 key
-上建索引</p></li>
-</ol>
-<p><img src="/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/build-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>查询 Retriever：两步骤</p>
-<ol type="1">
-<li>查询编码：查找相关性 top-k 的索引，返回数据库中对应的 values</li>
-<li>后处理：重排序 (根据任务类型重新排序)</li>
-</ol>
-<p><img src="/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/query-retriever.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>Retriever 融合：三种</p>
-<ul>
-<li><p>query-based：先编码 query 和各 retrievals (可选)，再拼接 query 和
-retrievals，最后输入给 LLM <br>算法见 (algorithm Wu 等, 2024, page
-6)</p>
-<p><img src="/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/query-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>logits-based：先将 query 和各 retrievals 输入
-LLM，再对各输出响应<strong>加权求和</strong> <br>算法见 (algorithm Wu
-等, 2024, page 6)，有“集成”和“校准”两种方法</p>
-<p><img src="/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/logits-based-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
-<li><p>latent-based：将 retrievals 融入 LLM 的 hidden-states <br>算法见
-(algorithm Wu 等, 2024, page
-7)，有"attention-based"和"weighted"（开销较小）两种集成方法，RAG
-使用较多</p>
-<p><img src="/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/latent-fusions.png" srcset="/img/loading.gif" lazyload width="60%"></p></li>
+<li>LLM 核心控制器：agents
+的控制核心，具备强大的<strong>理解规划能力</strong></li>
+<li>多模态输入输出：复杂任务场景需要引入<strong>多模态输入输出</strong></li>
+<li>多源输入：LLM core 与 <u>用户</u>、<u>系统提示词</u>、<u>外挂</u> 和
+<u>外部环境</u> 交互</li>
+<li>多轮交互：LLM core 在复杂任务中需要与 <u>上述对象</u>
+进行多轮交互</li>
+<li>记忆机制：记忆模块帮助 agents
+<strong>积累经验知识</strong>、提高解决多样化问题的能力</li>
+<li>工具调用：LLM
+经过指令微调可以<strong>调用工具</strong>，从而执行更加复杂的任务</li>
 </ul></li>
 </ul>
 <hr>
-<h3 id="三generator">三、Generator</h3>
+<h3 id="三输入风险">三、输入风险</h3>
 <ul>
-<li>LLM 经典分支：Llama, GPT, Gemini 等</li>
-<li>当前 RAG 多设计拓展模块，采用 latent-based 方法</li>
-</ul>
-<hr>
-<h3 id="四rag-training">四、RAG Training</h3>
+<li><p>对抗样本：经过<strong>微小扰动</strong>的、保留<strong>原始语义</strong>，但是能够<strong><u>混淆目标模型</u></strong>的样本，形式如下：
+<span class="math display">\[
+\begin{align}
+\delta^{*} &amp;= \text{argmin}_{\delta \in \Delta} SemDist(x, \
+x+\delta) \\
+&amp; \text{s.t.} \begin{cases}
+g(x+\delta^{*}) \ne o &amp; (\text{untargeted}) \\ \\
+g(x+\delta^{*}) = t &amp; (\text{targeted})
+\end{cases}
+\end{align}
+\]</span> 其中 <span class="math inline">\(\Delta\)</span>
+表示可行的扰动范围，<span class="math inline">\(g\)</span>
+表示深度学习模型，<span class="math inline">\(SemDist\)</span>
+表示<strong>语义间距</strong>，<span class="math inline">\(o\)</span>
+是<u>原始</u>的样本输出标签</p>
 <ul>
-<li><p>训练方案：两种，”数据库更新”和“数据库不更新”</p></li>
-<li><p>数据库不更新：三种方式</p>
+<li><p>攻击方式：白盒攻击、黑盒攻击、灰盒攻击；包括 <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2023/papers/Liu_RIATIG_Reliable_and_Imperceptible_Adversarial_Text-to-Image_Generation_With_Natural_Prompts_CVPR_2023_paper.pdf">RIATIC</a>、<a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper_files/paper/2023/file/a5e3cf29c269b041ccd644b6beaf5c42-Paper-Conference.pdf">VLATTACK</a>、<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/ICCV2023/papers/Lu_Set-level_Guidance_Attack_Boosting_Adversarial_Transferability_of_Vision-Language_Pre-training_Models_ICCV_2023_paper.pdf">SGA</a>、<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/10646738">TMM</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/html/2307.02849v2">NatLogAttack</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.03655">DGSlow</a></p>
+<p>攻击局限性：大多仅支持<strong>非定向攻击</strong>；仅用单模态指标计算多模态攻击效果；攻击面仍不够广泛</p></li>
+<li><p>防御方式：防御性蒸馏、监督微调、混淆梯度、可证明鲁棒性；包括 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2105.14553">ADFAR</a>、<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2024/papers/Li_One_Prompt_Word_is_Enough_to_Boost_Adversarial_Robustness_for_CVPR_2024_paper.pdf">APT</a>、<a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2021/file/22b1f2e0983160db6f7bb9f62f4dbb39-Paper.pdf">RIFT</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2011.08908">SHIELD</a></p>
+<p>防御局限性：大多仅支持<strong>单</strong>模态 or
+<strong>单</strong>模型的防御；防御范围仍不够广泛</p></li>
+</ul></li>
+<li><p>目标劫持：通过某种对抗性输入，使模型偏离原始意图</p>
 <ul>
-<li><p>训练 Retriever：仅针对
-dense-encoder，用于提升语义表征、加速编码，或 学习特定领域的知识
-<br>encoder 改变 <span class="math inline">\(\rightarrow\)</span> embed
-改变 <span class="math inline">\(\rightarrow\)</span> index
-改变</p></li>
-<li><p>训练 Generator：LoRA</p></li>
-<li><p>联合训练：端到端优化，同时提升 retriever 和 generator</p></li>
-</ul>
-<p><img src="/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/train-without-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
-<li><p>数据库更新：插入新的 K-V 或 修改 values</p>
-<p><img src="/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/train-with-update.png" srcset="/img/loading.gif" lazyload width="50%"></p></li>
+<li><p>攻击方式：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2404.02637">字典搜索</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2405.14189">梯度优化</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2408.03554">视觉语义注入</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2403.03792">外挂数据库投毒</a></p></li>
+<li><p>防御方式：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2403.14720">提示工程与优化</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2404.13208">监督微调</a></p>
+<p>防御局限性：尚无全面综合的跨模态防御方式</p></li>
+</ul></li>
+<li><p>模型窃取：用<u>尽可能低的开销</u>获得接近于黑盒商用模型的<strong><u>克隆模型</u></strong></p>
+<ul>
+<li><p>攻击方式：<a target="_blank" rel="noopener" href="https://proceedings.mlr.press/v139/zanella-beguelin21a.html">从功能角度仿制模型</a>
+or <a target="_blank" rel="noopener" href="https://www.usenix.org/system/files/sec20-jagielski.pdf">窃取完整模型</a></p>
+<p>攻击局限性：难以窃取大模型的完整权重；难以复制 agent 系统内 LLM
+的<strong>完整输入输出</strong></p></li>
+<li><p>防御方式：目前主要为被动防御，如<a target="_blank" rel="noopener" href="https://proceedings.mlr.press/v202/zhao23i/zhao23i.pdf">给模型输出加水印</a></p>
+<p>防御局限性：所有使用同一 LLM core 的下游 agent
+会因为一个模型被窃取而导致所有 agent 被窃取</p></li>
+</ul></li>
 </ul>
 
                 
@@ -444,12 +427,12 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
   
     <span>></span>
     
-  <a href="/categories/paper/NLP/" class="category-chain-item">NLP</a>
+  <a href="/categories/paper/MM/" class="category-chain-item">MM</a>
   
   
     <span>></span>
     
-  <a href="/categories/paper/NLP/LLM/" class="category-chain-item">LLM</a>
+  <a href="/categories/paper/MM/agent/" class="category-chain-item">agent</a>
   
   
 
@@ -468,7 +451,13 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/RAG/">#RAG</a>
+        <a href="/tags/agent/">#agent</a>
+      
+        <a href="/tags/LLM/">#LLM</a>
+      
+        <a href="/tags/Multimodal/">#Multimodal</a>
+      
+        <a href="/tags/safety/">#safety</a>
       
     </div>
   
@@ -480,8 +469,8 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『paper-NLP-2』《RAG for NLP: A Survey》</div>
-      <div>http://larry0454.github.io/2024/10/13/paper/NLP/LLM/RAG-for-NLP-A-Survey/</div>
+      <div>『paper-MM-1』《A Survey on Threats in LLM-Based Agents》</div>
+      <div>http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/</div>
     </div>
     <div class="license-meta">
       
@@ -493,7 +482,7 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>October 13, 2024</div>
+          <div>November 22, 2024</div>
         </div>
       
       
@@ -525,18 +514,12 @@ dense-encoder，用于提升语义表征、加速编码，或 学习特定领域
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/18/paper/CV/NBV/NBV-planning/" title="『paper-CV-1』《NBV-planning》">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『paper-CV-1』《NBV-planning》</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/13/tools/HuggingFace/" title="『tools-1』HuggingFace">
-                        <span class="hidden-mobile">『tools-1』HuggingFace</span>
+                      <a href="/2024/11/19/paper/NLP/LLM/sneaky-prompt/" title="『paper-NLP-3』《SneakyPrompt》">
+                        <span class="hidden-mobile">『paper-NLP-3』《SneakyPrompt》</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
