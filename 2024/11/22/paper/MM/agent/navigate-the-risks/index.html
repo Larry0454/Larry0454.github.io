@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/new-taxonomy.png">
 <meta property="og:image" content="http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/structure.png">
 <meta property="article:published_time" content="2024-11-22T15:25:55.000Z">
-<meta property="article:modified_time" content="2024-11-22T15:51:10.910Z">
+<meta property="article:modified_time" content="2024-11-26T15:30:52.919Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="agent">
 <meta property="article:tag" content="LLM">
@@ -240,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k words
+          1.8k words
         
       </span>
     
@@ -251,7 +251,7 @@
         
         
         
-          14 mins
+          15 mins
         
       </span>
     
@@ -402,6 +402,14 @@ or <a target="_blank" rel="noopener" href="https://www.usenix.org/system/files/s
 <li><p>防御方式：目前主要为被动防御，如<a target="_blank" rel="noopener" href="https://proceedings.mlr.press/v202/zhao23i/zhao23i.pdf">给模型输出加水印</a></p>
 <p>防御局限性：所有使用同一 LLM core 的下游 agent
 会因为一个模型被窃取而导致所有 agent 被窃取</p></li>
+</ul></li>
+<li><p>提示词泄露：攻击者通过某种手段获得<strong><u>系统提示词</u></strong>（用来执行任务规划的<strong>内部</strong>提示词）</p>
+<ul>
+<li><p>攻击方式：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2405.06823">优化前缀/后缀</a>，<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2405.15012">训练逆向模型</a>，<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.19200">逆向工程</a>；<a target="_blank" rel="noopener" href="https://iclr.cc/virtual/2024/poster/17767">多模态隐层优化</a></p>
+<p>攻击局限性：仅攻击 LLM core，未考虑 planner 等其他组件</p></li>
+<li><p>防御方式：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2408.02416">提示工程</a>
+or <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.02816">提示词加水印</a></p>
+<p>防御局限性：当前防御面应扩展到 LLM core 以外更多的组件</p></li>
 </ul></li>
 </ul>
 
