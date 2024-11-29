@@ -16,28 +16,26 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="《Generalizable Next-Best-View Policy for Active 3D Reconstruction》  From IEEE&#x2F;CVF Computer Vision and Pattern Recognition Conference (2024)  一、拟解决问题  大规模场景数字化：图像捕捉费时费力 现有 NBV 问题：基于实际经验的视角选取 +">
+    <meta name="description" content="《Towards Deep Learning Models Resistant to Adversarial Attacks》  From International Conference on Learning Representations (2018)  一、本文贡献  将过去的深度学习模型攻击&#x2F;防御方法融合到同一个框架下，抵抗广泛而非单一的攻击类别 证明了 Projecte">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『paper-CV-2』《GenNBV》">
-<meta property="og:url" content="http://larry0454.github.io/2024/10/18/paper/CV/NBV/GenNBV/index.html">
+<meta property="og:title" content="『paper-CV-3』《PGD》">
+<meta property="og:url" content="http://larry0454.github.io/2024/11/29/paper/CV/AML/PGD/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="《Generalizable Next-Best-View Policy for Active 3D Reconstruction》  From IEEE&#x2F;CVF Computer Vision and Pattern Recognition Conference (2024)  一、拟解决问题  大规模场景数字化：图像捕捉费时费力 现有 NBV 问题：基于实际经验的视角选取 +">
+<meta property="og:description" content="《Towards Deep Learning Models Resistant to Adversarial Attacks》  From International Conference on Learning Representations (2018)  一、本文贡献  将过去的深度学习模型攻击&#x2F;防御方法融合到同一个框架下，抵抗广泛而非单一的攻击类别 证明了 Projecte">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/10/18/paper/CV/NBV/GenNBV/GenNBV.png">
-<meta property="article:published_time" content="2024-10-18T10:37:59.000Z">
-<meta property="article:modified_time" content="2024-11-29T15:36:36.098Z">
+<meta property="article:published_time" content="2024-11-29T15:32:41.000Z">
+<meta property="article:modified_time" content="2024-11-29T15:42:26.706Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="next best view">
-<meta property="article:tag" content="3D reconstruction">
-<meta property="article:tag" content="reinforcement learning">
+<meta property="article:tag" content="adversarial machine learning">
+<meta property="article:tag" content="PGD">
+<meta property="article:tag" content="FSGM">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/10/18/paper/CV/NBV/GenNBV/GenNBV.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『paper-CV-2』《GenNBV》 - Blog</title>
+  <title>『paper-CV-3』《PGD》 - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -215,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『paper-CV-2』《GenNBV》"></span>
+            <span id="subtitle" data-typed-text="『paper-CV-3』《PGD》"></span>
           
         </div>
 
@@ -226,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-18 18:37" pubdate>
-          October 18, 2024 pm
+        <time datetime="2024-11-29 23:32" pubdate>
+          November 29, 2024 pm
         </time>
       </span>
     
@@ -238,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k words
+          1.7k words
         
       </span>
     
@@ -249,7 +247,7 @@
         
         
         
-          12 mins
+          15 mins
         
       </span>
     
@@ -295,80 +293,96 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『paper-CV-2』《GenNBV》</h1>
+            <h1 style="display: none">『paper-CV-3』《PGD》</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="generalizable-next-best-view-policy-for-active-3d-reconstruction">《Generalizable
-Next-Best-View Policy for Active 3D Reconstruction》</h2>
+                <h2 id="towards-deep-learning-models-resistant-to-adversarial-attacks">《Towards
+Deep Learning Models Resistant to Adversarial Attacks》</h2>
 <p class="note note-info">
-From IEEE/CVF Computer Vision and Pattern Recognition Conference (2024)
+From International Conference on Learning Representations (2018)
 </p>
-<h3 id="一拟解决问题">一、拟解决问题</h3>
+<h3 id="一本文贡献">一、本文贡献</h3>
 <ul>
-<li>大规模场景数字化：图像捕捉费时费力</li>
-<li>现有 NBV 问题：基于实际经验的视角选取 +
-人工限定的action范围，限制针对陌生场景的泛化能力</li>
-</ul>
-<p>需要改进
-NBV，使其支持<u><strong>任意场景下</strong></u>的主动探索</p>
-<hr>
-<h3 id="二相关工作">二、相关工作</h3>
+<li>将过去的深度学习模型攻击/防御方法融合到<strong>同一个框架下</strong>，抵抗广泛而非单一的攻击类别</li>
+<li>证明了 Projected Gradient Descent (PGD)
+是<u>鞍点问题的<strong>最佳优化方法</strong></u>
 <ul>
-<li>传统三维重建：利用光度和几何信息进行重建评估，展现出大规模场景中的重建能力，但泛化性较差、实时性差</li>
-<li>主动三维重建：NBV，依赖于人工制定视角选取标准，候选视角有限，仅在特定场景下表现较好，泛化性同样较差</li>
-</ul>
-<hr>
-<h3 id="三研究方法">三、研究方法</h3>
-<p><img src="/2024/10/18/paper/CV/NBV/GenNBV/GenNBV.png" srcset="/img/loading.gif" lazyload width="80%"></p>
-<ul>
-<li><p>NBV 问题描述：（对无人机）给定当前观测 <span class="math inline">\(o_t\)</span>，执行 <span class="math inline">\(a_t\)</span>，到达下一个观测点 <span class="math inline">\(o_{t+1}\)</span></p>
-<ul>
-<li>观测空间：<span class="math inline">\(o_t\)</span> <span class="math inline">\(\leftarrow\)</span> 过去所有捕捉的RGB图片 +
-所有深度信息D + 所有5D位姿 <span class="math inline">\((x,y,z,
-y,p)\)</span></li>
-<li>行动空间：相机三维位置空间 <span class="math inline">\((x, y,
-z)\)</span> + 二维旋转空间 <span class="math inline">\((y,
-p)\)</span>（不支持 <span class="math inline">\(r\)</span>）</li>
+<li>PGD 是 <strong>一阶</strong>最强对抗攻击方法</li>
+<li>针对 PGD 对抗攻击提出<strong>对抗训练</strong>策略</li>
 </ul></li>
-<li><p>可泛化状态嵌入：</p>
+<li>揭示了抵御对抗攻击需要<strong>更大的网络容量</strong>：解决鞍点问题的
+<u>鲁棒决策边界</u> 比 <u>普通决策边界</u> 复杂得多</li>
+<li>在数据集 <u>MNIST</u> 和 <u>CIFAR10</u>
+上训练出针对各种对抗攻击都具备防御能力的鲁棒网络</li>
+</ul>
+<hr>
+<h3 id="二对抗鲁棒性">二、对抗鲁棒性</h3>
 <ul>
-<li><p>几何表征：将 <span class="math inline">\(t\)</span>
-时刻场景划分为 3D Grids <span class="math inline">\(F_t^G\)</span>，用概率表示"occupied"、"free" 以及
-"unscanned"</p>
-<p>设 <span class="math inline">\(i^{th}\)</span> 体素概率为 <span class="math inline">\(v_i\)</span>，<span class="math inline">\(z_j\)</span> 表示相机 <span class="math inline">\(j^{th}\)</span> 视线穿过 <span class="math inline">\(i^{th}\)</span> 对应的体素之measurement <br>则有
-<span class="math inline">\(\log \text{Odd}(v_i | z_j) = \log
-\text{Odd}(v_i) + C\)</span>，其中 <span class="math inline">\(c\)</span> 是基于经验的更新常数</p></li>
-<li><p>语义表征：将当前 RGB <span class="math inline">\(I_t\)</span> 和
-灰化的过去 <span class="math inline">\(k\)</span> 帧图 <span class="math inline">\([I_{t-1}, \dots, I_{t-k}]\)</span>
-拼接，再输入两层卷积网络提取融合特征 <span class="math inline">\(F_t^S\)</span></p>
+<li><p>标准的神经网络任务：给定数据集 <span class="math inline">\(\mathcal{D} = \{ (x, y) \ | \ x \in \mathbb{R}^d \
+, \ y \in [k]  \}\)</span>，损失函数 <span class="math inline">\(L(\theta, x, y)\)</span>，目标是得到最优模型参数
+<span class="math inline">\(\theta^{*}\)</span>： <span class="math display">\[
+\theta^{*} = \text{argmin}_{\theta} \ \mathbb{E}_{(x, y) \sim
+\mathcal{D}} [L(x, y, \theta)]
+\]</span> 以上方法遵循 emperical risk minimization (ERM)
+准则，其具备以下特点：</p>
+<ul>
+<li>优势：在传统任务上效果<u>显著</u>且<u>稳定</u></li>
+<li>问题：不会训练出针对对抗性样本稳定的模型，<u>面对对抗攻击<strong>鲁棒性差</strong></u></li>
+</ul></li>
+<li><p>威胁模型：对于每个数据点 <span class="math inline">\(x \in
+\mathbb{R}^d\)</span>，设定一个小扰动范围 <span class="math inline">\(\mathcal{S} \subseteq \mathbb{R}^d\)</span>，使得
+<span class="math inline">\(F_{\theta}(x + \delta) \ne
+F_{\theta}(s)\)</span></p></li>
+<li><p>鞍点优化问题：相较于标准的神经网络任务，<u>先对输入进行<strong>扰动</strong></u>，再<strong><u>最小化对抗训练损失</u></strong>得到最优模型参数
+<span class="math inline">\(\theta^{*}\)</span> <span class="math display">\[
+\begin{align}
+\theta^{*} &amp;= \text{argmin}_{\theta} \ \rho(\theta) \\ \textbf{
+where } \rho(\theta) &amp;= \mathbb{E}_{(x, y) \sim \mathcal{D}}
+[\max_{\delta \in \mathcal{S}} L(\theta, x+\delta, y)]
+\end{align}
+\]</span></p>
+<ul>
+<li>内部最大化：攻击过程，通过微小扰动使得<strong>对抗损失最大化</strong></li>
+<li>外部最小化：在对抗样本上进行对抗训练，得到鲁棒学习器</li>
+</ul>
 <blockquote>
-<p>"语义表征" 可用于区分处理 hole 和 unscanned
-区域，弥补了"几何表征"的缺陷</p>
+<p><strong>注意</strong>：“鞍点问题” 定义了鲁棒学习器应当实现的目标，当
+对抗损失 = 0
+时可认为学习器是<strong>完全鲁棒</strong>的，没有攻击能欺骗网络</p>
 </blockquote></li>
-<li><p>状态嵌入：<span class="math inline">\(s_t = \text{Linear}(s_t^G;
-s_t^S;s_t^A)\)</span>，其中 <span class="math inline">\(s_t^G =
-\text{Linear}(\text{Flatten}(F_t^G))\)</span>，<span class="math inline">\(s_t^A = \text{Linear}(a_{1:t})\)</span>
-<br>"状态嵌入"进一步融合了多源信息（几何表征 + 语义表征 +
-action）</p></li>
-<li><p>Policy：将 <span class="math inline">\(s_t\)</span>
-作为输入，经过<strong>三层MLP</strong>，实现 <span class="math inline">\(a \sim \pi(\cdot | o_t)\)</span></p></li>
-</ul></li>
-<li><p>优化过程：RL-based NBV</p>
+</ul>
+<hr>
+<h3 id="三对抗性攻击与训练">三、对抗性攻击与训练</h3>
 <ul>
-<li>计算 occupied 比率：设置一个 occupied 阈值，计数 occupied
-voxels，得到被占用比率 <span class="math inline">\(\text{CR}_t =
-\dfrac{\tilde{N}_t}{N^{*}}\)</span></li>
-<li>奖励函数：<span class="math inline">\(r^{\text{CR}}_t =
-\text{CR}_{t+1} -
-\text{CR}_t\)</span>，即<strong><u>鼓励无人机扫描更多的未知领域</u></strong>；若在自由空间发生碰撞，给予负奖励</li>
-<li>PPO 损失函数：<span class="math inline">\(L(\theta) =
-\mathbb{E}_t[\dfrac{\pi_\theta (a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t
-| s_t)}A^{\pi_{\theta_{\text{old}}}}(s_t,
-a_t)]\)</span>，<strong><u>限制新旧策略变化</u></strong>剧烈的同时<strong><u>提升策略增益
-<span class="math inline">\(A\)</span></u></strong></li>
+<li><p>梯度攻击：内层最大化过程的梯度方向，恰好就是对抗损失下降的方向 ——
+Danskin’s theorem</p>
+<ul>
+<li><p>FGSM：基于 <span class="math inline">\(\mathcal{l}_{\infty}\)</span>
+有界的对抗攻击方法，<strong><u>一步</u></strong>生成对抗样本： <span class="math display">\[
+x^{(adv)} = x + \epsilon \ \text{sgn} \ (\nabla_x L(\theta, x, y))
+\]</span> 以上公式中 <span class="math inline">\(\text{sgn}\)</span>
+是符号函数，<span class="math inline">\(\epsilon\)</span>
+是学习率，<span class="math inline">\(L\)</span> 是内层损失函数</p></li>
+<li><p>PGD：更优的攻击方法，<strong><u>迭代</u></strong>生成对抗样本：第
+<span class="math inline">\(t\)</span> 步更新过程如下 <span class="math display">\[
+x^{(t+1)} = \Pi_{x^{(0)} + \delta} (x^{(t)} + \alpha \
+\text{sgn}(\nabla_{x^{(t)}} L(\theta, x^{(t)}, y)))
+\]</span> 以上公式中 <span class="math inline">\(\Pi\)</span>
+是投影算子用来<strong>限定扰动范围</strong>，<span class="math inline">\(\alpha\)</span> 是学习率，<span class="math inline">\(L\)</span> 是内层损失函数</p></li>
 </ul></li>
+<li><p>对抗性训练：直接将对抗样本注入训练集中，<strong><u>对混合数据集进行训练</u></strong>；随机设置
+<span class="math inline">\(\epsilon \sim \mathcal{N}\)</span>
+有助于提高模型鲁棒性</p></li>
+<li><p>网络容量：训练鲁棒学习器需要<strong>更大的网络容量</strong></p></li>
+</ul>
+<hr>
+<h3 id="四实验评估">四、实验评估</h3>
+<ul>
+<li>基于混入对抗样本的 MNIST 和 CIFAR10 数据集训练；训练过程中
+adversarial loss <strong>骤降</strong>
+<br>说明对抗性训练有效解决了鞍点问题</li>
 </ul>
 
                 
@@ -398,7 +412,7 @@ a_t)]\)</span>，<strong><u>限制新旧策略变化</u></strong>剧烈的同时
   
     <span>></span>
     
-  <a href="/categories/paper/CV/NBV/" class="category-chain-item">NBV</a>
+  <a href="/categories/paper/CV/AML/" class="category-chain-item">AML</a>
   
   
 
@@ -417,11 +431,11 @@ a_t)]\)</span>，<strong><u>限制新旧策略变化</u></strong>剧烈的同时
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/next-best-view/">#next best view</a>
+        <a href="/tags/adversarial-machine-learning/">#adversarial machine learning</a>
       
-        <a href="/tags/3D-reconstruction/">#3D reconstruction</a>
+        <a href="/tags/PGD/">#PGD</a>
       
-        <a href="/tags/reinforcement-learning/">#reinforcement learning</a>
+        <a href="/tags/FSGM/">#FSGM</a>
       
     </div>
   
@@ -433,8 +447,8 @@ a_t)]\)</span>，<strong><u>限制新旧策略变化</u></strong>剧烈的同时
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『paper-CV-2』《GenNBV》</div>
-      <div>http://larry0454.github.io/2024/10/18/paper/CV/NBV/GenNBV/</div>
+      <div>『paper-CV-3』《PGD》</div>
+      <div>http://larry0454.github.io/2024/11/29/paper/CV/AML/PGD/</div>
     </div>
     <div class="license-meta">
       
@@ -446,7 +460,7 @@ a_t)]\)</span>，<strong><u>限制新旧策略变化</u></strong>剧烈的同时
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>October 18, 2024</div>
+          <div>November 29, 2024</div>
         </div>
       
       
@@ -478,18 +492,12 @@ a_t)]\)</span>，<strong><u>限制新旧策略变化</u></strong>剧烈的同时
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/11/19/paper/NLP/LLM/sneaky-prompt/" title="『paper-NLP-3』《SneakyPrompt》">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『paper-NLP-3』《SneakyPrompt》</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/18/paper/CV/NBV/NBV-planning/" title="『paper-CV-1』《NBV-planning》">
-                        <span class="hidden-mobile">『paper-CV-1』《NBV-planning》</span>
+                      <a href="/2024/11/22/paper/MM/agent/navigate-the-risks/" title="『paper-MM-1』《A Survey on Threats in LLM-Based Agents》">
+                        <span class="hidden-mobile">『paper-MM-1』《A Survey on Threats in LLM-Based Agents》</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
