@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://larry0454.github.io/2024/12/01/paper/MM/VLM/robust-vlm/pipeline.png">
 <meta property="article:published_time" content="2024-12-01T13:11:59.000Z">
-<meta property="article:modified_time" content="2024-12-01T13:43:54.355Z">
+<meta property="article:modified_time" content="2024-12-01T14:04:42.697Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="safety">
 <meta property="article:tag" content="multimodal">
@@ -311,7 +311,7 @@ From Advances in Neural Information Processing Systems (2023)
 进行<strong>黑盒攻击</strong></li>
 <li>基于替身模型的迁移攻击可以对 VLMs 进行<strong>定向诱导</strong></li>
 <li>定量揭示了当前基于 VLM
-的应用（robots/agents）的对抗脆弱性，尤其在视觉模态异常脆弱</li>
+的应用（robots/agents）的对抗性脆弱，尤其在视觉模态异常脆弱</li>
 </ul>
 <hr>
 <h3 id="二相关工作">二、相关工作</h3>
@@ -361,7 +361,7 @@ x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le
 g_{\psi}(c_{\text{tar}})
 \]</span> 其中 <span class="math inline">\(f_{\phi}\)</span> 是 image
 encoder，<span class="math inline">\(g_{\psi}\)</span> 是 text
-encoder，均为<strong>开源的<u>替代模型</u></strong>；上述带 <span class="math inline">\(\epsilon\)</span> 限制的优化问题可用 PGD
+encoder，均为<strong>开源的<u>替代模型</u></strong>；带 <span class="math inline">\(\epsilon\)</span> 限制的优化问题可用 PGD
 算法求解</p>
 <p>本文用预训练T2I模型 <span class="math inline">\(h\)</span>
 <u>先生成对抗性图片</u>，<strong>再在<u>同一个图像空间</u>内对齐</strong>；第一阶段的攻击目标如下
@@ -371,13 +371,15 @@ x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le
 f_{\phi}(h(c_{\text{tar}}))
 \]</span></p></li>
 <li><p>Query-based
-attacking：在<strong>生成文本</strong>的语义空间内对齐，同样可使用.PGD
-算法求解；第二阶段的攻击目标如下 <span class="math display">\[
+attacking：在<strong><u>生成文本的语义空间</u></strong>内对齐，同样可使用
+PGD 算法求解；第二阶段的攻击目标如下 <span class="math display">\[
 x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le
 \epsilon}{\text{argmax}} g_{\psi}(p_{\theta}(x_{\text{adv}};
 c_{\text{in}}))^{\text{T}} g_{\psi}(c_{\text{tar}})
-\]</span> 由于无法获得 <span class="math inline">\(p_{\theta}\)</span>
-的参数 <span class="math inline">\(\theta\)</span>，本文采用 Random
+\]</span> 其中 <span class="math inline">\(x_{\text{adv}}\)</span>
+来自第一阶段的输出结果，也即第二阶段的输入参数是第一阶段的输出结果</p>
+<p>由于无法获得 <span class="math inline">\(p_{\theta}\)</span> 的参数
+<span class="math inline">\(\theta\)</span>，本文采用 Random
 Gradient-Free 算法估计 <span class="math inline">\(\theta\)</span> ；设
 <span class="math inline">\(p_{\theta}\)</span>
 是<strong>可微分</strong>的，可通过<u><strong>估计多个方向导数</strong>估算梯度</u>
