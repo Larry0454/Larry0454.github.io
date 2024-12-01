@@ -4,11 +4,42 @@
   
   
   <entry>
+    <title>『paper-MM-2』《Evaluating Adversarial Robustness of Large VLMs》</title>
+    <link href="/2024/12/01/paper/MM/VLM/robust-vlm/"/>
+    <url>/2024/12/01/paper/MM/VLM/robust-vlm/</url>
+    
+    <content type="html"><![CDATA[<h2 id="on-evaluating-adversarial-robustness-of-large-vision-language-models">《OnEvaluating Adversarial Robustness of Large Vision-Language Models》</h2><p class="note note-info">From Advances in Neural Information Processing Systems (2023)</p><h3 id="一本文贡献">一、本文贡献</h3><ul><li>评估当前 SOTA VLMs 的视觉对抗鲁棒性，对开源 VLMs进行<strong>黑盒攻击</strong></li><li>基于替身模型的迁移攻击可以对 VLMs 进行<strong>定向诱导</strong></li><li>定量揭示了当前基于 VLM的应用（robots/agents）的对抗脆弱性，尤其在视觉模态异常脆弱</li></ul><hr><h3 id="二相关工作">二、相关工作</h3><ul><li><p>大语言模型及其鲁棒性：</p><ul><li>奠基性工作：<a href="https://eva.fing.edu.uy/pluginfile.php/524749/mod_folder/content/0/BERT%20Pre-training%20of%20Deep%20Bidirectional%20Transformers%20for%20Language%20Understanding.pdf">BERT</a>、<a href="https://insightcivic.s3.us-east-1.amazonaws.com/language-models.pdf">GPT-2</a>、<a href="https://www.jmlr.org/papers/volume21/20-074/20-074.pdf">T5</a>等</li><li>支持复杂对话的语言模型：<a href="https://proceedings.neurips.cc/paper_files/paper/2022/file/b1efde53be364a73914f58805a001731-Paper-Conference.pdf">ChatGPT</a>、<a href="https://arxiv.org/pdf/2302.13971">LLaMA</a> 等</li><li>针对语言模型的<strong>对抗样本</strong> or对抗性<strong>数据集</strong> or benchmarks</li></ul></li><li><p>多模态大模型及其鲁棒性：</p><ul><li>经典工作：<a href="https://arxiv.org/pdf/2303.03378">PaLM-E</a>、<a href="https://proceedings.neurips.cc/paper_files/paper/2023/file/e425b75bac5742a008d643826428787c-Paper-Conference.pdf">KOSMOS-1</a>、<a href="https://arxiv.org/pdf/2303.04671">Visual-ChatGPT</a> 等</li><li>针对 MLLMs 的 <u>VQA</u> 任务或 <u>Image Caption</u>任务的鲁棒性探究</li></ul><p>相较于过去针对 CNN-RNN-based的白盒非定向攻击、本篇工作聚焦于<strong><u>针对 VLM的黑盒定向攻击</u></strong></p></li></ul><hr><h3 id="三研究方法">三、研究方法</h3><p><img src="/2024/12/01/paper/MM/VLM/robust-vlm/pipeline.png" style="zoom:70%;"></p><ul><li><p>威胁模型：基于图像的生文任务可建模为 <span class="math inline">\(p_{\theta}(x;c_{\text{in}}) \vdashc_{\text{out}}\)</span>，其中 <span class="math inline">\(x\)</span>是输入图像、<span class="math inline">\(c_{\text{in}}\)</span>是输入文本，<span class="math inline">\(c_{\text{out}}\)</span>是输出文本</p><ul><li>对抗性知识：攻击者对受害模型的了解程度，对应地可以分为<u>黑盒攻击</u>和<u>白盒攻击</u></li><li>对抗性目标：可以分为<u>非定向攻击</u>（<span class="math inline">\(c_{\text{out}}\)</span>只需保证是错误的）和<u>定向攻击</u>（<span class="math inline">\(c_{\text{out}}\)</span> 必须符合<strong>预先指定的<span class="math inline">\(c_{\text{tar}}\)</span></strong>）</li><li>对抗性能力：限定了攻击者可干扰的<u>范围边界</u> <span class="math inline">\(\epsilon\)</span>；对于 <span class="math inline">\(p\)</span> 范数干扰需满足 <span class="math inline">\(||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon\)</span></li></ul><p>本文提出了一种"<strong><u>两阶段</u></strong>"的攻击策略：Transfer-basedattacking (MF-ii) 和 Query-based attacking (MF-tt)</p></li><li><p>Transfer-basedattacking：针对<strong><u>替代模型</u></strong>设计攻击策略，再<strong>迁移</strong>到黑盒受害模型上；<strong>总体跨模态攻击目标</strong>如下<span class="math display">\[x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon}{\text{argmax}} f_{\phi}(x_{\text{adv}})^{\text{T}}g_{\psi}(c_{\text{tar}})\]</span> 其中 <span class="math inline">\(f_{\phi}\)</span> 是 imageencoder，<span class="math inline">\(g_{\psi}\)</span> 是 textencoder，均为<strong>开源的<u>替代模型</u></strong>；上述带 <span class="math inline">\(\epsilon\)</span> 限制的优化问题可用 PGD算法求解</p><p>本文用预训练T2I模型 <span class="math inline">\(h\)</span><u>先生成对抗性图片</u>，<strong>再在<u>同一个图像空间</u>内对齐</strong>；第一阶段的攻击目标如下<span class="math display">\[x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon}{\text{argmax}} f_{\phi}(x_{\text{adv}})^\text{T}f_{\phi}(h(c_{\text{tar}}))\]</span></p></li><li><p>Query-basedattacking：在<strong>生成文本</strong>的语义空间内对齐，同样可使用.PGD算法求解；第二阶段的攻击目标如下： <span class="math display">\[x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon}{\text{argmax}} g_{\psi}(p_{\theta}(x_{\text{adv}};c_{\text{in}}))^{\text{T}} g_{\psi}(c_{\text{tar}})\]</span> 由于无法获得 <span class="math inline">\(p_{\theta}\)</span>的参数 <span class="math inline">\(\theta\)</span>，本文采用 RandomGradient-Free 算法估计 <span class="math inline">\(\theta\)</span> ；设<span class="math inline">\(p_{\theta}\)</span>是<strong>可微分</strong>的，可通过<u><strong>估计多个方向导数</strong>估算梯度</u><span class="math display">\[\begin{align}&amp;\nabla_{x_{\text{adv}}}g_{\psi}(p_{\theta}(x_{\text{adv}};c_{\text{in}}))^\text{T}g_{\psi}(c_{\text{tar}}) \\\approx &amp; \dfrac{1}{N} \sum_{n=1}^N[\dfrac{g_{\psi}(p_{\theta}(x_{\text{adv}}+\sigma\delta_n;c_{\text{in}}))^\text{T} g_{\psi}(c_{\text{tar}}) -g_{\psi}(p_{\theta}(x_{\text{adv}};c_{\text{in}}))^\text{T}g_{\psi}(c_{\text{tar}})}{\sigma}] \cdot \delta_n\end{align}\]</span> 其中 <span class="math inline">\(\delta_n \simP(\delta)\)</span>可以从<strong>超球面</strong>随机取点以模拟不同的方向，<span class="math inline">\(N\)</span> 表示 query T2I 的总次数</p><blockquote><p><strong>注意</strong>：先前的工作会把 Transfer-based 和 Query-based两阶段并行执行，本文方法将两个阶段<strong>串行执行</strong>，对抗攻击效果更优</p></blockquote></li></ul><hr><h3 id="四实验评估">四、实验评估</h3><ul><li><p>Ours 优于 直接基于跨模态优化的方案，两阶段扰动范围 <span class="math inline">\(\epsilon_{t}, \ \epsilon_i\)</span> 均不能为0</p></li><li><p>Ours 优于 单一Transfer-based/Query-based的方案</p></li><li><p>Ours 生成的混淆噪声 <span class="math inline">\(\Delta =x_{\text{cle}} - x_{\text{adv}}\)</span>并不携带有效的语义信息/显著的视觉信号</p></li><li><p>Ours 需要选取适当的 <span class="math inline">\(\epsilon \in [0,255]\)</span>，以达到 图像质量 <span class="math inline">\(\Leftrightarrow\)</span> 目标诱导性之间的平衡（LPIPS）</p></li><li><p>原始text-input下，GradCAM 在 <span class="math inline">\(x_{\text{adv}}\)</span> 上多关注无用的背景，说明VLM 的关注点遭到不良影响</p><p>对抗text-input下，GradCAM 在 <span class="math inline">\(x_{\text{cle}}\)</span> 和 <span class="math inline">\(x_{\text{adv}}\)</span> 上关注相近的部位，说明 VLM的注意力被对抗样本带偏了</p></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>paper</category>
+      
+      <category>MM</category>
+      
+      <category>VLM</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>safety</tag>
+      
+      <tag>multimodal</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>『paper-CV-3』《PGD》</title>
     <link href="/2024/11/29/paper/CV/AML/PGD/"/>
     <url>/2024/11/29/paper/CV/AML/PGD/</url>
     
-    <content type="html"><![CDATA[<h2 id="towards-deep-learning-models-resistant-to-adversarial-attacks">《TowardsDeep Learning Models Resistant to Adversarial Attacks》</h2><p class="note note-info">From International Conference on Learning Representations (2018)</p><h3 id="一本文贡献">一、本文贡献</h3><ul><li>将过去的深度学习模型攻击/防御方法融合到<strong>同一个框架下</strong>，抵抗广泛而非单一的攻击类别</li><li>证明了 Projected Gradient Descent (PGD)是<u>鞍点问题的<strong>最佳优化方法</strong></u><ul><li>PGD 是 <strong>一阶</strong>最强对抗攻击方法</li><li>针对 PGD 对抗攻击提出<strong>对抗训练</strong>策略</li></ul></li><li>揭示了抵御对抗攻击需要<strong>更大的网络容量</strong>：解决鞍点问题的<u>鲁棒决策边界</u> 比 <u>普通决策边界</u> 复杂得多</li><li>在数据集 <u>MNIST</u> 和 <u>CIFAR10</u>上训练出针对各种对抗攻击都具备防御能力的鲁棒网络</li></ul><hr><h3 id="二对抗鲁棒性">二、对抗鲁棒性</h3><ul><li><p>标准的神经网络任务：给定数据集 <span class="math inline">\(\mathcal{D} = \{ (x, y) \ | \ x \in \mathbb{R}^d \, \ y \in [k]  \}\)</span>，损失函数 <span class="math inline">\(L(\theta, x, y)\)</span>，目标是得到最优模型参数<span class="math inline">\(\theta^{*}\)</span>： <span class="math display">\[\theta^{*} = \text{argmin}_{\theta} \ \mathbb{E}_{(x, y) \sim\mathcal{D}} [L(x, y, \theta)]\]</span> 以上方法遵循 emperical risk minimization (ERM)准则，其具备以下特点：</p><ul><li>优势：在传统任务上效果<u>显著</u>且<u>稳定</u></li><li>问题：不会训练出针对对抗性样本稳定的模型，<u>面对对抗攻击<strong>鲁棒性差</strong></u></li></ul></li><li><p>威胁模型：对于每个数据点 <span class="math inline">\(x \in\mathbb{R}^d\)</span>，设定一个小扰动范围 <span class="math inline">\(\mathcal{S} \subseteq \mathbb{R}^d\)</span>，使得<span class="math inline">\(F_{\theta}(x + \delta) \neF_{\theta}(x)\)</span></p></li><li><p>鞍点优化问题：相较于标准的神经网络任务，<u>先对输入进行<strong>扰动</strong></u>，再<strong><u>最小化对抗训练损失</u></strong>得到最优模型参数<span class="math inline">\(\theta^{*}\)</span> <span class="math display">\[\begin{align}\theta^{*} &amp;= \text{argmin}_{\theta} \ \rho(\theta) \\ \textbf{where } \rho(\theta) &amp;= \mathbb{E}_{(x, y) \sim \mathcal{D}}[\max_{\delta \in \mathcal{S}} L(\theta, x+\delta, y)]\end{align}\]</span></p><ul><li>内部最大化：攻击过程，通过微小扰动使得<strong>对抗损失最大化</strong></li><li>外部最小化：在对抗样本上进行对抗训练，得到鲁棒学习器</li></ul><blockquote><p><strong>注意</strong>：“鞍点问题” 定义了鲁棒学习器应当实现的目标，当对抗损失 = 0时可认为学习器是<strong>完全鲁棒</strong>的，没有攻击能欺骗网络</p></blockquote></li></ul><hr><h3 id="三对抗性攻击与训练">三、对抗性攻击与训练</h3><ul><li><p>梯度攻击：内层最大化过程的梯度方向，恰好就是对抗损失下降的方向 ——Danskin’s theorem</p><ul><li><p>FGSM：基于 <span class="math inline">\(\mathcal{l}_{\infty}\)</span>有界的对抗攻击方法，<strong><u>一步</u></strong>生成对抗样本： <span class="math display">\[x^{(adv)} = x + \epsilon \ \text{sgn} \ (\nabla_x L(\theta, x, y))\]</span> 以上公式中 <span class="math inline">\(\text{sgn}\)</span>是符号函数，<span class="math inline">\(\epsilon\)</span>是学习率，<span class="math inline">\(L\)</span> 是内层损失函数</p></li><li><p>PGD：更优的攻击方法，<strong><u>迭代</u></strong>生成对抗样本：第<span class="math inline">\(t\)</span> 步更新过程如下 <span class="math display">\[x^{(t+1)} = \Pi_{x^{(0)} + \delta} (x^{(t)} + \alpha \\text{sgn}(\nabla_{x^{(t)}} L(\theta, x^{(t)}, y)))\]</span> 以上公式中 <span class="math inline">\(\Pi\)</span>是投影算子用来<strong>限定扰动范围</strong>，<span class="math inline">\(\alpha\)</span> 是学习率，<span class="math inline">\(L\)</span> 是内层损失函数</p></li></ul></li><li><p>对抗性训练：直接将对抗样本注入训练集中，<strong><u>对混合数据集进行训练</u></strong>；随机设置<span class="math inline">\(\epsilon \sim \mathcal{N}\)</span>有助于提高模型鲁棒性</p></li><li><p>网络容量：训练鲁棒学习器需要<strong>更大的网络容量</strong></p></li></ul><hr><h3 id="四实验评估">四、实验评估</h3><ul><li>基于混入对抗样本的 MNIST 和 CIFAR10 数据集训练；训练过程中adversarial loss <strong>骤降</strong><br>说明对抗性训练有效解决了鞍点问题</li></ul>]]></content>
+    <content type="html"><![CDATA[<h2 id="towards-deep-learning-models-resistant-to-adversarial-attacks">《TowardsDeep Learning Models Resistant to Adversarial Attacks》</h2><p class="note note-info">From International Conference on Learning Representations (2018)</p><h3 id="一本文贡献">一、本文贡献</h3><ul><li>将过去的深度学习模型攻击/防御方法融合到<strong>同一个框架下</strong>，抵抗广泛而非单一的攻击类别</li><li>证明了 Projected Gradient Descent (PGD)是<u>鞍点问题的<strong>最佳优化方法</strong></u><ul><li>PGD 是 <strong>一阶</strong>最强对抗攻击方法</li><li>针对 PGD 对抗攻击提出<strong>对抗训练</strong>策略</li></ul></li><li>揭示了抵御对抗攻击需要<strong>更大的网络容量</strong>：解决鞍点问题的<u>鲁棒决策边界</u> 比 <u>普通决策边界</u> 复杂得多</li><li>在数据集 <u>MNIST</u> 和 <u>CIFAR10</u>上训练出针对各种对抗攻击都具备防御能力的鲁棒网络</li></ul><hr><h3 id="二对抗鲁棒性">二、对抗鲁棒性</h3><ul><li><p>标准的神经网络任务：给定数据集 <span class="math inline">\(\mathcal{D} = \{ (x, y) \ | \ x \in \mathbb{R}^d \, \ y \in [k]  \}\)</span>，损失函数 <span class="math inline">\(L(\theta, x, y)\)</span>，目标是得到最优模型参数<span class="math inline">\(\theta^{*}\)</span>： <span class="math display">\[\theta^{*} = \text{argmin}_{\theta} \ \mathbb{E}_{(x, y) \sim\mathcal{D}} [L(x, y, \theta)]\]</span> 以上方法遵循 emperical risk minimization (ERM)准则，其具备以下特点：</p><ul><li>优势：在传统任务上效果<u>显著</u>且<u>稳定</u></li><li>问题：不会训练出针对对抗性样本稳定的模型，<u>面对对抗攻击<strong>鲁棒性差</strong></u></li></ul></li><li><p>威胁模型：对于每个数据点 <span class="math inline">\(x \in\mathbb{R}^d\)</span>，设定一个小扰动范围 <span class="math inline">\(\mathcal{S} \subseteq \mathbb{R}^d\)</span>，使得<span class="math inline">\(F_{\theta}(x + \delta) \neF_{\theta}(x)\)</span>，<span class="math inline">\(\delta \in\mathcal{S}\)</span></p></li><li><p>鞍点优化问题：相较于标准的神经网络任务，<u>先对输入进行<strong>扰动</strong></u>，再<strong><u>最小化对抗训练损失</u></strong>得到最优模型参数<span class="math inline">\(\theta^{*}\)</span> <span class="math display">\[\begin{align}\theta^{*} &amp;= \text{argmin}_{\theta} \ \rho(\theta) \\ \textbf{where } \rho(\theta) &amp;= \mathbb{E}_{(x, y) \sim \mathcal{D}}[\max_{\delta \in \mathcal{S}} L(\theta, x+\delta, y)]\end{align}\]</span></p><ul><li>内部最大化：攻击过程，通过微小扰动使得<strong>对抗损失最大化</strong></li><li>外部最小化：在对抗样本上进行对抗训练，得到鲁棒学习器</li></ul><blockquote><p><strong>注意</strong>：“鞍点问题” 定义了鲁棒学习器应当实现的目标，当对抗损失 = 0时可认为学习器是<strong>完全鲁棒</strong>的，没有攻击能欺骗网络</p></blockquote></li></ul><hr><h3 id="三对抗性攻击与训练">三、对抗性攻击与训练</h3><ul><li><p>梯度攻击：内层最大化过程的梯度方向，恰好就是对抗损失下降的方向 ——Danskin’s theorem</p><ul><li><p>FGSM：基于 <span class="math inline">\(\mathcal{l}_{\infty}\)</span>有界的对抗攻击方法，<strong><u>一步</u></strong>生成对抗样本： <span class="math display">\[x^{(adv)} = x + \epsilon \ \text{sgn} \ (\nabla_x L(\theta, x, y))\]</span> 以上公式中 <span class="math inline">\(\text{sgn}\)</span>是符号函数，<span class="math inline">\(\epsilon\)</span>是学习率，<span class="math inline">\(L\)</span> 是内层损失函数</p></li><li><p>PGD：更优的攻击方法，<strong><u>迭代</u></strong>生成对抗样本：第<span class="math inline">\(t\)</span> 步更新过程如下 <span class="math display">\[x^{(t+1)} = \Pi_{x^{(0)} + \delta} (x^{(t)} + \alpha \\text{sgn}(\nabla_{x^{(t)}} L(\theta, x^{(t)}, y)))\]</span> 以上公式中 <span class="math inline">\(\Pi\)</span>是投影算子用来<strong>限定扰动范围</strong>，<span class="math inline">\(\alpha\)</span> 是学习率，<span class="math inline">\(L\)</span> 是内层损失函数</p></li></ul></li><li><p>对抗性训练：直接将对抗样本注入训练集中，<strong><u>对混合数据集进行训练</u></strong>；随机设置<span class="math inline">\(\epsilon \sim \mathcal{N}\)</span>有助于提高模型鲁棒性</p></li><li><p>网络容量：训练鲁棒学习器需要<strong>更大的网络容量</strong></p></li></ul><hr><h3 id="四实验评估">四、实验评估</h3><ul><li>基于混入对抗样本的 MNIST 和 CIFAR10 数据集训练；训练过程中adversarial loss <strong>骤降</strong><br>说明对抗性训练有效解决了鞍点问题</li></ul>]]></content>
     
     
     <categories>
@@ -61,9 +92,9 @@
       
       <tag>LLM</tag>
       
-      <tag>Multimodal</tag>
-      
       <tag>safety</tag>
+      
+      <tag>multimodal</tag>
       
     </tags>
     
@@ -92,9 +123,9 @@
     
     <tags>
       
-      <tag>safety</tag>
-      
       <tag>reinforcement learning</tag>
+      
+      <tag>safety</tag>
       
       <tag>jailbreak</tag>
       
@@ -138,7 +169,7 @@
   
   
   <entry>
-    <title>『paper-CV-1』《NBV-planning》</title>
+    <title>『paper-CV-1』《NBV Planning》</title>
     <link href="/2024/10/18/paper/CV/NBV/NBV-planning/"/>
     <url>/2024/10/18/paper/CV/NBV/NBV-planning/</url>
     
@@ -160,9 +191,9 @@
       
       <tag>next best view</tag>
       
-      <tag>3D reconstruction</tag>
-      
       <tag>point cloud</tag>
+      
+      <tag>3D reconstruction</tag>
       
     </tags>
     
@@ -579,6 +610,8 @@
       
       <tag>Diffie-Hellman encryption</tag>
       
+      <tag>safety</tag>
+      
     </tags>
     
   </entry>
@@ -970,6 +1003,8 @@
       <tag>DES</tag>
       
       <tag>AES</tag>
+      
+      <tag>safety</tag>
       
     </tags>
     

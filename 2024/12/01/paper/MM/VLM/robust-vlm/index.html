@@ -16,30 +16,27 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="《A Survey of Security, Privacy, and Ethics Threats in LLM-Based Agents》  From arXiv (2024)  一、LLM-Based Agents 安全  与启发式&#x2F;强化学习 Agents 的区别：LLM Agents 可与用户交流，其庞大的知识量可支撑其像人类一样理解 + 规划 LLM-Based A">
+    <meta name="description" content="《On Evaluating Adversarial Robustness of Large Vision-Language Models》  From Advances in Neural Information Processing Systems (2023)  一、本文贡献  评估当前 SOTA VLMs 的视觉对抗鲁棒性，对开源 VLMs 进行黑盒攻击 基于替身模型的迁">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『paper-MM-1』《A Survey on Threats in LLM-Based Agents》">
-<meta property="og:url" content="http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/index.html">
+<meta property="og:title" content="『paper-MM-2』《Evaluating Adversarial Robustness of Large VLMs》">
+<meta property="og:url" content="http://larry0454.github.io/2024/12/01/paper/MM/VLM/robust-vlm/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="《A Survey of Security, Privacy, and Ethics Threats in LLM-Based Agents》  From arXiv (2024)  一、LLM-Based Agents 安全  与启发式&#x2F;强化学习 Agents 的区别：LLM Agents 可与用户交流，其庞大的知识量可支撑其像人类一样理解 + 规划 LLM-Based A">
+<meta property="og:description" content="《On Evaluating Adversarial Robustness of Large Vision-Language Models》  From Advances in Neural Information Processing Systems (2023)  一、本文贡献  评估当前 SOTA VLMs 的视觉对抗鲁棒性，对开源 VLMs 进行黑盒攻击 基于替身模型的迁">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/new-taxonomy.png">
-<meta property="og:image" content="http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/structure.png">
-<meta property="article:published_time" content="2024-11-22T15:25:55.000Z">
-<meta property="article:modified_time" content="2024-12-01T13:18:52.599Z">
+<meta property="og:image" content="http://larry0454.github.io/2024/12/01/paper/MM/VLM/robust-vlm/pipeline.png">
+<meta property="article:published_time" content="2024-12-01T13:11:59.000Z">
+<meta property="article:modified_time" content="2024-12-01T13:20:36.881Z">
 <meta property="article:author" content="WangLe">
-<meta property="article:tag" content="agent">
-<meta property="article:tag" content="LLM">
 <meta property="article:tag" content="safety">
 <meta property="article:tag" content="multimodal">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/new-taxonomy.png">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/12/01/paper/MM/VLM/robust-vlm/pipeline.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『paper-MM-1』《A Survey on Threats in LLM-Based Agents》 - Blog</title>
+  <title>『paper-MM-2』《Evaluating Adversarial Robustness of Large VLMs》 - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -217,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『paper-MM-1』《A Survey on Threats in LLM-Based Agents》"></span>
+            <span id="subtitle" data-typed-text="『paper-MM-2』《Evaluating Adversarial Robustness of Large VLMs》"></span>
           
         </div>
 
@@ -228,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-22 23:25" pubdate>
-          November 22, 2024 pm
+        <time datetime="2024-12-01 21:11" pubdate>
+          December 1, 2024 pm
         </time>
       </span>
     
@@ -240,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k words
+          2.7k words
         
       </span>
     
@@ -251,7 +248,7 @@
         
         
         
-          15 mins
+          23 mins
         
       </span>
     
@@ -297,120 +294,127 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『paper-MM-1』《A Survey on Threats in LLM-Based Agents》</h1>
+            <h1 style="display: none">『paper-MM-2』《Evaluating Adversarial Robustness of Large VLMs》</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="a-survey-of-security-privacy-and-ethics-threats-in-llm-based-agents">《A
-Survey of Security, Privacy, and Ethics Threats in LLM-Based
-Agents》</h2>
+                <h2 id="on-evaluating-adversarial-robustness-of-large-vision-language-models">《On
+Evaluating Adversarial Robustness of Large Vision-Language Models》</h2>
 <p class="note note-info">
-From arXiv (2024)
+From Advances in Neural Information Processing Systems (2023)
 </p>
-<h3 id="一llm-based-agents-安全">一、LLM-Based Agents 安全</h3>
+<h3 id="一本文贡献">一、本文贡献</h3>
 <ul>
-<li><p>与启发式/强化学习 Agents 的区别：LLM Agents
-可<strong><u>与用户交流</u></strong>，其庞大的知识量可支撑其<u><strong>像人类一样</strong></u>理解
-+ 规划</p></li>
-<li><p>LLM-Based Agents 的脆弱性：<u>多轮对话</u> + <u>多源输入</u>
-为智能体引入了更多威胁</p></li>
-<li><p>现有的<strong>针对安全威胁</strong>的分类学：模块化 or 阶段化</p>
-<ul>
-<li>模块化：输入模块 + 决策模块 + 工具链模块 + 输出模块</li>
-<li>阶段化：感知阶段 <span class="math inline">\(\rightarrow\)</span>
-内部执行阶段 <span class="math inline">\(\rightarrow\)</span>
-环境执行阶段 <span class="math inline">\(\rightarrow\)</span>
-外部交互阶段</li>
-</ul>
-<p>各种威胁往往是跨模块/跨阶段的，难以精确定位到单个模块/阶段</p></li>
-<li><p><strong>全新</strong>的分类学：基于
-<strong><u>威胁源</u></strong>+<strong><u>威胁类型</u></strong>
-的分类方法</p>
-<ul>
-<li>威胁源：模型输入 or 模型本身 or 两者混合（左 1/4）</li>
-<li>威胁类型：安全 or 隐私 or 道德（右 3/4）</li>
-</ul>
-<p><img src="/2024/11/22/paper/MM/agent/navigate-the-risks/new-taxonomy.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
+<li>评估当前 SOTA VLMs 的视觉对抗鲁棒性，对开源 VLMs
+进行<strong>黑盒攻击</strong></li>
+<li>基于替身模型的迁移攻击可以对 VLMs 进行<strong>定向诱导</strong></li>
+<li>定量揭示了当前基于 VLM
+的应用（robots/agents）的对抗脆弱性，尤其在视觉模态异常脆弱</li>
 </ul>
 <hr>
-<h3 id="二关于-llm-based-agents">二、关于 LLM-Based Agents</h3>
+<h3 id="二相关工作">二、相关工作</h3>
 <ul>
-<li><p>LLM-Based Agents 结构：</p>
+<li><p>大语言模型及其鲁棒性：</p>
 <ul>
-<li>输入模块：接收用户<strong>输入</strong> <span class="math inline">\(\rightarrow\)</span> 检测有害信息 or 纯化 <span class="math inline">\(\rightarrow\)</span> 追加提示词</li>
-<li>决策模块：根据用户输入<strong>给出规划和回应</strong>；简单任务可使用单一
-LLM，复杂任务可使用多 LLM 实现</li>
-<li>外挂实体：将 记忆模块 (数据库 or RAG) + 外部工具 (搜索引擎 or
-机械单元) 作为执行复杂任务的<strong>辅助工具</strong></li>
-<li>输出模块：任务执行结束后，agents
-通过输出模块<strong>向用户返回结果</strong>，同时执行安全检测</li>
-</ul>
-<p><img src="/2024/11/22/paper/MM/agent/navigate-the-risks/structure.png" srcset="/img/loading.gif" lazyload width="80%"></p></li>
-<li><p>LLM-Based Agents 特征：如下特征带来了新的安全隐患</p>
-<ul>
-<li>LLM 核心控制器：agents
-的控制核心，具备强大的<strong>理解规划能力</strong></li>
-<li>多模态输入输出：复杂任务场景需要引入<strong>多模态输入输出</strong></li>
-<li>多源输入：LLM core 与 <u>用户</u>、<u>系统提示词</u>、<u>外挂</u> 和
-<u>外部环境</u> 交互</li>
-<li>多轮交互：LLM core 在复杂任务中需要与 <u>上述对象</u>
-进行多轮交互</li>
-<li>记忆机制：记忆模块帮助 agents
-<strong>积累经验知识</strong>、提高解决多样化问题的能力</li>
-<li>工具调用：LLM
-经过指令微调可以<strong>调用工具</strong>，从而执行更加复杂的任务</li>
+<li>奠基性工作：<a target="_blank" rel="noopener" href="https://eva.fing.edu.uy/pluginfile.php/524749/mod_folder/content/0/BERT%20Pre-training%20of%20Deep%20Bidirectional%20Transformers%20for%20Language%20Understanding.pdf">BERT</a>、<a target="_blank" rel="noopener" href="https://insightcivic.s3.us-east-1.amazonaws.com/language-models.pdf">GPT-2</a>、<a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume21/20-074/20-074.pdf">T5</a>
+等</li>
+<li>支持复杂对话的语言模型：<a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper_files/paper/2022/file/b1efde53be364a73914f58805a001731-Paper-Conference.pdf">ChatGPT</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2302.13971">LLaMA</a> 等</li>
+<li>针对语言模型的<strong>对抗样本</strong> or
+对抗性<strong>数据集</strong> or benchmarks</li>
 </ul></li>
+<li><p>多模态大模型及其鲁棒性：</p>
+<ul>
+<li>经典工作：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2303.03378">PaLM-E</a>、<a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper_files/paper/2023/file/e425b75bac5742a008d643826428787c-Paper-Conference.pdf">KOSMOS-1</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2303.04671">Visual-ChatGPT</a> 等</li>
+<li>针对 MLLMs 的 <u>VQA</u> 任务或 <u>Image Caption</u>
+任务的鲁棒性探究</li>
+</ul>
+<p>相较于过去针对 CNN-RNN-based
+的白盒非定向攻击、本篇工作聚焦于<strong><u>针对 VLM
+的黑盒定向攻击</u></strong></p></li>
 </ul>
 <hr>
-<h3 id="三输入风险">三、输入风险</h3>
+<h3 id="三研究方法">三、研究方法</h3>
+<p><img src="/2024/12/01/paper/MM/VLM/robust-vlm/pipeline.png" srcset="/img/loading.gif" lazyload style="zoom:70%;"></p>
 <ul>
-<li><p>对抗样本：经过<strong>微小扰动</strong>的、保留<strong>原始语义</strong>，但是能够<strong><u>混淆目标模型</u></strong>的样本，形式如下：
+<li><p>威胁模型：基于图像的生文任务可建模为 <span class="math inline">\(p_{\theta}(x;c_{\text{in}}) \vdash
+c_{\text{out}}\)</span>，其中 <span class="math inline">\(x\)</span>
+是输入图像、<span class="math inline">\(c_{\text{in}}\)</span>
+是输入文本，<span class="math inline">\(c_{\text{out}}\)</span>
+是输出文本</p>
+<ul>
+<li>对抗性知识：攻击者对受害模型的了解程度，对应地可以分为<u>黑盒攻击</u>和<u>白盒攻击</u></li>
+<li>对抗性目标：可以分为<u>非定向攻击</u>（<span class="math inline">\(c_{\text{out}}\)</span>
+只需保证是错误的）和<u>定向攻击</u>（<span class="math inline">\(c_{\text{out}}\)</span> 必须符合<strong>预先指定的
+<span class="math inline">\(c_{\text{tar}}\)</span></strong>）</li>
+<li>对抗性能力：限定了攻击者可干扰的<u>范围边界</u> <span class="math inline">\(\epsilon\)</span>；对于 <span class="math inline">\(p\)</span> 范数干扰需满足 <span class="math inline">\(||x_{\text{cle}} - x_{\text{adv}}||_p \le
+\epsilon\)</span></li>
+</ul>
+<p>本文提出了一种"<strong><u>两阶段</u></strong>"的攻击策略：Transfer-based
+attacking (MF-ii) 和 Query-based attacking (MF-tt)</p></li>
+<li><p>Transfer-based
+attacking：针对<strong><u>替代模型</u></strong>设计攻击策略，再<strong>迁移</strong>到黑盒受害模型上；<strong>总体跨模态攻击目标</strong>如下
+<span class="math display">\[
+x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le
+\epsilon}{\text{argmax}} f_{\phi}(x_{\text{adv}})^{\text{T}}
+g_{\psi}(c_{\text{tar}})
+\]</span> 其中 <span class="math inline">\(f_{\phi}\)</span> 是 image
+encoder，<span class="math inline">\(g_{\psi}\)</span> 是 text
+encoder，均为<strong>开源的<u>替代模型</u></strong>；上述带 <span class="math inline">\(\epsilon\)</span> 限制的优化问题可用 PGD
+算法求解</p>
+<p>本文用预训练T2I模型 <span class="math inline">\(h\)</span>
+<u>先生成对抗性图片</u>，<strong>再在<u>同一个图像空间</u>内对齐</strong>；第一阶段的攻击目标如下
+<span class="math display">\[
+x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le
+\epsilon}{\text{argmax}} f_{\phi}(x_{\text{adv}})^\text{T}
+f_{\phi}(h(c_{\text{tar}}))
+\]</span></p></li>
+<li><p>Query-based
+attacking：在<strong>生成文本</strong>的语义空间内对齐，同样可使用.PGD
+算法求解；第二阶段的攻击目标如下： <span class="math display">\[
+x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le
+\epsilon}{\text{argmax}} g_{\psi}(p_{\theta}(x_{\text{adv}};
+c_{\text{in}}))^{\text{T}} g_{\psi}(c_{\text{tar}})
+\]</span> 由于无法获得 <span class="math inline">\(p_{\theta}\)</span>
+的参数 <span class="math inline">\(\theta\)</span>，本文采用 Random
+Gradient-Free 算法估计 <span class="math inline">\(\theta\)</span> ；设
+<span class="math inline">\(p_{\theta}\)</span>
+是<strong>可微分</strong>的，可通过<u><strong>估计多个方向导数</strong>估算梯度</u>
 <span class="math display">\[
 \begin{align}
-\delta^{*} &amp;= \text{argmin}_{\delta \in \Delta} SemDist(x, \
-x+\delta) \\
-&amp; \text{s.t.} \begin{cases}
-g(x+\delta^{*}) \ne o &amp; (\text{untargeted}) \\ \\
-g(x+\delta^{*}) = t &amp; (\text{targeted})
-\end{cases}
+&amp;\nabla_{x_{\text{adv}}}
+g_{\psi}(p_{\theta}(x_{\text{adv}};c_{\text{in}}))^\text{T}
+g_{\psi}(c_{\text{tar}}) \\
+\approx &amp; \dfrac{1}{N} \sum_{n=1}^N
+[\dfrac{g_{\psi}(p_{\theta}(x_{\text{adv}}+\sigma
+\delta_n;c_{\text{in}}))^\text{T} g_{\psi}(c_{\text{tar}}) -
+g_{\psi}(p_{\theta}(x_{\text{adv}};c_{\text{in}}))^\text{T}
+g_{\psi}(c_{\text{tar}})}{\sigma}] \cdot \delta_n
 \end{align}
-\]</span> 其中 <span class="math inline">\(\Delta\)</span>
-表示可行的扰动范围，<span class="math inline">\(g\)</span>
-表示深度学习模型，<span class="math inline">\(SemDist\)</span>
-表示<strong>语义间距</strong>，<span class="math inline">\(o\)</span>
-是<u>原始</u>的样本输出标签</p>
+\]</span> 其中 <span class="math inline">\(\delta_n \sim
+P(\delta)\)</span>
+可以从<strong>超球面</strong>随机取点以模拟不同的方向，<span class="math inline">\(N\)</span> 表示 query T2I 的总次数</p>
+<blockquote>
+<p><strong>注意</strong>：先前的工作会把 Transfer-based 和 Query-based
+两阶段并行执行，本文方法将两个阶段<strong>串行执行</strong>，对抗攻击效果更优</p>
+</blockquote></li>
+</ul>
+<hr>
+<h3 id="四实验评估">四、实验评估</h3>
 <ul>
-<li><p>攻击方式：白盒攻击、黑盒攻击、灰盒攻击；包括 <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2023/papers/Liu_RIATIG_Reliable_and_Imperceptible_Adversarial_Text-to-Image_Generation_With_Natural_Prompts_CVPR_2023_paper.pdf">RIATIC</a>、<a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper_files/paper/2023/file/a5e3cf29c269b041ccd644b6beaf5c42-Paper-Conference.pdf">VLATTACK</a>、<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/ICCV2023/papers/Lu_Set-level_Guidance_Attack_Boosting_Adversarial_Transferability_of_Vision-Language_Pre-training_Models_ICCV_2023_paper.pdf">SGA</a>、<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/10646738">TMM</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/html/2307.02849v2">NatLogAttack</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.03655">DGSlow</a></p>
-<p>攻击局限性：大多仅支持<strong>非定向攻击</strong>；仅用单模态指标计算多模态攻击效果；攻击面仍不够广泛</p></li>
-<li><p>防御方式：防御性蒸馏、监督微调、混淆梯度、可证明鲁棒性；包括 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2105.14553">ADFAR</a>、<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2024/papers/Li_One_Prompt_Word_is_Enough_to_Boost_Adversarial_Robustness_for_CVPR_2024_paper.pdf">APT</a>、<a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2021/file/22b1f2e0983160db6f7bb9f62f4dbb39-Paper.pdf">RIFT</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2011.08908">SHIELD</a></p>
-<p>防御局限性：大多仅支持<strong>单</strong>模态 or
-<strong>单</strong>模型的防御；防御范围仍不够广泛</p></li>
-</ul></li>
-<li><p>目标劫持：通过某种对抗性输入，使模型偏离原始意图</p>
-<ul>
-<li><p>攻击方式：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2404.02637">字典搜索</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2405.14189">梯度优化</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2408.03554">视觉语义注入</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2403.03792">外挂数据库投毒</a></p></li>
-<li><p>防御方式：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2403.14720">提示工程与优化</a>、<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2404.13208">监督微调</a></p>
-<p>防御局限性：尚无全面综合的跨模态防御方式</p></li>
-</ul></li>
-<li><p>模型窃取：用<u>尽可能低的开销</u>获得接近于黑盒商用模型的<strong><u>克隆模型</u></strong></p>
-<ul>
-<li><p>攻击方式：<a target="_blank" rel="noopener" href="https://proceedings.mlr.press/v139/zanella-beguelin21a.html">从功能角度仿制模型</a>
-or <a target="_blank" rel="noopener" href="https://www.usenix.org/system/files/sec20-jagielski.pdf">窃取完整模型</a></p>
-<p>攻击局限性：难以窃取大模型的完整权重；难以复制 agent 系统内 LLM
-的<strong>完整输入输出</strong></p></li>
-<li><p>防御方式：目前主要为被动防御，如<a target="_blank" rel="noopener" href="https://proceedings.mlr.press/v202/zhao23i/zhao23i.pdf">给模型输出加水印</a></p>
-<p>防御局限性：所有使用同一 LLM core 的下游 agent
-会因为一个模型被窃取而导致所有 agent 被窃取</p></li>
-</ul></li>
-<li><p>提示词泄露：攻击者通过某种手段获得<strong><u>系统提示词</u></strong>（用来执行任务规划的<strong>内部</strong>提示词）</p>
-<ul>
-<li><p>攻击方式：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2405.06823">优化前缀/后缀</a>，<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2405.15012">训练逆向模型</a>，<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.19200">逆向工程</a>；<a target="_blank" rel="noopener" href="https://iclr.cc/virtual/2024/poster/17767">多模态隐层优化</a></p>
-<p>攻击局限性：仅攻击 LLM core，未考虑 planner 等其他组件</p></li>
-<li><p>防御方式：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2408.02416">提示工程</a>
-or <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.02816">提示词加水印</a></p>
-<p>防御局限性：当前防御面应扩展到 LLM core 以外更多的组件</p></li>
-</ul></li>
+<li><p>Ours 优于 直接基于跨模态优化的方案，两阶段扰动范围 <span class="math inline">\(\epsilon_{t}, \ \epsilon_i\)</span> 均不能为
+0</p></li>
+<li><p>Ours 优于 单一Transfer-based/Query-based的方案</p></li>
+<li><p>Ours 生成的混淆噪声 <span class="math inline">\(\Delta =
+x_{\text{cle}} - x_{\text{adv}}\)</span>
+并不携带有效的语义信息/显著的视觉信号</p></li>
+<li><p>Ours 需要选取适当的 <span class="math inline">\(\epsilon \in [0,
+255]\)</span>，以达到 图像质量 <span class="math inline">\(\Leftrightarrow\)</span> 目标诱导性
+之间的平衡（LPIPS）</p></li>
+<li><p>原始text-input下，GradCAM 在 <span class="math inline">\(x_{\text{adv}}\)</span> 上多关注无用的背景，说明
+VLM 的关注点遭到不良影响</p>
+<p>对抗text-input下，GradCAM 在 <span class="math inline">\(x_{\text{cle}}\)</span> 和 <span class="math inline">\(x_{\text{adv}}\)</span> 上关注相近的部位，说明 VLM
+的注意力被对抗样本带偏了</p></li>
 </ul>
 
                 
@@ -440,7 +444,7 @@ or <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.02816">提
   
     <span>></span>
     
-  <a href="/categories/paper/MM/agent/" class="category-chain-item">agent</a>
+  <a href="/categories/paper/MM/VLM/" class="category-chain-item">VLM</a>
   
   
 
@@ -459,10 +463,6 @@ or <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.02816">提
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/agent/">#agent</a>
-      
-        <a href="/tags/LLM/">#LLM</a>
-      
         <a href="/tags/safety/">#safety</a>
       
         <a href="/tags/multimodal/">#multimodal</a>
@@ -477,8 +477,8 @@ or <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.02816">提
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『paper-MM-1』《A Survey on Threats in LLM-Based Agents》</div>
-      <div>http://larry0454.github.io/2024/11/22/paper/MM/agent/navigate-the-risks/</div>
+      <div>『paper-MM-2』《Evaluating Adversarial Robustness of Large VLMs》</div>
+      <div>http://larry0454.github.io/2024/12/01/paper/MM/VLM/robust-vlm/</div>
     </div>
     <div class="license-meta">
       
@@ -490,7 +490,7 @@ or <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.02816">提
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>November 22, 2024</div>
+          <div>December 1, 2024</div>
         </div>
       
       
@@ -522,18 +522,12 @@ or <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.02816">提
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/11/29/paper/CV/AML/PGD/" title="『paper-CV-3』《PGD》">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『paper-CV-3』《PGD》</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/11/19/paper/NLP/LLM/sneaky-prompt/" title="『paper-NLP-3』《SneakyPrompt》">
-                        <span class="hidden-mobile">『paper-NLP-3』《SneakyPrompt》</span>
+                      <a href="/2024/11/29/paper/CV/AML/PGD/" title="『paper-CV-3』《PGD》">
+                        <span class="hidden-mobile">『paper-CV-3』《PGD》</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
