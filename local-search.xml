@@ -8,7 +8,7 @@
     <link href="/2024/12/01/paper/MM/VLM/robust-vlm/"/>
     <url>/2024/12/01/paper/MM/VLM/robust-vlm/</url>
     
-    <content type="html"><![CDATA[<h2 id="on-evaluating-adversarial-robustness-of-large-vision-language-models">《OnEvaluating Adversarial Robustness of Large Vision-Language Models》</h2><p class="note note-info">From Advances in Neural Information Processing Systems (2023)</p><h3 id="一本文贡献">一、本文贡献</h3><ul><li>评估当前 SOTA VLMs 的视觉对抗鲁棒性，对开源 VLMs进行<strong>黑盒攻击</strong></li><li>基于替身模型的迁移攻击可以对 VLMs 进行<strong>定向诱导</strong></li><li>定量揭示了当前基于 VLM的应用（robots/agents）的对抗脆弱性，尤其在视觉模态异常脆弱</li></ul><hr><h3 id="二相关工作">二、相关工作</h3><ul><li><p>大语言模型及其鲁棒性：</p><ul><li>奠基性工作：<a href="https://eva.fing.edu.uy/pluginfile.php/524749/mod_folder/content/0/BERT%20Pre-training%20of%20Deep%20Bidirectional%20Transformers%20for%20Language%20Understanding.pdf">BERT</a>、<a href="https://insightcivic.s3.us-east-1.amazonaws.com/language-models.pdf">GPT-2</a>、<a href="https://www.jmlr.org/papers/volume21/20-074/20-074.pdf">T5</a>等</li><li>支持复杂对话的语言模型：<a href="https://proceedings.neurips.cc/paper_files/paper/2022/file/b1efde53be364a73914f58805a001731-Paper-Conference.pdf">ChatGPT</a>、<a href="https://arxiv.org/pdf/2302.13971">LLaMA</a> 等</li><li>针对语言模型的<strong>对抗样本</strong> or对抗性<strong>数据集</strong> or benchmarks</li></ul></li><li><p>多模态大模型及其鲁棒性：</p><ul><li>经典工作：<a href="https://arxiv.org/pdf/2303.03378">PaLM-E</a>、<a href="https://proceedings.neurips.cc/paper_files/paper/2023/file/e425b75bac5742a008d643826428787c-Paper-Conference.pdf">KOSMOS-1</a>、<a href="https://arxiv.org/pdf/2303.04671">Visual-ChatGPT</a> 等</li><li>针对 MLLMs 的 <u>VQA</u> 任务或 <u>Image Caption</u>任务的鲁棒性探究</li></ul><p>相较于过去针对 CNN-RNN-based的白盒非定向攻击、本篇工作聚焦于<strong><u>针对 VLM的黑盒定向攻击</u></strong></p></li></ul><hr><h3 id="三研究方法">三、研究方法</h3><p><img src="/2024/12/01/paper/MM/VLM/robust-vlm/pipeline.png" style="zoom:70%;"></p><ul><li><p>威胁模型：基于图像的生文任务可建模为 <span class="math inline">\(p_{\theta}(x;c_{\text{in}}) \vdashc_{\text{out}}\)</span>，其中 <span class="math inline">\(x\)</span>是输入图像、<span class="math inline">\(c_{\text{in}}\)</span>是输入文本，<span class="math inline">\(c_{\text{out}}\)</span>是输出文本</p><ul><li>对抗性知识：攻击者对受害模型的了解程度，对应地可以分为<u>黑盒攻击</u>和<u>白盒攻击</u></li><li>对抗性目标：可以分为<u>非定向攻击</u>（<span class="math inline">\(c_{\text{out}}\)</span>只需保证是错误的）和<u>定向攻击</u>（<span class="math inline">\(c_{\text{out}}\)</span> 必须符合<strong>预先指定的<span class="math inline">\(c_{\text{tar}}\)</span></strong>）</li><li>对抗性能力：限定了攻击者可干扰的<u>范围边界</u> <span class="math inline">\(\epsilon\)</span>；对于 <span class="math inline">\(p\)</span> 范数干扰需满足 <span class="math inline">\(||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon\)</span></li></ul><p>本文提出了一种"<strong><u>两阶段</u></strong>"的攻击策略：Transfer-basedattacking (MF-ii) 和 Query-based attacking (MF-tt)</p></li><li><p>Transfer-basedattacking：针对<strong><u>替代模型</u></strong>设计攻击策略，再<strong>迁移</strong>到黑盒受害模型上；<strong>总体跨模态攻击目标</strong>如下<span class="math display">\[x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon}{\text{argmax}} f_{\phi}(x_{\text{adv}})^{\text{T}}g_{\psi}(c_{\text{tar}})\]</span> 其中 <span class="math inline">\(f_{\phi}\)</span> 是 imageencoder，<span class="math inline">\(g_{\psi}\)</span> 是 textencoder，均为<strong>开源的<u>替代模型</u></strong>；上述带 <span class="math inline">\(\epsilon\)</span> 限制的优化问题可用 PGD算法求解</p><p>本文用预训练T2I模型 <span class="math inline">\(h\)</span><u>先生成对抗性图片</u>，<strong>再在<u>同一个图像空间</u>内对齐</strong>；第一阶段的攻击目标如下<span class="math display">\[x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon}{\text{argmax}} f_{\phi}(x_{\text{adv}})^\text{T}f_{\phi}(h(c_{\text{tar}}))\]</span></p></li><li><p>Query-basedattacking：在<strong>生成文本</strong>的语义空间内对齐，同样可使用.PGD算法求解；第二阶段的攻击目标如下： <span class="math display">\[x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon}{\text{argmax}} g_{\psi}(p_{\theta}(x_{\text{adv}};c_{\text{in}}))^{\text{T}} g_{\psi}(c_{\text{tar}})\]</span> 由于无法获得 <span class="math inline">\(p_{\theta}\)</span>的参数 <span class="math inline">\(\theta\)</span>，本文采用 RandomGradient-Free 算法估计 <span class="math inline">\(\theta\)</span> ；设<span class="math inline">\(p_{\theta}\)</span>是<strong>可微分</strong>的，可通过<u><strong>估计多个方向导数</strong>估算梯度</u><span class="math display">\[\begin{align}&amp;\nabla_{x_{\text{adv}}}g_{\psi}(p_{\theta}(x_{\text{adv}};c_{\text{in}}))^\text{T}g_{\psi}(c_{\text{tar}}) \\\approx &amp; \dfrac{1}{N} \sum_{n=1}^N[\dfrac{g_{\psi}(p_{\theta}(x_{\text{adv}}+\sigma\delta_n;c_{\text{in}}))^\text{T} g_{\psi}(c_{\text{tar}}) -g_{\psi}(p_{\theta}(x_{\text{adv}};c_{\text{in}}))^\text{T}g_{\psi}(c_{\text{tar}})}{\sigma}] \cdot \delta_n\end{align}\]</span> 其中 <span class="math inline">\(\delta_n \simP(\delta)\)</span>可以从<strong>超球面</strong>随机取点以模拟不同的方向，<span class="math inline">\(N\)</span> 表示 query T2I 的总次数</p><blockquote><p><strong>注意</strong>：先前的工作会把 Transfer-based 和 Query-based两阶段并行执行，本文方法将两个阶段<strong>串行执行</strong>，对抗攻击效果更优</p></blockquote></li></ul><hr><h3 id="四实验评估">四、实验评估</h3><ul><li><p>Ours 优于 直接基于跨模态优化的方案，两阶段扰动范围 <span class="math inline">\(\epsilon_{t}, \ \epsilon_i\)</span> 均不能为0</p></li><li><p>Ours 优于 单一Transfer-based/Query-based的方案</p></li><li><p>Ours 生成的混淆噪声 <span class="math inline">\(\Delta =x_{\text{cle}} - x_{\text{adv}}\)</span>并不携带有效的语义信息/显著的视觉信号</p></li><li><p>Ours 需要选取适当的 <span class="math inline">\(\epsilon \in [0,255]\)</span>，以达到 图像质量 <span class="math inline">\(\Leftrightarrow\)</span> 目标诱导性之间的平衡（LPIPS）</p></li><li><p>原始text-input下，GradCAM 在 <span class="math inline">\(x_{\text{adv}}\)</span> 上多关注无用的背景，说明VLM 的关注点遭到不良影响</p><p>对抗text-input下，GradCAM 在 <span class="math inline">\(x_{\text{cle}}\)</span> 和 <span class="math inline">\(x_{\text{adv}}\)</span> 上关注相近的部位，说明 VLM的注意力被对抗样本带偏了</p></li></ul>]]></content>
+    <content type="html"><![CDATA[<h2 id="on-evaluating-adversarial-robustness-of-large-vision-language-models">《OnEvaluating Adversarial Robustness of Large Vision-Language Models》</h2><p class="note note-info">From Advances in Neural Information Processing Systems (2023)</p><h3 id="一本文贡献">一、本文贡献</h3><ul><li>评估当前 SOTA VLMs 的视觉对抗鲁棒性，对开源 VLMs进行<strong>黑盒攻击</strong></li><li>基于替身模型的迁移攻击可以对 VLMs 进行<strong>定向诱导</strong></li><li>定量揭示了当前基于 VLM的应用（robots/agents）的对抗脆弱性，尤其在视觉模态异常脆弱</li></ul><hr><h3 id="二相关工作">二、相关工作</h3><ul><li><p>大语言模型及其鲁棒性：</p><ul><li>奠基性工作：<a href="https://eva.fing.edu.uy/pluginfile.php/524749/mod_folder/content/0/BERT%20Pre-training%20of%20Deep%20Bidirectional%20Transformers%20for%20Language%20Understanding.pdf">BERT</a>、<a href="https://insightcivic.s3.us-east-1.amazonaws.com/language-models.pdf">GPT-2</a>、<a href="https://www.jmlr.org/papers/volume21/20-074/20-074.pdf">T5</a>等</li><li>支持复杂对话的语言模型：<a href="https://proceedings.neurips.cc/paper_files/paper/2022/file/b1efde53be364a73914f58805a001731-Paper-Conference.pdf">ChatGPT</a>、<a href="https://arxiv.org/pdf/2302.13971">LLaMA</a> 等</li><li>针对语言模型的<strong>对抗样本</strong> or对抗性<strong>数据集</strong> or benchmarks</li></ul></li><li><p>多模态大模型及其鲁棒性：</p><ul><li>经典工作：<a href="https://arxiv.org/pdf/2303.03378">PaLM-E</a>、<a href="https://proceedings.neurips.cc/paper_files/paper/2023/file/e425b75bac5742a008d643826428787c-Paper-Conference.pdf">KOSMOS-1</a>、<a href="https://arxiv.org/pdf/2303.04671">Visual-ChatGPT</a> 等</li><li>针对 MLLMs 的 <u>VQA</u> 任务或 <u>Image Caption</u>任务的鲁棒性探究</li></ul><p>相较于过去针对 CNN-RNN-based的白盒非定向攻击、本篇工作聚焦于<strong><u>针对 VLM的黑盒定向攻击</u></strong></p></li></ul><hr><h3 id="三研究方法">三、研究方法</h3><p><img src="/2024/12/01/paper/MM/VLM/robust-vlm/pipeline.png" style="zoom:70%;"></p><ul><li><p>威胁模型：基于图像的生文任务可建模为 <span class="math inline">\(p_{\theta}(x;c_{\text{in}}) \vdashc_{\text{out}}\)</span>，其中 <span class="math inline">\(x\)</span>是输入图像、<span class="math inline">\(c_{\text{in}}\)</span>是输入文本，<span class="math inline">\(c_{\text{out}}\)</span>是输出文本</p><ul><li>对抗性知识：攻击者对受害模型的了解程度，对应地可以分为<u>黑盒攻击</u>和<u>白盒攻击</u></li><li>对抗性目标：可以分为<u>非定向攻击</u>（<span class="math inline">\(c_{\text{out}}\)</span>只需保证是错误的）和<u>定向攻击</u>（<span class="math inline">\(c_{\text{out}}\)</span> 必须符合<strong>预先指定的<span class="math inline">\(c_{\text{tar}}\)</span></strong>）</li><li>对抗性能力：限定了攻击者可干扰的<u>范围边界</u> <span class="math inline">\(\epsilon\)</span>；对于 <span class="math inline">\(p\)</span> 范数干扰需满足约束 <span class="math inline">\(||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon\)</span></li></ul><p>本文提出了一种"<strong><u>两阶段</u></strong>"的攻击策略：Transfer-basedattacking (MF-ii) 和 Query-based attacking (MF-tt)</p></li><li><p>Transfer-basedattacking：针对<strong><u>替代模型</u></strong>设计攻击策略，再<strong>迁移</strong>到黑盒受害模型上；<strong>总体跨模态攻击目标</strong>如下<span class="math display">\[x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon}{\text{argmax}} f_{\phi}(x_{\text{adv}})^{\text{T}}g_{\psi}(c_{\text{tar}})\]</span> 其中 <span class="math inline">\(f_{\phi}\)</span> 是 imageencoder，<span class="math inline">\(g_{\psi}\)</span> 是 textencoder，均为<strong>开源的<u>替代模型</u></strong>；上述带 <span class="math inline">\(\epsilon\)</span> 限制的优化问题可用 PGD算法求解</p><p>本文用预训练T2I模型 <span class="math inline">\(h\)</span><u>先生成对抗性图片</u>，<strong>再在<u>同一个图像空间</u>内对齐</strong>；第一阶段的攻击目标如下<span class="math display">\[x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon}{\text{argmax}} f_{\phi}(x_{\text{adv}})^\text{T}f_{\phi}(h(c_{\text{tar}}))\]</span></p></li><li><p>Query-basedattacking：在<strong>生成文本</strong>的语义空间内对齐，同样可使用.PGD算法求解；第二阶段的攻击目标如下 <span class="math display">\[x_{\text{adv}}^{*} = \underset{||x_{\text{cle}} - x_{\text{adv}}||_p \le\epsilon}{\text{argmax}} g_{\psi}(p_{\theta}(x_{\text{adv}};c_{\text{in}}))^{\text{T}} g_{\psi}(c_{\text{tar}})\]</span> 由于无法获得 <span class="math inline">\(p_{\theta}\)</span>的参数 <span class="math inline">\(\theta\)</span>，本文采用 RandomGradient-Free 算法估计 <span class="math inline">\(\theta\)</span> ；设<span class="math inline">\(p_{\theta}\)</span>是<strong>可微分</strong>的，可通过<u><strong>估计多个方向导数</strong>估算梯度</u><span class="math display">\[\begin{align}&amp;\nabla_{x_{\text{adv}}}g_{\psi}(p_{\theta}(x_{\text{adv}};c_{\text{in}}))^\text{T}g_{\psi}(c_{\text{tar}}) \\\approx &amp; \dfrac{1}{N} \sum_{n=1}^N[\dfrac{g_{\psi}(p_{\theta}(x_{\text{adv}}+\sigma\delta_n;c_{\text{in}}))^\text{T} g_{\psi}(c_{\text{tar}}) -g_{\psi}(p_{\theta}(x_{\text{adv}};c_{\text{in}}))^\text{T}g_{\psi}(c_{\text{tar}})}{\sigma}] \cdot \delta_n\end{align}\]</span> 其中 <span class="math inline">\(\delta_n \simP(\delta)\)</span>可以从<strong>超球面</strong>随机取点以模拟不同的方向，<span class="math inline">\(N\)</span> 表示 query T2I 的总次数</p><blockquote><p><strong>注意</strong>：先前的工作会把 Transfer-based 和 Query-based两阶段并行执行，本文方法将两个阶段<strong>串行执行</strong>，对抗攻击效果更优</p></blockquote></li></ul><hr><h3 id="四实验评估">四、实验评估</h3><ul><li><p>Ours 优于 直接基于跨模态优化的方案，两阶段扰动范围 <span class="math inline">\(\epsilon_{t}, \ \epsilon_i\)</span> 均不能为0</p></li><li><p>Ours 优于 单一Transfer-based/Query-based的方案</p></li><li><p>Ours 生成的混淆噪声 <span class="math inline">\(\Delta =x_{\text{cle}} - x_{\text{adv}}\)</span>并不携带有效的语义信息/显著的视觉信号</p></li><li><p>Ours 需要选取适当的 <span class="math inline">\(\epsilon \in [0,255]\)</span>，以达到 图像质量 <span class="math inline">\(\Leftrightarrow\)</span> 目标诱导性之间的平衡（LPIPS）</p></li><li><p>原始text-input下，GradCAM 在 <span class="math inline">\(x_{\text{adv}}\)</span>上更多地关注无用的背景，说明 VLM的关注点遭受到不良影响<br>对抗text-input下，GradCAM 在 <span class="math inline">\(x_{\text{cle}}\)</span> 和 <span class="math inline">\(x_{\text{adv}}\)</span> 上关注了相近的部位，说明VLM 的注意力被对抗样本带偏了</p></li></ul>]]></content>
     
     
     <categories>
@@ -27,6 +27,8 @@
       <tag>safety</tag>
       
       <tag>multimodal</tag>
+      
+      <tag>LLM</tag>
       
     </tags>
     
@@ -88,13 +90,13 @@
     
     <tags>
       
-      <tag>agent</tag>
-      
-      <tag>LLM</tag>
-      
       <tag>safety</tag>
       
       <tag>multimodal</tag>
+      
+      <tag>LLM</tag>
+      
+      <tag>agent</tag>
       
     </tags>
     
@@ -123,9 +125,9 @@
     
     <tags>
       
-      <tag>reinforcement learning</tag>
-      
       <tag>safety</tag>
+      
+      <tag>reinforcement learning</tag>
       
       <tag>jailbreak</tag>
       
@@ -191,9 +193,9 @@
       
       <tag>next best view</tag>
       
-      <tag>point cloud</tag>
-      
       <tag>3D reconstruction</tag>
+      
+      <tag>point cloud</tag>
       
     </tags>
     
@@ -998,13 +1000,13 @@
     
     <tags>
       
+      <tag>safety</tag>
+      
       <tag>symmetric encryption</tag>
       
       <tag>DES</tag>
       
       <tag>AES</tag>
-      
-      <tag>safety</tag>
       
     </tags>
     
