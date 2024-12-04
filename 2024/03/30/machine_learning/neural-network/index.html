@@ -16,16 +16,16 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="神经网络 一、感知器  感知器的定义：以一个实值向量为输入，计算输入中各分量的线性组合，最后通过激活函数计算输出 感知器的输出计算公式： \[ o(x_1, ..., x_n) &#x3D; \begin{cases} 1 &amp; \omega_0 + \omega_1 x_1 + ... + \omega_n x_n \gt 0 \\ -1 &amp; otherwise \end{">
+    <meta name="description" content="神经网络 一、感知器  感知器的定义：以一个实值向量为输入，计算输入中各分量的线性组合，最后通过激活函数计算输出 感知器的输出计算公式： \[ o(x_1, ..., x_n) &#x3D; \begin{cases} 1 &amp; \omega_0 + \omega_1 x_1 + ... + \omega_n x_n \gt 0 \\ -1 &amp; \text{otherwise}">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『machine learning-7』neural network">
 <meta property="og:url" content="http://larry0454.github.io/2024/03/30/machine_learning/neural-network/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="神经网络 一、感知器  感知器的定义：以一个实值向量为输入，计算输入中各分量的线性组合，最后通过激活函数计算输出 感知器的输出计算公式： \[ o(x_1, ..., x_n) &#x3D; \begin{cases} 1 &amp; \omega_0 + \omega_1 x_1 + ... + \omega_n x_n \gt 0 \\ -1 &amp; otherwise \end{">
+<meta property="og:description" content="神经网络 一、感知器  感知器的定义：以一个实值向量为输入，计算输入中各分量的线性组合，最后通过激活函数计算输出 感知器的输出计算公式： \[ o(x_1, ..., x_n) &#x3D; \begin{cases} 1 &amp; \omega_0 + \omega_1 x_1 + ... + \omega_n x_n \gt 0 \\ -1 &amp; \text{otherwise}">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://larry0454.github.io/2024/03/30/machine_learning/neural-network/BP%E7%AE%97%E6%B3%95.png">
 <meta property="article:published_time" content="2024-03-30T00:29:00.000Z">
-<meta property="article:modified_time" content="2024-11-29T15:37:37.512Z">
+<meta property="article:modified_time" content="2024-12-04T15:45:06.714Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="perception">
 <meta property="article:tag" content="gradient descent">
@@ -249,7 +249,7 @@
         
         
         
-          42 mins
+          43 mins
         
       </span>
     
@@ -308,7 +308,7 @@
 o(x_1, ..., x_n) =
 \begin{cases}
 1 &amp; \omega_0 + \omega_1 x_1 + ... + \omega_n x_n \gt 0 \\
--1 &amp; otherwise
+-1 &amp; \text{otherwise}
 \end{cases}
 \]</span> 上式中激活函数取符号函数<span class="math inline">\(sgn(x)\)</span></p>
 <p><strong>注意</strong>：一般会设置一个<strong>固定的输入<span class="math inline">\(x_0 = 1\)</span></strong>，则上面的不等式可写成
@@ -330,7 +330,7 @@ o(x_1, ..., x_n) =
 <p>只要出现误分类就修改权值，直至感知器<strong>正确分类所有样例</strong>，设输入样例<span class="math inline">\((x_i, t)\)</span>对应的权值为<span class="math inline">\(\omega_i\)</span>： <span class="math display">\[
 \begin{align}
 \omega_i &amp;\leftarrow \omega_i + \Delta \omega_i \\
-其中权重增量 \Delta \omega_i &amp;= \eta (t - o)x_i
+其中权重增量 \ \Delta \omega_i &amp;= \eta (t - o)x_i
 \end{align}
 \]</span> 其中o表示感知器的当前输出，<span class="math inline">\(\eta
 \in (0, 1)\)</span>表示<strong>学习速率</strong></p>
@@ -377,24 +377,26 @@ t)\)</span><strong>直接更新</strong>各权值 <span class="math display">\[
 <li><p>多层网络：具有<strong>隐藏层</strong>，能够表示<u>高度非线性</u>的决策面（如曲面）</p></li>
 <li><p>可微阈值单元：适用于梯度下降算法<strong>非线性</strong>的<strong>可微</strong>函数</p>
 <p>sigmoid函数：常见的平滑可微的阈值函数 <span class="math display">\[
-sigmoid(x) = \frac{1}{1 + e^{-x}}
+\text{sigmoid}(x) = \frac{1}{1 + e^{-x}}
 \]</span></p></li>
 <li><p>sigmoid函数的特殊性质：记sigmoid为<span class="math inline">\(\sigma\)</span>，有<span class="math inline">\(\sigma&#39; = \sigma(1-\sigma)\)</span></p>
 <hr></li>
 <li><p>反向传播算法（BP算法）：通过<strong>梯度下降</strong>最小化<u>网络输出值</u>和<u>目标值之间</u>的误差平方</p>
 <p>设<span class="math inline">\(x_{ji}\)</span>为神经元j的第i个<strong>输入</strong>，<span class="math inline">\(\omega_{ji}\)</span>表示对应的<strong>权重</strong>，<span class="math inline">\(net_j\)</span>表示神经元j<strong>输入的线性加权</strong>，<span class="math inline">\(o_j\)</span>表示神经元j的<strong>阈值输出</strong></p>
-<p>downstream(j)表示以神经元j的输出为直接输入的<strong>下一层神经元</strong>的集合</p>
+<p>downstream(j)
+表示以神经元j的输出为直接输入的<strong>下一层神经元</strong>的集合</p>
 <p><img src="/2024/03/30/machine_learning/neural-network/BP算法.png" srcset="/img/loading.gif" lazyload width="80%" height="80%">
 对于训练样本集中的每个样例<span class="math inline">\((\vec{x_i},
 t)\)</span>，将其输入网络，使误差沿网络反向传播：</p>
 <ol type="1">
-<li><p>对于网络中的每个<strong>输出神经元k</strong>，计算其误差项<span class="math inline">\(\delta_k = o_k(1-o_k)(t_k - o_k)\)</span> （<span class="math inline">\(\sigma&#39; \Delta out）\)</span></p></li>
-<li><p>对于网络中的每个<strong>隐层神经元h</strong>，计算其误差项<span class="math inline">\(\delta_h = o_h(1-o_h) \sum_{k \in downstream(h)}
-\delta_k \omega_{kh}\)</span>（<u><strong>向前递推</strong></u>）</p>
+<li><p>对于网络中的每个<strong>输出神经元k</strong>，计算其误差项 <span class="math inline">\(\delta_k = o_k(1-o_k)(t_k - o_k)\)</span> （<span class="math inline">\(\sigma&#39; \Delta out）\)</span></p></li>
+<li><p>对于网络中的每个<strong>隐层神经元h</strong>，计算其误差项 <span class="math inline">\(\delta_h = o_h(1-o_h) \sum_{k \in downstream(h)}
+\delta_k \omega_{kh}\)</span>（<span class="math inline">\(\sigma&#39;
+\sum \Delta\)</span>，<u><strong>向前递推</strong></u>）</p>
 <p>第m层神经元的误差项是由<strong>所有第m+1层神经元</strong>的误差项推导出来的</p></li>
 <li><p><strong>更新</strong>各网络权值<span class="math inline">\(\omega_{ji} \leftarrow \omega_{ji} + \Delta
-\omega_{ji}\)</span>，其中<span class="math inline">\(\Delta \omega_{ji}
-= \eta \delta_{j} x_{ji}\)</span></p></li>
+\omega_{ji}\)</span>，其中 <span class="math inline">\(\Delta
+\omega_{ji} = \eta \delta_{j} x_{ji}\)</span></p></li>
 </ol>
 <p>反向传播算法的终止条件：固定的迭代次数（一轮<u>迭代</u>指<u>读取一遍训练集</u>），或误差降至某个阈值以下</p></li>
 </ul>

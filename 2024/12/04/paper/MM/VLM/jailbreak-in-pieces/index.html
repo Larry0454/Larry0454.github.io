@@ -16,26 +16,28 @@
   <meta name="author" content="WangLe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="《SneakyPrompt: Jailbreaking Text-to-image Generative Models》  From IEEE Symposium on Security and Privacy (2024)  一、拟解决问题  现有攻击方式比较低效，进攻开销大 adv prompt 初次使用效果好，重用后效果差 现有攻击方法不太关注生图质量   二、相关工">
+    <meta name="description" content="《Jailbreak in Pieces: Compositional Adversarial Attacks on Multi-Modal Language Models》  From International Conference on Learning Representations (2024, Spotlight)  一、本文贡献  跨模态攻击：提出了一种&quot;跨模态&quot;的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『paper-NLP-3』《SneakyPrompt》">
-<meta property="og:url" content="http://larry0454.github.io/2024/11/19/paper/NLP/LLM/sneaky-prompt/index.html">
+<meta property="og:title" content="『paper-MM-3』《Jailbreak in Pieces》">
+<meta property="og:url" content="http://larry0454.github.io/2024/12/04/paper/MM/VLM/jailbreak-in-pieces/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="《SneakyPrompt: Jailbreaking Text-to-image Generative Models》  From IEEE Symposium on Security and Privacy (2024)  一、拟解决问题  现有攻击方式比较低效，进攻开销大 adv prompt 初次使用效果好，重用后效果差 现有攻击方法不太关注生图质量   二、相关工">
+<meta property="og:description" content="《Jailbreak in Pieces: Compositional Adversarial Attacks on Multi-Modal Language Models》  From International Conference on Learning Representations (2024, Spotlight)  一、本文贡献  跨模态攻击：提出了一种&quot;跨模态&quot;的">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-11-19T15:32:29.000Z">
-<meta property="article:modified_time" content="2024-11-30T12:46:55.110Z">
+<meta property="og:image" content="http://larry0454.github.io/2024/12/04/paper/MM/VLM/jailbreak-in-pieces/jailbreak-algorithm.png">
+<meta property="article:published_time" content="2024-12-04T15:38:05.000Z">
+<meta property="article:modified_time" content="2024-12-04T15:40:50.749Z">
 <meta property="article:author" content="WangLe">
 <meta property="article:tag" content="safety">
+<meta property="article:tag" content="multimodal">
 <meta property="article:tag" content="jailbreak">
-<meta property="article:tag" content="reinforcement learning">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://larry0454.github.io/2024/12/04/paper/MM/VLM/jailbreak-in-pieces/jailbreak-algorithm.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>『paper-NLP-3』《SneakyPrompt》 - Blog</title>
+  <title>『paper-MM-3』《Jailbreak in Pieces》 - Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +215,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="『paper-NLP-3』《SneakyPrompt》"></span>
+            <span id="subtitle" data-typed-text="『paper-MM-3』《Jailbreak in Pieces》"></span>
           
         </div>
 
@@ -224,8 +226,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-19 23:32" pubdate>
-          November 19, 2024 pm
+        <time datetime="2024-12-04 23:38" pubdate>
+          December 4, 2024 pm
         </time>
       </span>
     
@@ -236,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k words
+          2.4k words
         
       </span>
     
@@ -247,7 +249,7 @@
         
         
         
-          21 mins
+          20 mins
         
       </span>
     
@@ -293,117 +295,100 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">『paper-NLP-3』《SneakyPrompt》</h1>
+            <h1 style="display: none">『paper-MM-3』《Jailbreak in Pieces》</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="sneakyprompt-jailbreaking-text-to-image-generative-models">《SneakyPrompt:
-Jailbreaking Text-to-image Generative Models》</h2>
+                <h2 id="jailbreak-in-pieces-compositional-adversarial-attacks-on-multi-modal-language-models">《Jailbreak
+in Pieces: Compositional Adversarial Attacks on Multi-Modal Language
+Models》</h2>
 <p class="note note-info">
-From IEEE Symposium on Security and Privacy (2024)
+From International Conference on Learning Representations (2024,
+Spotlight)
 </p>
-<h3 id="一拟解决问题">一、拟解决问题</h3>
+<h3 id="一本文贡献">一、本文贡献</h3>
 <ul>
-<li>现有攻击方式比较低效，进攻开销大</li>
-<li>adv prompt 初次使用效果好，重用后效果差</li>
-<li>现有攻击方法不太关注生图质量</li>
+<li>跨模态攻击：提出了一种"跨模态"的复合攻击方式，将四种<strong>有害trigger</strong>嵌入视觉输入，与无害通用文本指令一起输入多模态模型</li>
+<li>隐层嵌入：基于嵌入空间执行对抗攻击，用<strong>梯度优化更新对抗性图片</strong>，将有害trigger隐写入看似无害的图片，无需设计文本输入</li>
+<li>复合攻击：同一个无害文本指令可以组合多种有害trigger；同一个有害trigger可以诱导多种无害文本指令</li>
 </ul>
 <hr>
-<h3 id="二相关工作">二、相关工作</h3>
+<h3 id="二研究背景">二、研究背景</h3>
 <ul>
-<li>文生图模型：Stable Diffusion、DALLE<span class="math inline">\(\cdot\)</span>E；攻击多为手工打造，绕过率低且多针对非商业模型</li>
-<li>对抗样本：用以混淆模型决策的输入；当前方法无法保持生图语义不变 +
-多轮询问攻击开销大 + adv prompt 在随机种子下不可重用</li>
-<li>强化学习：policy 在当前 state 执行一个 action 并获得 reward；policy
-会执行<strong>未来累计奖励最大</strong>对应的 action</li>
+<li><p>Text-based 攻击：假设 LLM 模型为 <span class="math inline">\(p_{\theta}\)</span>，有害目标集为 <span class="math inline">\(Y = \{y_i\}_{i=1}^m\)</span>，扰动约束为 <span class="math inline">\(\mathcal{B}\)</span>
+，获得对抗性提示词的优化目标为： <span class="math display">\[
+{x}^{*}_{\text{adv}} = \underset{x^t_{\text{adv}} \in
+\mathcal{B}}{\text{argmin}}\sum_{i=1}^m -\log (p_{\theta}(y_i \ | \
+[x^t_{\text{harm}},\ x^t_{\text{adv}}]))
+\]</span> 其中 <span class="math inline">\(x^t_{\text{harm}}\)</span>
+为原有害指令、而 <span class="math inline">\(x^t_{\text{adv}}\)</span>
+为<strong><u>嵌入有害trigger</u></strong>（如<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2307.15043">加后缀</a>）；上述公式描述了白盒攻击，需要获取完整的模型参数
+<span class="math inline">\(\theta\)</span></p></li>
+<li><p>Image-based 攻击：假设 VLM 模型为 <span class="math inline">\(p_{\theta}\)</span>，有害目标集为 <span class="math inline">\(Y = \{y_i\}_{i=1}^m\)</span>，扰动约束为 <span class="math inline">\(\mathcal{B}\)</span>，获得对抗性图像的优化目标为：
+<span class="math display">\[
+x^{*}_{\text{adv}} = \underset{x^i_{\text{adv}} \in
+\mathcal{B}}{\text{argmin}}\sum_{i=1}^m  -\log (p_{\theta}(y_i \ | \
+[x^i_{\text{adv}}, \ x^t]))
+\]</span> 其中 <span class="math inline">\(x^i_{\text{adv}}\)</span>
+为<strong><u>对抗性图像</u></strong>，<span class="math inline">\(x^t\)</span>
+为有害/无害文本指令；上述公式描述了白盒攻击，需要获取完整的模型参数
+<span class="math inline">\(\theta\)</span></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://ojs.aaai.org/index.php/AAAI/article/view/30150">图文结合</a>：将良性图像开始与恶性指令结合，生成对抗性图像</li>
+<li><a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper_files/paper/2023/file/c1f0b856a35986348ab3414177266f75-Paper-Conference.pdf">固化输出</a>：优化原始图像以固定原始输出，从而提高生成部分有害输出的可能性</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2309.00236">诱导行为</a>：不仅生成有害文本，而且诱导模型执行错误行为（访问有害网站）</li>
+</ul></li>
+<li><p>Embedding-based
+攻击：在<strong><u>嵌入语义空间</u></strong>进行攻击，使用<strong>影子模型</strong>
+CLIP/BLIP 优化输入模式</p>
+<ul>
+<li>通过<a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper_files/paper/2022/file/efbd571f139d26604e53fe2760e2c073-Paper-Conference.pdf">微小扰动</a>图像嵌入，误导多目标分类器</li>
+<li>通过在嵌入空间<a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper_files/paper/2023/file/a97b58c4f7551053b0512f92244b0810-Paper-Conference.pdf">匹配</a>原始图像和目标图像，生成误导性回复</li>
+</ul>
+<p>Embedding-based 方法跟本篇工作最为接近</p></li>
 </ul>
 <hr>
 <h3 id="三研究方法">三、研究方法</h3>
 <ul>
-<li><p>攻击目标：给定一个提示词 <span class="math inline">\(p_t\)</span>，找到一个绕过过滤器 <span class="math inline">\(\mathcal{F}\)</span> 从而攻击文生图模型 <span class="math inline">\(\mathcal{M}\)</span>
-的<u><strong>对抗样本</strong></u> <span class="math inline">\(p_a\)</span></p>
-<ul>
-<li>生成图 <span class="math inline">\(\mathcal{M}(p_a)\)</span>
-的语义接近原始 <span class="math inline">\(p_t\)</span>：采用余弦相似度衡量 <u>图像嵌入</u>
-和 <u><span class="math inline">\(p_t\)</span> 嵌入</u>的语义相似度</li>
-<li>对抗样本可以绕过安全过滤器，即 <span class="math inline">\(\mathcal{F}(\mathcal{M}, p_a) =
-0\)</span>：持续询问 <span class="math inline">\(\mathcal{M}\)</span>，直至绕过过滤器</li>
-<li>最小化询问 <span class="math inline">\(\mathcal{M}\)</span>
-的次数，即降低攻击成本：采用<u>强化学习</u>策略，根据查询结果扰动更新提示词
-<span class="math inline">\(p_a\)</span></li>
-</ul></li>
-<li><p>攻击算法：</p>
-<ol type="1">
-<li><p>离线查询：使用 <strong>影子编码器</strong> <span class="math inline">\(\hat{\epsilon}\)</span>
-执行离线查询，得到原始提示词 <span class="math inline">\(p_t\)</span>
-的嵌入 <span class="math inline">\(\hat{\epsilon}(p_t)\)</span></p></li>
-<li><p>初始化采样空间：设 <span class="math inline">\(\mathcal{S}\)</span>
-为总搜索空间，其中每个行为对应一个 <span class="math inline">\(\mathcal{C}\)</span></p></li>
-<li><p>循环迭代在线查询：设查询迭代次数上限为 <span class="math inline">\(Q\)</span>，当前迭代轮次为 <span class="math inline">\(q\)</span>，<span class="math inline">\(\mathcal{P}\)</span> 为强化学习算法</p>
-<ol type="1">
-<li><p>采样：对 <span class="math inline">\(p_t\)</span> 中 <span class="math inline">\(n\)</span> 个敏感词的每个词找指派 <span class="math inline">\(m\)</span> 个候选替换词，形成 <span class="math inline">\(\mathcal{C} = \{c_{11}, \dots,
-c_{nm}\}\)</span></p>
-<ul>
-<li><p>暴力采样：从单词长度为 <span class="math inline">\(l\)</span>
-的单词表中随机挑选 <span class="math inline">\(nm\)</span> 个单词，得到
-<span class="math inline">\(\mathcal{C}\)</span></p></li>
-<li><p>贪婪采样：设已选出 <span class="math inline">\(j\)</span> 个单词
-<span class="math inline">\((c_1, \dots, c_j)\)</span>，继续选使 <span class="math inline">\((c_1, \dots, c_{j+1})\)</span> 与 <span class="math inline">\(p_t\)</span> 间距最近的 <span class="math inline">\(c_{j+1}\)</span>，直至选出 <span class="math inline">\(nm\)</span> 个单词</p></li>
-<li><p>光束采样：设置 <span class="math inline">\(k\)</span>
-条单词链，每条单词链长度为 <span class="math inline">\(j\)</span>，下一步为各单词链的第 <span class="math inline">\(j+1\)</span> 位选出 <span class="math inline">\(k\)</span> 个候选单词，得到 <span class="math inline">\(k^2\)</span> 条链 <br>再筛除与 <span class="math inline">\(p_t\)</span> 间距离最远的 <span class="math inline">\(k^2 - k\)</span> 个链条得到长度为 <span class="math inline">\(j+1\)</span> 的 <span class="math inline">\(k\)</span> 条单词链；最后选出长度为 <span class="math inline">\(nm\)</span>，且距 <span class="math inline">\(p_t\)</span> 最近的链</p></li>
-<li><p>强化学习：policy network 用 LSTM 建模，根据 <span class="math inline">\(P(c_j \ | \ c_1 c_2 \dots c_{j-1})\)</span> 选出
-<span class="math inline">\(c_j\)</span>，直至选出 <span class="math inline">\(nm\)</span> 个单词</p></li>
-</ul>
-<p>最后，对 <span class="math inline">\(p_a\)</span> 中的第 <span class="math inline">\(i\)</span> 个敏感词用其候选单词集合 <span class="math inline">\(\{c_{i1}, \dots, c_{im} \}\)</span>
-进行替换</p></li>
-<li><p>在线查询：用 <span class="math inline">\(p_a\)</span> 查询 <span class="math inline">\(\mathcal{M}\)</span> 得到 <span class="math inline">\(\mathcal{M}(p_{a})\)</span></p>
-<ul>
-<li>若 绕过防御，记奖励 <span class="math inline">\(r_q\)</span>
-为<strong><u>正的</u></strong> <span class="math inline">\(\text{Sim}(\mathcal{M}(p_{a}), \
-\hat{\epsilon}(p_t))\)</span></li>
-<li>若 未绕过防御，记奖励 <span class="math inline">\(r_q\)</span>
-为<u><strong>负的</strong></u> <span class="math inline">\(-\dfrac{q}{10
-\cdot Q}\)</span></li>
-</ul>
-<p>若 <span class="math inline">\(r_q &gt; r_{max}\)</span>，更新 <span class="math inline">\(r_{max}, \ p_a, \
-\mathcal{M}(p_a)\)</span></p></li>
-<li><p>更新采样策略：用 学习率 <span class="math inline">\(\eta\)</span>
-和 <span class="math inline">\(r_q\)</span> 更新 policy network <span class="math inline">\(P\)</span>，其损失函数 <span class="math inline">\(\mathcal{L} = -r_q \ln (P)\)</span></p></li>
-<li><p>迭代终止判断：三种情况</p>
-<ul>
-<li>若 <span class="math inline">\(r_q &gt; \textbf{Threshold} &gt;
-0\)</span>，直接返回当前 <span class="math inline">\(p_a\)</span> 和
-<span class="math inline">\(\mathcal{M}(p_a)\)</span>，算法结束</li>
-<li>若 <span class="math inline">\(r_{q-3,\ q-2,\ q-1}\)</span>
-<strong>波动很小</strong>，或 <span class="math inline">\(p_a\)</span>
-中<strong>被替换的单词比例</strong>超过 30%，直接返回当前 <span class="math inline">\(p_a\)</span> 和 <span class="math inline">\(\mathcal{M}(p_a)\)</span>，算法结束</li>
-<li>若 <span class="math inline">\(r_{q-1, \ \dots, \ q-5} &lt;
-0\)</span>，进一步<u>扩大采样范围</u> <span class="math inline">\(\mathcal{S}\)</span>，<u><strong>继续迭代</strong></u></li>
-</ul></li>
-</ol></li>
-</ol></li>
-<li><p>采样空间算法 <span class="math inline">\(\mathcal{S}\)</span>：设
-敏感词词表 为 <span class="math inline">\(keywords\)</span>，原始提示词为 <span class="math inline">\(p_t\)</span>，单词长度为 <span class="math inline">\(l\)</span> 的单词表为 <span class="math inline">\(\mathcal{D}_l\)</span></p>
-<ul>
-<li>初始 <span class="math inline">\(\mathcal{S}\)</span>：记 <span class="math inline">\(p_t\)</span> 中与 <span class="math inline">\(keywords\)</span> 匹配的敏感词数量为 <span class="math inline">\(n\)</span>，则返回 <span class="math inline">\(\mathcal{S} = \{(c_1, \dots, c_{nm}) \ | \ c_j \in
-\mathcal{D}_l, \ j = 1, \dots, nm \}\)</span></li>
-<li>扩展 <span class="math inline">\(\mathcal{S}\)</span>：<span class="math inline">\(n \leftarrow n+1\)</span>，返回 <span class="math inline">\(\mathcal{S} = \{(c_{11}, \dots, c_{(n+1)m}) \ | \
-c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
-</ul></li>
+<li><p>特征空间下的复合攻击方法：将有害输入特征<strong><u>分解</u></strong>为
+无害文本指令 <span class="math inline">\(H_{\text{gen}}^t\)</span> +
+有害trigger <span class="math inline">\(H_{\text{harm}}\)</span>；设 VLM
+为 <span class="math inline">\(f_{\theta}\)</span>，诱导输出 <span class="math inline">\(Y\)</span> 定义为： <span class="math display">\[
+Y = f_{\theta}([H_{\text{gen}}^t, \ H_{\text{harm}}^t])
+\]</span> 本文设计了四种 <span class="math inline">\(H_{\text{harm}}^t\)</span>，嵌入看似无害的图像输入，诱导
+VLM 生成有害输出，设 CLIP-image-encoder 为 <span class="math inline">\(\mathcal{I}\)</span> <span class="math display">\[
+H_{\text{harm}} = \begin{cases}
+\mathcal{T}(x_{\text{harm}}^t) &amp; \text{text trigger} \\
+W_{\mathcal{I}} \cdot \mathcal{I}(x_{\text{harm}}^t) &amp; \text{OCR
+trigger} \\
+W_{\mathcal{I}} \cdot \mathcal{I}(x_{\text{harm}}^i) &amp; \text{visual
+trigger} \\
+W_{\mathcal{I}} \cdot \mathcal{I}(x_{\text{harm}}^t, x_\text{harm}^i)
+&amp; \text{OCR textual \&amp; visual trigger}
+\end{cases}
+\]</span></p></li>
+<li><p>基于嵌入的对抗攻击方法：将有害 trigger
+融入看似无害的图像输入，以绕过视觉过滤器；设对抗性图像输入为 <span class="math inline">\(x_{\text{adv}}^{i}\)</span> <span class="math display">\[
+x_{\text{adv}}^{*} = \underset{x_\text{adv}^i \in
+\mathcal{B}}{\text{argmin}} \ \mathcal{L}_2(H_{\text{harm}}, \
+W_{\mathcal{I}} \cdot \mathcal{I}(x_{\text{adv}}^i) )
+\]</span> 设优化收敛门限 <span class="math inline">\(\tau =
+0.3\)</span>，有害 trigger 嵌入记作 <span class="math inline">\(H_{\text{adv}} = W_\mathcal{I} \cdot
+\mathcal{I}(x_\text{adv}^i)\)</span>，优化算法如下图所示：</p>
+<p><img src="/2024/12/04/paper/MM/VLM/jailbreak-in-pieces/jailbreak-algorithm.png" srcset="/img/loading.gif" lazyload style="zoom:67%;"></p></li>
 </ul>
 <hr>
 <h3 id="四实验评估">四、实验评估</h3>
 <ul>
-<li>SneakyPrompt 提高了 Bypass rate</li>
-<li>SneakyPrompt 提高了生图效果 (FID)</li>
-<li>RL 奖励函数选择：
-<ul>
-<li><span class="math inline">\(\cos (\mathcal{M}(\mathcal{p_a}), \
-\hat{\epsilon}(p_t))\)</span>：更高的绕过率 + 更好的生图质量</li>
-<li><span class="math inline">\(1 - \mathcal{l}_2(\hat{\epsilon}(p_t), \
-\hat{\epsilon(p_a)})\)</span>：更少的查询次数</li>
-</ul></li>
+<li>OCR &amp; visual 组合的 trigger
+攻击成功率最高，单一文本模态攻击效果较差（CLIP的文本-语义嵌入距离较大，难以优化）</li>
+<li>Ours
+可以造成<strong>上下文污染</strong>：一旦首条提示词成功越狱，后续的对话被污染从而越狱</li>
+<li>Ours
+可以<strong>激发偏见</strong>内容：将含诱导性目标（如枪支）图像融入对抗性输入，引诱模型说出不良内容（如暴力/偏见内容）</li>
+<li>Ours
+可以造成<strong>提示词注入</strong>：把有害指令嵌入图像输入，诱导模型执行有害行为</li>
 </ul>
 
                 
@@ -428,12 +413,12 @@ c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
   
     <span>></span>
     
-  <a href="/categories/paper/NLP/" class="category-chain-item">NLP</a>
+  <a href="/categories/paper/MM/" class="category-chain-item">MM</a>
   
   
     <span>></span>
     
-  <a href="/categories/paper/NLP/LLM/" class="category-chain-item">LLM</a>
+  <a href="/categories/paper/MM/VLM/" class="category-chain-item">VLM</a>
   
   
 
@@ -454,9 +439,9 @@ c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
       
         <a href="/tags/safety/">#safety</a>
       
-        <a href="/tags/jailbreak/">#jailbreak</a>
+        <a href="/tags/multimodal/">#multimodal</a>
       
-        <a href="/tags/reinforcement-learning/">#reinforcement learning</a>
+        <a href="/tags/jailbreak/">#jailbreak</a>
       
     </div>
   
@@ -468,8 +453,8 @@ c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>『paper-NLP-3』《SneakyPrompt》</div>
-      <div>http://larry0454.github.io/2024/11/19/paper/NLP/LLM/sneaky-prompt/</div>
+      <div>『paper-MM-3』《Jailbreak in Pieces》</div>
+      <div>http://larry0454.github.io/2024/12/04/paper/MM/VLM/jailbreak-in-pieces/</div>
     </div>
     <div class="license-meta">
       
@@ -481,7 +466,7 @@ c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>November 19, 2024</div>
+          <div>December 4, 2024</div>
         </div>
       
       
@@ -513,18 +498,12 @@ c_j \in \mathcal{D}_l, j = 1, \dots, (n+1)m \}\)</span></li>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/11/22/paper/MM/agent/navigate-the-risks/" title="『paper-MM-1』《A Survey on Threats in LLM-Based Agents》">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">『paper-MM-1』《A Survey on Threats in LLM-Based Agents》</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/18/paper/CV/NBV/GenNBV/" title="『paper-CV-2』《GenNBV》">
-                        <span class="hidden-mobile">『paper-CV-2』《GenNBV》</span>
+                      <a href="/2024/12/01/paper/MM/VLM/robust-vlm/" title="『paper-MM-2』《Evaluating Adversarial Robustness of Large VLMs》">
+                        <span class="hidden-mobile">『paper-MM-2』《Evaluating Adversarial Robustness of Large VLMs》</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
